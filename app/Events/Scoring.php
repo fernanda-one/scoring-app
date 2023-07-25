@@ -35,10 +35,10 @@ class Scoring implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('public.ring.1');
+        return new PresenceChannel('presence.ring.1');
     }
 
-    public function broadcastAs()
+    public function broadcastAs(): string
     {
         return 'ring';
     }
@@ -51,7 +51,7 @@ class Scoring implements ShouldBroadcast
             ];
     }
 
-    public function scoring()
+    public function scoring(): bool
     {
 //        session()->forget('score');
         if (session()->has('time') && session()->get('name') != $this->name) {
@@ -59,8 +59,6 @@ class Scoring implements ShouldBroadcast
 
             // Jika tombol ditekan dalam 2 detik terakhir, berikan point
             if (time() - $time <= 2) {
-                $point = true;
-
                 // Broadcast event ke channel
                 if(!session()->has('score')){
                     session(['score' => 0]);

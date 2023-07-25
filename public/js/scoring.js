@@ -10,10 +10,17 @@ form.addEventListener("submit", function (event) {
     });
 });
 
-const channel = Echo.channel("public.ring.1");
+const channel = Echo.join("presence.ring.1");
 channel
-    .subscribed(() => {
+    .here((users) => {
+        console.log(users);
         console.log("anda terhubung");
+    })
+    .joining((user) => {
+        console.log({ user }, "joined");
+    })
+    .leaving((user) => {
+        console.log({ user }, "leaved");
     })
     .listen(".ring", (event) => {
         console.log(event);

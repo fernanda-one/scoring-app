@@ -39,3 +39,20 @@ Route::post('/score-event', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Scoring($request->message));
     return null;
 });
+Route::get('/test',function (){
+    return view('test');
+});
+
+Route::get('/register',[\App\Http\Controllers\UserController::class, 'index']);
+Route::post('/register',[\App\Http\Controllers\UserController::class, 'create']);
+
+Route::get('/login',[\App\Http\Controllers\AuthController::class, 'index']);
+Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate']);
+
+Route::get('admin',[\App\Http\Controllers\Admin::class, 'index']);
+Route::get('admin/users',[\App\Http\Controllers\Admin::class, 'getUser']);
+Route::get('admin/users/{user:id}/edit',[\App\Http\Controllers\UserController::class, 'edit']);
+Route::delete('admin/users/{user:id}',[\App\Http\Controllers\UserController::class, 'destroy']);
+
+Route::get('admin/participant',[\App\Http\Controllers\ParticipantController::class, 'index']);
+Route::get('admin/rooms',[\App\Http\Controllers\RoomController::class, 'index']);
