@@ -20,7 +20,52 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('register', ['title' => 'registrasi']);
+        $users = [
+            [
+                'id' => 1,
+                'name' => 'John Doe',
+                'username' => 'johndoe',
+                'role' => 'user',
+                'status' => 'active',
+                'created_at' => '2023-08-21'
+            ],
+            [
+                'id' => 2,
+                'name' => 'Jane Smith',
+                'username' => 'janesmith',
+                'role' => 'admin',
+                'status' => 'active',
+                'created_at' => '2023-08-20'
+            ],
+            [
+                'id' => 3,
+                'name' => 'Alice Johnson',
+                'username' => 'alicej',
+                'role' => 'user',
+                'status' => 'inactive',
+                'created_at' => '2023-08-19'
+            ],
+            [
+                'id' => 4,
+                'name' => 'Bob Brown',
+                'username' => 'bobbrown',
+                'role' => 'user',
+                'status' => 'active',
+                'created_at' => '2023-08-18'
+            ],
+            [
+                'id' => 5,
+                'name' => 'Eve Davis',
+                'username' => 'evedavis',
+                'role' => 'admin',
+                'status' => 'inactive',
+                'created_at' => '2023-08-17'
+            ]
+        ];
+        return view('management.users.users', [
+            'title' => 'users',
+            'data' => $users
+        ]);
     }
     /**
      * Show the form for creating a new resource.
