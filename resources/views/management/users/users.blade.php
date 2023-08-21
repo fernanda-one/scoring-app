@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 @section('container')
-    <header class="flex-col mt-[4%]">
+<header class="flex-col mt-[4%]">
     <p class="text-2xl">Users</p>
     <div class="lg:flex lg:justify-between my-4">
-        <form action="/pemilih" method="get" enctype="multipart/form-data">
+        <form action="#" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
                 <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
             </div>

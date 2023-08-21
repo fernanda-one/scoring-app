@@ -60,3 +60,5 @@ Route::get('/login',[\App\Http\Controllers\AuthController::class, 'index']);
 Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate']);
 
 Route::get('/management',[\App\Http\Controllers\UserController::class, 'index']);
+
+Route::get('/management/peserta',[\App\Http\Controllers\PesertaController::class, 'index']);
