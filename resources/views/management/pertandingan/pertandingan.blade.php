@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 @section('container')
 <header class="flex-col mt-[4%]">
-    <p class="text-2xl">Peserta</p>
+    <p class="text-2xl">Pertandingan</p>
     <div class="lg:flex lg:justify-between my-4">
         <form action="#" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
@@ -9,10 +9,16 @@
             </div>
         </form>
 
+        <div class="flex justify-between">
+        <button type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
+            Export
+        </button>
+
         <!-- Tambah toggle -->
         <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
             Add
         </button>
+        </div>
 
         <!-- Tambah modal -->
         <div id="add-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -26,7 +32,7 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="px-6 py-6 lg:px-8">
-                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Add Peserta</h3>
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Tambah Pertandingan</h3>
                         <div class="border border-gray-300 my-6"></div>
                         <form class="space-y-6" action="#" method="post" enctype="multipart/form-data">
                             @csrf
@@ -36,24 +42,28 @@
                                     <input value="{{ old('name') }}" type="text" name="name" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="kelamin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis kelamin</label>
-                                    <input value="{{ old('kelamin') }}" type="text" name="kelamin" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                </div>
-                            </div>
-                            <div class="grid lg:grid-cols-1 md:gap-6">
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="kontigen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kontigen</label>
-                                    <input value="{{ old('kontigen') }}" type="text" name="kontigen" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
+                                    <input value="{{ old('juri1') }}" type="text" name="juri1" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                             </div>
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="bb" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat badan</label>
-                                    <input value="{{ old('bb') }}" type="number" name="bb" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
+                                    <input value="{{ old('juri2') }}" type="text" name="juri2" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="tb" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tinggi badan</label>
-                                    <input value="{{ old('tb') }}" type="number" name="tb" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
+                                    <input value="{{ old('juri3') }}" type="text" name="juri3" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="grid lg:grid-cols-2 md:gap-6">
+                                <div class="relative z-0 w-full mb-4 group">
+                                    <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
+                                    <input value="{{ old('dewan') }}" type="text" name="dewan" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                </div>
+                                <div class="relative z-0 w-full mb-4 group">
+                                    <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
+                                    <input value="{{ old('operator') }}" type="text" name="operator" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                             </div>
                             <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -73,28 +83,31 @@
                 No
             </th>
             <th scope="col" class="px-6 py-3">
-                Name
+                Partai
             </th>
             <th scope="col" class="px-6 py-3">
-                Kontigen
+                Gelanggang
             </th>
             <th scope="col" class="px-6 py-3">
-                Jenis Kelamin
+                Juri 1
             </th>
             <th scope="col" class="px-6 py-3">
-                Tinggi badan
+                Juri 2
             </th>
             <th scope="col" class="px-6 py-3">
-                Berat badan
+                Juri 3
             </th>
             <th scope="col" class="px-6 py-3">
-                Kelas
+                Dewan
             </th>
             <th scope="col" class="px-6 py-3">
-                Pertandingan
+                Operator
             </th>
             <th scope="col" class="px-6 py-3">
-                Status
+                Sudut Biru
+            </th>
+            <th scope="col" class="px-6 py-3">
+                Sudut Merah
             </th>
             <th scope="col" class="px-6 py-3">
                 Action
@@ -107,37 +120,40 @@
                 1
             </th>
             <td class="px-6 py-4">
-                agus
+                1
             </td>
             <td class="px-6 py-4">
-                CEMPAKA
+                SATU
             </td>
             <td class="px-6 py-4">
-                Laki-laki
+                Agus
             </td>
             <td class="px-6 py-4">
-                170
+                Dimas
             </td>
             <td class="px-6 py-4">
-                60 KG
+                Sumanto
             </td>
             <td class="px-6 py-4">
-                A
+                Yantoo
             </td>
             <td class="px-6 py-4">
-                FINAL
+                Mahardika
             </td>
             <td class="px-6 py-4">
-                GUGUR
+                Ryandika
+            </td>
+            <td class="px-6 py-4">
+                Asep
             </td>
             <td class="px-6 py-4 flex">
                 <!-- Edit Modal -->
                 <button data-modal-target="edit-modal" data-modal-toggle="edit-modal" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Edit Peserta
+                    Edit Pertandingan
                 </button>
                 <!-- Delete Modal -->
                 <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Delete Peserta
+                    Delete Pertandingan
                 </button>
 
                 <!-- Edit modal -->
@@ -152,7 +168,7 @@
                                 <span class="sr-only">Close modal</span>
                             </button>
                             <div class="px-6 py-6 lg:px-8">
-                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Peserta</h3>
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update Pertandingan</h3>
                                 <div class="border border-gray-300 my-6"></div>
                                 <form class="space-y-6" action="#" method="post" enctype="multipart/form-data">
                                     @csrf
@@ -162,24 +178,28 @@
                                             <input value="{{ old('name') }}" type="text" name="name" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
-                                            <label for="kelamin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis kelamin</label>
-                                            <input value="{{ old('kelamin') }}" type="text" name="kelamin" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                        </div>
-                                    </div>
-                                    <div class="grid lg:grid-cols-1 md:gap-6">
-                                        <div class="relative z-0 w-full mb-4 group">
-                                            <label for="kontigen" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kontigen</label>
-                                            <input value="{{ old('kontigen') }}" type="text" name="kontigen" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
+                                            <input value="{{ old('juri1') }}" type="text" name="juri1" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                     </div>
                                     <div class="grid lg:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
-                                            <label for="bb" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat badan</label>
-                                            <input value="{{ old('bb') }}" type="number" name="bb" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
+                                            <input value="{{ old('juri2') }}" type="text" name="juri2" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
-                                            <label for="tb" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tinggi badan</label>
-                                            <input value="{{ old('tb') }}" type="number" name="tb" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
+                                            <input value="{{ old('juri3') }}" type="text" name="juri3" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                        </div>
+                                    </div>
+                                    <div class="grid lg:grid-cols-2 md:gap-6">
+                                        <div class="relative z-0 w-full mb-4 group">
+                                            <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
+                                            <input value="{{ old('dewan') }}" type="text" name="dewan" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                        </div>
+                                        <div class="relative z-0 w-full mb-4 group">
+                                            <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
+                                            <input value="{{ old('operator') }}" type="text" name="operator" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                     </div>
                                     <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -203,7 +223,7 @@
                                 <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                 </svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin ingin menghapus peserta ini?</h3>
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin ingin menghapus pertandingan ini?</h3>
                                 <button data-modal-hide="delete-modal" type="button" class="text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                     Iya, saya yakin
                                 </button>
