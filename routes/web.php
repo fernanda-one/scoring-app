@@ -60,3 +60,5 @@ Route::get('/management',[\App\Http\Controllers\UserController::class, 'index'])
 Route::get('/management/peserta',[\App\Http\Controllers\PesertaController::class, 'index']);
 
 Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index']);
+
+Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index']);
