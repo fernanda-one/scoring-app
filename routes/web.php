@@ -57,8 +57,6 @@ Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate
 
 Route::get('/management',[\App\Http\Controllers\UserController::class, 'index']);
 
-Route::get('/management/peserta',[\App\Http\Controllers\PesertaController::class, 'index']);
-
 Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index']);
 
 Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index']);
@@ -70,3 +68,5 @@ Route::get('/papan_score',[\App\Http\Controllers\PapanScoreController::class, 'i
 Route::get('/ketua_pertandingan',[\App\Http\Controllers\KetuaPertandingaController::class, 'index']);
 
 Route::get('/operator',[\App\Http\Controllers\OperatorController::class, 'index']);
+
+Route::get('/history',[\App\Http\Controllers\HistoryController::class, 'index']);
