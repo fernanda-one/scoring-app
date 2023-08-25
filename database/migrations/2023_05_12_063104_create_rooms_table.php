@@ -13,9 +13,16 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('pertandingan', function (Blueprint $table) {
             $table->id();
-            $table->string('room_name');
+            $table->string('nama_pertandingan');
+            $table->foreignId('juri_pertama');
+            $table->foreignId('juri_kedua');
+            $table->foreignId('juri_ketiga');
+            $table->foreignId('dewan');
+            $table->foreignId('ketua_pertandingan');
+            $table->foreignId('sudut_merah');
+            $table->foreignId('sudut_biru');
             $table->timestamps();
         });
     }

@@ -13,14 +13,14 @@ class CreateParticipantsTable extends Migration
      */
     public function up()
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('peserta', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('contingent');
             $table->string('sparring_class');
             $table->enum('gender',['laki-laki', 'perempuan']);
             $table->boolean('status')->default(true);
-            $table->string('status_match')->nullable();
+            $table->string('last_match')->nullable();
             $table->timestamps();
         });
     }

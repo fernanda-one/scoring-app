@@ -13,15 +13,16 @@ class CreateRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('records', function (Blueprint $table) {
+        Schema::create('log_pertandingan', function (Blueprint $table) {
             $table->id();
-            $table->string('match_name');
-            $table->foreignId('participant_a');
-            $table->foreignId('participant_b');
-            $table->string('match_winner');
-            $table->string('sparing_class');
-            $table->integer('point_participant_a');
-            $table->integer('point_participant_b');
+            $table->integer('partai');
+            $table->string('juri_pertama');
+            $table->string('juri_kedua');
+            $table->string('juri_ketiga');
+            $table->string('dewan');
+            $table->string('sudut_merah');
+            $table->string('sudut_biru');
+            $table->string('round_time')->nullable();
             $table->timestamps();
         });
     }
