@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -20,51 +21,38 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = [
-            [
-                'id' => 1,
-                'name' => 'John Doe',
-                'username' => 'johndoe',
-                'role' => 'user',
-                'status' => 'active',
-                'created_at' => '2023-08-21'
+        $users = User::latest();
+        $search = \request('search') ?? '';
+        if ($search != ''){
+            $users->where('name','like', '%'.$search.'%')
+                ->orWhere('username','like', '%'.$search.'%');
+        }
+        $role = [
+            (object) [
+                'name'=> 'Admin',
+                'value'=>'admin'
             ],
-            [
-                'id' => 2,
-                'name' => 'Jane Smith',
-                'username' => 'janesmith',
-                'role' => 'admin',
-                'status' => 'active',
-                'created_at' => '2023-08-20'
+            (object) [
+                'name'=> 'Juri',
+                'value'=>'juri'
             ],
-            [
-                'id' => 3,
-                'name' => 'Alice Johnson',
-                'username' => 'alicej',
-                'role' => 'user',
-                'status' => 'inactive',
-                'created_at' => '2023-08-19'
+            (object) [
+                'name'=> 'Dewan',
+                'value'=>'dewan'
             ],
-            [
-                'id' => 4,
-                'name' => 'Bob Brown',
-                'username' => 'bobbrown',
-                'role' => 'user',
-                'status' => 'active',
-                'created_at' => '2023-08-18'
+            (object) [
+                'name'=> 'Operator',
+                'value'=>'operator'
             ],
-            [
-                'id' => 5,
-                'name' => 'Eve Davis',
-                'username' => 'evedavis',
-                'role' => 'admin',
-                'status' => 'inactive',
-                'created_at' => '2023-08-17'
-            ]
+            (object) [
+                'name'=> 'Ketua Pertandingan',
+                'value'=>'ketua'
+            ],
         ];
         return view('management.users.users', [
             'title' => 'users',
-            'data' => $users
+            'data' => $users->paginate(10),
+            'roles' => $role
         ]);
     }
     /**
@@ -75,19 +63,18 @@ class UserController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'username' => 'required|max:100|min:5',
-            'email' => 'required|max:255|email|unique:users',
+            'name' => 'required|max:100|min:5',
+            'username' => 'required|max:100|min:5|unique:users',
+            'role'=> 'required',
             'password' => ['required','min:5']
         ]);
-//        dd($validatedData);
-
         $validatedData['password'] = Hash::make($validatedData['password']);
-
+//        dd($validatedData);
         User::create($validatedData);
 
 //        $request->session()->flash('success', 'Registration successfully! login');
 
-        return redirect('/login')->with('success', 'Registration successfull');
+        return redirect('/management')->with('success', 'Registration successfully!');
     }
 
     /**
@@ -118,12 +105,24 @@ class UserController extends Controller
      * @param User $user
      * @return Application|Factory|View
      */
-    public function edit(User $user)
+    public function edit(Request $request,$id)
     {
-        return view('admin.users.edit',[
-            'title' => 'update user',
-            'data' => $user
+        $validatedData = $request->validate([
+            'name' => 'required|max:100|min:5',
+            'username' => 'required|max:100|min:5',
+            'role'=> 'required',
+            'password' => 'nullable|string|min:5|confirmed',
         ]);
+        $user = User::findOrFail($id);
+        if ($validatedData['password'] !== null)
+        {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }else{
+            Arr::forget($validatedData, 'password');
+        }
+        $user->update($validatedData);
+
+        return redirect('/management')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -135,7 +134,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
     }
 
     /**
@@ -144,9 +143,9 @@ class UserController extends Controller
      * @param User $user
      * @return void
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        User::destroy($user->id);
-        return redirect('admin')->with('success', 'Users has been deleted');
+        User::destroy($id);
+        return redirect('management')->with('success', 'Users has been deleted');
     }
 }
