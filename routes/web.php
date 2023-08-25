@@ -68,3 +68,5 @@ Route::get('/dewan',[\App\Http\Controllers\DewanController::class, 'index']);
 Route::get('/papan_score',[\App\Http\Controllers\PapanScoreController::class, 'index']);
 
 Route::get('/ketua_pertandingan',[\App\Http\Controllers\KetuaPertandingaController::class, 'index']);
+
+Route::get('/operator',[\App\Http\Controllers\OperatorController::class, 'index']);
