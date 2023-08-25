@@ -27,10 +27,10 @@
         </div>
         <div>
             <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px]">
-                <p class="font-bold text-whiteDefault text-xl">SEMI-FINAL</p>
+                <p class="font-bold text-whiteDefault text-xl">DEWAN JURI</p>
             </div>
             <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px]">
-                <p class="flex items-center text-whiteDefault font-bold text-base">ROUND 1
+                <p class="flex items-center text-whiteDefault font-bold text-base">6 - 10
                     <button class="ml-1 mb-[10%]" data-popover-target="popover-description" data-popover-placement="bottom-start" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" fill="none">
                             <g clip-path="url(#clip0_154_1275)">
@@ -44,7 +44,7 @@
                         </svg>
                     </button>
                 </p>
-                <div data-popover id="popover-description" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72">
+                <div data-popover id="popover-description" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-whiteDefault transition-opacity duration-300 bg-greenDefault border border-gray-200 rounded-lg shadow-sm opacity-0 w-72">
                     <div class="p-3 space-y-2">
                         <div class="p-4">
                             <table class="w-full">
@@ -69,9 +69,6 @@
                     <div data-popper-arrow></div>
                 </div>
             </div>
-
-
-
         </div>
         <div>
             <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px]">
@@ -84,8 +81,349 @@
     </div>
 </header>
 
+<!--round 1-->
 <div class="flex justify-between">
+    <!--left side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+        </div>
+        <div class="flex bg-redOpacity rounded-b-[8px]">
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                </div>
+            </div>
+            <div class="w-[75%] border-l border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!--center side-->
+    <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
+        <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
+            <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
+                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">1</p>
+            </div>
+            <div class="flex justify-between w-full h-[50%]">
+                <p class="flex items-center justify-center w-[50%] border-r-[2px] font-bold text-xl text-whiteDefault">6</p>
+                <p class="flex items-center justify-center w-[50%] font-bold text-xl text-whiteDefault">10</p>
+            </div>
+        </div>
+    </div>
+
+    <!--right side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+        </div>
+        <div class="flex bg-blueOpacity rounded-b-[8px]">
+            <div class="w-[75%] border-r border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+            </div>
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--round 2-->
+<div class="flex justify-between">
+    <!--left side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+        </div>
+        <div class="flex bg-redOpacity rounded-b-[8px]">
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                </div>
+            </div>
+            <div class="w-[75%] border-l border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--center side-->
+    <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
+        <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
+            <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
+                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">2</p>
+            </div>
+            <div class="flex justify-between w-full h-[50%]">
+                <p class="flex items-center justify-center w-[50%] border-r-[2px] font-bold text-xl text-whiteDefault">6</p>
+                <p class="flex items-center justify-center w-[50%] font-bold text-xl text-whiteDefault">10</p>
+            </div>
+        </div>
+    </div>
+
+    <!--right side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+        </div>
+        <div class="flex bg-blueOpacity rounded-b-[8px]">
+            <div class="w-[75%] border-r border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+            </div>
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--round 3-->
+<div class="flex justify-between">
+    <!--left side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+        </div>
+        <div class="flex bg-redOpacity rounded-b-[8px]">
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                </div>
+            </div>
+            <div class="w-[75%] border-l border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center h-[40px] ml-[2%]"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--center side-->
+    <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
+        <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
+            <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
+                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">3</p>
+            </div>
+            <div class="flex justify-between w-full h-[50%]">
+                <p class="flex items-center justify-center w-[50%] border-r-[2px] font-bold text-xl text-whiteDefault">6</p>
+                <p class="flex items-center justify-center w-[50%] font-bold text-xl text-whiteDefault">10</p>
+            </div>
+        </div>
+    </div>
+
+    <!--right side-->
+    <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
+        <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
+            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+        </div>
+        <div class="flex bg-blueOpacity rounded-b-[8px]">
+            <div class="w-[75%] border-r border-grayDefault">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[2%]"></p>
+                </div>
+            </div>
+            <div class="w-[25%]">
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                </div>
+                <div class="border-b border-grayDefault">
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                </div>
+                <div>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
