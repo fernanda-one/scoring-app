@@ -56,6 +56,9 @@ Route::get('/login',[\App\Http\Controllers\AuthController::class, 'index']);
 Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate']);
 
 Route::get('/management',[\App\Http\Controllers\UserController::class, 'index']);
+Route::post('/create-user',[\App\Http\Controllers\UserController::class,'create']);
+Route::put('/edit-user/{id}',[\App\Http\Controllers\UserController::class,'edit']);
+Route::delete('/delete-user/{id}',[\App\Http\Controllers\UserController::class,'destroy']);
 
 Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index']);
 
