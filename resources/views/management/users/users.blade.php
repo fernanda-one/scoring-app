@@ -104,7 +104,7 @@
                     Action
                 </th>
             </tr>
-            </thead>,
+            </thead>
             <tbody>
             @foreach($data as $user)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
