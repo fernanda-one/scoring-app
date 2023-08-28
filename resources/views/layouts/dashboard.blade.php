@@ -28,10 +28,9 @@
             <div class="flex items-center">
                 <div class="flex items-center ml-3">
                     <div>
-                        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                            <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                        </button>
+                        <div class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                            <span class="font-medium text-gray-600 dark:text-gray-300">{{ strtoupper(substr(auth()->user()->name, 0, 1)) . strtoupper(substr(strstr(auth()->user()->name, ' '), 1, 1)) }}</span>
+                        </div>
                     </div>
                     <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user">
                         <div class="px-4 py-3" role="none">
@@ -96,7 +95,7 @@
                 </a>
             </li>
             <li>
-                <a href="/management/history" class="{{ Request::is('history') ? 'bg-gray-200' : '' }} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a href="/management/history" class="{{ Request::is('management/history') ? 'bg-gray-200' : '' }} flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
                         <g clip-path="url(#clip0_279_1887)">
                             <path d="M5.16633 16.8336C6.51608 18.1834 8.29211 19.0233 10.1918 19.2103C12.0914 19.3973 13.9971 18.9198 15.5842 17.8592C17.1712 16.7985 18.3413 15.2203 18.8951 13.3936C19.449 11.5669 19.3522 9.60462 18.6213 7.84124C17.8905 6.07786 16.5707 4.62248 14.8871 3.72311C13.2034 2.82375 11.2599 2.53605 9.38787 2.90906C7.51583 3.28206 5.83106 4.29268 4.62067 5.7687C3.41028 7.24471 2.74917 9.09477 2.75 11.0036V12.8333" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
