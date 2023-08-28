@@ -63,6 +63,8 @@ Route::delete('/delete-user/{id}',[\App\Http\Controllers\UserController::class,'
 
 Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index'])->middleware('auth');
 
+Route::get('/management/gelanggang',[\App\Http\Controllers\GelanggangController::class, 'index'])->middleware('auth');
+
 Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth');
 
 Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index']);

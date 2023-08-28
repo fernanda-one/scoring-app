@@ -8,7 +8,7 @@ class HistoryController extends Controller
 {
     public function index()
     {
-        return view('history', [
+        return view('management.history.history', [
             'title' => 'history'
             ]);
     }
