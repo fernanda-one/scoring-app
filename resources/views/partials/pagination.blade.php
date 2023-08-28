@@ -3,6 +3,7 @@
     <ul class="inline-flex items-center -space-x-px">
 {{--         Previous Page Link--}}
         @if ($paginator->onFirstPage())
+            <li>
                 <span class="flex space-x-3 justify-between items-center px-6 py-3 bg-blueDark rounded-md text-white cursor-not-allowed"  >
                     <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M8.62706 0.409901C8.89143 0.67244 9.03994 1.02847 9.03994 1.3997C9.03994 1.77093 8.89143 2.12696 8.62706 2.3895L3.98327 6.9997L8.62706 11.6099C8.88394 11.8739 9.02608 12.2276 9.02286 12.5947C9.01965 12.9617 8.87134 13.3129 8.60988 13.5724C8.34842 13.832 7.99472 13.9793 7.62497 13.9824C7.25522 13.9856 6.899 13.8445 6.63303 13.5895L0.992233 7.9895C0.727862 7.72696 0.579346 7.37093 0.579346 6.9997C0.579346 6.62847 0.727862 6.27244 0.992233 6.0099L6.63303 0.409901C6.89749 0.147442 7.25611 0 7.63005 0C8.00398 0 8.36261 0.147442 8.62706 0.409901Z" fill="black"/>
