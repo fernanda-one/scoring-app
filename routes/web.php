@@ -52,15 +52,18 @@ Route::get('admin/users/{user:id}/edit',[\App\Http\Controllers\UserController::c
 Route::delete('admin/users/{user:id}',[\App\Http\Controllers\UserController::class, 'destroy']);
 
 //
-Route::get('/login',[\App\Http\Controllers\AuthController::class, 'index']);
+Route::get('login',[\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate']);
+Route::get('/logout',[\App\Http\Controllers\AuthController::class, 'logout']);
 
-Route::get('/management',[\App\Http\Controllers\UserController::class, 'index']);
+Route::get('/management',[\App\Http\Controllers\UserController::class, 'index'])->middleware('auth');
 Route::post('/create-user',[\App\Http\Controllers\UserController::class,'create']);
 Route::put('/edit-user/{id}',[\App\Http\Controllers\UserController::class,'edit']);
 Route::delete('/delete-user/{id}',[\App\Http\Controllers\UserController::class,'destroy']);
 
-Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index']);
+Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index'])->middleware('auth');
+
+Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth');
 
 Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index']);
 
@@ -71,5 +74,3 @@ Route::get('/papan_score',[\App\Http\Controllers\PapanScoreController::class, 'i
 Route::get('/ketua_pertandingan',[\App\Http\Controllers\KetuaPertandingaController::class, 'index']);
 
 Route::get('/operator',[\App\Http\Controllers\OperatorController::class, 'index']);
-
-Route::get('/history',[\App\Http\Controllers\HistoryController::class, 'index']);

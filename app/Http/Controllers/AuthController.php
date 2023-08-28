@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function index()
+    public function login()
     {
         return view('/login', ['title' => 'LOGIN']);
     }
@@ -17,15 +17,25 @@ class AuthController extends Controller
     {
 //        $credentials = $request->all();
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
+            'username' => 'required',
             'password' => 'required'
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/score');
+            return redirect()->intended('/management');
         }
 
         return back()->with('loginError', 'Login failed!');
     }
 
+    public function logout()
+    {
+        Auth::logout();
+
+        request()->session()->invalidate();
+
+        request()->session()->regenerateToken();
+
+        return redirect('/login');
+    }
 }
