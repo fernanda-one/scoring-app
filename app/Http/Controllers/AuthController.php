@@ -25,7 +25,7 @@ class AuthController extends Controller
             return redirect()->intended('/management');
         }
 
-        return back()->with('loginError', 'Login failed!');
+        return back()->with('error', 'Login failed!');
     }
 
     public function logout()
