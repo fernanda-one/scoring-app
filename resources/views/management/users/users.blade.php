@@ -230,4 +230,6 @@
             </tbody>
         </table>
     </div>
+{{ $data->appends(request()->except('page'))->onEachSide(1)->links('partials.pagination') }}
+
 @endsection

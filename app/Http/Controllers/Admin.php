@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Participant;
-use App\Models\Room;
+use App\Models\Partai;
+use App\Models\Pertandingan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,7 +29,7 @@ class Admin extends Controller
     {
         return view('admin.rooms',[
             'title' => 'list rooms',
-            'data' => collect(Room::paginate(5))->all()
+            'data' => collect(Pertandingan::paginate(5))->all()
         ]);
     }
 }
