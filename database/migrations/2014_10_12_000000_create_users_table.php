@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('username');
-            $table->enum('role', ['admin','juri','dewan','operator','ketua','user'])->default('user');
+            $table->foreignId('gelanggang_id')->nullable();
+            $table->foreignId('role_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('active')->default(true);
             $table->string('password');

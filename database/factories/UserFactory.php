@@ -18,8 +18,8 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'username' => $this->faker->name(),
-            'role' => $this->faker->randomElement(['admin','dewan','operator','juri']),
-            'password' =>  $validatedData['password'] = Hash::make('12345'), // password
+            'role_id' => $this->faker->numberBetween(1,8),
+            'password' => Hash::make('12345'), // password
         ];
     }
 

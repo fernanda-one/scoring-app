@@ -16,7 +16,8 @@ class CreatePartaiTable extends Migration
         Schema::create('partais', function (Blueprint $table) {
             $table->integer('id')->unsigned();
             $table->primary('id');
-            $table->string('nama_pertandingan');
+            $table->string('babak');
+            $table->foreignId('gelanggang_id')->nullable();
             $table->string('sudut_merah');
             $table->string('sudut_biru');
             $table->string('kelas');
