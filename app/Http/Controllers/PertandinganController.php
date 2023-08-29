@@ -36,6 +36,7 @@ class PertandinganController extends Controller
         if ($search != ''){
             $partai->where('id','like', '%'.$search.'%')
                 ->orWhere('nama_pertandingan','like', '%'.$search.'%')
+                ->orWhere('jenis_kelamin','like', '%'.$search.'%')
                 ->orWhere('sudut_biru','like', '%'.$search.'%')
                 ->orWhere('sudut_merah','like', '%'.$search.'%');
         }
@@ -48,16 +49,17 @@ class PertandinganController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'id' => 'required|unique:pertandingan',
+            'id' => 'required|unique:partais',
             'nama_pertandingan' => 'required',
             'sudut_biru'=> 'required|max:100|min:3',
             'sudut_merah'=> 'required|max:100|min:3',
-            'kelas'=> 'required|max:100|min:3',
-            'jenis_kelamin'=> 'required|max:100|min:3',
+            'kelas'=> 'required|max:2',
+            'jenis_kelamin'=> 'required|max:12|min:3',
         ]);
         Partai::create($validatedData);
 
-        return redirect('/management/pertandingan')->with('success', 'Registration successfully!');
+
+        return redirect('/management/pertandingan')->with('success', 'Pertandingan Berhasil ditambahkan!');
     }
 
     public function edit(Request $request,$id)
@@ -78,6 +80,6 @@ class PertandinganController extends Controller
     public function destroy($id)
     {
         Partai::destroy($id);
-        return redirect('management/pertandingan')->with('success', 'Users has been deleted');
+        return redirect('management/pertandingan')->with('success', 'Pertandingan telah dihapus');
     }
 }

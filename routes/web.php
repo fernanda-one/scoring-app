@@ -62,6 +62,9 @@ Route::put('/edit-user/{id}',[\App\Http\Controllers\UserController::class,'edit'
 Route::delete('/delete-user/{id}',[\App\Http\Controllers\UserController::class,'destroy']);
 
 Route::get('/management/pertandingan',[\App\Http\Controllers\PertandinganController::class, 'index'])->middleware('auth');
+Route::post('/create-pertandingan',[\App\Http\Controllers\PertandinganController::class, 'create']);
+Route::put('/edit-pertandingan/{id}',[\App\Http\Controllers\PertandinganController::class, 'edit']);
+Route::delete('/delete-pertandingan/{id}',[\App\Http\Controllers\PertandinganController::class, 'destroy']);
 
 Route::get('/management/gelanggang',[\App\Http\Controllers\GelanggangController::class, 'index'])->middleware('auth');
 
