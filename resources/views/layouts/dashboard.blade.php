@@ -58,7 +58,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="fixed right-0 left-0 bottom-0">
+                    <div class="fixed left-0 bottom-0">
                         <ul class="w-64 font-medium border-t border-gray-200 dark:border-gray-700">
                             <li>
                                 <a href="/logout" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
