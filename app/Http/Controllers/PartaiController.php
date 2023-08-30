@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PartaiImport;
 use App\Models\Partai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Facades\Excel;
 
-class PertandinganController extends Controller
+class PartaiController extends Controller
 {
     public function index()
     {
@@ -81,5 +83,19 @@ class PertandinganController extends Controller
     {
         Partai::destroy($id);
         return redirect('management/pertandingan')->with('success', 'Pertandingan telah dihapus');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('excel_file');
+        $import = new PartaiImport();
+        Excel::import($import, $file);
+
+        $message = $import->getMessage();
+        if (!empty($message)) {
+            return redirect('management/pertandingan')->with('error', $message);
+        } else {
+        return redirect('management/pertandingan')->with('success', 'Data imported successfully!');
+        }
     }
 }
