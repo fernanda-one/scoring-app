@@ -28,38 +28,63 @@
                         <span class="sr-only">Close modal</span>
                     </button>
                     <div class="px-6 py-6 lg:px-8">
-                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Tambah Pertandingan</h3>
+                        <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Tambah Gelanggang</h3>
                         <div class="border border-gray-300 my-6"></div>
-                        <form class="space-y-6" action="#" method="post" enctype="multipart/form-data">
+                        <form class="space-y-6" action="/management/create-gelanggang" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                    <input value="{{ old('name') }}" type="text" name="name" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <label for="nama_gelanggang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                    <input value="{{ old('nama_gelanggang') }}" type="text" name="nama_gelanggang" id="nama_gelanggang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
-                                    <input value="{{ old('juri1') }}" type="text" name="juri1" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <select id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Pilih Juri 1</option>
+                                        @foreach($juri1C as $j1)
+                                        <option value={{$j1->id}}>{{$j1->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
-                                    <input value="{{ old('juri2') }}" type="text" name="juri2" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <select id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Pilih Juri 2</option>
+                                        @foreach($juri2C as $j2)
+                                        <option value={{$j2->id}}>{{$j2->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
-                                    <input value="{{ old('juri3') }}" type="text" name="juri3" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <select id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Pilih Juri 3</option>
+                                        @foreach($juri3C as $j3)
+                                        <option value={{$j3->id}}>{{$j3->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
-                                    <input value="{{ old('dewan') }}" type="text" name="dewan" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <select id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Pilih Dewan</option>
+                                        @foreach($dewanC as $d)
+                                        <option value={{$d->id}}>{{$d->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
-                                    <input value="{{ old('operator') }}" type="text" name="operator" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    <select id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Pilih Operator</option>
+                                        @foreach($operatorC as $o)
+                                        <option value={{$o->id}}>{{$o->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -77,9 +102,6 @@
         <tr>
             <th scope="col" class="px-6 py-3">
                 No
-            </th>
-            <th scope="col" class="px-6 py-3">
-                Partai
             </th>
             <th scope="col" class="px-6 py-3">
                 Gelanggang
@@ -100,47 +122,33 @@
                 Operator
             </th>
             <th scope="col" class="px-6 py-3">
-                Sudut Biru
-            </th>
-            <th scope="col" class="px-6 py-3">
-                Sudut Merah
-            </th>
-            <th scope="col" class="px-6 py-3">
                 Action
             </th>
         </tr>
         </thead>
         <tbody>
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            @foreach($gelanggangs as $g)
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                1
+                {{ $loop->iteration }}
             </th>
             <td class="px-6 py-4">
-                1
+                {{ $g->nama_gelanggang }}
             </td>
             <td class="px-6 py-4">
-                SATU
+                {{ $g->juri_pertama }}
             </td>
             <td class="px-6 py-4">
-                Agus
+                {{ $g->juri_kedua }}
             </td>
             <td class="px-6 py-4">
-                Dimas
+                {{ $g->juri_ketiga }}
             </td>
             <td class="px-6 py-4">
-                Sumanto
+                {{ $g->dewan }}
             </td>
             <td class="px-6 py-4">
-                Yantoo
-            </td>
-            <td class="px-6 py-4">
-                Mahardika
-            </td>
-            <td class="px-6 py-4">
-                Ryandika
-            </td>
-            <td class="px-6 py-4">
-                Asep
+                {{ $g->operator }}
             </td>
             <td class="px-6 py-4 flex">
                 <!-- Edit Modal -->
@@ -170,32 +178,57 @@
                                     @csrf
                                     <div class="grid lg:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
-                                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                            <input value="{{ old('name') }}" type="text" name="name" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <label for="nama_gelanggang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                                            <input value="{{ old('nama_gelanggang') }}" type="text" name="nama_gelanggang" id="nama_gelanggang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
-                                            <input value="{{ old('juri1') }}" type="text" name="juri1" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <select id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Pilih Juri 1</option>
+                                                @foreach($juri1C as $j1)
+                                                <option value={{$j1->id}}>{{$j1->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="grid lg:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
-                                            <input value="{{ old('juri2') }}" type="text" name="juri2" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <select id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Pilih Juri 2</option>
+                                                @foreach($juri2C as $j2)
+                                                <option value={{$j2->id}}>{{$j2->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
-                                            <input value="{{ old('juri3') }}" type="text" name="juri3" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <select id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Pilih Juri 3</option>
+                                                @foreach($juri3C as $j3)
+                                                <option value={{$j3->id}}>{{$j3->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="grid lg:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
-                                            <input value="{{ old('dewan') }}" type="text" name="dewan" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <select id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Pilih Dewan</option>
+                                                @foreach($dewanC as $d)
+                                                <option value={{$d->id}}>{{$d->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
-                                            <input value="{{ old('operator') }}" type="text" name="operator" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <select id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <option selected>Pilih Operator</option>
+                                                @foreach($operatorC as $o)
+                                                <option value={{$o->id}}>{{$o->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -232,6 +265,7 @@
                 </div>
             </td>
         </tr>
+        @endforeach
         </tbody>
     </table>
 </div>

@@ -68,6 +68,7 @@ Route::delete('/delete-pertandingan/{id}',[\App\Http\Controllers\PartaiControlle
 Route::post('/management/import-pertandingan',[\App\Http\Controllers\PartaiController::class, 'import']);
 
 Route::get('/management/gelanggang',[\App\Http\Controllers\GelanggangController::class, 'index'])->middleware('auth');
+Route::post('/management/create-gelanggang',[\App\Http\Controllers\GelanggangController::class, 'create']);
 
 Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth');
 
