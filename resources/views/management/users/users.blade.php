@@ -118,7 +118,7 @@
                         {{$user->username }}
                     </td>
                     <td class="px-6 py-4">
-                        {{$user->role }}
+                        {{ucwords(str_replace('_',' ',$user->role->name)) }}
                     </td>
                     <td class="px-6 py-4">
                        @if($user->status)

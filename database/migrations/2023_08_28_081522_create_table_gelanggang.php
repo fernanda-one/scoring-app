@@ -13,7 +13,7 @@ class CreateTableGelanggang extends Migration
      */
     public function up()
     {
-        Schema::create('gelanggang', function (Blueprint $table) {
+        Schema::create('gelanggangs', function (Blueprint $table) {
                 $table->id();
                 $table->string('nama_gelanggang');
                 $table->timestamps();
@@ -27,6 +27,6 @@ class CreateTableGelanggang extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gelanggang');
+        Schema::dropIfExists('gelanggangs');
     }
 }

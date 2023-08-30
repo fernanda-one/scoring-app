@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\PartaiImport;
+use App\Models\Gelanggang;
 use App\Models\Partai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -34,6 +35,7 @@ class PartaiController extends Controller
             ],
         ];
         $partai = Partai::orderBy('id', 'asc');
+        $gelanggang = Gelanggang::orderBy('id', 'asc');
         $search = \request('search') ?? '';
         if ($search != ''){
             $partai->where('id','like', '%'.$search.'%')
@@ -46,6 +48,7 @@ class PartaiController extends Controller
             'title' => 'pertandingan',
             'kelas'=>$kelas,
             'partais'=>$partai->paginate(10),
+            'gelanggangs'=>$gelanggang
         ]);
     }
     public function create(Request $request)
