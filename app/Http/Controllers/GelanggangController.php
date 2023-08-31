@@ -12,24 +12,7 @@ class GelanggangController extends Controller
 {
     public function index()
     {
-        $gelanggang = DB::table('gelanggangs')
-            ->select(
-                'gelanggangs.id', 'gelanggangs.nama_gelanggang',
-                DB::raw('MAX(CASE WHEN roles.name = \'Juri Pertama\' THEN users.name END) as juri_pertama'),
-                DB::raw('MAX(CASE WHEN roles.name = \'Juri Kedua\' THEN users.name END) as juri_kedua'),
-                DB::raw('MAX(CASE WHEN roles.name = \'Juri Ketiga\' THEN users.name END) as juri_ketiga'),
-                DB::raw('MAX(CASE WHEN roles.name = \'Dewan\' THEN users.name END) as dewan'),
-                DB::raw('MAX(CASE WHEN roles.name = \'Operator\' THEN users.name END) as operator')
-            )
-            ->leftJoin('users', 'gelanggangs.id', '=', 'users.gelanggang_id')
-            ->leftJoin('roles', 'roles.id', '=', 'users.role_id')
-            ->groupBy('gelanggangs.id', 'gelanggangs.nama_gelanggang')
-            ->get();
-
-
-
-
-//        dd($gelanggang);
+        $gelanggang = $this->listGelanggang();
 
         $juri1U = User::whereHas('role', function ($query) {
                 $query->where('name', 'Juri Pertama');
@@ -77,6 +60,45 @@ class GelanggangController extends Controller
             'dewanC' => $dewanC,
             'operatorC' => $operatorC,
         ]);
+    }
+
+    public function listGelanggang()
+    {
+        $gelanggang = DB::table('users_gelanggangs')
+            ->select('gelanggangs.nama_gelanggang', 'roles.name as nama_role', 'users.name as nama_user')
+            ->leftJoin('gelanggangs', 'gelanggangs.id', '=', 'users_gelanggangs.gelanggang_id')
+            ->leftJoin('users', 'users.id', '=', 'users_gelanggangs.user_id')
+            ->leftJoin('roles', 'roles.id', '=', 'users.role_id')
+            ->orderBy('gelanggangs.nama_gelanggang')
+            ->get();
+
+        $result = [];
+
+        foreach ($gelanggang as $row) {
+            $gelanggang_name = $row->nama_gelanggang;
+            $nama_role = $row->nama_role;
+            $nama_user = $row->nama_user;
+
+            if (!isset($result[$gelanggang_name])) {
+                $result[$gelanggang_name] = [];
+            }
+
+            $result[$gelanggang_name][] = [
+                "nama_role" => $nama_role,
+                "nama_user" => $nama_user,
+            ];
+        }
+
+        $response = [];
+        foreach ($result as $gelanggang_name => $peran_users) {
+            $entry = [
+                "nama_gelanggang" => $gelanggang_name,
+                "peran_user" => $peran_users,
+            ];
+            $response[] = $entry;
+        }
+
+        return $response;
     }
 
     public function create(Request $request)
