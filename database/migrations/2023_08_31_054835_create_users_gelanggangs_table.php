@@ -17,7 +17,6 @@ class CreateUsersGelanggangsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('gelanggang_id');
-            $table->foreignId('role_id');
             $table->timestamps();
 
         });

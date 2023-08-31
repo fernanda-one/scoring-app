@@ -97,6 +97,26 @@
 </header>
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-[35px]">
+    @if ($message = session('success'))
+    <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 dark:bg-gray-800 dark:text-green-400 text-center" role="alert">
+        <span class="font-medium">{{ $message }}</span>
+    </div>
+    @elseif ($message = session('error'))
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
+        <span class="font-medium">{{ $message }}</span>
+    </div>
+    @endif
+
+    @if ($errors->any())
+    <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-400 text-center" role="alert">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li><span class="font-medium">{{ $error }}</span></li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
@@ -179,7 +199,7 @@
                                             <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
                                             <select id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>Pilih Juri 1</option>
-                                                @foreach($juri1C as $j1)
+                                                @foreach($juri1U as $j1)
                                                 <option value={{$j1->id}}>{{$j1->name}}</option>
                                                 @endforeach
                                             </select>
@@ -190,7 +210,7 @@
                                             <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
                                             <select id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>Pilih Juri 2</option>
-                                                @foreach($juri2C as $j2)
+                                                @foreach($juri2U as $j2)
                                                 <option value={{$j2->id}}>{{$j2->name}}</option>
                                                 @endforeach
                                             </select>
@@ -199,7 +219,7 @@
                                             <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
                                             <select id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>Pilih Juri 3</option>
-                                                @foreach($juri3C as $j3)
+                                                @foreach($juri3U as $j3)
                                                 <option value={{$j3->id}}>{{$j3->name}}</option>
                                                 @endforeach
                                             </select>
@@ -210,7 +230,7 @@
                                             <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
                                             <select id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>Pilih Dewan</option>
-                                                @foreach($dewanC as $d)
+                                                @foreach($dewanU as $d)
                                                 <option value={{$d->id}}>{{$d->name}}</option>
                                                 @endforeach
                                             </select>
@@ -219,7 +239,7 @@
                                             <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
                                             <select id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 <option selected>Pilih Operator</option>
-                                                @foreach($operatorC as $o)
+                                                @foreach($operatorU as $o)
                                                 <option value={{$o->id}}>{{$o->name}}</option>
                                                 @endforeach
                                             </select>
