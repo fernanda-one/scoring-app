@@ -39,8 +39,8 @@
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
-                                    <select id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Juri 1</option>
+                                    <select required id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">Pilih Juri 1</option>
                                         @foreach($juri1C as $j1)
                                         <option value={{$j1->id}}>{{$j1->name}}</option>
                                         @endforeach
@@ -50,8 +50,8 @@
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
-                                    <select id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Juri 2</option>
+                                    <select required id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">Pilih Juri 2</option>
                                         @foreach($juri2C as $j2)
                                         <option value={{$j2->id}}>{{$j2->name}}</option>
                                         @endforeach
@@ -59,8 +59,8 @@
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
-                                    <select id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Juri 3</option>
+                                    <select required id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">Pilih Juri 3</option>
                                         @foreach($juri3C as $j3)
                                         <option value={{$j3->id}}>{{$j3->name}}</option>
                                         @endforeach
@@ -70,8 +70,8 @@
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
-                                    <select id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Dewan</option>
+                                    <select required id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">Pilih Dewan</option>
                                         @foreach($dewanC as $d)
                                         <option value={{$d->id}}>{{$d->name}}</option>
                                         @endforeach
@@ -79,8 +79,8 @@
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
-                                    <select id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Operator</option>
+                                    <select required id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="">Pilih Operator</option>
                                         @foreach($operatorC as $o)
                                         <option value={{$o->id}}>{{$o->name}}</option>
                                         @endforeach

@@ -174,7 +174,7 @@ class GelanggangController extends Controller
         ]);
 
         $gelanggang = Gelanggang::findOrFail($id);
-//        $gelanggang->update(['nama_gelanggang' => $validatedData['nama_gelanggang']]);
+        $gelanggang->update(['nama_gelanggang' => $validatedData['nama_gelanggang']]);
 
         // Update user_id for Juri Pertama
         $UG_JuriPertama = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
