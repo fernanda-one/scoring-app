@@ -128,9 +128,6 @@ class GelanggangController extends Controller
         return $response;
     }
 
-
-
-
     public function create(Request $request)
     {
         $validatedData = $request->validate([
@@ -218,6 +215,13 @@ class GelanggangController extends Controller
 
 
 
-        return redirect('/management/gelanggang')->with('success', 'Gelanggang Berhasil update!');
+        return redirect('/management/gelanggang')->with('success', 'Gelanggang Berhasil Update!');
+    }
+
+    public function destroy($id)
+    {
+        Gelanggang::destroy($id);
+        UserGelanggang::where('gelanggang_id', $id)->delete();
+        return redirect('/management/gelanggang')->with('success', 'Gelanggang Berhasil Delete!');
     }
 }
