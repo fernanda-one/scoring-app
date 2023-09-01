@@ -69,6 +69,7 @@ Route::post('/management/import-pertandingan',[\App\Http\Controllers\PartaiContr
 
 Route::get('/management/gelanggang',[\App\Http\Controllers\GelanggangController::class, 'index'])->middleware('auth');
 Route::post('/management/create-gelanggang',[\App\Http\Controllers\GelanggangController::class, 'create']);
+Route::put('/management/edit-gelanggang/{id}',[\App\Http\Controllers\GelanggangController::class, 'edit']);
 
 Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth');
 
