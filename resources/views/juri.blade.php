@@ -16,6 +16,39 @@
     </head>
 <body>
     <header>
+        <!-- Main modal -->
+        <div class="fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-2xl max-h-full">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div class="flex items-center justify-center p-4 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            JURROR 1 CHOICE DROP VERIVICATION
+                        </h3>
+                    </div>
+                    <div class="py-8 px-4 space-y-4">
+                        <div class="flex flex-col">
+                            <div class="flex items-center justify-center">
+                                <button type="button" class="flex justify-center items-center w-[33%] h-[70px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+                                    <p class="text-2xl text-whiteDefault">WAITING</p>
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <button type="button" class="flex justify-center items-center w-[40%] h-[70px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+                                    <p class="text-2xl text-whiteDefault">BLUE CORNER</p>
+                                </button>
+                                <button type="button" class="flex justify-center items-center w-[40%] h-[70px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+                                    <p class="text-2xl text-whiteDefault">INVALID</p>
+                                </button>
+                                <button type="button" class="flex justify-center items-center w-[40%] h-[70px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+                                    <p class="text-2xl text-whiteDefault">RED CORNER</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="flex justify-between">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px]">

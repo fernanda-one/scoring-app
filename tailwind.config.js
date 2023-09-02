@@ -20,7 +20,7 @@ module.exports = {
                 grayDark: '#626973',
                 greenDefault: '#04879C',
                 whiteDefault: '#FFFFFF'
-              },
+              }
         },
     },
     plugins: [require("flowbite/plugin")],
