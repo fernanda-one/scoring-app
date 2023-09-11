@@ -13,23 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/send-event', function () {
-    event(new \App\Events\ChatMessageEvent('tes'));
-//    broadcast(new \App\Events\helloEvent());
-});
-
-Route::get('/ws', function (){
-    return view('websocket');
-});
-
-Route::post('/chat-message', function (\Illuminate\Http\Request $request){
-    event(new \App\Events\ChatMessageEvent($request->message));
-    return null;
-});
+//Route::get('/', function () {
+//    return view('login');
+//});
 
 Route::get('/score', function (){
     return view('scoring');
@@ -37,6 +23,10 @@ Route::get('/score', function (){
 
 Route::post('/score-event', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Scoring($request->message));
+    return null;
+});
+Route::post('/score-update', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\ScoringUpdate($request->message));
     return null;
 });
 Route::get('/test',function (){
@@ -52,7 +42,8 @@ Route::get('admin/users/{user:id}/edit',[\App\Http\Controllers\UserController::c
 Route::delete('admin/users/{user:id}',[\App\Http\Controllers\UserController::class, 'destroy']);
 
 //
-Route::get('login',[\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('/',[\App\Http\Controllers\AuthController::class, 'login'])->name('login');
+Route::get('/login',[\App\Http\Controllers\AuthController::class, 'login'])->name('login');
 Route::post('/login',[\App\Http\Controllers\AuthController::class, 'authenticate']);
 Route::get('/logout',[\App\Http\Controllers\AuthController::class, 'logout']);
 

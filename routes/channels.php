@@ -17,6 +17,17 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('presence.ring.{id}', function ($user , $id){
+Broadcast::channel('presence.juri.{id}', function ($user , $id){
+    return $user;
+});
+
+Broadcast::channel('presence.dewan.{id}', function ($user , $id){
+    return $user;
+});Broadcast::channel('presence.operator.{id}', function ($user , $id){
+    return $user;
+});Broadcast::channel('presence.ketuapertandingan.{id}', function ($user , $id){
+    return $user;
+});
+Broadcast::channel('presence.updateScore.{id}', function ($user , $id){
     return $user;
 });

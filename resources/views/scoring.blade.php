@@ -9,15 +9,22 @@
 </head>
 <body>
 
-<span id="score"></span>
+<span id="redScore">0</span>
+<span id="blueScore">0</span>
+<input id="user" type="text" hidden="hidden" value="{{auth()->user()}}">
 
-<form action="" id="form">
-    <label for="input-message">Name:</label>
-    <input id="input-message" type="text" placeholder="Your name...">
+<form action="" id="pukul">
+    <input id="gelanggang_id" type="number" hidden="" value="{{auth()->user()->gelanggang_id??1}}">
+    <button type="submit">Pukulan</button>
+</form>
+<form action="" id="tendang">
+    <input id="gelanggang_id" type="number" hidden="" value="{{auth()->user()->gelanggang_id??1}}">
+    <button type="submit">Tendangan</button>
 </form>
 
-<script src="{{ mix('js/app.js') }}">
+<script src="{{ mix('js/scoringJuri.js') }}">
 </script>
-<script src="{{ mix('js/scoring.js') }}"></script>
+<script src="{{ mix('js/scoreUpdate.js') }}">
+</script>
 </body>
 </html>

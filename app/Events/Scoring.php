@@ -2,10 +2,11 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use App\Models\Gelanggang;
+use App\Models\User;
+use App\Models\UserGelanggang;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -13,10 +14,9 @@ use Illuminate\Queue\SerializesModels;
 class Scoring implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    private string $name;
-    private int $score = 0;
-    private int $roomId;
+    private bool $done = false;
+    private string $sudut, $gerakan, $name;
+    private int $blueScore, $redScore, $roomId, $id,$time;
     /**
      * Create a new event instance.
      *
@@ -24,8 +24,14 @@ class Scoring implements ShouldBroadcast
      */
     public function __construct($message)
     {
-//        $this->roomId = $room_id;
-        $this->name = $message;
+        $user = auth()->user();
+        $this->roomId = $user->gelanggang_id;
+        $this->id = $user['role_id'];
+        $this->sudut = $message['sudut'];
+        $this->gerakan = $message['gerakan'];
+        $this->blueScore = $message['blueScore'];
+        $this->redScore = $message['redScore'];
+        $this->time = $message['time'];
     }
 
     /**
@@ -35,46 +41,37 @@ class Scoring implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('presence.ring.1');
+        return new PresenceChannel('presence.juri.'.$this->roomId);
     }
 
     public function broadcastAs(): string
     {
-        return 'ring';
+        return 'juri.'.$this->roomId;
     }
 
     public function broadcastWith()
     {
-        $this->scoring();
+
             return [
-                'message' => session()->get('score')
+                'message'=> 'juri score',
+                'blue_score'=>$this->blueScore,
+                'red_score'=>$this->redScore,
+                'expired'=>$this->time,
+                'sudut'=>$this->sudut,
+                'gerakan'=>$this->gerakan,
+                'id'=> $this->getRoleById($this->id)
             ];
     }
-
-    public function scoring(): bool
+    private function getRoleById($id): string
     {
-//        session()->forget('score');
-        if (session()->has('time') && session()->get('name') != $this->name) {
-            $time = session()->get('time');
+        $roleMap = [
+            5 => 'Juri Pertama',
+            6 => 'Juri Kedua',
+            7 => 'Juri Ketiga',
+            // Tambahkan peran lainnya jika diperlukan
+        ];
 
-            // Jika tombol ditekan dalam 2 detik terakhir, berikan point
-            if (time() - $time <= 2) {
-                // Broadcast event ke channel
-                if(!session()->has('score')){
-                    session(['score' => 0]);
-                }
-                session()->increment('score');
-                $this->score = session()->get('score');
-                // Hapus session
-                session()->forget('time');
-                session()->forget('name');
-                return true;
-            }
-        }
-
-        // Simpan waktu tombol ditekan
-        session(['time' => time()]);
-        session(['name' => $this->name]);
-        return false;
+        return $roleMap[$id] ?? 'Role Lainnya';
     }
+
 }

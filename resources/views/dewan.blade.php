@@ -16,6 +16,7 @@
 </head>
 <body>
 <header>
+    <input id="user" type="text" hidden="hidden" data-user="{{auth()->user()}}">
     <div class="flex justify-between">
         <div>
             <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px]">
@@ -43,22 +44,22 @@
         </div>
     </div>
 </header>
-
+<s class="text-whiteDefault">1</s>
 <div class="flex justify-between">
     <div class="w-full flex mt-[5%]">
         <div class="bg-redDefault py-3 w-[70%] rounded-r-[20px] pl-6">
-            <p class="text-whiteDefault">1, 2, 1, 1, 1, 2</p>
+            <span id="round1-redInput" class="text-whiteDefault"></span>
         </div>
         <div class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%]">
-            <p class="text-whiteDefault">8</p>
+            <p id="round1-redScore" class="text-whiteDefault">0</p>
         </div>
     </div>
     <div class="w-full flex mt-[5%] justify-end">
         <div class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault rounded-full mr-[2%]">
-            <p class="text-whiteDefault">8</p>
+            <p id="round1-blueScore" class="text-whiteDefault">0</p>
         </div>
         <div class="bg-blueDefault py-3 w-[70%] rounded-l-[20px] pr-6">
-            <p class="text-whiteDefault text-right">1, 2, 1, 1, 1, 2</p>
+            <p id="round1-blueInput" class="text-whiteDefault text-right"></p>
         </div>
     </div>
 </div>
@@ -260,5 +261,7 @@
         </div>
     </div>
 </div>
+<script src="{{ mix('js/scoreUpdate.js') }}">
+</script>
 </body>
 </html>

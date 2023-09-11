@@ -43,10 +43,10 @@
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Role User</label>
-                                    <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <select id="role" name="role_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option selected>Choose a Role</option>
                                         @foreach($roles as $role)
-                                            <option value="{{$role->value}}">{{$role->name}}</option>
+                                            <option value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -118,7 +118,7 @@
                         {{$user->username }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ucwords(str_replace('_',' ',$user->role->name)) }}
+                        {{$user->role->name }}
                     </td>
                     <td class="px-6 py-4">
                        @if($user->status)
@@ -173,12 +173,12 @@
                                     <div class="grid lg:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Role User</label>
-                                            <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <select id="role" name="role_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @foreach($roles as $role)
-                                                    @if($role->value === $user->role)
-                                                        <option selected value={{$role->value}}>{{$role->name}}</option>
+                                                    @if($role->id === $user->role_id)
+                                                        <option selected value={{$role->id}}>{{$role->name}}</option>
                                                     @else
-                                                        <option value={{$role->value}}>{{$role->name}}</option>
+                                                        <option value={{$role->id}}>{{$role->name}}</option>
                                                     @endif
                                                 @endforeach
                                             </select>

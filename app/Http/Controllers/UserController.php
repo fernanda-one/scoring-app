@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -27,28 +28,7 @@ class UserController extends Controller
             $users->where('name','like', '%'.$search.'%')
                 ->orWhere('username','like', '%'.$search.'%');
         }
-        $role = [
-            (object) [
-                'name'=> 'Admin',
-                'value'=>'admin'
-            ],
-            (object) [
-                'name'=> 'Juri',
-                'value'=>'juri'
-            ],
-            (object) [
-                'name'=> 'Dewan',
-                'value'=>'dewan'
-            ],
-            (object) [
-                'name'=> 'Operator',
-                'value'=>'operator'
-            ],
-            (object) [
-                'name'=> 'Ketua Pertandingan',
-                'value'=>'ketua'
-            ],
-        ];
+        $role = Role::all();
         return view('management.users.users', [
             'title' => 'users',
             'data' => $users->paginate(10),
@@ -65,11 +45,10 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:100|min:5',
             'username' => 'required|max:100|min:5|unique:users',
-            'role'=> 'required',
+            'role_id'=> 'required|numeric',
             'password' => ['required','min:5']
         ]);
         $validatedData['password'] = Hash::make($validatedData['password']);
-//        dd($validatedData);
         User::create($validatedData);
 
 //        $request->session()->flash('success', 'Registration successfully! login');
@@ -110,7 +89,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:100|min:5',
             'username' => 'required|max:100|min:5',
-            'role'=> 'required',
+            'role_id'=> 'required|numeric',
             'password' => 'nullable|string|min:5|confirmed',
         ]);
         $user = User::findOrFail($id);
