@@ -27,7 +27,7 @@
         </div>
         <div>
             <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px]">
-                <p class="font-bold text-whiteDefault text-xl">DEWAN JURI</p>
+                <p class="font-bold text-whiteDefault text-xl">KETUA</p>
             </div>
             <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px]">
                 <p class="flex items-center text-whiteDefault font-bold text-base">6 - 10

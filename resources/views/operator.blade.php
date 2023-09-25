@@ -15,38 +15,113 @@
     </style>
 </head>
 <body>
-<div class="flex justify-center mt-[5%] ml-[1%] mr-[1%]">
-    <!--center side-->
-    <div class="flex flex-col justify-center items-center w-[70%]">
-        <div class="flex justify-between w-[100%]">
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">START ROUND</p>
-            </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">FINISH ROUND</p>
-            </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">PREF ROUND</p>
-            </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">NEXT ROUND</p>
-            </button>
+    <div class="w-[52.75rem] h-[24.375rem] mx-auto my-auto">
+        <div class="mx-auto mt-3">
+            <div class="mx-auto flex justify-center space-x-[3.125rem] mt-1">
+                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                    DEWAN
+                </button>
+                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                    KETUA
+                </button>
+            </div>
+            <div class="mx-auto flex justify-center mt-4 space-x-[3.125rem]">
+                <button disabled class="w-[12.5rem] border-black border-[1px] bg-yellowDefault h-9">
+                    JURI 1
+                </button>
+                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                    JURI II
+                </button>
+                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                    JURI III
+                </button>
+            </div>
         </div>
-        <div class="flex justify-between w-[100%]">
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">START PARTAi</p>
+        <div class="flex mt-4 justify-between mx-4">
+            <div class="flex-row space-y-[2.625rem] my-4 ">
+                <div class="flex space-x-3">
+                    <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
+                        12 A
+                    </span>
+                    <div class="flex-row space-y-2">
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
+                           DIMAS
+                        </span>
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           JEPARA
+                        </span>
+                    </div>
+                </div>
+                <div class="flex space-x-3">
+                    <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
+                        12 A
+                    </span>
+                    <div class="flex-row space-y-2">
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
+                           GALIH
+                        </span>
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           JEPARA
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col space-y-[0.875rem]">
+                <button class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium">
+                    Rounde I
+                </button>
+                <button class="w-36 h-14 border-[2px] border-black font-medium">
+                    Rounde II
+                </button>
+                <button class="w-36 h-14 border-[2px] border-black font-medium">
+                    Rounde III
+                </button>
+            </div>
+            <div class="flex-row space-y-[2.625rem] my-4">
+                <div class="flex space-x-3">
+                    <div class="flex-row space-y-2">
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
+                           BUDI
+                        </span>
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           JEPARA
+                        </span>
+                    </div>
+                    <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
+                        12 A
+                    </span>
+                </div>
+                <div class="flex space-x-3">
+                    <div class="flex-row space-y-2">
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
+                           AMIN
+                        </span>
+                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           JEPARA
+                        </span>
+                    </div>
+                    <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
+                        12 A
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-center mx-auto space-x-5 mt-6">
+            <button class="w-24 h-8 border-[2px] border-black">
+                START
             </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">FINISH PARTAI</p>
+            <button class="w-24 h-8 border-[2px] border-black">
+                PAUSE
+            </button><button class="w-24 h-8 border-[2px] border-black">
+                FINISH
             </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">PREF PARTAI</p>
+            <button class="w-24 h-8 border-[2px] border-black">
+                PREV
             </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-6 mb-6">
-                <p class="font-bold text-whiteDefault text-lg">NEXT PARTAI</p>
+            <button class="w-24 h-8 border-[2px] border-black">
+                NEXT
             </button>
         </div>
     </div>
-</div>
 </body>
 </html>

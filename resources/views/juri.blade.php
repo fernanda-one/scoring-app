@@ -29,7 +29,7 @@
                     <div class="py-8 px-4 space-y-4">
                         <div class="flex flex-col">
                             <div class="flex items-center justify-center mb-4">
-                                <button type="button" class="flex justify-center items-center w-[33%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+                                <button type="button" disabled class="flex justify-center items-center w-[33%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                                     <p class="text-2xl text-whiteDefault">WAITING</p>
                                 </button>
                             </div>
