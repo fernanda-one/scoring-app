@@ -23,6 +23,6 @@ channelUpdateScore
         updateScore(event)
     });
 function updateScore(event) {
-    redScore.textContent = event.red_score;
-    blueScore.textContent = event.blue_score;
+    redScore.textContent = event.red_score - event.redPenalty;
+    blueScore.textContent = event.blue_score - event.bluePenalty;
 }

@@ -118,7 +118,7 @@ function pushScore(blueScore,redScore){
             "redScore":redScore,
             "redPenalty":redPenalty,
             "bluePenalty":bluePenalty,
-            "roomId":user.gelanggang_id
+            // "roomId":user.gelanggang_id
         },
     });
 }
@@ -131,6 +131,8 @@ function updateScore(event) {
     const name = sudut + gerakan;
     const sudutPointTime = name + 'time';
     const exp = event.expired;
+    redPenalty = event.redPenalty
+    bluePenalty = event.bluePenalty
     const score = {
         'redScore': pointMerah,
         'blueScore': pointBiru,

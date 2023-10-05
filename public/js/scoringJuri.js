@@ -33574,11 +33574,12 @@ function pushScore(blueScore, redScore) {
       "blueScore": blueScore,
       "redScore": redScore,
       "redPenalty": redPenalty,
-      "bluePenalty": bluePenalty,
-      "roomId": user.gelanggang_id
+      "bluePenalty": bluePenalty
+      // "roomId":user.gelanggang_id
     }
   });
 }
+
 function updateScore(event) {
   var gerakan = event.gerakan;
   var sudut = event.sudut;
@@ -33588,6 +33589,8 @@ function updateScore(event) {
   var name = sudut + gerakan;
   var sudutPointTime = name + 'time';
   var exp = event.expired;
+  redPenalty = event.redPenalty;
+  bluePenalty = event.bluePenalty;
   var score = {
     'redScore': pointMerah,
     'blueScore': pointBiru
