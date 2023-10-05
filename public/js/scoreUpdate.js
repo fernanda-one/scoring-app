@@ -30756,7 +30756,6 @@ var __webpack_exports__ = {};
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 var _require = __webpack_require__(/*! lodash/seq */ "./node_modules/lodash/seq.js"),
   value = _require.value;
-var tendanganMerah = document.getElementById("tendang-merah");
 var round = 'round1';
 var userElement = document.getElementById("user");
 var userData = JSON.parse(userElement.getAttribute("data-user"));

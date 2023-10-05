@@ -15,6 +15,7 @@ const redScore = document.getElementById(`${round}-redScore`);
 const blueInput = document.getElementById(`${round}-blueInput`);
 const redInput = document.getElementById(`${round}-redInput`);
 const roundView = document.getElementById(`round`)
+let redPenalty ,bluePenalty = 0;
 roundView.textContent = roundNow
 let timeouts = {
     pukulanred: [],
@@ -110,11 +111,13 @@ function handleAction(event, color, action) {
     event.preventDefault();
     pushMessage(color, action, toInteger(blueScore.textContent), toInteger(redScore.textContent));
 }
-function pushScore(blueScore,redScore ){
+function pushScore(blueScore,redScore){
     axios.post("/score-update", {
         message: {
             "blueScore":blueScore,
             "redScore":redScore,
+            "redPenalty":redPenalty,
+            "bluePenalty":bluePenalty,
             "roomId":user.gelanggang_id
         },
     });

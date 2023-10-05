@@ -1,7 +1,6 @@
 require("./bootstrap");
 const {value} = require("lodash/seq");
 
-const tendanganMerah = document.getElementById("tendang-merah");
 let round = 'round1'
 const userElement = document.getElementById("user");
 const userData = JSON.parse(userElement.getAttribute("data-user"));

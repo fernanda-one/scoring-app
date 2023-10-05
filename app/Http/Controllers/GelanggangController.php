@@ -132,29 +132,10 @@ class GelanggangController extends Controller
     {
         $validatedData = $request->validate([
             'nama_gelanggang' => 'required',
-            'juri1' => 'required',
-            'juri2' => 'required',
-            'juri3' => 'required',
-            'dewan' => 'required',
-            'operator' => 'required',
         ]);
-        $gelanggang = Gelanggang::create([
+        Gelanggang::create([
             'nama_gelanggang' => $validatedData['nama_gelanggang'],
         ]);
-
-        $gelanggangId = $gelanggang->id;
-
-        $data = [
-            ['gelanggang_id' => $gelanggangId, 'user_id' => $validatedData['juri1']],
-            ['gelanggang_id' => $gelanggangId, 'user_id' => $validatedData['juri2']],
-            ['gelanggang_id' => $gelanggangId, 'user_id' => $validatedData['juri3']],
-            ['gelanggang_id' => $gelanggangId, 'user_id' => $validatedData['dewan']],
-            ['gelanggang_id' => $gelanggangId, 'user_id' => $validatedData['operator']],
-        ];
-
-        foreach ($data as $val) {
-            UserGelanggang::create($val);
-        }
 
         return redirect('/management/gelanggang')->with('success', 'Gelanggang Berhasil ditambahkan!');
     }

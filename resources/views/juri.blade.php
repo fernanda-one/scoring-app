@@ -18,7 +18,7 @@
     <header>
         <input id="user" type="text" hidden="hidden" data-user="{{auth()->user()}}">
         <!-- Main modal -->
-        <div class="flex fixed hidden justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
+        <div class="flex fixed  justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
             <div class="max-h-full">
                 <div class="bg-white w-auto rounded-lg shadow dark:bg-gray-700">
                     <div class="flex items-center justify-center p-4 rounded-t dark:border-gray-600">

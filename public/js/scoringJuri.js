@@ -33477,6 +33477,8 @@ var redScore = document.getElementById("".concat(round, "-redScore"));
 var blueInput = document.getElementById("".concat(round, "-blueInput"));
 var redInput = document.getElementById("".concat(round, "-redInput"));
 var roundView = document.getElementById("round");
+var redPenalty,
+  bluePenalty = 0;
 roundView.textContent = roundNow;
 var timeouts = {
   pukulanred: [],
@@ -33571,6 +33573,8 @@ function pushScore(blueScore, redScore) {
     message: {
       "blueScore": blueScore,
       "redScore": redScore,
+      "redPenalty": redPenalty,
+      "bluePenalty": bluePenalty,
       "roomId": user.gelanggang_id
     }
   });

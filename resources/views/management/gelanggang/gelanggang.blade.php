@@ -32,59 +32,10 @@
                         <div class="border border-gray-300 my-6"></div>
                         <form class="space-y-6" action="/management/create-gelanggang" method="post" enctype="multipart/form-data">
                             @csrf
-                            <div class="grid lg:grid-cols-2 md:gap-6">
+                            <div class="grid md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="nama_gelanggang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                                     <input value="{{ old('nama_gelanggang') }}" type="text" name="nama_gelanggang" id="nama_gelanggang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                </div>
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
-                                    <select required id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="">Pilih Juri 1</option>
-                                        @foreach($juri1C as $j1)
-                                        <option value={{$j1->id}}>{{$j1->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="grid lg:grid-cols-2 md:gap-6">
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
-                                    <select required id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="">Pilih Juri 2</option>
-                                        @foreach($juri2C as $j2)
-                                        <option value={{$j2->id}}>{{$j2->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
-                                    <select required id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="">Pilih Juri 3</option>
-                                        @foreach($juri3C as $j3)
-                                        <option value={{$j3->id}}>{{$j3->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="grid lg:grid-cols-2 md:gap-6">
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
-                                    <select required id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="">Pilih Dewan</option>
-                                        @foreach($dewanC as $d)
-                                        <option value={{$d->id}}>{{$d->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
-                                    <select required id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option value="">Pilih Operator</option>
-                                        @foreach($operatorC as $o)
-                                        <option value={{$o->id}}>{{$o->name}}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                             <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -167,11 +118,11 @@
             <td class="px-6 py-4 flex">
                 <!-- Edit Modal -->
                 <button data-modal-target="edit-modal-{{$g['id']}}" data-modal-toggle="edit-modal-{{$g['id']}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Edit Pertandingan
+                    Edit Gelanggang
                 </button>
                 <!-- Delete Modal -->
                 <button data-modal-target="delete-modal-{{$g['id']}}" data-modal-toggle="delete-modal-{{$g['id']}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Delete Pertandingan
+                    Hapus Gelanggang
                 </button>
             </td>
         </tr>
@@ -257,7 +208,7 @@
                 </div>
             </div>
         </div>
-    </div>
+     </div>
 
     <!-- Delete modal -->
     <div id="delete-modal-{{$g['id']}}" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
