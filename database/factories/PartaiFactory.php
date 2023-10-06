@@ -15,7 +15,7 @@ class PartaiFactory extends Factory
     {
         return [
             'id' => $this->faker->numberBetween(0,1000),
-            'babak' => $this->faker->randomElement(['Semi-final','final','penyisihan','seperempat']),
+            'babak' => $this->faker->randomElement(['Semi-final','Final','Penyisihan','Seperempat']),
             'sudut_merah' => $this->faker->name(),
             'sudut_biru' => $this->faker->name(),
             'kelas' => $this->faker->randomElement(['A','B','C','D','E','F']),

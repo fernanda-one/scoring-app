@@ -39,7 +39,7 @@ class PartaiController extends Controller
         $search = \request('search') ?? '';
         if ($search != ''){
             $partai->where('id','like', '%'.$search.'%')
-                ->orWhere('nama_pertandingan','like', '%'.$search.'%')
+                ->orWhere('babak','like', '%'.$search.'%')
                 ->orWhere('jenis_kelamin','like', '%'.$search.'%')
                 ->orWhere('sudut_biru','like', '%'.$search.'%')
                 ->orWhere('sudut_merah','like', '%'.$search.'%');

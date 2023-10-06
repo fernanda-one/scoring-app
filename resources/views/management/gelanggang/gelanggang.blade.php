@@ -71,20 +71,20 @@
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" class="pl-6 py-3">
                 No
             </th>
             <th scope="col" class="px-6 py-3">
                 Gelanggang
             </th>
             <th scope="col" class="px-6 py-3">
-                Juri 1
+                Juri Pertama
             </th>
             <th scope="col" class="px-6 py-3">
-                Juri 2
+                Juri Kedua
             </th>
             <th scope="col" class="px-6 py-3">
-                Juri 3
+                Juri Ketiga
             </th>
             <th scope="col" class="px-6 py-3">
                 Dewan
@@ -92,7 +92,7 @@
             <th scope="col" class="px-6 py-3">
                 Operator
             </th>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" class="pl-10 py-3">
                 Action
             </th>
         </tr>
@@ -107,7 +107,7 @@
                 {{ $g['nama_gelanggang'] }}
             </td>
             @foreach(['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator'] as $role)
-            <td class="px-6 py-4">
+            <td class="py-4">
                 @foreach($g['peran_user'] as $pu)
                 @if ($pu['nama_role'] == $role)
                 {{ $pu['nama_user'] }}
@@ -115,7 +115,7 @@
                 @endforeach
             </td>
             @endforeach
-            <td class="px-6 py-4 flex">
+            <td class="pl-10 py-4 flex">
                 <!-- Edit Modal -->
                 <button data-modal-target="edit-modal-{{$g['id']}}" data-modal-toggle="edit-modal-{{$g['id']}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
                     Edit Gelanggang
@@ -156,9 +156,19 @@
                             <div class="relative z-0 w-full mb-4 group">
                                 <label for="juri1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 1</label>
                                 <select required id="juri1" name="juri1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Pilih Juri 1</option>
-                                    @foreach($juri1U as $j1)
-                                    <option value={{$j1->id}}>{{$j1->name}}</option>
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($juri1U as $j1)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j1->name === $g_role['nama_user'])
+                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Juri Pertama</option>
+                                    @endif
+                                    @foreach($juri1C as $j1)
+                                            <option selected value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -167,18 +177,38 @@
                             <div class="relative z-0 w-full mb-4 group">
                                 <label for="juri2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 2</label>
                                 <select required id="juri2" name="juri2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Pilih Juri 2</option>
-                                    @foreach($juri2U as $j2)
-                                    <option value={{$j2->id}}>{{$j2->name}}</option>
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($juri2U as $j2)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j2->name === $g_role['nama_user'])
+                                                    <option selected value={{$j2->id}}>{{$j2->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Juri Kedua</option>
+                                    @endif
+                                    @foreach($juri2C as $j2)
+                                        <option selected value={{$j2->id}}>{{$j2->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="relative z-0 w-full mb-4 group">
                                 <label for="juri3" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Juri 3</label>
                                 <select required id="juri3" name="juri3" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Pilih Juri 3</option>
-                                    @foreach($juri3U as $j3)
-                                    <option value={{$j3->id}}>{{$j3->name}}</option>
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($juri3U as $j3)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j3->name === $g_role['nama_user'])
+                                                    <option selected value={{$j3->id}}>{{$j3->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Juri ketiga</option>
+                                    @endif
+                                    @foreach($juri3C as $j3)
+                                        <option selected value={{$j3->id}}>{{$j3->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -187,18 +217,38 @@
                             <div class="relative z-0 w-full mb-4 group">
                                 <label for="dewan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dewan</label>
                                 <select required id="dewan" name="dewan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Pilih Dewan</option>
-                                    @foreach($dewanU as $d)
-                                    <option value={{$d->id}}>{{$d->name}}</option>
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($dewanU as $j1)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j1->name === $g_role['nama_user'])
+                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Dewan</option>
+                                    @endif
+                                    @foreach($dewanC as $j1)
+                                        <option selected value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="relative z-0 w-full mb-4 group">
                                 <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
                                 <select required id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    <option value="">Pilih Operator</option>
-                                    @foreach($operatorU as $o)
-                                    <option value={{$o->id}}>{{$o->name}}</option>
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($operatorU as $j1)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j1->name === $g_role['nama_user'])
+                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Operator</option>
+                                    @endif
+                                    @foreach($operatorC as $j1)
+                                        <option selected value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

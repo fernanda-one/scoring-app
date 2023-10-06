@@ -15,70 +15,43 @@ class GelanggangController extends Controller
     {
         $gelanggang = $this->listGelanggang();
         $dataUsers = $this->dataUsers();
-
+//        dd($gelanggang);
         return view('management.gelanggang.gelanggang', [
             'title' => 'gelanggang',
-            'gelanggangs' =>$gelanggang,
-            'juri1U' => $dataUsers['juri1C'],
-            'juri2U' => $dataUsers['juri2C'],
-            'juri3U' => $dataUsers['juri3C'],
-            'dewanU' => $dataUsers['dewanC'],
-            'operatorU' => $dataUsers['operatorC'],
-            'juri1C' => $dataUsers['juri1C'],
-            'juri2C' => $dataUsers['juri2C'],
-            'juri3C' => $dataUsers['juri3C'],
-            'dewanC' => $dataUsers['dewanC'],
-            'operatorC' => $dataUsers['operatorC'],
+            'gelanggangs' => $gelanggang,
+            'juri1U' => $dataUsers['Juri PertamaU'],
+            'juri2U' => $dataUsers['Juri KeduaU'],
+            'juri3U' => $dataUsers['Juri KetigaU'],
+            'dewanU' => $dataUsers['DewanU'],
+            'operatorU' => $dataUsers['OperatorU'],
+            'juri1C' => $dataUsers['Juri PertamaC'],
+            'juri2C' => $dataUsers['Juri KeduaC'],
+            'juri3C' => $dataUsers['Juri KetigaC'],
+            'dewanC' => $dataUsers['DewanC'],
+            'operatorC' => $dataUsers['OperatorC'],
         ]);
     }
 
     public function dataUsers()
     {
-        $dataUsers = [];
-        $dataUsers['juri1U'] = $juri1U = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Pertama');
-        })->get();
-        $dataUsers['juri2U'] = $juri2U = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Kedua');
-        })->get();
-        $dataUsers['juri3U'] = $juri3U = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Ketiga');
-        })->get();
-        $dataUsers['dewanU'] = $dewanU = User::whereHas('role', function ($query) {
-            $query->where('name', 'Dewan');
-        })->get();
-        $dataUsers['operatorU'] = $operatorU = User::whereHas('role', function ($query) {
-            $query->where('name', 'Operator');
-        })->get();
+        $roles = ['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator'];
 
-        $dataUsers['juri1C'] = $juri1C = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Pertama');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('users_gelanggangs');
-        })->get();
-        $dataUsers['juri2C'] = $juri2C = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Kedua');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('users_gelanggangs');
-        })->get();
-        $dataUsers['juri3C'] = $juri3C = User::whereHas('role', function ($query) {
-            $query->where('name', 'Juri Ketiga');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('users_gelanggangs');
-        })->get();
-        $dataUsers['dewanC'] = $dewanC = User::whereHas('role', function ($query) {
-            $query->where('name', 'Dewan');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('users_gelanggangs');
-        })->get();
-        $dataUsers['operatorC'] = $operatorC = User::whereHas('role', function ($query) {
-            $query->where('name', 'Operator');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('users_gelanggangs');
-        })->get();
+        $dataUsers = [];
+
+        foreach ($roles as $role) {
+            $dataUsers[$role . 'U'] = User::whereHas('role', function ($query) use ($role) {
+                $query->where('name', $role);
+            })->get();
+            $dataUsers[$role . 'C'] = User::whereHas('role', function ($query) use ($role) {
+                $query->where('name', $role);
+            })->whereNotIn('id', function ($query) {
+                $query->select('user_id')->from('users_gelanggangs');
+            })->get();
+        }
 
         return $dataUsers;
     }
+
 
     public function listGelanggang()
     {
@@ -114,7 +87,6 @@ class GelanggangController extends Controller
                     "peran_user" => [],
                 ];
             }
-
             foreach ($nama_roles as $index => $nama_role) {
                 $result[$gelanggang_id]['peran_user'][] = [
                     "nama_role" => $nama_role,
@@ -144,59 +116,49 @@ class GelanggangController extends Controller
     {
         $validatedData = $request->validate([
             'nama_gelanggang' => 'required',
-            'juri1'=> 'required',
-            'juri2'=> 'required',
-            'juri3'=> 'required',
-            'dewan'=> 'required',
-            'operator'=> 'required',
+            'juri1' => 'required',
+            'juri2' => 'required',
+            'juri3' => 'required',
+            'dewan' => 'required',
+            'operator' => 'required',
         ]);
 
         $gelanggang = Gelanggang::findOrFail($id);
         $gelanggang->update(['nama_gelanggang' => $validatedData['nama_gelanggang']]);
 
-        // Update user_id for Juri Pertama
-        $UG_JuriPertama = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
-            $query->whereHas('role', function ($subquery) {
-                $subquery->where('name', 'Juri Pertama');
-            });
-        });
-        $UG_JuriPertama->update(['user_id' => $validatedData['juri1']]);
+// Daftar peran yang perlu diperbarui
+        $roles = [
+            'Juri Pertama' => 'juri1',
+            'Juri Kedua' => 'juri2',
+            'Juri Ketiga' => 'juri3',
+            'Dewan' => 'dewan',
+            'Operator' => 'operator',
+        ];
 
-        // Update user_id for Juri Kedua
-        $UG_JuriKedua = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
-            $query->whereHas('role', function ($subquery) {
-                $subquery->where('name', 'Juri Kedua');
-            });
-        });
-        $UG_JuriKedua->update(['user_id' => $validatedData['juri2']]);
+        foreach ($roles as $roleName => $fieldName) {
+            $userId = $validatedData[$fieldName];
 
-        // Update user_id for Juri Ketiga
-        $UG_JuriKetiga = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
-            $query->whereHas('role', function ($subquery) {
-                $subquery->where('name', 'Juri Ketiga');
-            });
-        });
-        $UG_JuriKetiga->update(['user_id' => $validatedData['juri3']]);
+            $userRole = UserGelanggang::where('gelanggang_id', $id)
+                ->whereHas('user', function ($query) use ($roleName) {
+                    $query->whereHas('role', function ($subquery) use ($roleName) {
+                        $subquery->where('name', $roleName);
+                    });
+                })->first(); // Gunakan first() untuk mencari entri pertama yang sesuai
 
-        // Update user_id for Dewan
-        $UG_Dewan = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
-            $query->whereHas('role', function ($subquery) {
-                $subquery->where('name', 'Dewan');
-            });
-        });
-        $UG_Dewan->update(['user_id' => $validatedData['dewan']]);
-
-        // Update user_id for Operator
-        $UG_Operator = UserGelanggang::where('gelanggang_id', $id)->whereHas('user', function ($query) {
-            $query->whereHas('role', function ($subquery) {
-                $subquery->where('name', 'Operator');
-            });
-        });
-        $UG_Operator->update(['user_id' => $validatedData['operator']]);
-
-
+            if ($userRole) {
+                // Jika entri ditemukan, lakukan pembaruan
+                $userRole->update(['user_id' => $userId]);
+            } else {
+                // Jika entri tidak ditemukan, tambahkan entri baru
+                UserGelanggang::create([
+                    'gelanggang_id' => $id,
+                    'user_id' => $userId,
+                ]);
+            }
+        }
 
         return redirect('/management/gelanggang')->with('success', 'Gelanggang Berhasil Update!');
+
     }
 
     public function destroy($id)
