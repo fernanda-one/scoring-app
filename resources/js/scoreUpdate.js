@@ -13,16 +13,16 @@ channelUpdateScore
         console.log(`anda telah terhubung dalam Gelanggang`);
     })
     .joining((user) => {
-        // console.log({ user }, "joined");
+        console.log({ user }, "joined");
     })
     .leaving((user) => {
-        // console.log({ user }, "leaved");
+        console.log({ user }, "leaved");
     })
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        // console.log(event)
+        console.log(event)
         updateScore(event)
     });
 function updateScore(event) {
-    redScore.textContent = event.red_score - event.redPenalty;
-    blueScore.textContent = event.blue_score - event.bluePenalty;
+    redScore.textContent = event.red_score - event.red_penalty;
+    blueScore.textContent = event.blue_score - event.blue_penalty;
 }

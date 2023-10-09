@@ -30766,16 +30766,20 @@ channelUpdateScore.here(function (users) {
   console.log(users);
   console.log("anda telah terhubung dalam Gelanggang");
 }).joining(function (user) {
-  // console.log({ user }, "joined");
+  console.log({
+    user: user
+  }, "joined");
 }).leaving(function (user) {
-  // console.log({ user }, "leaved");
+  console.log({
+    user: user
+  }, "leaved");
 }).listen(".updateScore.".concat(userData.gelanggang_id), function (event) {
-  // console.log(event)
+  console.log(event);
   updateScore(event);
 });
 function updateScore(event) {
-  redScore.textContent = event.red_score - event.redPenalty;
-  blueScore.textContent = event.blue_score - event.bluePenalty;
+  redScore.textContent = event.red_score - event.red_penalty;
+  blueScore.textContent = event.blue_score - event.blue_penalty;
 }
 })();
 

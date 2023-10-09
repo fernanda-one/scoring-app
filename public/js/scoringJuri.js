@@ -33471,7 +33471,7 @@ var pukulanMerah = document.getElementById("pukul-merah");
 var tendanganBiru = document.getElementById("tendang-biru");
 var tendanganMerah = document.getElementById("tendang-merah");
 var userElement = document.getElementById("user");
-var userData = JSON.parse(userElement.getAttribute("data-user"));
+var userData = userElement.getAttribute("data-user");
 var blueScore = document.getElementById("".concat(round, "-blueScore"));
 var redScore = document.getElementById("".concat(round, "-redScore"));
 var blueInput = document.getElementById("".concat(round, "-blueInput"));
@@ -33499,7 +33499,7 @@ var timeouts = {
   juriketigatendanganblue: []
 };
 var kondisiTertentuTerpenuhi;
-var channelGelanggang = Echo.join("presence.juri.".concat(userData.gelanggang_id));
+var channelGelanggang = Echo.join("presence.juri.".concat(userData));
 channelGelanggang.here(function (users) {
   console.log(users);
   console.log("anda telah terhubung sebagai juri");
@@ -33511,7 +33511,7 @@ channelGelanggang.here(function (users) {
   console.log({
     user: user
   }, "leaved");
-}).listen(".juri.".concat(userData.gelanggang_id), function (event) {
+}).listen(".juri.".concat(userData), function (event) {
   updateScore(event);
 });
 pukulanBiru.addEventListener("click", function (event) {
@@ -33575,11 +33575,9 @@ function pushScore(blueScore, redScore) {
       "redScore": redScore,
       "redPenalty": redPenalty,
       "bluePenalty": bluePenalty
-      // "roomId":user.gelanggang_id
     }
   });
 }
-
 function updateScore(event) {
   var gerakan = event.gerakan;
   var sudut = event.sudut;

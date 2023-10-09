@@ -25,7 +25,8 @@ class Scoring implements ShouldBroadcast
     public function __construct($message)
     {
         $user = auth()->user();
-        $this->roomId = $user->gelanggang_id;
+        $gelanggang = $this->getGelanggangId($user);
+        $this->roomId = $gelanggang;
         $this->id = $user['role_id'];
         $this->sudut = $message['sudut'];
         $this->gerakan = $message['gerakan'];
@@ -72,6 +73,12 @@ class Scoring implements ShouldBroadcast
         ];
 
         return $roleMap[$id] ?? 'Role Lainnya';
+    }
+
+    private function getGelanggangId($user)
+    {
+        $gelanggang = UserGelanggang::where('user_id', $user->id)->first();
+        return $gelanggang->gelanggang_id;
     }
 
 }
