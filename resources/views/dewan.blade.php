@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <input id="user" type="text" hidden="hidden" data-user="{{auth()->user()}}">
+    <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}">
     <div class="flex justify-between">
         <div>
             <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px]">
@@ -163,7 +163,7 @@
             <button type="button" id="jatuhan-merah-minus" class="flex justify-center items-center w-[25%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DROP -</p>
             </button>
-            <button type="button" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-merah-ketiga" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="44" viewBox="0 0 48 44" fill="none">
                     <path d="M32 23.8333V8.25C32 7.52065 31.6839 6.82118 31.1213 6.30546C30.5587 5.78973 29.7956 5.5 29 5.5C28.2044 5.5 27.4413 5.78973 26.8787 6.30546C26.3161 6.82118 26 7.52065 26 8.25V22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M14 21.083C14 20.3537 13.6839 19.6542 13.1213 19.1385C12.5587 18.6227 11.7956 18.333 11 18.333C10.2044 18.333 9.44129 18.6227 8.87868 19.1385C8.31607 19.6542 8 20.3537 8 21.083V29.333C8 32.2504 9.26428 35.0483 11.5147 37.1112C13.7652 39.1741 16.8174 40.333 20 40.333H24H23.584C25.5713 40.3333 27.5276 39.8812 29.2772 39.0172C31.0268 38.1532 32.515 36.9044 33.608 35.383C33.7392 35.2 33.8698 35.0166 34 34.833C34.624 33.9548 36.814 30.455 40.572 24.3317C40.9551 23.7075 41.0574 22.9709 40.8572 22.2786C40.657 21.5863 40.1701 20.9929 39.5 20.6247C38.7862 20.2321 37.9499 20.0694 37.1237 20.1624C36.2975 20.2554 35.5289 20.5988 34.94 21.138L32 23.833" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -187,7 +187,7 @@
     <!--right side-->
     <div class="flex flex-col justify-start items-end w-[50%]">
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-biru-pertama" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-biru-pertama" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="44" viewBox="0 0 47 44" fill="none">
                     <path d="M32.292 21.3289L36.2165 26.2276C36.7648 26.9119 37.0403 27.7542 36.9952 28.6086C36.9502 29.463 36.5874 30.2758 35.9697 30.9063L28.5594 38.4743C27.8192 39.2314 26.7734 39.6623 25.6748 39.6623H16.6253C11.9253 39.6623 8.79199 35.9956 8.79199 32.3289L8.79199 16.6154C8.79199 12.4244 14.667 12.4244 14.667 16.6154L14.667 17.6623" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M14.667 17.6623L14.667 14.5199C14.667 10.3289 20.542 10.3289 20.542 14.5199L20.542 17.6623L20.542 13.0789C20.542 8.88794 26.417 8.88794 26.417 13.0789L26.417 17.6623L26.417 5.74377C26.4175 5.01474 26.7272 4.31574 27.2781 3.80041C27.8289 3.28509 28.5758 2.99561 29.3545 2.99561C30.1336 2.99561 30.8807 3.28534 31.4316 3.80106C31.9825 4.31679 32.292 5.01626 32.292 5.74561L32.292 26.8289" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -203,7 +203,7 @@
                     <path d="M14.667 18.064L14.667 14.8502C14.667 10.564 20.542 10.564 20.542 14.8502L20.542 18.064L20.542 13.3765C20.542 9.09022 26.417 9.09022 26.417 13.3765L26.417 18.064L26.417 5.87459C26.4175 5.12899 26.7272 4.4141 27.2781 3.88706C27.8289 3.36002 28.5758 3.06396 29.3545 3.06396C30.1336 3.06396 30.8807 3.36028 31.4316 3.88773C31.9825 4.41517 32.292 5.13054 32.292 5.87647L32.292 27.439" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="pelanggaran-biru-pertama" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-biru-pertama" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="47" viewBox="0 0 43 47" fill="none">
                     <path d="M20.8443 14.708L25.6317 10.7835C26.3004 10.2352 27.1236 9.95971 27.9586 10.0048C28.7936 10.0498 29.5879 10.4126 30.204 11.0303L37.6 18.4406C38.3399 19.1808 38.761 20.2266 38.761 21.3252L38.761 30.3747C38.761 35.0747 35.1777 38.208 31.5943 38.208L16.238 38.208C12.1422 38.208 12.1422 32.333 16.238 32.333L17.261 32.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M17.261 32.333L14.1901 32.333C10.0943 32.333 10.0943 26.458 14.1901 26.458L17.261 26.458L12.7818 26.458C8.68609 26.458 8.68609 20.583 12.7818 20.583L17.261 20.583L5.61338 20.583C4.90092 20.5825 4.21781 20.2728 3.71419 19.7219C3.21057 19.1711 2.92767 18.4242 2.92767 17.6455C2.92767 16.8664 3.21082 16.1193 3.71482 15.5684C4.21883 15.0175 4.9024 14.708 5.61517 14.708L26.2193 14.708" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -212,7 +212,7 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-biru-kedua" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-biru-kedua" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="44" viewBox="0 0 47 44" fill="none">
                     <path d="M34.696 24.9175C36.3708 25.9916 37.2083 27.7693 37.2083 30.2504C37.2083 33.9722 32.3367 40.3338 27.9437 40.3338C23.5506 40.3338 21.0029 40.3338 16.7031 40.3338C12.4033 40.3338 9.79167 36.8041 9.79167 33.9722C9.79167 29.9843 9.79167 25.9966 9.79167 22.0088C9.79167 20.49 11.1068 19.2588 12.7292 19.2588H12.7381C14.3555 19.2588 15.6667 20.4863 15.6667 22.0004" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M33.3103 26.9913L33.3103 10.0886C33.3103 8.57104 31.9962 7.34082 30.3752 7.34082C30.3725 7.34082 30.3697 7.34082 30.3671 7.34083C28.7403 7.34505 27.4238 8.58085 27.4238 10.1038L27.4238 22.5425" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -234,7 +234,7 @@
                     <path d="M21.5417 21.7398L21.5417 19.2534C21.5417 17.7347 20.2266 16.5034 18.6042 16.5034C16.9818 16.5034 15.6667 17.7347 15.6667 19.2534L15.6667 22.0034" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="pelanggaran-biru-kedua" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-biru-kedua" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="47" viewBox="0 0 43 47" fill="none">
                     <path d="M24.3509 12.3038C25.4007 10.629 27.138 9.7915 29.5627 9.7915C33.1999 9.7915 39.4169 14.6631 39.4169 19.0562C39.4169 23.4492 39.4169 25.9969 39.4169 30.2967C39.4169 34.5965 35.9674 37.2082 33.1999 37.2082C29.3026 37.2082 25.4055 37.2082 21.5084 37.2082C20.0241 37.2082 18.8209 35.893 18.8209 34.2707L18.8209 34.2618C18.8209 32.6444 20.0205 31.3332 21.5002 31.3332" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M26.378 13.6895L9.85948 13.6895C8.3764 13.6895 7.17413 15.0035 7.17413 16.6245C7.17413 16.6272 7.17413 16.63 7.17414 16.6326C7.17826 18.2594 8.38598 19.5759 9.87435 19.5759L22.0304 19.5759" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -245,17 +245,17 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="pelanggaran-biru-ketiga" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-biru-ketiga" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="44" viewBox="0 0 47 44" fill="none">
                     <path d="M15.6667 23.8333V8.25C15.6667 7.52065 15.9761 6.82118 16.527 6.30546C17.0779 5.78973 17.8251 5.5 18.6042 5.5C19.3832 5.5 20.1304 5.78973 20.6813 6.30546C21.2322 6.82118 21.5417 7.52065 21.5417 8.25V22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M33.2917 21.083C33.2917 20.3537 33.6011 19.6542 34.152 19.1385C34.7029 18.6227 35.4501 18.333 36.2292 18.333C37.0082 18.333 37.7554 18.6227 38.3063 19.1385C38.8572 19.6542 39.1667 20.3537 39.1667 21.083V29.333C39.1667 32.2504 37.9287 35.0483 35.7252 37.1112C33.5216 39.1741 30.533 40.333 27.4167 40.333H23.5H23.9073C21.9614 40.3333 20.0459 39.8812 18.3327 39.0172C16.6195 38.1532 15.1624 36.9044 14.0922 35.383C13.9637 35.2 13.8358 35.0166 13.7083 34.833C13.0973 33.9548 10.953 30.455 7.27324 24.3317C6.89812 23.7075 6.79792 22.9709 6.99395 22.2786C7.18998 21.5863 7.66677 20.9929 8.32291 20.6247C9.02179 20.2321 9.84076 20.0694 10.6497 20.1624C11.4587 20.2554 12.2113 20.5988 12.7879 21.138L15.6667 23.833" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M21.5417 10.0832V6.4165C21.5417 6.05537 21.6176 5.69777 21.7653 5.36412C21.9129 5.03048 22.1293 4.72732 22.402 4.47196C22.6748 4.2166 22.9986 4.01404 23.355 3.87583C23.7114 3.73763 24.0934 3.6665 24.4792 3.6665C24.8649 3.6665 25.2469 3.73763 25.6033 3.87583C25.9597 4.01404 26.2835 4.2166 26.5563 4.47196C26.8291 4.72732 27.0454 5.03048 27.1931 5.36412C27.3407 5.69777 27.4167 6.05537 27.4167 6.4165V21.9998M27.4167 10.0832C27.4167 9.35383 27.7261 8.65435 28.277 8.13863C28.8279 7.6229 29.5751 7.33317 30.3542 7.33317C31.1332 7.33317 31.8804 7.6229 32.4313 8.13863C32.9822 8.65435 33.2917 9.35383 33.2917 10.0832V21.9998" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="jatuhan-biru-minus" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DROP -</p>
             </button>
-            <button type="button" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button"  id="jatuhan-biru-plus" class="flex justify-center items-center w-[25%] bg-blueDefault hover:bg-blueDark focus:bg-blueDark focus:ring-2 focus:outline-none focus:ring-blueDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DROP +</p>
             </button>
 
@@ -274,6 +274,7 @@
     </div>
 </div>
 <script src="{{ mix('js/scoreUpdate.js') }}">
+</script>
 <script src="{{ mix('js/scoringDewan.js') }}">
 </script>
 </body>

@@ -16,7 +16,7 @@
     </head>
 <body>
     <header>
-        <input id="user" type="text" hidden="hidden" data-user="{{auth()->user()}}">
+        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}">
         <!-- Main modal -->
         <div class="flex fixed hidden  justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
             <div class="max-h-full">

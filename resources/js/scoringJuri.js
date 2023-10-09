@@ -9,7 +9,7 @@ const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
 const userElement = document.getElementById("user");
-const userData = JSON.parse(userElement.getAttribute("data-user"));
+const userData = userElement.getAttribute("data-user");
 const blueScore = document.getElementById(`${round}-blueScore`);
 const redScore = document.getElementById(`${round}-redScore`);
 const blueInput = document.getElementById(`${round}-blueInput`);
@@ -37,7 +37,7 @@ let timeouts = {
 };
 let kondisiTertentuTerpenuhi;
 
-const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
+const channelGelanggang = Echo.join(`presence.juri.${userData}`);
 channelGelanggang
     .here((users) => {
         console.log(users);
@@ -49,7 +49,7 @@ channelGelanggang
     .leaving((user) => {
         console.log({ user }, "leaved");
     })
-    .listen(`.juri.${userData.gelanggang_id}`, (event) => {
+    .listen(`.juri.${userData}`, (event) => {
         updateScore(event);
     });
 
@@ -118,7 +118,6 @@ function pushScore(blueScore,redScore){
             "redScore":redScore,
             "redPenalty":redPenalty,
             "bluePenalty":bluePenalty,
-            // "roomId":user.gelanggang_id
         },
     });
 }

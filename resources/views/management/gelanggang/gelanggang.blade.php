@@ -168,7 +168,7 @@
                                         <option selected>Pilih Juri Pertama</option>
                                     @endif
                                     @foreach($juri1C as $j1)
-                                            <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                            <option value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -189,7 +189,7 @@
                                         <option selected>Pilih Juri Kedua</option>
                                     @endif
                                     @foreach($juri2C as $j2)
-                                        <option selected value={{$j2->id}}>{{$j2->name}}</option>
+                                        <option value={{$j2->id}}>{{$j2->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -208,7 +208,7 @@
                                         <option selected>Pilih Juri ketiga</option>
                                     @endif
                                     @foreach($juri3C as $j3)
-                                        <option selected value={{$j3->id}}>{{$j3->name}}</option>
+                                        <option value={{$j3->id}}>{{$j3->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -221,7 +221,7 @@
                                         @foreach($dewanU as $j1)
                                             @foreach($g['peran_user'] as $g_role)
                                                 @if($j1->name === $g_role['nama_user'])
-                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                    <option value={{$j1->id}}>{{$j1->name}}</option>
                                                 @endif
                                             @endforeach
                                         @endforeach
@@ -229,7 +229,7 @@
                                         <option selected>Pilih Dewan</option>
                                     @endif
                                     @foreach($dewanC as $j1)
-                                        <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                        <option value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -248,7 +248,7 @@
                                         <option selected>Pilih Operator</option>
                                     @endif
                                     @foreach($operatorC as $j1)
-                                        <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                        <option value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

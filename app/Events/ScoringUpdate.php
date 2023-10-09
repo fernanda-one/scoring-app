@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\User;
+use App\Models\UserGelanggang;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,16 +14,19 @@ class ScoringUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private int $blueScore, $redScore, $roomId;
+    private int $blueScore, $redScore, $roomId,$redPenalty, $bluePenalty;
     /**
      * @param mixed $message
      */
     public function __construct( $message)
     {
         $user = auth()->user();
+        $gelanggang = $this->getGelanggangId($user);
         $this->blueScore = $message['blueScore'];
         $this->redScore = $message['redScore'];
-        $this->roomId = $user->gelanggang_id;
+        $this->redPenalty = $message['redPenalty'];
+        $this->bluePenalty = $message['bluePenalty'];
+        $this->roomId = $gelanggang;
     }
     public function broadcastOn(): PresenceChannel
     {
@@ -38,6 +42,13 @@ class ScoringUpdate implements ShouldBroadcast
         return [
             'blue_score'=>$this->blueScore,
             'red_score'=>$this->redScore,
+            'blue_penalty'=>$this->bluePenalty,
+            'red_penalty'=>$this->redPenalty,
         ];
+    }
+    private function getGelanggangId($user)
+    {
+        $gelanggang = UserGelanggang::where('user_id', $user->id)->first();
+        return $gelanggang->gelanggang_id;
     }
 }

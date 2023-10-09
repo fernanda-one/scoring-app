@@ -26289,23 +26289,32 @@ var __webpack_exports__ = {};
   !*** ./resources/js/scoringDewan.js ***!
   \**************************************/
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-var blueScore = document.getElementById("".concat(round, "-blueScore"));
-var redScore = document.getElementById("".concat(round, "-redScore"));
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+  toNumber = _require.toNumber;
+var round = 'round1';
+var blueScore = document.getElementById("".concat(round, "-blueScore")).textContent;
+var redScore = document.getElementById("".concat(round, "-redScore")).textContent;
 var teguranMerahPertama = document.getElementById('teguran-merah-pertama');
 var binaanMerahPertama = document.getElementById('binaan-merah-pertama');
 var peringatanMerahPertama = document.getElementById('peringatan-merah-pertama');
 var teguranMerahKedua = document.getElementById('teguran-merah-kedua');
 var binaanMerahKedua = document.getElementById('binaan-merah-kedua');
 var peringatanMerahKedua = document.getElementById('peringatan-merah-kedua');
+var peringatanMerahKetiga = document.getElementById('peringatan-merah-ketiga');
 var teguranBiruPertama = document.getElementById('teguran-biru-pertama');
 var binaanBiruPertama = document.getElementById('binaan-biru-pertama');
 var peringatanBiruPertama = document.getElementById('peringatan-biru-pertama');
 var teguranBiruKedua = document.getElementById('teguran-biru-kedua');
 var binaanBiruKedua = document.getElementById('binaan-biru-kedua');
 var peringatanBiruKedua = document.getElementById('peringatan-biru-kedua');
-var bluePenalty,
-  redPenalty = 0;
-teguranMerahPertama.addEventListener("click", function () {
+var peringatanBiruKetiga = document.getElementById('peringatan-biru-ketiga');
+var jatuhanMerahSah = document.getElementById('jatuhan-merah-plus');
+var jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus');
+var jatuhanBiruSah = document.getElementById('jatuhan-biru-plus');
+var jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus');
+var bluePenalty = 0;
+var redPenalty = 0;
+teguranMerahPertama.addEventListener("click", function (event) {
   redPenalty = 0;
   pushScore();
 });
@@ -26327,6 +26336,18 @@ peringatanMerahPertama.addEventListener("click", function () {
 });
 peringatanMerahKedua.addEventListener("click", function () {
   redPenalty = 5;
+  pushScore();
+});
+peringatanMerahKetiga.addEventListener("click", function () {
+  redPenalty = 7;
+  pushScore();
+});
+jatuhanMerahSah.addEventListener("click", function () {
+  redScore = toNumber(redScore) + 2;
+  pushScore();
+});
+jatuhanMerahTidakSah.addEventListener("click", function () {
+  redScore = toNumber(redScore) - 2;
   pushScore();
 });
 teguranBiruPertama.addEventListener("click", function () {
@@ -26353,14 +26374,25 @@ peringatanBiruKedua.addEventListener("click", function () {
   bluePenalty = 5;
   pushScore();
 });
+peringatanBiruKetiga.addEventListener("click", function () {
+  bluePenalty = 7;
+  pushScore();
+});
+jatuhanBiruSah.addEventListener("click", function () {
+  blueScore = toNumber(blueScore) + 2;
+  pushScore();
+});
+jatuhanBiruTidakSah.addEventListener("click", function () {
+  blueScore = toNumber(blueScore) - 2;
+  pushScore();
+});
 function pushScore() {
   axios.post("/score-update", {
     message: {
-      "blueScore": blueScore,
-      "redScore": redScore,
+      "blueScore": toNumber(blueScore),
+      "redScore": toNumber(redScore),
       "redPenalty": redPenalty,
       "bluePenalty": bluePenalty
-      // "roomId":user.gelanggang_id
     }
   });
 }
