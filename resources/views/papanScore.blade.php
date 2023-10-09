@@ -45,13 +45,13 @@
         </div>
     </header>
 
-    <div class="flex justify-between mt-[5%]">
+    <div class="flex justify-between mt-[3%] overflow-hidden">
         <div class="flex h-[450px] w-[50%]">
-            <div class="flex items-center justify-center px-[4%] lg:px-[13%] h-screen lg:h-[70%] rounded-r-[30px] bg-redDefault">
+            <div class="flex items-center justify-center w-[40%] lg:w-[45%] h-screen lg:h-[70%] rounded-r-[30px] bg-redDefault">
                 <p class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">6</p>
             </div>
 
-            <div class="flex flex-col justify-start w-[70%] mx-[5%]">
+            <div class="flex flex-col justify-start w-[60%] lg:w-[55%] h-screen lg:h-[70%] mx-[3.5%]">
                 <div class="flex justify-between w-[100%]">
                     <div class="flex justify-center items-center w-[25%] bg-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mb-4 shadow-inset-custom">
                         <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
@@ -110,36 +110,36 @@
                     </div>
                 </div>
 
-                <div class="flex justify-between w-[100%] mt-[10%] px-14 gap-8">
+                <div class="flex justify-between items-end h-full w-[100%] px-6 gap-6">
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 1</p>
-                        <div class="flex justify-between mt-[10%]">
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-redDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-redDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
                     </div>
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 2</p>
-                        <div class="flex justify-between mt-[10%]">
-                            <div class="flex items-center justify-center bg-redDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-redDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
                     </div>
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 3</p>
-                        <div class="flex justify-between mt-[10%]">
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
@@ -149,7 +149,7 @@
         </div>
 
         <div class="flex h-[450px] w-[50%]">
-            <div class="flex flex-col justify-start w-[70%] mx-[5%]">
+            <div class="flex flex-col justify-start w-[60%] lg:w-[55%] h-screen lg:h-[70%] mx-[3.5%]">
                 <div class="flex justify-between w-[100%]">
                     <div class="flex justify-center items-center w-[50%] bg-blueDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mb-4 shadow-inset-custom">
                         <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 68 67" fill="none">
@@ -208,45 +208,44 @@
                     </div>
                 </div>
 
-                <div class="flex justify-between w-[100%] mt-[10%] px-14 gap-8">
+                <div class="flex justify-between items-end h-full w-[100%] px-6 gap-5">
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 1</p>
-                        <div class="flex justify-between mt-[10%] gap-5">
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-blueDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-blueDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
                     </div>
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 2</p>
-                        <div class="flex justify-between mt-[10%] gap-5">
-                            <div class="flex items-center justify-center bg-blueDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-blueDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
                     </div>
                     <div class="w-[30%]">
                         <p class="flex justify-center font-poppins-bold text-xl text-darkGray">JURI 3</p>
-                        <div class="flex justify-between mt-[10%] gap-5">
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                        <div class="flex justify-center mt-[20%] 2xl:mt-[10%] gap-2">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-5 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">1</p>
                             </div>
-                            <div class="flex items-center justify-center bg-grayDefault w-[50px] h-[50px] rounded-[8px] shadow-inset-custom">
+                            <div class="flex items-center justify-center bg-grayDefault py-2 px-4 rounded-[8px] shadow-inset-custom">
                                 <p class="text-whiteDefault font-semibold text-2xl">2</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="flex items-center justify-center px-[13%] h-[70%] rounded-l-[30px] bg-blueDefault">
-                <p class="text-whiteDefault text-9xl font-bold">10</p>
+            <div class="flex items-center justify-center w-[40%] lg:w-[45%] h-screen lg:h-[70%] rounded-l-[30px] bg-blueDefault">
+                <p class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">10</p>
             </div>
         </div>
     </div>
