@@ -15,24 +15,25 @@
     </style>
 </head>
 <body>
+    <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
     <div class="w-[52.75rem] h-[24.375rem] mx-auto my-auto">
         <div class="mx-auto mt-3">
-            <div class="mx-auto flex justify-center space-x-[3.125rem] mt-1">
-                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+            <div  class="mx-auto flex justify-center space-x-[3.125rem] mt-1">
+                <button id="status_dewan" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
                     DEWAN
                 </button>
-                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                <button id="status_ketua" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
                     KETUA
                 </button>
             </div>
             <div class="mx-auto flex justify-center mt-4 space-x-[3.125rem]">
-                <button disabled class="w-[12.5rem] border-black border-[1px] bg-yellowDefault h-9">
+                <button id="status_juri_pertama" disabled class="w-[12.5rem] border-black border-[1px] bg-yellowDefault h-9">
                     JURI 1
                 </button>
-                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                <button id="status_juri_kedua" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
                     JURI II
                 </button>
-                <button disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
+                <button id="status_juri_ketiga" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
                     JURI III
                 </button>
             </div>
@@ -41,11 +42,11 @@
             <div class="flex-row space-y-[2.625rem] my-4 ">
                 <div class="flex space-x-3">
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
-                        12 A
+                        {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
                     </span>
                     <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
-                           DIMAS
+                           {{$partai_pertama[0]->sudut_merah}}
                         </span>
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
                            JEPARA
@@ -54,11 +55,11 @@
                 </div>
                 <div class="flex space-x-3">
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
-                        12 A
+                        {{$partai_kedua[0]->id}} {{$partai_kedua[0]->kelas}}
                     </span>
                     <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
-                           GALIH
+                           {{$partai_kedua[0]->sudut_merah}}
                         </span>
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
                            JEPARA
@@ -81,27 +82,27 @@
                 <div class="flex space-x-3">
                     <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
-                           BUDI
+                             {{$partai_pertama[0]->sudut_biru}}
                         </span>
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
                            JEPARA
                         </span>
                     </div>
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
-                        12 A
+                        {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
                     </span>
                 </div>
                 <div class="flex space-x-3">
                     <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
-                           AMIN
+                             {{$partai_kedua[0]->sudut_biru}}
                         </span>
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
                            JEPARA
                         </span>
                     </div>
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
-                        12 A
+                        {{$partai_kedua[0]->id}} {{$partai_kedua[0]->kelas}}
                     </span>
                 </div>
             </div>
@@ -115,13 +116,18 @@
             </button><button class="w-24 h-8 border-[2px] border-black">
                 FINISH
             </button>
-            <button class="w-24 h-8 border-[2px] border-black">
-                PREV
-            </button>
-            <button class="w-24 h-8 border-[2px] border-black">
-                NEXT
-            </button>
+            <a href="{{ $partai_pertama->previousPageUrl() }}">
+                <button class="w-24 h-8 border-[2px] border-black">
+                    PREV
+                </button>
+            </a>
+            <a href="{{ $partai_pertama->nextPageUrl() }}">
+                <button class="w-24 h-8 border-[2px] border-black">
+                    NEXT
+                </button>
+            </a>
         </div>
     </div>
+    <script src="{{ mix('js/scoreUpdate.js') }}"></script>
 </body>
 </html>

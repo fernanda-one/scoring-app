@@ -15,6 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/scoringJuri.js', 'public/js')
     .js('resources/js/scoringDewan.js', 'public/js')
     .js('resources/js/scoreUpdate.js', 'public/js')
+    .js('resources/js/operator.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
