@@ -14,6 +14,7 @@ module.exports = {
                 blueDark: '#0A3060',
                 blueOpacity: '#CCE4FF',
                 redDefault: '#F30A49',
+                yellowDark: '#FFD369',
                 yellowDefault: '#F6FA70',
                 redDark: '#C2083A',
                 redOpacity: '#FFCCCC',

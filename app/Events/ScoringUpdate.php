@@ -14,7 +14,7 @@ class ScoringUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private int $blueScore, $redScore, $roomId,$redPenalty, $bluePenalty;
+    private int $blueScore, $redScore, $roomId,$redPenalty, $bluePenalty, $redPopup, $bluePopup;
     /**
      * @param mixed $message
      */
@@ -26,6 +26,8 @@ class ScoringUpdate implements ShouldBroadcast
         $this->redScore = $message['redScore'];
         $this->redPenalty = $message['redPenalty'];
         $this->bluePenalty = $message['bluePenalty'];
+        $this->redPopup = $message['redPopup'];
+        $this->bluePopup = $message['bluePopup'];
         $this->roomId = $gelanggang;
     }
     public function broadcastOn(): PresenceChannel
@@ -44,6 +46,8 @@ class ScoringUpdate implements ShouldBroadcast
             'red_score'=>$this->redScore,
             'blue_penalty'=>$this->bluePenalty,
             'red_penalty'=>$this->redPenalty,
+            'red_popup'=>$this->redPopup,
+            'blue_popup'=>$this->bluePopup,
         ];
     }
     private function getGelanggangId($user)

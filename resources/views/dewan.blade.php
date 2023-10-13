@@ -38,6 +38,7 @@
             </div>
         </div>
     </div>
+    <x-drop-verification-result/>
 </header>
 <s class="text-whiteDefault">1</s>
 <div class="flex justify-between">
@@ -99,19 +100,19 @@
     <!--left side-->
     <div class="flex flex-col justify-start w-[50%]">
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-merah-pertama" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-merah-pertama" class="focus-red-button flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
                     <path d="M23.6406 14.708L18.735 10.7835C18.0497 10.2352 17.2062 9.95971 16.3506 10.0048C15.495 10.0498 14.681 10.4126 14.0497 11.0303L6.47095 18.4406C5.71271 19.1808 5.28126 20.2266 5.28126 21.3252L5.28126 30.3747C5.28126 35.0747 8.95314 38.208 12.625 38.208L28.3608 38.208C32.5578 38.208 32.5578 32.333 28.3608 32.333L27.3125 32.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M27.3125 32.333L30.4593 32.333C34.6562 32.333 34.6562 26.458 30.4593 26.458L27.3125 26.458L31.9023 26.458C36.0993 26.458 36.0993 20.583 31.9023 20.583L27.3125 20.583L39.2479 20.583C39.978 20.5825 40.678 20.2728 41.194 19.7219C41.7101 19.1711 42 18.4242 42 17.6455C42 16.8664 41.7099 16.1193 41.1934 15.5684C40.6769 15.0175 39.9765 14.708 39.2461 14.708L18.1328 14.708" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-merah-pertama" class="flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-merah-pertama" class="focus-red-button flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M14.708 21.8679L10.7835 26.7735C10.2352 27.4588 9.95971 28.3023 10.0048 29.1579C10.0498 30.0136 10.4126 30.8275 11.0303 31.4588L18.4406 39.0376C19.1808 39.7958 20.2266 40.2273 21.3252 40.2273H30.3747C35.0747 40.2273 38.208 36.5554 38.208 32.8835L38.208 17.1477C38.208 12.9508 32.333 12.9508 32.333 17.1477L32.333 18.196" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M32.333 18.1562L32.333 15.0095C32.333 10.8125 26.458 10.8125 26.458 15.0095L26.458 18.1562L26.458 13.5664C26.458 9.36945 20.583 9.36945 20.583 13.5664L20.583 18.1562L20.583 6.22082C20.5825 5.49076 20.2728 4.79076 19.7219 4.2747C19.1711 3.75864 18.4242 3.46875 17.6455 3.46875C16.8664 3.46875 16.1193 3.75889 15.5684 4.27535C15.0175 4.79181 14.708 5.49227 14.708 6.22266L14.708 27.3359" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="peringatan-merah-pertama" class="flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-merah-pertama" class="focus-red-button flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M14.708 21.8679L10.7835 26.7735C10.2352 27.4588 9.95971 28.3023 10.0048 29.1579C10.0498 30.0136 10.4126 30.8275 11.0303 31.4588L18.4406 39.0376C19.1808 39.7958 20.2266 40.2273 21.3252 40.2273H30.3747C35.0747 40.2273 38.208 36.5554 38.208 32.8835L38.208 17.1477C38.208 12.9508 32.333 12.9508 32.333 17.1477L32.333 18.196" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M32.333 18.1562L32.333 15.0095C32.333 10.8125 26.458 10.8125 26.458 15.0095L26.458 18.1562L26.458 13.5664C26.458 9.36945 20.583 9.36945 20.583 13.5664L20.583 18.1562L20.583 6.22082C20.5825 5.49076 20.2728 4.79076 19.7219 4.2747C19.1711 3.75864 18.4242 3.46875 17.6455 3.46875C16.8664 3.46875 16.1193 3.75889 15.5684 4.27535C15.0175 4.79181 14.708 5.49227 14.708 6.22266L14.708 27.3359" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -173,7 +174,7 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" class="flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" class="focus-red-button flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DISK</p>
             </button>
         </div>

@@ -21,8 +21,13 @@ const jatuhanMerahSah = document.getElementById('jatuhan-merah-plus')
 const jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus')
 const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
+const popupMerah = document.getElementById('popup-merah')
+const popupBiru = document.getElementById('popup-biru')
+const tutupPopup = document.getElementById('done-popup')
 let bluePenalty=0
 let redPenalty = 0;
+let redPopup = false;
+let bluePopup = false;
 
 teguranMerahPertama.addEventListener("click", function (event) {
     redPenalty = 0
@@ -101,13 +106,45 @@ jatuhanBiruTidakSah.addEventListener("click", function () {
     pushScore()
 })
 
+popupMerah.addEventListener("click", function () {
+    showRedPopup()
+    pushScore()
+})
+
+popupBiru.addEventListener("click", function () {
+    showBluePopup()
+    pushScore()
+})
+
+tutupPopup.addEventListener("click", function () {
+    donePopup();
+    pushScore();
+})
+
+function donePopup() {
+    bluePopup = false;
+    redPopup = false;
+}
+
+function showRedPopup() {
+    bluePopup = false;
+    redPopup = true;
+}
+
+function showBluePopup() {
+    bluePopup = true;
+    redPopup = false;
+}
+
 function pushScore(){
     axios.post("/score-update", {
         message: {
             "blueScore":toNumber(blueScore),
             "redScore":toNumber(redScore),
             "redPenalty":redPenalty,
-            "bluePenalty":bluePenalty
+            "bluePenalty": bluePenalty,
+            'redPopup': redPopup,
+            'bluePopup': bluePopup,
         },
     });
 }
