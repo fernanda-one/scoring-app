@@ -69,18 +69,20 @@
                         <form class="space-y-6"  action="/create-pertandingan" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="grid md:grid-cols-3 md:gap-6">
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partai</label>
-                                    <input value="{{ old('id') }}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                </div>
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                                    <select id="kelas" name="kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Kelas Tanding</option>
-                                        @foreach($kelas as $class)
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-4 group">
+                                        <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partai</label>
+                                        <input value="{{ old('id') }}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-4 group">
+                                        <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
+                                        <select id="kelas" name="kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <option selected>Pilih Kelas Tanding</option>
+                                            @foreach($kelas as $class)
                                                 <option value={{$class->value}}>{{$class->name}}</option>
-                                        @endforeach
-                                    </select>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
                                     <label for="jenis_kelamin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis-kelamin</label>
@@ -90,30 +92,29 @@
                                         <option value="laki-laki">Laki-laki</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="babak" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama pertandingan</label>
+                                    <label for="babak" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Babak</label>
                                     <input value="{{ old('babak') }}" type="text" name="babak" id="babak" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
-                                <div class="relative z-0 w-full mb-4 group">
-                                    <label for="gelanggang_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gelanggang Pertandingan</label>
-                                    <select id="gelanggang_id" name="gelanggang_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Gelanggang Pertandingan</option>
-                                        @foreach($gelanggangs as $item)
-                                            <option value="{{$item->id}}">{{$item->nama_gelanggang}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
                             </div>
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="sudut_merah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sudut Merah</label>
+                                    <label for="sudut_merah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peserta Sudut Merah</label>
                                     <input value="{{ old('sudut_merah') }}" type="text" name="sudut_merah" id="sudut_merah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sudut Biru</label>
+                                    <label for="sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peserta Sudut Biru</label>
                                     <input value="{{ old('sudut_biru') }}" type="text" name="sudut_biru" id="sudut_biru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="grid lg:grid-cols-2 md:gap-6">
+                                <div class="relative z-0 w-full mb-4 group">
+                                    <label for="contingen_sudut_merah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal Peserta Sudut Merah</label>
+                                    <input value="{{ old('contingen_sudut_merah') }}" type="text" name="contingen_sudut_merah" id="contingen_sudut_merah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                </div>
+                                <div class="relative z-0 w-full mb-4 group">
+                                    <label for="contingen_sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal Peserta Sudut Biru</label>
+                                    <input value="{{ old('contingen_sudut_biru') }}" type="text" name="contingen_sudut_biru" id="contingen_sudut_biru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                             </div>
                             <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
@@ -171,12 +172,10 @@
                 Partai
             </th>
             <th scope="col" class="px-6 py-3">
-                Gelanggang
-            </th><th scope="col" class="px-6 py-3">
-                Babak
+                Kelas
             </th>
             <th scope="col" class="px-6 py-3">
-                Kelas
+                Babak
             </th>
             <th scope="col" class="px-6 py-3">
                 Jenis - Kelamin
@@ -202,13 +201,10 @@
                     {{$partai->id}}
                 </td>
                 <td class="px-6 py-4">
-                    {{$partai->gelanggang->name??'Belum Dipilih'}}
+                    {{$partai->kelas}}
                 </td>
                 <td class="px-6 py-4">
                     {{$partai->babak}}
-                </td>
-                <td class="px-6 py-4">
-                    {{$partai->kelas}}
                 </td>
                 <td class="px-6 py-4">
                     {{$partai->jenis_kelamin}}
@@ -252,21 +248,23 @@
                                 @csrf
                                 @method('put')
                                 <div class="grid md:grid-cols-3 md:gap-6">
-                                    <div class="relative z-0 w-full mb-4 group">
-                                        <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partai</label>
-                                        <input value="{{ old('id')??$partai->id }}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                    </div>
-                                    <div class="relative z-0 w-full mb-4 group">
-                                        <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
-                                        <select id="kelas" name="kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            @foreach($kelas as $class)
-                                                @if($class->value === $partai->kelas)
-                                                    <option selected value={{$class->value}}>{{$class->name}}</option>
-                                                @else
-                                                    <option value={{$class->value}}>{{$class->name}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
+                                    <div class="grid md:grid-cols-2 md:gap-6">
+                                        <div class="relative z-0 w-full mb-4 group">
+                                            <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partai</label>
+                                            <input value="{{ old('id')??$partai->id }}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                        </div>
+                                        <div class="relative z-0 w-full mb-4 group">
+                                            <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
+                                            <select id="kelas" name="kelas" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                @foreach($kelas as $class)
+                                                    @if($class->value === $partai->kelas)
+                                                        <option selected value={{$class->value}}>{{$class->name}}</option>
+                                                    @else
+                                                        <option value={{$class->value}}>{{$class->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="relative z-0 w-full mb-4 group">
                                         <label for="jenis_kelamin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis-kelamin</label>
@@ -275,22 +273,9 @@
                                             <option {{ $partai->jenis_kelamin === "laki-laki" ? 'selected' : "" }} value="laki-laki">Laki-laki</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="grid lg:grid-cols-2 md:gap-6">
                                     <div class="relative z-0 w-full mb-4 group">
                                         <label for="babak" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama pertandingan</label>
                                         <input value="{{ old('babak')??$partai->babak }}" type="text" name="babak" id="babak" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
-                                    </div>
-                                    <div class="relative z-0 w-full mb-4 group">
-                                        <label for="gelanggang_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gelanggang Pertandingan</label>
-                                        <select id="gelanggang_id" name="gelanggang_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            @if(empty($partai->gelanggang_id))
-                                                <option selected >Pilih Gelanggang Pertandingan</option>
-                                            @endif
-                                            @foreach($gelanggangs as $item)
-                                                    <option {{$item->id === $partai->gelanggang_id?"selected":""}} value="{{$item->id}}">{{$item->nama_gelanggang}}</option>
-                                            @endforeach
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="grid lg:grid-cols-2 md:gap-6">
@@ -301,6 +286,16 @@
                                     <div class="relative z-0 w-full mb-4 group">
                                         <label for="sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sudut Biru</label>
                                         <input value="{{ old('sudut_biru')??$partai->sudut_biru }}" type="text" name="sudut_biru" id="sudut_biru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    </div>
+                                </div>
+                                <div class="grid lg:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-4 group">
+                                        <label for="contingen_sudut_merah" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal Sudut Merah</label>
+                                        <input value="{{ old('contingen_sudut_merah')??$partai->contingen_sudut_merah }}" type="text" name="contingen_sudut_merah" id="contingen_sudut_merah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                    </div>
+                                    <div class="relative z-0 w-full mb-4 group">
+                                        <label for="contingen_sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sudut Biru</label>
+                                        <input value="{{ old('contingen_sudut_biru')??$partai->contingen_sudut_biru }}" type="text" name="contingen_sudut_biru" id="contingen_sudut_biru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                     </div>
                                 </div>
                                 <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
