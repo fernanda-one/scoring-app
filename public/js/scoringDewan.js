@@ -26312,8 +26312,13 @@ var jatuhanMerahSah = document.getElementById('jatuhan-merah-plus');
 var jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus');
 var jatuhanBiruSah = document.getElementById('jatuhan-biru-plus');
 var jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus');
+var popupMerah = document.getElementById('popup-merah');
+var popupBiru = document.getElementById('popup-biru');
+var tutupPopup = document.getElementById('done-popup');
 var bluePenalty = 0;
 var redPenalty = 0;
+var redPopup = false;
+var bluePopup = false;
 teguranMerahPertama.addEventListener("click", function (event) {
   redPenalty = 0;
   pushScore();
@@ -26386,13 +26391,39 @@ jatuhanBiruTidakSah.addEventListener("click", function () {
   blueScore = toNumber(blueScore) - 2;
   pushScore();
 });
+popupMerah.addEventListener("click", function () {
+  showRedPopup();
+  pushScore();
+});
+popupBiru.addEventListener("click", function () {
+  showBluePopup();
+  pushScore();
+});
+tutupPopup.addEventListener("click", function () {
+  donePopup();
+  pushScore();
+});
+function donePopup() {
+  bluePopup = false;
+  redPopup = false;
+}
+function showRedPopup() {
+  bluePopup = false;
+  redPopup = true;
+}
+function showBluePopup() {
+  bluePopup = true;
+  redPopup = false;
+}
 function pushScore() {
   axios.post("/score-update", {
     message: {
       "blueScore": toNumber(blueScore),
       "redScore": toNumber(redScore),
       "redPenalty": redPenalty,
-      "bluePenalty": bluePenalty
+      "bluePenalty": bluePenalty,
+      'redPopup': redPopup,
+      'bluePopup': bluePopup
     }
   });
 }
