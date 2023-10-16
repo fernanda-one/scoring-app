@@ -32,6 +32,15 @@ class PartaiController extends Controller
             ],(object)[
                 'name'=>'F',
                 'value'=>'F'
+            ],(object)[
+                'name'=>'G',
+                'value'=>'G'
+            ],(object)[
+                'name'=>'H',
+                'value'=>'H'
+            ],(object)[
+                'name'=>'I',
+                'value'=>'I'
             ],
         ];
         $partai = Partai::orderBy('id', 'asc');
@@ -39,10 +48,13 @@ class PartaiController extends Controller
         $search = \request('search') ?? '';
         if ($search != ''){
             $partai->where('id','like', '%'.$search.'%')
-                ->orWhere('babak','like', '%'.$search.'%')
-                ->orWhere('jenis_kelamin','like', '%'.$search.'%')
-                ->orWhere('sudut_biru','like', '%'.$search.'%')
-                ->orWhere('sudut_merah','like', '%'.$search.'%');
+                ->orWhereRaw("LOWER(babak) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(jenis_kelamin) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(sudut_biru) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(sudut_merah) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(contingen_sudut_biru) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(contingen_sudut_merah) LIKE ?", ['%' . strtolower($search) . '%']);
+
         }
         return view('management.pertandingan.pertandingan', [
             'title' => 'pertandingan',
@@ -55,9 +67,11 @@ class PartaiController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required|unique:partais',
-            'nama_pertandingan' => 'required',
+            'babak' => 'required',
             'sudut_biru'=> 'required|max:100|min:3',
             'sudut_merah'=> 'required|max:100|min:3',
+            'contingen_sudut_biru'=> 'required|max:100|min:3',
+            'contingen_sudut_merah'=> 'required|max:100|min:3',
             'kelas'=> 'required|max:2',
             'jenis_kelamin'=> 'required|max:12|min:3',
         ]);
@@ -71,9 +85,11 @@ class PartaiController extends Controller
     {
         $validatedData = $request->validate([
             'id' => 'required|unique:pertandingan',
-            'nama_pertandingan' => 'required',
+            'babak' => 'required',
             'sudut_biru'=> 'required|max:100|min:3',
             'sudut_merah'=> 'required|max:100|min:3',
+            'contingen_sudut_biru'=> 'required|max:100|min:3',
+            'contingen_sudut_merah'=> 'required|max:100|min:3',
             'kelas'=> 'required|max:100|min:3',
             'jenis_kelamin'=> 'required',
         ]);

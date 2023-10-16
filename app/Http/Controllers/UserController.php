@@ -25,8 +25,8 @@ class UserController extends Controller
         $users = User::latest();
         $search = \request('search') ?? '';
         if ($search != ''){
-            $users->where('name','like', '%'.$search.'%')
-                ->orWhere('username','like', '%'.$search.'%');
+            $users->whereRaw("LOWER(name) LIKE ?", ['%' . strtolower($search) . '%'])
+                ->orWhereRaw("LOWER(username) LIKE ?", ['%' . strtolower($search) . '%']);
         }
         $role = Role::all();
         return view('management.users.users', [
@@ -90,7 +90,7 @@ class UserController extends Controller
             'name' => 'required|max:100|min:5',
             'username' => 'required|max:100|min:5',
             'role_id'=> 'required|numeric',
-            'password' => 'nullable|string|min:5|confirmed',
+            'password' => 'nullable|string|min:5',
         ]);
         $user = User::findOrFail($id);
         if ($validatedData['password'] !== null)

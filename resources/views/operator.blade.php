@@ -27,7 +27,7 @@
                 </button>
             </div>
             <div class="mx-auto flex justify-center mt-4 space-x-[3.125rem]">
-                <button id="status_juri_pertama" disabled class="w-[12.5rem] border-black border-[1px] bg-yellowDefault h-9">
+                <button id="status_juri_pertama" disabled class="w-[12.5rem] border-black border-[1px] bg-gray-200 h-9">
                     JURI 1
                 </button>
                 <button id="status_juri_kedua" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
@@ -128,6 +128,6 @@
             </a>
         </div>
     </div>
-    <script src="{{ mix('js/scoreUpdate.js') }}"></script>
+    <script src="{{ mix('js/operator.js') }}"></script>
 </body>
 </html>

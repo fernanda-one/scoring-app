@@ -20,6 +20,8 @@ class CreatePartaiTable extends Migration
             $table->foreignId('gelanggang_id')->nullable();
             $table->string('sudut_merah');
             $table->string('sudut_biru');
+            $table->string('contingen_sudut_merah');
+            $table->string('contingen_sudut_biru');
             $table->string('kelas');
             $table->string('jenis_kelamin');
             $table->boolean('status')->default('true');

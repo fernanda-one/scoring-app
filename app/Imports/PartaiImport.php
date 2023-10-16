@@ -41,9 +41,11 @@ class PartaiImport implements ToCollection
                 'gelanggang_id' => intval($gelanggang_id),
                 'sudut_merah' => $row[3],
                 'sudut_biru' => $row[4],
-                'kelas' => $row[5],
-                'jenis_kelamin' => $row[6],
-                'status' => $row[7],
+                'contingen_sudut_merah' => $row[5],
+                'contingen_sudut_biru' => $row[6],
+                'kelas' => $row[7],
+                'jenis_kelamin' => $row[8],
+                'status' => $row[9],
             ];
         }
         array_shift($data);
@@ -60,6 +62,8 @@ class PartaiImport implements ToCollection
                     'gelanggang_id' => $row['gelanggang_id'],
                     'sudut_merah' => $row['sudut_merah'],
                     'sudut_biru' => $row['sudut_biru'],
+                    'contingen_sudut_merah' => $row['contingen_sudut_merah'],
+                    'contingen_sudut_biru' => $row['contingen_sudut_biru'],
                     'kelas' => $row['kelas'],
                     'jenis_kelamin' => $row['jenis_kelamin'],
                     'status' => $row['status'],
