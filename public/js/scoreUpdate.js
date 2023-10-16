@@ -30762,6 +30762,7 @@ var userData = JSON.parse(userElement.getAttribute("data-user"));
 var blueScore = document.getElementById("".concat(round, "-blueScore"));
 var redScore = document.getElementById("".concat(round, "-redScore"));
 var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
+var isPopup = document.getElementById('dropVerificationModal');
 channelUpdateScore.here(function (users) {
   console.log(users);
   console.log("anda telah terhubung dalam Gelanggang");
@@ -30774,8 +30775,12 @@ channelUpdateScore.here(function (users) {
     user: user
   }, "leaved");
 }).listen(".updateScore.".concat(userData.gelanggang_id), function (event) {
-  console.log(event);
   updateScore(event);
+  if (event.red_popup || event.blue_popup) {
+    isPopup.style.display = 'block';
+  } else {
+    isPopup.style.display = 'none';
+  }
 });
 function updateScore(event) {
   redScore.textContent = event.red_score - event.red_penalty;
