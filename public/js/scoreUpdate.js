@@ -30763,6 +30763,10 @@ var blueScore = document.getElementById("".concat(round, "-blueScore"));
 var redScore = document.getElementById("".concat(round, "-redScore"));
 var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
 var isPopup = document.getElementById('dropVerificationModal');
+var choice1 = document.getElementById("choice1");
+var choice2 = document.getElementById("choice2");
+var choice3 = document.getElementById("choice3");
+var choiceResult = document.getElementById("choice-result");
 channelUpdateScore.here(function (users) {
   console.log(users);
   console.log("anda telah terhubung dalam Gelanggang");
@@ -30780,12 +30784,37 @@ channelUpdateScore.here(function (users) {
     isPopup.style.display = 'block';
   } else {
     isPopup.style.display = 'none';
+    choiceResult.classList.remove("bg-blueDark");
+    choiceResult.classList.remove("bg-yellowDark");
+    choiceResult.classList.remove("bg-redDark");
+    choiceResult.classList.add("bg-grayDefault");
   }
 });
 function updateScore(event) {
   redScore.textContent = event.red_score - event.red_penalty;
   blueScore.textContent = event.blue_score - event.blue_penalty;
 }
+choice1.addEventListener("click", function () {
+  choiceResult.innerText = "BLUE CORNER";
+  choiceResult.classList.remove("bg-yellowDark");
+  choiceResult.classList.remove("bg-redDark");
+  choiceResult.classList.remove("bg-grayDefault");
+  choiceResult.classList.add("bg-blueDark");
+});
+choice2.addEventListener("click", function () {
+  choiceResult.innerText = "INVALID";
+  choiceResult.classList.remove("bg-blueDark");
+  choiceResult.classList.remove("bg-redDark");
+  choiceResult.classList.remove("bg-grayDefault");
+  choiceResult.classList.add("bg-yellowDark");
+});
+choice3.addEventListener("click", function () {
+  choiceResult.innerText = "RED CORNER";
+  choiceResult.classList.remove("bg-blueDark");
+  choiceResult.classList.remove("bg-yellowDark");
+  choiceResult.classList.remove("bg-grayDefault");
+  choiceResult.classList.add("bg-redDark");
+});
 })();
 
 /******/ })()
