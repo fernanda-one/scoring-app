@@ -11,12 +11,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class Scoring implements ShouldBroadcast
+class Operator implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private bool $done = false;
-    private string $sudut, $gerakan, $name;
-    private int $blueScore, $redScore, $roomId, $id,$time;
+    private int $roomId;
+    private string $blueName, $redName, $activeRound, $babak, $blueContingent, $redContingent;
     /**
      * Create a new event instance.
      *
@@ -26,13 +25,14 @@ class Scoring implements ShouldBroadcast
     {
         $user = auth()->user();
         $gelanggang = $this->getGelanggangId($user);
+        $message  =  (object)$message;
         $this->roomId = $gelanggang;
-        $this->id = $user['role_id'];
-        $this->sudut = $message['sudut'];
-        $this->gerakan = $message['gerakan'];
-        $this->blueScore = $message['blueScore'];
-        $this->redScore = $message['redScore'];
-        $this->time = $message['time'];
+        $this->redName = $message->redName;
+        $this->blueName = $message->blueName;
+        $this->redContingent = $message->redContingent;
+        $this->blueContingent = $message->blueContingent;
+        $this->babak = $message->babak;
+        $this->activeRound = $message->activeRound;
     }
 
     /**
@@ -42,36 +42,25 @@ class Scoring implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('presence.juri.'.$this->roomId);
+        return new PresenceChannel('presence.operator.'.$this->roomId);
     }
 
     public function broadcastAs(): string
     {
-        return 'juri.'.$this->roomId;
+        return 'operator.'.$this->roomId;
     }
 
     public function broadcastWith()
     {
         return [
-            'blue_score'=>$this->blueScore,
-            'red_score'=>$this->redScore,
-            'expired'=>$this->time,
-            'sudut'=>$this->sudut,
-            'gerakan'=>$this->gerakan,
-            'id'=> $this->getRoleById($this->id)
-        ];
+                'redName'=> $this->redName,
+                'blueName'=> $this->blueName,
+                'redContingent'=> $this->redContingent,
+                'blueContingent'=> $this->blueContingent,
+                'babak'=> $this->babak,
+                'activeRound'=> $this->activeRound,
+            ];
     }
-    private function getRoleById($id): string
-    {
-        $roleMap = [
-            5 => 'Juri Pertama',
-            6 => 'Juri Kedua',
-            7 => 'Juri Ketiga',
-        ];
-
-        return $roleMap[$id] ?? 'Role Lainnya';
-    }
-
     private function getGelanggangId($user)
     {
         $gelanggang = UserGelanggang::where('user_id', $user->id)->first();

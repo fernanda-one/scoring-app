@@ -13,19 +13,20 @@
                 font-family: "Poppins";
             }
         </style>
-    </head>
-<body>
-    <header>
-        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
-        <!-- Main modal -->
-        {{-- <div class="flex fixed hidden  justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
-            <div class="max-h-full">
-                <div class="bg-white w-auto rounded-lg shadow dark:bg-gray-700">
-                    <div class="flex items-center justify-center p-4 rounded-t dark:border-gray-600">
-                        <span class="flex text-xl font-semibold align-middle items-center justify-center text-gray-900 dark:text-white">
-                            JUROR 1 CHOICE DROP VERIFICATION
-                        </span>
-                    </div>
+        </head>
+    <body>
+        <header>
+            <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
+    {{--        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{auth()->user()}}">--}}
+            <!-- Main modal -->
+            {{-- <div class="flex fixed hidden  justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
+                <div class="max-h-full">
+                    <div class="bg-white w-auto rounded-lg shadow dark:bg-gray-700">
+                        <div class="flex items-center justify-center p-4 rounded-t dark:border-gray-600">
+                            <span class="flex text-xl font-semibold align-middle items-center justify-center text-gray-900 dark:text-white">
+                                JUROR 1 CHOICE DROP VERIFICATION
+                            </span>
+                        </div>
                     <div class="py-8 px-4 space-y-4">
                         <div class="flex flex-col">
                             <div class="flex items-center justify-center mb-4">
@@ -49,31 +50,31 @@
                 </div>
             </div>
         </div> --}}
-        <x-drop-verification/>
+{{--        <x-drop-verification/>--}}
 
         <div class="flex justify-between uppercase">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_merah" class="font-bold text-whiteDefault text-xl">Sudut Merah</p>
                 </div>
                 <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_merah" class="text-whiteDefault text-base">Kontingen</p>
                 </div>
             </div>
             <div>
                 <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-lg lg:text-xl">SEMI-FINAL</p>
+                    <p id="babak" class="font-bold text-whiteDefault text-xl">Babak</p>
                 </div>
                 <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-sm lg:text-base">ROUND 1</p>
+                    <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
                 </div>
             </div>
             <div>
                 <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_biru" class="font-bold text-whiteDefault text-xl">Sudut Biru</p>
                 </div>
                 <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_biru" class="text-whiteDefault text-base">Kontingen</p>
                 </div>
             </div>
         </div>

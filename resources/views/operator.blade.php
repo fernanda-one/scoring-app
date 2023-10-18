@@ -16,6 +16,7 @@
 </head>
 <body>
     <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
+    <label for="partai"></label><input id="partai" type="text" hidden="hidden" data-partai="{{$partai_pertama[0]}}">
     <div class="w-[52.75rem] h-[24.375rem] mx-auto my-auto">
         <div class="mx-auto mt-3">
             <div  class="mx-auto flex justify-center space-x-[3.125rem] mt-1">
@@ -45,75 +46,81 @@
                         {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
                     </span>
                     <div class="flex-row space-y-2">
-                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
+                        <span id="kontingen_peserta_sudut_merah" class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
                            {{$partai_pertama[0]->sudut_merah}}
                         </span>
-                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
-                           JEPARA
+                        <span id="kontingen_peserta_sudut_merah" class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           {{$partai_pertama[0]->contingen_sudut_merah}}
                         </span>
                     </div>
                 </div>
-                <div class="flex space-x-3">
+
+                @if(!empty($partai_kedua[0]))
+                    <div class="flex space-x-3">
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
                         {{$partai_kedua[0]->id}} {{$partai_kedua[0]->kelas}}
                     </span>
-                    <div class="flex-row space-y-2">
+                        <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-redDark">
                            {{$partai_kedua[0]->sudut_merah}}
                         </span>
-                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
-                           JEPARA
+                            <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           {{$partai_kedua[0]->contingen_sudut_merah}}
                         </span>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
             <div class="flex flex-col space-y-[0.875rem]">
-                <button class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium">
+                <button id="round-1" class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium">
                     Rounde I
                 </button>
-                <button class="w-36 h-14 border-[2px] border-black font-medium">
+                <button id="round-2" class="w-36 h-14 border-[2px] border-black font-medium">
                     Rounde II
                 </button>
-                <button class="w-36 h-14 border-[2px] border-black font-medium">
+                <button id="round-3" class="w-36 h-14 border-[2px] border-black font-medium">
                     Rounde III
                 </button>
             </div>
             <div class="flex-row space-y-[2.625rem] my-4">
                 <div class="flex space-x-3">
                     <div class="flex-row space-y-2">
-                        <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
+                        <span id="nama_peserta_sudut_biru" class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
                              {{$partai_pertama[0]->sudut_biru}}
                         </span>
-                        <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
-                           JEPARA
+                        <span id="kontingen_peserta_sudut_biru" class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
+                           {{$partai_pertama[0]->contingen_sudut_biru}}
                         </span>
                     </div>
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
                         {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
                     </span>
                 </div>
-                <div class="flex space-x-3">
-                    <div class="flex-row space-y-2">
+                @if(!empty($partai_kedua[0]))
+                    <div class="flex space-x-3">
+                        <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
                              {{$partai_kedua[0]->sudut_biru}}
                         </span>
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-black border-black border-[2px] ">
-                           JEPARA
+                           {{$partai_kedua[0]->contingen_sudut_biru}}
                         </span>
-                    </div>
-                    <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
+                        </div>
+                        <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
                         {{$partai_kedua[0]->id}} {{$partai_kedua[0]->kelas}}
                     </span>
-                </div>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="flex justify-center mx-auto space-x-5 mt-6">
-            <button class="w-24 h-8 border-[2px] border-black">
+            <button id="start" class="w-24 h-8 border-[2px] border-black">
                 START
             </button>
-            <button class="w-24 h-8 border-[2px] border-black">
+            <button id="pause" class="w-24 h-8 border-[2px] border-black">
                 PAUSE
-            </button><button class="w-24 h-8 border-[2px] border-black">
+            </button>
+            <button id="finish" class="w-24 h-8 border-[2px] border-black">
                 FINISH
             </button>
             <a href="{{ $partai_pertama->previousPageUrl() }}">
