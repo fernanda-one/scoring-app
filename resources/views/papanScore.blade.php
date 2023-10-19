@@ -11,6 +11,7 @@
 </head>
 <body class="font-poppins">
     <header>
+        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}" detail-user="{{auth()->user()}}">
         <div class="flex justify-between uppercase">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
@@ -43,6 +44,7 @@
                         <p class="text-base lg:text-lg font-semibold">00 : 00</p>
                 </div>
         </div>
+        <x-drop-verification-result/>
     </header>
 
     <div class="flex justify-between mt-[3%] overflow-hidden">
@@ -249,5 +251,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ mix('js/dropVerification.js') }}">
+    </script>
 </body>
 </html>

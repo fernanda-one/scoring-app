@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}">
+    <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}" detail-user="{{auth()->user()}}">
     <div class="flex justify-between">
         <div>
             <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
@@ -277,6 +277,8 @@
 <script src="{{ mix('js/scoreUpdate.js') }}">
 </script>
 <script src="{{ mix('js/scoringDewan.js') }}">
+</script>
+<script src="{{ mix('js/dropVerification.js') }}">
 </script>
 </body>
 </html>

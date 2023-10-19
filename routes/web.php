@@ -29,6 +29,10 @@ Route::post('/score-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\ScoringUpdate($request->message));
     return null;
 });
+Route::post('/drop-verification', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\DropVerification($request->message));
+    return null;
+});
 Route::get('/test',function (){
     return view('test');
 });

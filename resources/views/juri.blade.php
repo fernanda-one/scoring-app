@@ -16,39 +16,7 @@
     </head>
 <body>
     <header>
-        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
-        <!-- Main modal -->
-        {{-- <div class="flex fixed hidden  justify-center my-10 z-50 p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)]">
-            <div class="max-h-full">
-                <div class="bg-white w-auto rounded-lg shadow dark:bg-gray-700">
-                    <div class="flex items-center justify-center p-4 rounded-t dark:border-gray-600">
-                        <span class="flex text-xl font-semibold align-middle items-center justify-center text-gray-900 dark:text-white">
-                            JUROR 1 CHOICE DROP VERIFICATION
-                        </span>
-                    </div>
-                    <div class="py-8 px-4 space-y-4">
-                        <div class="flex flex-col">
-                            <div class="flex items-center justify-center mb-4">
-                                <button type="button" disabled class="flex justify-center items-center w-[33%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                                    <p class="text-2xl text-whiteDefault">WAITING</p>
-                                </button>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <button type="button" class="flex justify-center items-center w-[40%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                                    <p class="text-2xl text-whiteDefault">BLUE CORNER</p>
-                                </button>
-                                <button type="button" class="flex justify-center items-center w-[40%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                                    <p class="text-2xl text-whiteDefault">INVALID</p>
-                                </button>
-                                <button type="button" class="flex justify-center items-center w-[40%] h-[74px] bg-grayDefault hover:bg-grayDark focus:ring-2 focus:outline-none focus:ring-grayDark rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                                    <p class="text-2xl text-whiteDefault">RED CORNER</p>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+        <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}" detail-user="{{auth()->user()}}">
         <x-drop-verification/>
 
         <div class="flex justify-between uppercase">
@@ -245,6 +213,8 @@
     <script src="{{ mix('js/scoringJuri.js') }}">
     </script>
     <script src="{{ mix('js/scoreUpdate.js') }}">
+    </script>
+    <script src="{{ mix('js/dropVerification.js') }}">
     </script>
 </body>
 </html>

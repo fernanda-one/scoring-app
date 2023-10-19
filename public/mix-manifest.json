@@ -4,5 +4,6 @@
     "/js/scoringDewan.js": "/js/scoringDewan.js",
     "/js/scoreUpdate.js": "/js/scoreUpdate.js",
     "/js/operator.js": "/js/operator.js",
+    "/js/dropVerification.js": "/js/dropVerification.js",
     "/css/app.css": "/css/app.css"
 }
