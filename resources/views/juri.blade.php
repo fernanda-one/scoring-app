@@ -22,26 +22,26 @@
         <div class="flex justify-between uppercase">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_merah" class="font-bold text-whiteDefault text-xl">Sudut Merah</p>
                 </div>
                 <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_merah" class="text-whiteDefault text-base">Kontingen</p>
                 </div>
             </div>
             <div>
                 <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-lg lg:text-xl">SEMI-FINAL</p>
+                    <p id="babak" class="font-bold text-whiteDefault text-xl">Babak</p>
                 </div>
                 <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-sm lg:text-base">ROUND 1</p>
+                    <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
                 </div>
             </div>
             <div>
                 <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_biru" class="font-bold text-whiteDefault text-xl">Sudut Biru</p>
                 </div>
                 <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_biru" class="text-whiteDefault text-base">Kontingen</p>
                 </div>
             </div>
         </div>

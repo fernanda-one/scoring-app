@@ -33,6 +33,14 @@ Route::post('/drop-verification', function (\Illuminate\Http\Request $request){
     event(new \App\Events\DropVerification($request->message));
     return null;
 });
+Route::post('/operator-update', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\Operator($request->message));
+    return null;
+});
+Route::post('/verif-update', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\Operator($request->message));
+    return null;
+});
 Route::get('/test',function (){
     return view('test');
 });
