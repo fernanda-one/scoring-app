@@ -21,13 +21,8 @@ const jatuhanMerahSah = document.getElementById('jatuhan-merah-plus')
 const jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus')
 const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
-// const popupMerah = document.getElementById('popup-merah')
-// const popupBiru = document.getElementById('popup-biru')
-// const tutupPopup = document.getElementById('done-popup')
 let bluePenalty='teguran-pertama'
 let redPenalty = 'teguran-pertama';
-// let redPopup = false;
-// let bluePopup = false;
 
 const pelanggaranRed = {
     'teguran-pertama': document.getElementById('teguran-merah-pertama'),
@@ -49,7 +44,7 @@ const pelanggaranBlue = {
 }
 const pelanggaran = ['teguran-pertama', 'teguran-kedua','binaan-pertama', 'binaan-kedua','peringatan-pertama', 'peringatan-kedua','peringatan-ketiga']
 
-function changeIndicatorPelanggaran(corner, penalty) {
+export function changeIndicatorPelanggaran(corner, penalty) {
         let nameElemenet = pelanggaranRed
         let color = 'bg-redDefault'
         if (corner !== 'red'){

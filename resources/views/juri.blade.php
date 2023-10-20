@@ -49,55 +49,55 @@
     <s class="text-whiteDefault">1</s>
     <div class="flex justify-between">
         <div class="w-full flex mt-[5%]">
-            <div class="bg-redDefault shadow-inset-custom py-3 w-[70%] rounded-r-[20px] pl-6">
-                <span id="round1-redInput" class="text-whiteDefault"></span>
+            <div id="round-1-redInput-div"  class="bg-redDefault py-3 w-[70%] rounded-r-[20px] pl-6 shadow-inset-custom">
+                <p id="round-1-redInput" class="text-whiteDefault"></p>
             </div>
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault shadow-inset-custom rounded-full ml-[2%]">
-                <p id="round1-redScore" class="text-whiteDefault">0</p>
+            <div id="round-1-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%] shadow-inset-custom">
+                <p id="round-1-redScore" class="text-whiteDefault">0</p>
             </div>
         </div>
         <div class="w-full flex mt-[5%] justify-end">
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault shadow-inset-custom rounded-full mr-[2%]">
-                <p id="round1-blueScore" class="text-whiteDefault">0</p>
+            <div id="round-1-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault rounded-full mr-[2%] shadow-inset-custom">
+                <p id="round-1-blueScore" class="text-whiteDefault">0</p>
             </div>
-            <div class="bg-blueDefault shadow-inset-custom py-3 w-[70%] rounded-l-[20px] pr-6">
-                <p id="round1-blueInput" class="text-whiteDefault text-right"></p>
-            </div>
-        </div>
-    </div>
-    <div class="flex justify-between">
-        <div class="w-full flex mt-[2%]">
-            <div class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
-                <p class="text-whiteDefault"></p>
-            </div>
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
-                <p class="text-whiteDefault"></p>
-            </div>
-        </div>
-        <div class="w-full flex mt-[2%] justify-end">
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
-                <p class="text-whiteDefault"></p>
-            </div>
-            <div class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
-                <p class="text-whiteDefault text-right"></p>
+            <div id="round-1-blueInput-div" class="bg-blueDefault py-3 w-[70%] rounded-l-[20px] pr-6 shadow-inset-custom">
+                <p id="round-1-blueInput" class="text-whiteDefault text-right"></p>
             </div>
         </div>
     </div>
     <div class="flex justify-between">
         <div class="w-full flex mt-[2%]">
-            <div class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
-                <p class="text-whiteDefault"></p>
+            <div id="round-2-redInput-div"  class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
+                <p id="round-2-redInput" class="text-whiteDefault"></p>
             </div>
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
-                <p class="text-whiteDefault"></p>
+            <div id="round-2-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
+                <p id="round-2-redScore" class="text-whiteDefault"></p>
             </div>
         </div>
         <div class="w-full flex mt-[2%] justify-end">
-            <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
-                <p class="text-whiteDefault"></p>
+            <div id="round-2-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
+                <p id="round-2-blueScore" class="text-whiteDefault"></p>
             </div>
-            <div class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
-                <p class="text-whiteDefault text-right"></p>
+            <div id="round-2-blueInput-div" class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
+                <p id="round-2-blueInput" class="text-whiteDefault text-right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-between">
+        <div class="w-full flex mt-[2%]">
+            <div id="round-3-redInput-div"  class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
+                <p id="round-3-redInput" class="text-whiteDefault"></p>
+            </div>
+            <div id="round-3-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
+                <p id="round-3-redScore" class="text-whiteDefault"></p>
+            </div>
+        </div>
+        <div class="w-full flex mt-[2%] justify-end">
+            <div id="round-3-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
+                <p id="round-3-blueScore" class="text-whiteDefault"></p>
+            </div>
+            <div id="round-3-blueInput-div" class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
+                <p id="round-3-blueInput" class="text-whiteDefault text-right"></p>
             </div>
         </div>
     </div>
@@ -212,7 +212,7 @@
     </div>
     <script src="{{ mix('js/scoringJuri.js') }}">
     </script>
-    <script src="{{ mix('js/scoreUpdate.js') }}">
+    <script type="module" src="{{ mix('js/scoreUpdate.js') }}">
     </script>
     <script src="{{ mix('js/dropVerification.js') }}">
     </script>

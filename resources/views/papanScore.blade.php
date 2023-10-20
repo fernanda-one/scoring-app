@@ -15,33 +15,33 @@
         <div class="flex justify-between uppercase">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_merah" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT MERAH</p>
                 </div>
                 <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_merah" class="text-whiteDefault text-sm lg:text-xl">Kontingen</p>
                 </div>
             </div>
             <div>
                 <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-lg lg:text-xl">SEMI-FINAL</p>
+                    <p id="babak" class="font-extrabold text-whiteDefault text-lg lg:text-xl">BABAK</p>
                 </div>
                 <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                    <p class="font-extrabold text-whiteDefault text-sm lg:text-base">ROUND 1</p>
+                    <p id="round" class="font-extrabold text-whiteDefault text-sm lg:text-base">ROUND</p>
                 </div>
             </div>
             <div>
                 <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="font-bold text-whiteDefault text-base lg:text-2xl">Adi Nugraha</p>
+                    <p id="nama_biru" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT BIRU</p>
                 </div>
                 <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                    <p class="text-whiteDefault text-sm lg:text-xl">Jepara</p>
+                    <p id="kontingen_biru" class="text-whiteDefault text-sm lg:text-xl">Kontingen</p>
                 </div>
             </div>
         </div>
         <div class="flex justify-center items-center w-full h-[200px]">
                 <div class="w-[12rem] h-[8rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-5 text-whiteDefault shadow-inset-custom">
-                        <p class="text-base lg:text-lg font-semibold">Timer</p>
-                        <p class="text-base lg:text-lg font-semibold">00 : 00</p>
+                    <p class="text-base lg:text-lg font-semibold">Timer</p>
+                    <p class="text-base lg:text-lg font-semibold">00 : 00</p>
                 </div>
         </div>
         <x-drop-verification-result/>
@@ -50,7 +50,7 @@
     <div class="flex justify-between mt-[3%] overflow-hidden">
         <div class="flex h-[450px] w-[50%]">
             <div class="flex items-center justify-center w-[40%] lg:w-[45%] h-screen lg:h-[70%] rounded-r-[30px] bg-redDefault">
-                <p class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">6</p>
+                <p id="redScore" class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">0</p>
             </div>
 
             <div class="flex flex-col justify-start w-[60%] lg:w-[55%] h-screen lg:h-[70%] mx-[3.5%]">
@@ -247,12 +247,14 @@
                 </div>
             </div>
             <div class="flex items-center justify-center w-[40%] lg:w-[45%] h-screen lg:h-[70%] rounded-l-[30px] bg-blueDefault">
-                <p class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">10</p>
+                <p id="blueScore" class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">0</p>
             </div>
         </div>
     </div>
 
     <script src="{{ mix('js/dropVerification.js') }}">
+    </script>
+    <script type="module" src="{{ mix('js/papanScore.js') }}">
     </script>
 </body>
 </html>

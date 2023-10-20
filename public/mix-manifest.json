@@ -4,5 +4,9 @@
     "/js/scoringDewan.js": "/js/scoringDewan.js",
     "/js/scoreUpdate.js": "/js/scoreUpdate.js",
     "/js/operator.js": "/js/operator.js",
+    "/js/dropVerification.js": "/js/dropVerification.js",
+    "/js/papanScore.js": "/js/papanScore.js",
+    "/js/library/DewanFunc.js": "/js/library/DewanFunc.js",
+    "/js/library/JuriFunc.js": "/js/library/JuriFunc.js",
     "/css/app.css": "/css/app.css"
 }

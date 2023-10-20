@@ -17,6 +17,9 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/scoreUpdate.js', 'public/js')
     .js('resources/js/operator.js', 'public/js')
     .js('resources/js/dropVerification.js', 'public/js')
+    .js('resources/js/papanScore.js', 'public/js')
+    .js('resources/js/library/DewanFunc.js', 'public/js/library')
+    .js('resources/js/library/JuriFunc.js', 'public/js/library')
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);

@@ -31,7 +31,7 @@ let bluePopup = false;
 
 channelDropVerification
     .here((users) => {
-        console.log(users, `anda telah terhubung dalam Gelanggang`);
+        console.log(users, `anda telah terhubung dalam verification`);
         cekStatususer(users)
     })
     .joining((user) => {
@@ -84,7 +84,7 @@ function pushDropVerification({juriPertama, juriKedua, juriKetiga, redPopup, blu
     axios.post("/drop-verification", {
         message: {
             'juriPertama': juriPertama,
-            'juriKedua': juriKedua, 
+            'juriKedua': juriKedua,
             'juriKetiga': juriKetiga,
             'redPopup': redPopup,
             'bluePopup': bluePopup,
@@ -202,7 +202,7 @@ if (window.location.pathname == '/dewan') {
         })
         resetColors();
     })
-    
+
     popupBiru.addEventListener("click", function () {
         pushDropVerification({
             juriPertama: juriPertama,
@@ -213,7 +213,7 @@ if (window.location.pathname == '/dewan') {
         })
         resetColors();
     })
-    
+
     tutupPopup.addEventListener("click", function () {
         pushDropVerification({
             juriPertama: juriPertama,
@@ -246,7 +246,7 @@ if (window.location.pathname == '/dewan') {
         choiceResult.classList.remove("bg-grayDefault")
         choiceResult.classList.add("bg-blueDark")
     })
-    
+
     choice2.addEventListener("click", function () {
         let selected = "INVALID"
         if (userDetails.role_id == 5) {
@@ -269,7 +269,7 @@ if (window.location.pathname == '/dewan') {
         choiceResult.classList.remove("bg-grayDefault")
         choiceResult.classList.add("bg-yellowDark")
     })
-    
+
     choice3.addEventListener("click", function () {
         let selected = "RED CORNER"
         if (userDetails.role_id == 5) {
