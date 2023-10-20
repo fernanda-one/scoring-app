@@ -7,14 +7,19 @@ const roundsElement = {
      'round-3' : document.getElementById('round-3')
 }
 let activeRound = 'round-1'
+const coutMinimumToStart =5
 const start = document.getElementById('start')
-const pause = document.getElementById('pause')
+const next = document.getElementById('next')
+const prev = document.getElementById('prev')
+const pausePlay = document.getElementById('pause')
+let pauseStatus = true
 const finish = document.getElementById('finish')
 const userElement = document.getElementById("user");
 const userData = JSON.parse(userElement.getAttribute("data-user"));
 const partaiElement = document.getElementById("partai");
 const dataPartai = JSON.parse(partaiElement.getAttribute("data-partai"));
 const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
+const actionButtonNames = ['start','pausePlay']
 const userActiveList = {
     'juri_pertama':document.getElementById("status_juri_pertama"),
     'juri_kedua': document.getElementById("status_juri_kedua"),
@@ -22,6 +27,7 @@ const userActiveList = {
     'dewan': document.getElementById("status_dewan"),
     'ketua_pertandingan': document.getElementById("status_ketua"),
 }
+// start.disabled = true
 const rounds =[
     'round-1','round-2','round-3'
 ]
@@ -38,30 +44,21 @@ const roleIds = {
     '6': 'juri_kedua',
     '7': 'juri_ketiga',
 }
-
-function changeStatusRound(roundName) {
-    rounds.forEach(name => {
-        if (name === roundName){
-            allRoundStatus[name] = true
-            roundsElement[name].classList.add('bg-yellowDefault')
-        } else {
-            allRoundStatus[name] = false
-            roundsElement[name].classList.remove('bg-yellowDefault')
-        }
-    })
-}
+const roles = ['ketua_pertandingan','dewan','juri_pertama','juri_kedua','juri_ketiga']
 
 roundsElement['round-1'].addEventListener('click',(ev)=>{
     changeStatusRound('round-1')
+    updatePertandingan()
 })
 roundsElement['round-2'].addEventListener('click',(ev)=>{
     changeStatusRound('round-2')
+    updatePertandingan()
 })
 roundsElement['round-3'].addEventListener('click',(ev)=>{
     changeStatusRound('round-3')
+    updatePertandingan()
 })
 
-const roles = ['ketua_pertandingan','dewan','juri_pertama','juri_kedua','juri_ketiga']
 channelUpdateScore
     .here((users) => {
         console.log(users);
@@ -70,18 +67,39 @@ channelUpdateScore
     })
     .joining((users) => {
         console.log({ users }, "joined");
+        location.reload();
     })
     .leaving((users) => {
         console.log({ users }, "leaved");
+        location.reload();
     })
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
         console.log(event)
     });
+
 start.addEventListener('click', (evt)=>{
-    updatePertandingan()
+    updatePertandingan('start')
+    changeDisabledButtons(false)
+})
+finish.addEventListener('click', (evt) =>{
+    updatePertandingan('finish')
+    changeDisabledButtons(true)
+    changeStatusRound('round-1')
 })
 
-function updatePertandingan(){
+pausePlay.addEventListener('click', ()=>{
+    if(pauseStatus) {
+        pausePlay.textContent = 'PLAY'
+        pauseStatus = !pauseStatus
+        updatePertandingan('pause')
+    } else {
+        pausePlay.textContent = 'PAUSE'
+        pauseStatus = !pauseStatus
+        updatePertandingan('play')
+    }
+})
+
+function updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
         message: {
             'blueName':dataPartai.sudut_biru,
@@ -90,6 +108,7 @@ function updatePertandingan(){
             'redContingent':dataPartai.contingen_sudut_merah,
             'babak':dataPartai.babak,
             'activeRound':activeRound,
+            'action': action
         },
     });
 }
@@ -101,11 +120,16 @@ function cekStatususer(users) {
         'dewan': false,
         'ketua_pertandingan': false,
     }
+    let trueCount = 0;
     users.map(user =>{
         if (roleIds[`${user.role_id}`]){
+            trueCount += 1;
             userList[roleIds[`${user.role_id}`]] = true;
         }
     })
+    if (trueCount === coutMinimumToStart){
+        start.disabled = false;
+    }
     roles.map(role =>{
         if (userList[role]){
             userActiveList[role].classList.remove('bg-gray-200')
@@ -117,3 +141,28 @@ function cekStatususer(users) {
         }
     })
 }
+
+
+function changeDisabledButtons(status) {
+    rounds.forEach(round =>{
+        roundsElement[round].disabled = status
+    })
+    pausePlay.disabled = status
+    finish.disabled = status
+    prev.disabled = !status
+    next.disabled = !status
+}
+
+function changeStatusRound(roundName) {
+    rounds.forEach(name => {
+        if (name === roundName){
+            activeRound = name
+            allRoundStatus[name] = true
+            roundsElement[name].classList.add('bg-yellowDefault')
+        } else {
+            allRoundStatus[name] = false
+            roundsElement[name].classList.remove('bg-yellowDefault')
+        }
+    })
+}
+
