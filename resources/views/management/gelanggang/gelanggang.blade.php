@@ -90,6 +90,9 @@
                 Dewan
             </th>
             <th scope="col" class="pr-6 py-3">
+                Ketua
+            </th>
+            <th scope="col" class="pr-6 py-3">
                 Operator
             </th>
             <th scope="col" class="pr-6 py-3">
@@ -109,7 +112,7 @@
             <td class="px-6 py-4">
                 {{ $g['nama_gelanggang'] }}
             </td>
-            @foreach(['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator','Guest'] as $role)
+            @foreach(['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan','Ketua', 'Operator','Guest'] as $role)
             <td class="py-4">
                 @foreach($g['peran_user'] as $pu)
                 @if ($pu['nama_role'] == $role)
@@ -237,20 +240,20 @@
                                 </select>
                             </div>
                             <div class="relative z-0 w-full mb-4 group">
-                                <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
-                                <select required id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <label for="ketua" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ketua</label>
+                                <select required id="ketua" name="ketua" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     @if($g['peran_user'][0]['nama_role'] !== "")
-                                        @foreach($operatorU as $j1)
+                                        @foreach($ketuaU as $j1)
                                             @foreach($g['peran_user'] as $g_role)
                                                 @if($j1->name === $g_role['nama_user'])
-                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                    <option value={{$j1->id}}>{{$j1->name}}</option>
                                                 @endif
                                             @endforeach
                                         @endforeach
                                     @else
-                                        <option selected>Pilih Operator</option>
+                                        <option selected>Pilih Ketua</option>
                                     @endif
-                                    @foreach($operatorC as $j1)
+                                    @foreach($ketuaC as $j1)
                                         <option value={{$j1->id}}>{{$j1->name}}</option>
                                     @endforeach
                                 </select>
@@ -274,6 +277,26 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="relative z-0 w-full mb-4 group">
+                                <label for="operator" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Operator</label>
+                                <select required id="operator" name="operator" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    @if($g['peran_user'][0]['nama_role'] !== "")
+                                        @foreach($operatorU as $j1)
+                                            @foreach($g['peran_user'] as $g_role)
+                                                @if($j1->name === $g_role['nama_user'])
+                                                    <option selected value={{$j1->id}}>{{$j1->name}}</option>
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    @else
+                                        <option selected>Pilih Operator</option>
+                                    @endif
+                                    @foreach($operatorC as $j1)
+                                        <option value={{$j1->id}}>{{$j1->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                         </div>
                         <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                     </form>

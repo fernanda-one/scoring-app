@@ -24,6 +24,7 @@ class GelanggangController extends Controller
             'juri3U' => $dataUsers['Juri KetigaU'],
             'dewanU' => $dataUsers['DewanU'],
             'operatorU' => $dataUsers['OperatorU'],
+            'ketuaU' => $dataUsers['KetuaU'],
             'guestU' => $dataUsers['GuestU'],
             'juri1C' => $dataUsers['Juri PertamaC'],
             'juri2C' => $dataUsers['Juri KeduaC'],
@@ -31,12 +32,13 @@ class GelanggangController extends Controller
             'dewanC' => $dataUsers['DewanC'],
             'guestC' => $dataUsers['GuestC'],
             'operatorC' => $dataUsers['OperatorC'],
+            'ketuaC' => $dataUsers['KetuaC'],
         ]);
     }
 
     public function dataUsers()
     {
-        $roles = ['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator', 'Guest'];
+        $roles = ['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator','Ketua', 'Guest'];
 
         $dataUsers = [];
 
@@ -122,6 +124,7 @@ class GelanggangController extends Controller
             'juri2' => 'required',
             'juri3' => 'required',
             'dewan' => 'required',
+            'ketua' => 'required',
             'operator' => 'required',
             'guest' => 'required',
         ]);
@@ -135,6 +138,7 @@ class GelanggangController extends Controller
             'Juri Kedua' => 'juri2',
             'Juri Ketiga' => 'juri3',
             'Dewan' => 'dewan',
+            'Ketua' => 'ketua',
             'Operator' => 'operator',
             'Guest' => 'guest',
         ];
