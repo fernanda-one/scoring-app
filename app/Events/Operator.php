@@ -15,7 +15,7 @@ class Operator implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     private int $roomId;
-    private string $blueName, $redName, $activeRound, $babak, $blueContingent, $redContingent;
+    private string $blueName, $redName, $activeRound, $babak, $blueContingent, $redContingent, $action;
     /**
      * Create a new event instance.
      *
@@ -33,6 +33,7 @@ class Operator implements ShouldBroadcast
         $this->blueContingent = $message->blueContingent;
         $this->babak = $message->babak;
         $this->activeRound = $message->activeRound;
+        $this->action = $message->action;
     }
 
     /**
@@ -59,6 +60,7 @@ class Operator implements ShouldBroadcast
                 'blueContingent'=> $this->blueContingent,
                 'babak'=> $this->babak,
                 'activeRound'=> $this->activeRound,
+                'action'=> $this->action,
             ];
     }
     private function getGelanggangId($user)

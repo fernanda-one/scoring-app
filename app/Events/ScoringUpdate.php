@@ -14,7 +14,8 @@ class ScoringUpdate implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private int $blueScore, $redScore, $roomId,$redPenalty, $bluePenalty;
+    private int $blueScore, $redScore, $roomId, $redPopup, $bluePopup;
+    private string $redPenalty, $bluePenalty;
     /**
      * @param mixed $message
      */

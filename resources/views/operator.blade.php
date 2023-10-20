@@ -72,13 +72,13 @@
                 @endif
             </div>
             <div class="flex flex-col space-y-[0.875rem]">
-                <button id="round-1" class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium">
+                <button id="round-1" disabled class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium disabled:cursor-not-allowed">
                     Rounde I
                 </button>
-                <button id="round-2" class="w-36 h-14 border-[2px] border-black font-medium">
+                <button id="round-2" disabled class="w-36 h-14 border-[2px] border-black font-medium disabled:cursor-not-allowed">
                     Rounde II
                 </button>
-                <button id="round-3" class="w-36 h-14 border-[2px] border-black font-medium">
+                <button id="round-3" disabled class="w-36 h-14 border-[2px] border-black font-medium disabled:cursor-not-allowed">
                     Rounde III
                 </button>
             </div>
@@ -114,22 +114,22 @@
             </div>
         </div>
         <div class="flex justify-center mx-auto space-x-5 mt-6">
-            <button id="start" class="w-24 h-8 border-[2px] border-black">
+            <button id="start" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 START
             </button>
-            <button id="pause" class="w-24 h-8 border-[2px] border-black">
+            <button id="pause" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 PAUSE
             </button>
-            <button id="finish" class="w-24 h-8 border-[2px] border-black">
+            <button id="finish" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 FINISH
             </button>
             <a href="{{ $partai_pertama->previousPageUrl() }}">
-                <button class="w-24 h-8 border-[2px] border-black">
+                <button id="prev" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                     PREV
                 </button>
             </a>
             <a href="{{ $partai_pertama->nextPageUrl() }}">
-                <button class="w-24 h-8 border-[2px] border-black">
+                <button id="next" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                     NEXT
                 </button>
             </a>

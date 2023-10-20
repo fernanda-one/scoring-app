@@ -24,17 +24,19 @@ class GelanggangController extends Controller
             'juri3U' => $dataUsers['Juri KetigaU'],
             'dewanU' => $dataUsers['DewanU'],
             'operatorU' => $dataUsers['OperatorU'],
+            'guestU' => $dataUsers['GuestU'],
             'juri1C' => $dataUsers['Juri PertamaC'],
             'juri2C' => $dataUsers['Juri KeduaC'],
             'juri3C' => $dataUsers['Juri KetigaC'],
             'dewanC' => $dataUsers['DewanC'],
+            'guestC' => $dataUsers['GuestC'],
             'operatorC' => $dataUsers['OperatorC'],
         ]);
     }
 
     public function dataUsers()
     {
-        $roles = ['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator'];
+        $roles = ['Juri Pertama', 'Juri Kedua', 'Juri Ketiga', 'Dewan', 'Operator', 'Guest'];
 
         $dataUsers = [];
 
@@ -121,6 +123,7 @@ class GelanggangController extends Controller
             'juri3' => 'required',
             'dewan' => 'required',
             'operator' => 'required',
+            'guest' => 'required',
         ]);
 
         $gelanggang = Gelanggang::findOrFail($id);
@@ -133,6 +136,7 @@ class GelanggangController extends Controller
             'Juri Ketiga' => 'juri3',
             'Dewan' => 'dewan',
             'Operator' => 'operator',
+            'Guest' => 'guest',
         ];
 
         foreach ($roles as $roleName => $fieldName) {

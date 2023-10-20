@@ -43,55 +43,55 @@
 <s class="text-whiteDefault">1</s>
 <div class="flex justify-between">
     <div class="w-full flex mt-[5%]">
-        <div class="bg-redDefault py-3 w-[70%] rounded-r-[20px] pl-6 shadow-inset-custom">
-            <span id="round1-redInput" class="text-whiteDefault"></span>
+        <div id="round-1-redInput-div"  class="bg-redDefault py-3 w-[70%] rounded-r-[20px] pl-6 shadow-inset-custom">
+            <p id="round-1-redInput" class="text-whiteDefault"></p>
         </div>
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%] shadow-inset-custom">
-            <p id="round1-redScore" class="text-whiteDefault">0</p>
+        <div id="round-1-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%] shadow-inset-custom">
+            <p id="round-1-redScore" class="text-whiteDefault">0</p>
         </div>
     </div>
     <div class="w-full flex mt-[5%] justify-end">
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault rounded-full mr-[2%] shadow-inset-custom">
-            <p id="round1-blueScore" class="text-whiteDefault">0</p>
+        <div id="round-1-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault rounded-full mr-[2%] shadow-inset-custom">
+            <p id="round-1-blueScore" class="text-whiteDefault">0</p>
         </div>
-        <div class="bg-blueDefault py-3 w-[70%] rounded-l-[20px] pr-6 shadow-inset-custom">
-            <p id="round1-blueInput" class="text-whiteDefault text-right"></p>
-        </div>
-    </div>
-</div>
-<div class="flex justify-between">
-    <div class="w-full flex mt-[2%]">
-        <div class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
-            <p class="text-whiteDefault"></p>
-        </div>
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
-            <p class="text-whiteDefault"></p>
-        </div>
-    </div>
-    <div class="w-full flex mt-[2%] justify-end">
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
-            <p class="text-whiteDefault"></p>
-        </div>
-        <div class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
-            <p class="text-whiteDefault text-right"></p>
+        <div id="round-1-blueInput-div" class="bg-blueDefault py-3 w-[70%] rounded-l-[20px] pr-6 shadow-inset-custom">
+            <p id="round-1-blueInput" class="text-whiteDefault text-right"></p>
         </div>
     </div>
 </div>
 <div class="flex justify-between">
     <div class="w-full flex mt-[2%]">
-        <div class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
-            <p class="text-whiteDefault"></p>
+        <div id="round-2-redInput-div"  class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
+            <p id="round-2-redInput" class="text-whiteDefault"></p>
         </div>
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
-            <p class="text-whiteDefault"></p>
+        <div id="round-2-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
+            <p id="round-2-redScore" class="text-whiteDefault"></p>
         </div>
     </div>
     <div class="w-full flex mt-[2%] justify-end">
-        <div class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
-            <p class="text-whiteDefault"></p>
+        <div id="round-2-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
+            <p id="round-2-blueScore" class="text-whiteDefault"></p>
         </div>
-        <div class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
-            <p class="text-whiteDefault text-right"></p>
+        <div id="round-2-blueInput-div" class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
+            <p id="round-2-blueInput" class="text-whiteDefault text-right"></p>
+        </div>
+    </div>
+</div>
+<div class="flex justify-between">
+    <div class="w-full flex mt-[2%]">
+        <div id="round-3-redInput-div"  class="bg-grayDefault py-3 w-[70%] rounded-r-[20px] pl-6">
+            <p id="round-3-redInput" class="text-whiteDefault"></p>
+        </div>
+        <div id="round-3-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
+            <p id="round-3-redScore" class="text-whiteDefault"></p>
+        </div>
+    </div>
+    <div class="w-full flex mt-[2%] justify-end">
+        <div id="round-3-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full mr-[2%]">
+            <p id="round-3-blueScore" class="text-whiteDefault"></p>
+        </div>
+        <div id="round-3-blueInput-div" class="bg-grayDefault py-3 w-[70%] rounded-l-[20px] pr-6">
+            <p id="round-3-blueInput" class="text-whiteDefault text-right"></p>
         </div>
     </div>
 </div>
@@ -100,19 +100,19 @@
     <!--left side-->
     <div class="flex flex-col justify-start w-[50%]">
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
                     <path d="M23.6406 14.708L18.735 10.7835C18.0497 10.2352 17.2062 9.95971 16.3506 10.0048C15.495 10.0498 14.681 10.4126 14.0497 11.0303L6.47095 18.4406C5.71271 19.1808 5.28126 20.2266 5.28126 21.3252L5.28126 30.3747C5.28126 35.0747 8.95314 38.208 12.625 38.208L28.3608 38.208C32.5578 38.208 32.5578 32.333 28.3608 32.333L27.3125 32.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M27.3125 32.333L30.4593 32.333C34.6562 32.333 34.6562 26.458 30.4593 26.458L27.3125 26.458L31.9023 26.458C36.0993 26.458 36.0993 20.583 31.9023 20.583L27.3125 20.583L39.2479 20.583C39.978 20.5825 40.678 20.2728 41.194 19.7219C41.7101 19.1711 42 18.4242 42 17.6455C42 16.8664 41.7099 16.1193 41.1934 15.5684C40.6769 15.0175 39.9765 14.708 39.2461 14.708L18.1328 14.708" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M14.708 21.8679L10.7835 26.7735C10.2352 27.4588 9.95971 28.3023 10.0048 29.1579C10.0498 30.0136 10.4126 30.8275 11.0303 31.4588L18.4406 39.0376C19.1808 39.7958 20.2266 40.2273 21.3252 40.2273H30.3747C35.0747 40.2273 38.208 36.5554 38.208 32.8835L38.208 17.1477C38.208 12.9508 32.333 12.9508 32.333 17.1477L32.333 18.196" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M32.333 18.1562L32.333 15.0095C32.333 10.8125 26.458 10.8125 26.458 15.0095L26.458 18.1562L26.458 13.5664C26.458 9.36945 20.583 9.36945 20.583 13.5664L20.583 18.1562L20.583 6.22082C20.5825 5.49076 20.2728 4.79076 19.7219 4.2747C19.1711 3.75864 18.4242 3.46875 17.6455 3.46875C16.8664 3.46875 16.1193 3.75889 15.5684 4.27535C15.0175 4.79181 14.708 5.49227 14.708 6.22266L14.708 27.3359" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="peringatan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[50%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M14.708 21.8679L10.7835 26.7735C10.2352 27.4588 9.95971 28.3023 10.0048 29.1579C10.0498 30.0136 10.4126 30.8275 11.0303 31.4588L18.4406 39.0376C19.1808 39.7958 20.2266 40.2273 21.3252 40.2273H30.3747C35.0747 40.2273 38.208 36.5554 38.208 32.8835L38.208 17.1477C38.208 12.9508 32.333 12.9508 32.333 17.1477L32.333 18.196" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M32.333 18.1562L32.333 15.0095C32.333 10.8125 26.458 10.8125 26.458 15.0095L26.458 18.1562L26.458 13.5664C26.458 9.36945 20.583 9.36945 20.583 13.5664L20.583 18.1562L20.583 6.22082C20.5825 5.49076 20.2728 4.79076 19.7219 4.2747C19.1711 3.75864 18.4242 3.46875 17.6455 3.46875C16.8664 3.46875 16.1193 3.75889 15.5684 4.27535C15.0175 4.79181 14.708 5.49227 14.708 6.22266L14.708 27.3359" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -125,7 +125,7 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
                     <path d="M20.0474 12.3038C18.9717 10.629 17.1915 9.7915 14.7068 9.7915C10.9798 9.7915 4.60919 14.6631 4.60919 19.0562C4.60919 23.4492 4.60919 25.9969 4.60919 30.2967C4.60919 34.5965 8.14392 37.2082 10.9798 37.2082C14.9733 37.2082 18.9668 37.2082 22.9602 37.2082C24.4812 37.2082 25.7141 35.893 25.7141 34.2707L25.7141 34.2618C25.7141 32.6444 24.4849 31.3332 22.9686 31.3332" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M17.9702 13.6895L34.8969 13.6895C36.4167 13.6895 37.6486 15.0035 37.6486 16.6245C37.6486 16.6272 37.6486 16.63 37.6486 16.6326C37.6444 18.2594 36.4068 19.5759 34.8817 19.5759L22.4253 19.5759" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -133,7 +133,7 @@
                     <path d="M23.2296 25.458L25.7195 25.458C27.2404 25.458 28.4734 26.7731 28.4734 28.3955C28.4734 30.0179 27.2404 31.333 25.7195 31.333L22.9656 31.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M12.304 24.9524C10.6292 26.028 9.79169 27.8082 9.79169 30.2929C9.79169 34.02 14.6633 40.3906 19.0564 40.3906C23.4494 40.3906 25.9971 40.3906 30.2969 40.3906C34.5967 40.3906 37.2083 36.8558 37.2083 34.02C37.2083 30.0264 37.2083 26.033 37.2083 22.0396C37.2083 20.5186 35.8932 19.2856 34.2708 19.2856H34.2619C32.6445 19.2856 31.3333 20.5149 31.3333 22.0312" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M13.6898 27.0295L13.6898 10.1028C13.6898 8.58304 15.0038 7.35107 16.6248 7.35107C16.6276 7.35107 16.6303 7.35107 16.6329 7.35108C18.2597 7.35531 19.5762 8.59287 19.5762 10.118L19.5762 22.5744" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -141,7 +141,7 @@
                     <path d="M25.4584 21.7702L25.4584 19.2803C25.4584 17.7594 26.7735 16.5264 28.3959 16.5264C30.0183 16.5264 31.3334 17.7594 31.3334 19.2803L31.3334 22.0342" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="peringatan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[50%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M12.304 24.9524C10.6291 26.028 9.79166 27.8082 9.79166 30.2929C9.79166 34.02 14.6633 40.3906 19.0563 40.3906C23.4494 40.3906 25.9971 40.3906 30.2969 40.3906C34.5967 40.3906 37.2083 36.8558 37.2083 34.02C37.2083 30.0264 37.2083 26.033 37.2083 22.0396C37.2083 20.5186 35.8932 19.2856 34.2708 19.2856H34.2619C32.6445 19.2856 31.3333 20.5149 31.3333 22.0312" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M13.6897 27.0295L13.6897 10.1028C13.6897 8.58304 15.0038 7.35107 16.6248 7.35107C16.6275 7.35107 16.6303 7.35107 16.6329 7.35108C18.2597 7.35531 19.5762 8.59287 19.5762 10.118L19.5762 22.5744" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -158,13 +158,13 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="jatuhan-merah-plus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="jatuhan-merah-plus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DROP +</p>
             </button>
-            <button type="button" id="jatuhan-merah-minus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="jatuhan-merah-minus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DROP -</p>
             </button>
-            <button type="button" id="peringatan-merah-ketiga" class="shadow-inset-custom flex justify-center items-center w-[50%] bg-grayDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="peringatan-merah-ketiga" class="shadow-inset-custom flex justify-center items-center w-[50%] bg-grayDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="44" viewBox="0 0 48 44" fill="none">
                     <path d="M32 23.8333V8.25C32 7.52065 31.6839 6.82118 31.1213 6.30546C30.5587 5.78973 29.7956 5.5 29 5.5C28.2044 5.5 27.4413 5.78973 26.8787 6.30546C26.3161 6.82118 26 7.52065 26 8.25V22" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M14 21.083C14 20.3537 13.6839 19.6542 13.1213 19.1385C12.5587 18.6227 11.7956 18.333 11 18.333C10.2044 18.333 9.44129 18.6227 8.87868 19.1385C8.31607 19.6542 8 20.3537 8 21.083V29.333C8 32.2504 9.26428 35.0483 11.5147 37.1112C13.7652 39.1741 16.8174 40.333 20 40.333H24H23.584C25.5713 40.3333 27.5276 39.8812 29.2772 39.0172C31.0268 38.1532 32.515 36.9044 33.608 35.383C33.7392 35.2 33.8698 35.0166 34 34.833C34.624 33.9548 36.814 30.455 40.572 24.3317C40.9551 23.7075 41.0574 22.9709 40.8572 22.2786C40.657 21.5863 40.1701 20.9929 39.5 20.6247C38.7862 20.2321 37.9499 20.0694 37.1237 20.1624C36.2975 20.2554 35.5289 20.5988 34.94 21.138L32 23.833" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -174,12 +174,12 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[100%] bg-redDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">DISK</p>
             </button>
         </div>
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="popup-merah" class="shadow-inset-custom flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault focus:bg-redDefault focus:ring-2 focus:outline-none focus:ring-redDefault rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="popup-merah" class="shadow-inset-custom flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <p class="font-bold text-whiteDefault text-lg">Pop Up</p>
             </button>
         </div>

@@ -42,7 +42,7 @@ Route::post('/verif-update', function (\Illuminate\Http\Request $request){
     return null;
 });
 Route::get('/test',function (){
-    return view('test');
+    return view('timer');
 });
 
 Route::get('/register',[\App\Http\Controllers\UserController::class, 'index']);
