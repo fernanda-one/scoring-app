@@ -1,5 +1,6 @@
 require("./bootstrap");
 const {toNumber} = require("lodash");
+import {changeIndicatorPelanggaran} from './library/DewanFunc'
 let round = 'round-1'
 let blueScore = document.getElementById(`${round}-blueScore`).textContent;
 let redScore = document.getElementById(`${round}-redScore`).textContent;
@@ -21,137 +22,57 @@ const jatuhanMerahSah = document.getElementById('jatuhan-merah-plus')
 const jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus')
 const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
-let bluePenalty='teguran-pertama'
-let redPenalty = 'teguran-pertama';
+let bluePenalty='pertama'
+let redPenalty = 'pertama';
 
-const pelanggaranRed = {
-    'teguran-pertama': document.getElementById('teguran-merah-pertama'),
-    'teguran-kedua': document.getElementById('teguran-merah-kedua'),
-    'binaan-pertama': document.getElementById('binaan-merah-pertama'),
-    'binaan-kedua': document.getElementById('binaan-merah-kedua'),
-    'peringatan-pertama': document.getElementById('peringatan-merah-pertama'),
-    'peringatan-kedua': document.getElementById('peringatan-merah-kedua'),
-    'peringatan-ketiga': document.getElementById('peringatan-merah-ketiga'),
-}
-const pelanggaranBlue = {
-    'teguran-pertama': document.getElementById('teguran-biru-pertama'),
-    'teguran-kedua': document.getElementById('teguran-biru-kedua'),
-    'binaan-pertama': document.getElementById('binaan-biru-pertama'),
-    'binaan-kedua': document.getElementById('binaan-biru-kedua'),
-    'peringatan-pertama': document.getElementById('peringatan-biru-pertama'),
-    'peringatan-kedua': document.getElementById('peringatan-biru-kedua'),
-    'peringatan-ketiga': document.getElementById('peringatan-biru-ketiga'),
-}
-const pelanggaran = ['teguran-pertama', 'teguran-kedua','binaan-pertama', 'binaan-kedua','peringatan-pertama', 'peringatan-kedua','peringatan-ketiga']
-
-export function changeIndicatorPelanggaran(corner, penalty) {
-        let nameElemenet = pelanggaranRed
-        let color = 'bg-redDefault'
-        if (corner !== 'red'){
-            nameElemenet = pelanggaranBlue
-            color = 'bg-blueDark'
+function handlePenaltyClick(color, penalty) {
+    return function () {
+        if (color === 'red') {
+            redPenalty = penalty;
+        } else if (color === 'blue') {
+            bluePenalty = penalty;
         }
-        pelanggaran.map(itemPelanggaran =>{
-        if (itemPelanggaran === penalty){
-            nameElemenet[itemPelanggaran].classList.remove('bg-grayDefault')
-            nameElemenet[itemPelanggaran].classList.add(color)
-        } else {
-            nameElemenet[itemPelanggaran].classList.add('bg-grayDefault')
-            nameElemenet[itemPelanggaran].classList.remove(color)
+        changeIndicatorPelanggaran(color, penalty);
+        pushScore();
+    };
+}
+function handleScoreChange(color, scoreChange) {
+    return function () {
+        if (color === 'red') {
+            redScore = toNumber(redScore) + scoreChange;
+        } else if (color === 'blue') {
+            blueScore = toNumber(blueScore) + scoreChange;
         }
-    })
+        pushScore();
+    };
 }
 
-teguranMerahPertama.addEventListener("click", function (event) {
-    redPenalty = 'teguran-pertama'
-    changeIndicatorPelanggaran('red', redPenalty)
-    pushScore()
-})
-teguranMerahKedua.addEventListener("click", function () {
-    redPenalty = 'teguran-kedua'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
+// Add event listeners for red penalties
+teguranMerahPertama.addEventListener("click", handlePenaltyClick('red', 'teguran-pertama'));
+teguranMerahKedua.addEventListener("click", handlePenaltyClick('red', 'teguran-kedua'));
+binaanMerahPertama.addEventListener("click", handlePenaltyClick('red', 'binaan-pertama'));
+binaanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'binaan-kedua'));
+peringatanMerahPertama.addEventListener("click", handlePenaltyClick('red', 'peringatan-pertama'));
+peringatanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'peringatan-kedua'));
+peringatanMerahKetiga.addEventListener("click", handlePenaltyClick('red', 'peringatan-ketiga'));
 
-binaanMerahPertama.addEventListener("click", function () {
-    redPenalty = 'binaan-pertama'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
-binaanMerahKedua.addEventListener("click", function () {
-    redPenalty = 'binaan-kedua'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
-peringatanMerahPertama.addEventListener("click", function () {
-    redPenalty = 'peringatan-pertama'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
-peringatanMerahKedua.addEventListener("click", function () {
-    redPenalty = 'peringatan-kedua'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
-peringatanMerahKetiga.addEventListener("click", function () {
-    redPenalty = 'peringatan-ketiga'
-    changeIndicatorPelanggaran('red', redPenalty);
-    pushScore()
-})
-jatuhanMerahSah.addEventListener("click", function () {
-    redScore = toNumber(redScore) + 2
-    pushScore()
-})
-jatuhanMerahTidakSah.addEventListener("click", function () {
-    redScore = toNumber(redScore) - 2
-    pushScore()
-})
+// Add event listeners for blue penalties
+teguranBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'teguran-pertama'));
+teguranBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'teguran-kedua'));
+binaanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'binaan-pertama'));
+binaanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'binaan-kedua'));
+peringatanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'peringatan-pertama'));
+peringatanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'peringatan-kedua'));
+peringatanBiruKetiga.addEventListener("click", handlePenaltyClick('blue', 'peringatan-ketiga'));
 
-teguranBiruPertama.addEventListener("click", function () {
-    bluePenalty = 'teguran-pertama'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
-teguranBiruKedua.addEventListener("click", function () {
-    bluePenalty = 'teguran-kedua'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
+// Add event listeners for red score changes
+jatuhanMerahSah.addEventListener("click", handleScoreChange('red', 2));
+jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -2));
 
-binaanBiruPertama.addEventListener("click", function () {
-    bluePenalty = 'binaan-pertama'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
-binaanBiruKedua.addEventListener("click", function () {
-    bluePenalty = 'binaan-kedua'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
-peringatanBiruPertama.addEventListener("click", function () {
-    bluePenalty = 'peringatan-pertama'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
-peringatanBiruKedua.addEventListener("click", function () {
-    bluePenalty = 'peringatan-kedua'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
-peringatanBiruKetiga.addEventListener("click", function () {
-    bluePenalty = 'peringatan-ketiga'
-    changeIndicatorPelanggaran('blue', bluePenalty);
-    pushScore()
-})
+// Add event listeners for blue score changes
+jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 2));
+jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -2));
 
-jatuhanBiruSah.addEventListener("click", function () {
-    blueScore = toNumber(blueScore) + 2
-    pushScore()
-})
-jatuhanBiruTidakSah.addEventListener("click", function () {
-    blueScore = toNumber(blueScore) - 2
-    pushScore()
-})
 
 function pushScore(){
     axios.post("/score-update", {

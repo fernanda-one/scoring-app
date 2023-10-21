@@ -11,6 +11,7 @@ export const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gel
 export const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
 export const activeRound = document.getElementById('round');
 const pelanggaranPoint = {
+    'pertama':0,
     'teguran-pertama': 0,
     'teguran-kedua': 1,
     'binaan-pertama': 2,
@@ -33,6 +34,29 @@ const savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
     bluePenalty: 'teguran-pertama',
     redPenalty: 'teguran-pertama'
 };
+channelUpdateScore
+    .here((users) => {
+        console.log(users);
+        console.log(`anda telah terhubung dalam Gelanggang`);
+    })
+    .joining((user) => {
+        console.log({ user }, "joined");
+    })
+    .leaving((user) => {
+        console.log({ user }, "leaved");
+    })
+
+channelOperator
+    .here((users) => {
+        console.log(users);
+        console.log(`anda telah terhubung dalam Channel Operator`);
+    })
+    .joining((user) => {
+        console.log({ user }, "joined");
+    })
+    .leaving((user) => {
+        console.log({ user }, "leaved");
+    })
 export let redPenalty = '';
 export let bluePenalty = '';
 function changeScoreElement (newRedScoreElement, newBlueScoreElement){
@@ -89,7 +113,8 @@ function loadDataSaved() {
     redPenalty = savedScoreData.redPenalty
     bluePenalty = savedScoreData.bluePenalty
     redScore.textContent = savedScoreData.redScore
-    // blueScore.textContent = savedScoreData.blueScore
+    blueScore.textContent = savedScoreData.blueScore
 }
+
 
 export {startPertandingan, loadDataSaved, updateScore, changeScoreElement}

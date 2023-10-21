@@ -1,8 +1,7 @@
 require("./bootstrap");
 const {toInteger} = require("lodash/lang");
 const {isEmpty} = require("lodash");
-let roundNow = 'ROUND 1'
-let round = roundNow.toLowerCase().replace(/ /g, '')
+let round = 'round-1'
 const pukulanBiru = document.getElementById("pukul-biru");
 const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
@@ -16,7 +15,8 @@ const redInput = document.getElementById(`${round}-redInput`);
 const roundView = document.getElementById(`round`)
 const inputRed =[];
 const inputBlue =[];
-let redPenalty ,bluePenalty = 0;
+let bluePenalty='pertama'
+let redPenalty = 'pertama';
 // roundView.textContent = roundNow
 let timeouts = {
     pukulanred: [],
@@ -57,6 +57,7 @@ channelGelanggang
 pukulanBiru.addEventListener("click", function (event) {
     startTimeout(blueInput, 'pukulanblue', inputPoint(blueInput,1,'blue'), 'blue')
     handleAction(event, 'blue', 'pukulan');
+
 });
 
 pukulanMerah.addEventListener("click", function (event) {
@@ -118,10 +119,10 @@ function handleAction(event, color, action) {
 function pushScore(blueScore,redScore){
     axios.post("/score-update", {
         message: {
+            "redPenalty":'pertama',
+            "bluePenalty":'pertama',
             "blueScore":blueScore,
             "redScore":redScore,
-            "redPenalty":redPenalty,
-            "bluePenalty":bluePenalty,
         },
     });
 }

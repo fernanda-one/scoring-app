@@ -18,31 +18,11 @@ let redScore = document.getElementById(`${round}-redScore`);
 changeScoreElement(redScore, blueScore)
 loadDataSaved()
 channelUpdateScore
-    .here((users) => {
-        console.log(users);
-        console.log(`anda telah terhubung dalam Gelanggang`);
-    })
-    .joining((user) => {
-        console.log({ user }, "joined");
-    })
-    .leaving((user) => {
-        console.log({ user }, "leaved");
-    })
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
         updateScore(event)
     });
 
 channelOperator
-    .here((users) => {
-        console.log(users);
-        console.log(`anda telah terhubung dalam Channel Operator`);
-    })
-    .joining((user) => {
-        console.log({ user }, "joined");
-    })
-    .leaving((user) => {
-        console.log({ user }, "leaved");
-    })
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         console.log(event);
         updateDataGelanggang(event);
