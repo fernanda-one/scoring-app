@@ -3,6 +3,8 @@ const kontingenMerah = document.getElementById('kontingen_merah');
 const namaBiru = document.getElementById('nama_biru');
 const kontingenBiru = document.getElementById('kontingen_biru');
 const babak = document.getElementById('babak');
+export let partaiId = ''
+export let kelas;
 let redScore = ''
 let blueScore = ''
 let userElement = document.getElementById("user");
@@ -59,6 +61,8 @@ function updateScore(event, redPenalty, bluePenalty) {
     blueScore.textContent = blueScoreValue;
 }
 function startPertandingan(e) {
+    partaiId = e.id
+    kelas = e.kelas
     namaMerah.textContent = e.redName;
     kontingenMerah.textContent = e.redContingent;
     namaBiru.textContent = e.blueName;
@@ -67,6 +71,8 @@ function startPertandingan(e) {
     activeRound.textContent = e.activeRound.toUpperCase();
 
     const gelanggangData = {
+        partaiId : e.id,
+        kelas : e.kelas,
         namaMerah: namaMerah.textContent,
         kontingenMerah: kontingenMerah.textContent,
         namaBiru: namaBiru.textContent,
@@ -90,7 +96,8 @@ export function getDataGelanggang(){
 }
 
 function loadDataSaved() {
-    console.log(savedGelanggangData.activeRound)
+    partaiId = savedGelanggangData.partaiId;
+    kelas = savedGelanggangData.kelas;
     namaMerah.textContent = savedGelanggangData.namaMerah;
     kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
     namaBiru.textContent = savedGelanggangData.namaBiru;

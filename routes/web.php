@@ -76,6 +76,7 @@ Route::put('/management/edit-gelanggang/{id}',[\App\Http\Controllers\GelanggangC
 Route::delete('/management/delete-gelanggang/{id}',[\App\Http\Controllers\GelanggangController::class, 'destroy']);
 
 Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth');
+Route::post('/create-history',[\App\Http\Controllers\HistoryController::class, 'create'])->middleware('auth');
 
 Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index']);
 

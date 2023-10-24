@@ -10,14 +10,15 @@ class OperatorController extends Controller
 {
     public function index()
     {
-        $partai = Partai::orderBy('id', 'asc');
+        $partai = Partai::where('status', true)
+            ->orderBy('id', 'asc');
         $idToSkip = $partai->paginate(1)[0]->id;
 
         $gelangang = UserGelanggang::where('user_id', auth()->user()->id)->first();
         return view('operator', [
             'title' => 'operator',
             'partai_pertama'=>$partai->paginate(1),
-            'partai_kedua'=>$partai->where('id', '!=', $idToSkip)->paginate(1),
+            'partai_kedua'=>$partai->where('id', '!=', $idToSkip)->where('status',true)->paginate(1),
             'gelanggang'=>$gelangang
         ]);
     }

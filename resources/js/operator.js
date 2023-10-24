@@ -1,5 +1,6 @@
 require("./bootstrap");
 const {value} = require("lodash/seq");
+const {getDataGelanggang, partaiId, kelas} = require("./library/ScoreFunc");
 const roundsElement = {
      'round-1' : document.getElementById('round-1'),
      'round-2' : document.getElementById('round-2'),
@@ -59,7 +60,6 @@ roundsElement['round-3'].addEventListener('click',(ev)=>{
     changeStatusRound('round-3')
     updatePertandingan()
 })
-
 channelUpdateScore
     .here((users) => {
         cekStatususer(users)
@@ -82,6 +82,10 @@ function roundDone(activeRound) {
 }
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
+        if(event.action === 'merah' || event.action === 'biru'){
+            uploadDataWinner(event.action)
+            updatePertandingan('reset')
+        }
         event.action === 'round-done'?roundDone(event.activeRound):''
     });
 
@@ -111,6 +115,19 @@ function togglePausePlay(status = true){
     }
 }
 
+function uploadDataWinner(winner) {
+    axios.post("/create-history", {
+        'partai':dataPartai.id,
+        'kelas':dataPartai.kelas,
+        'sudut_biru':dataPartai.sudut_biru,
+        'sudut_merah':dataPartai.sudut_merah,
+        'kontingen_biru':dataPartai.contingen_sudut_biru,
+        'kontingen_merah':dataPartai.contingen_sudut_merah,
+        'babak':dataPartai.babak,
+        'round_time':activeRound,
+        'pemenang':winner,
+    });
+}
 function updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
         message: {

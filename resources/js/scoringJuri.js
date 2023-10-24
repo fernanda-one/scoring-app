@@ -16,7 +16,7 @@ const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
 const roundView = document.getElementById(`round`)
-const buttonAction = ['pukul-biru','tendangan-biru','pukul-merah','tendangan-merah']
+const buttonAction = ['pukul-biru','tendang-biru','pukul-merah','tendang-merah']
 let bluePenalty='pertama'
 let redPenalty = 'pertama';
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
@@ -102,7 +102,7 @@ function updateScore(event) {
     return score;
 }
 
-function enabledAction(status) {
+function enabledAction(status = true) {
     buttonAction.map(action =>{
         const button = document.getElementById(action)
         button.disabled = !status;

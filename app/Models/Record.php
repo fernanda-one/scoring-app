@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Record extends Model
 {
+    protected $table = 'log_pertandingan';
+    protected $guarded =['id'];
     use HasFactory;
 }

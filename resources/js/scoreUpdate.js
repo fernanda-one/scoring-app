@@ -9,18 +9,12 @@ import {
     changeScoreElement,
     channelUpdateScore,
     channelOperator,
-    userData, getDataGelanggang
+    userData, getDataGelanggang, partaiId, kelas
 } from "./library/ScoreFunc";
 
 let round = 'round-1';
 let blueScore = document.getElementById(`${round}-blueScore`);
 let redScore = document.getElementById(`${round}-redScore`);
-const rounds = ['round-1','round-2','round-3']
-const winnerRounds = {
-    'round-1':'',
-    'round-2':'',
-    'round-3':'',
-}
 changeScoreElement(redScore, blueScore)
 loadDataSaved()
 channelUpdateScore
@@ -34,40 +28,16 @@ channelOperator
         updateDataGelanggang(event);
     });
 
-function cekWinner(){
-    let red = 0;
-    let blue =0;
-    rounds.map(round =>{
-        winnerRounds[round] === 'red'? red++ : blue++
-    })
-    if (red > blue){
-        uploadDataWinner('red')
-    }
-    uploadDataWinner('blue')
-}
-function uploadDataWinner(winner) {
-    const dataPartai = getDataGelanggang()
-    axios.post("/operator-update", {
-        message: {
-            'partai':dataPartai.id,
-            'sudut_biru':dataPartai.sudut_biru,
-            'sudut_merah':dataPartai.sudut_merah,
-            'kontingen_biru':dataPartai.contingen_sudut_biru,
-            'kontingen_merah':dataPartai.contingen_sudut_merah,
-            'babak':dataPartai.babak,
-            'round_time':dataPartai.activeRound,
-            'pemenang':winner,
-        },
-    });
-}
-
 function updateDataGelanggang(e) {
     switch (e.action) {
         case 'start':
             startPertandingan(e)
             break;
         case 'finish':
-            uploadDataWinner()
+            // localStorage.clear()
+            // location.reload();
+            break;
+        case 'reset':
             localStorage.clear()
             location.reload();
             break;
@@ -91,6 +61,7 @@ function saveWinnerRound(round) {
 function changeRound(e) {
     activeRound.textContent = e.activeRound.toUpperCase()
     saveWinnerRound(round)
+    rounds.push(round)
     round = e.activeRound
     blueScore = document.getElementById(`${round}-blueScore`);
     redScore = document.getElementById(`${round}-redScore`);

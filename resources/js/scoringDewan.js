@@ -1,4 +1,4 @@
-import {channelOperator, userData} from "./library/ScoreFunc";
+import {activeRound, channelOperator, getDataGelanggang, kelas, partaiId, userData} from "./library/ScoreFunc";
 
 require("./bootstrap");
 const {toNumber} = require("lodash");
@@ -30,6 +30,12 @@ const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-mi
     'teguran-merah-kedua','peringatan-merah-pertama','binaan-merah-pertama','teguran-merah-pertama', 'popup-biru','popup-merah', 'disk-merah', 'disk-biru']
 let bluePenalty='pertama'
 let redPenalty = 'pertama';
+const rounds = []
+const winnerRounds = {
+    'round-1':'',
+    'round-2':'',
+    'round-3':'',
+}
 
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
@@ -100,12 +106,38 @@ function enabledAction(status = true) {
     })
 }
 enabledAction(false)
-
+function cekWinner(){
+    let red = 0;
+    let blue =0;
+    rounds.map(round =>{
+        winnerRounds[round] === 'red'? red++ : blue++
+    })
+    if (red > blue){
+        updatePertandingan('merah')
+    } else {
+        updatePertandingan('biru')
+    }
+}
+function updatePertandingan(winner){
+    const dataPartai = getDataGelanggang()
+    axios.post("/operator-update", {
+        message: {
+            'blueName':dataPartai.namaBiru,
+            'redName':dataPartai.namaMerah,
+            'blueContingent':dataPartai.kontingenMerah,
+            'redContingent':dataPartai.kontingenBiru,
+            'babak':dataPartai.babak,
+            'activeRound':activeRound.textContent,
+            'action': winner
+        },
+    });
+}
 function updateDataDewan(e) {
     switch (e.action) {
         case 'start':
             break;
         case 'finish':
+            cekWinner()
             break;
         case 'round':
             bluePenalty='pertama'
