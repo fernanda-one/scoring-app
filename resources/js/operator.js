@@ -1,6 +1,5 @@
 require("./bootstrap");
 const {value} = require("lodash/seq");
-
 const roundsElement = {
      'round-1' : document.getElementById('round-1'),
      'round-2' : document.getElementById('round-2'),
@@ -19,6 +18,8 @@ const userData = JSON.parse(userElement.getAttribute("data-user"));
 const partaiElement = document.getElementById("partai");
 const dataPartai = JSON.parse(partaiElement.getAttribute("data-partai"));
 const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
+const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
+
 const actionButtonNames = ['start','pausePlay']
 const userActiveList = {
     'juri_pertama':document.getElementById("status_juri_pertama"),
@@ -61,20 +62,27 @@ roundsElement['round-3'].addEventListener('click',(ev)=>{
 
 channelUpdateScore
     .here((users) => {
-        console.log(users);
-        console.log(`anda telah terhubung dalam Gelanggang`);
         cekStatususer(users)
     })
     .joining((users) => {
-        console.log({ users }, "joined");
-        location.reload();
+        // console.log({ users }, "joined");
     })
     .leaving((users) => {
-        console.log({ users }, "leaved");
-        location.reload();
+        // console.log({ users }, "leaved");
     })
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        console.log(event)
+        // console.log(event)
+    });
+
+function roundDone(activeRound) {
+    activeRound = activeRound.toLowerCase()
+    roundsElement[activeRound].classList.add('bg-grayDark')
+    roundsElement[activeRound].classList.remove('bg-yellowDefault')
+    togglePausePlay(false)
+}
+channelOperator
+    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
+        event.action === 'round-done'?roundDone(event.activeRound):''
     });
 
 start.addEventListener('click', (evt)=>{
@@ -84,20 +92,24 @@ start.addEventListener('click', (evt)=>{
 finish.addEventListener('click', (evt) =>{
     updatePertandingan('finish')
     changeDisabledButtons(true)
+    togglePausePlay(false)
     changeStatusRound('round-1')
 })
 
 pausePlay.addEventListener('click', ()=>{
-    if(pauseStatus) {
+    togglePausePlay(pauseStatus)
+    updatePertandingan(pauseStatus?'pause':'play')
+})
+
+function togglePausePlay(status = true){
+    if (status){
+        pausePlay.textContent = 'PAUSE'
+        pauseStatus = !status
+    } else {
         pausePlay.textContent = 'PLAY'
         pauseStatus = !pauseStatus
-        updatePertandingan('pause')
-    } else {
-        pausePlay.textContent = 'PAUSE'
-        pauseStatus = !pauseStatus
-        updatePertandingan('play')
     }
-})
+}
 
 function updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
@@ -126,7 +138,7 @@ function cekStatususer(users) {
             trueCount += 1;
             userList[roleIds[`${user.role_id}`]] = true;
         }
-    })
+     })
     if (trueCount === coutMinimumToStart){
         start.disabled = false;
     }

@@ -210,7 +210,7 @@
             </div>
         </div>
     </div>
-    <script src="{{ mix('js/scoringJuri.js') }}">
+    <script type="module" src="{{ mix('js/scoringJuri.js') }}">
     </script>
     <script type="module" src="{{ mix('js/scoreUpdate.js') }}">
     </script>

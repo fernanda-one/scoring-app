@@ -118,7 +118,7 @@
                 START
             </button>
             <button id="pause" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                PAUSE
+                PLAY
             </button>
             <button id="finish" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 FINISH
