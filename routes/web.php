@@ -29,6 +29,10 @@ Route::post('/score-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\ScoringUpdate($request->message));
     return null;
 });
+Route::post('/ketua-pertandingan-update', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\KetuaPertandingan($request->message));
+    return null;
+});
 Route::post('/drop-verification', function (\Illuminate\Http\Request $request){
     event(new \App\Events\DropVerification($request->message));
     return null;

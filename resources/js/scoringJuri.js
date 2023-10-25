@@ -105,10 +105,14 @@ function inputPoint(element, point,sudut = 'red' ){
         } else{
             formattedValues.push(`${point}`)
         }
-        element.innerHTML = formattedValues.join(",");
+        const joinValues = formattedValues.join(",");
+        element.innerHTML = joinValues
+        const scorePiece = joinValues
+        pushKetuaPertandingan(sudut, scorePiece);
         return values.length
     }else {
         element.innerHTML = point
+        pushKetuaPertandingan(sudut, point);
     }
 }
 
@@ -116,6 +120,7 @@ function handleAction(event, color, action) {
     event.preventDefault();
     pushMessage(color, action, toInteger(blueScore.textContent), toInteger(redScore.textContent));
 }
+
 function pushScore(blueScore,redScore){
     axios.post("/score-update", {
         message: {
@@ -126,6 +131,16 @@ function pushScore(blueScore,redScore){
         },
     });
 }
+
+function pushKetuaPertandingan(sudut,scorePiece){
+    axios.post("/ketua-pertandingan-update", {
+        message: {
+            "sudut": sudut,
+            "scorePiece": scorePiece,
+        },
+    });
+}
+
 function updateScore(event) {
     const gerakan = event.gerakan;
     const sudut = event.sudut
@@ -199,6 +214,8 @@ function strikeoutLastValue(element, posisi, sudut) {
             }
         });
         element.innerHTML = formattedValues.join(",");
+        const scorePiece = formattedValues.join(",");
+        pushKetuaPertandingan(sudut, scorePiece);
     }
 }
 

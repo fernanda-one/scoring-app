@@ -24,6 +24,8 @@ const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
 let bluePenalty='pertama'
 let redPenalty = 'pertama';
+let droppingRed = JSON.parse(localStorage.getItem('scoreData'))?.droppingRed || [] ;
+let droppingBlue = JSON.parse(localStorage.getItem('scoreData'))?.droppingBlue || [];
 
 function handlePenaltyClick(color, penalty) {
     return function () {
@@ -40,8 +42,10 @@ function handleScoreChange(color, scoreChange) {
     return function () {
         if (color === 'red') {
             redScore = toNumber(redScore) + scoreChange;
+            droppingRed.push(scoreChange)
         } else if (color === 'blue') {
             blueScore = toNumber(blueScore) + scoreChange;
+            droppingBlue.unshift(scoreChange)
         }
         pushScore();
     };
@@ -81,6 +85,8 @@ function pushScore(){
             "redScore":toNumber(redScore),
             "redPenalty":redPenalty,
             "bluePenalty": bluePenalty,
+            "droppingRed": droppingRed,
+            "droppingBlue": droppingBlue,
         },
     });
 }

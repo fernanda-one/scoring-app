@@ -9,6 +9,7 @@ let userElement = document.getElementById("user");
 export const userData = JSON.parse(userElement.getAttribute("data-user"));
 export const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
 export const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
+export const channelKetuaPertandingan = Echo.join(`presence.ketuaPertandingan.${userData.gelanggang_id}`);
 export const activeRound = document.getElementById('round');
 const pelanggaranPoint = {
     'pertama':0,
@@ -20,7 +21,7 @@ const pelanggaranPoint = {
     'peringatan-kedua': 7,
     'peringatan-ketiga': 9,
 }
-const savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
+export const savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
     namaMerah: 'Sudut Merah',
     kontingenMerah: 'Kontingen',
     namaBiru: 'Sudut Biru',
@@ -57,6 +58,18 @@ channelOperator
     .leaving((user) => {
         console.log({ user }, "leaved");
     })
+
+channelKetuaPertandingan
+    .here((users) => {
+        console.log(`anda telah terhubung dalam Channel Ketua Pertandingan`);
+    })
+    .joining((user) => {
+        console.log({ user }, "joined");
+    })
+    .leaving((user) => {
+        console.log({ user }, "leaved");
+    })
+
 export let redPenalty = '';
 export let bluePenalty = '';
 function changeScoreElement (newRedScoreElement, newBlueScoreElement){
@@ -75,6 +88,8 @@ function updateScore(event, redPenalty, bluePenalty) {
         blueScore: event.blue_score,
         redPenalty: event.red_penalty,
         bluePenalty: event.blue_penalty,
+        droppingRed: event.droppingRed,
+        droppingBlue: event.droppingBlue,
     };
 
     localStorage.setItem('scoreData', JSON.stringify(scoreData));
