@@ -33,6 +33,9 @@ Broadcast::channel('presence.ketuapertandingan.{id}', function ($user , $id){
 Broadcast::channel('presence.updateScore.{id}', function ($user , $id){
     return $user;
 });
+Broadcast::channel('presence.ketuaPertandingan.{id}', function ($user , $id){
+    return $user;
+});
 Broadcast::channel('presence.dropVerification.{id}', function ($user , $id){
     return $user;
 });

@@ -84,10 +84,14 @@ export function inputPoint(element, point,sudut = 'red' ){
         } else{
             formattedValues.push(`${point}`)
         }
-        element.innerHTML = formattedValues.join(",");
+        const joinValues = formattedValues.join(",");
+        element.innerHTML = joinValues
+        const scorePiece = joinValues
+        pushKetuaPertandingan(sudut, scorePiece);
         return values.length
     }else {
-        element.innerHTML = point
+        element.innerHTML = point;
+        pushKetuaPertandingan(sudut, point);
     }
 }
 function strikeoutLastValue(element, posisi, sudut) {
@@ -111,7 +115,9 @@ function strikeoutLastValue(element, posisi, sudut) {
                 return value;
             }
         });
-        element.innerHTML = formattedValues.join(",");
+        const scorePiece = formattedValues.join(",");
+        element.innerHTML = scorePiece;
+        pushKetuaPertandingan(sudut, scorePiece);
     }
 }
 
@@ -128,6 +134,15 @@ function pushMessage(sudut,gerakan, blueScore = 0,redScore = 0){
             "blueScore":blueScore,
             "redScore":redScore,
             "time":Date.now()
+        },
+    });
+}
+
+function pushKetuaPertandingan(sudut,scorePiece){
+    axios.post("/ketua-pertandingan-update", {
+        message: {
+            "sudut": sudut,
+            "scorePiece": scorePiece,
         },
     });
 }

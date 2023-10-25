@@ -11,7 +11,6 @@ let userElement = document.getElementById("user");
 export const userData = JSON.parse(userElement.getAttribute("data-user"));
 export const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
 export const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
-export const channelKetuaPertandingan = Echo.join(`presence.ketuaPertandingan.${userData.gelanggang_id}`);
 export const activeRound = document.getElementById('round');
 const pelanggaranPoint = {
     'pertama':0,

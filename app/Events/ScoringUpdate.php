@@ -16,6 +16,7 @@ class ScoringUpdate implements ShouldBroadcast
 
     private int $blueScore, $redScore, $roomId, $redPopup, $bluePopup;
     private string $redPenalty, $bluePenalty;
+    private array $droppingRed, $droppingBlue;
     /**
      * @param mixed $message
      */
@@ -27,6 +28,8 @@ class ScoringUpdate implements ShouldBroadcast
         $this->redScore = $message['redScore'];
         $this->redPenalty = $message['redPenalty'];
         $this->bluePenalty = $message['bluePenalty'];
+        $this->droppingRed = $message['droppingRed'];
+        $this->droppingBlue = $message['droppingBlue'];
         $this->roomId = $gelanggang;
     }
     public function broadcastOn(): PresenceChannel
@@ -45,6 +48,8 @@ class ScoringUpdate implements ShouldBroadcast
             'red_score'=>$this->redScore,
             'blue_penalty'=>$this->bluePenalty,
             'red_penalty'=>$this->redPenalty,
+            'droppingRed'=>$this->droppingRed,
+            'droppingBlue'=>$this->droppingBlue,
         ];
     }
     private function getGelanggangId($user)
