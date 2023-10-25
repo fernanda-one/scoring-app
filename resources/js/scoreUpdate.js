@@ -51,17 +51,8 @@ function updateDataGelanggang(e) {
     }
 }
 
-function saveWinnerRound(round) {
-    const scoreBlue = parseInt(blueScore.textContent)
-    const scoreRed = parseInt(blueScore.textContent)
-    winnerRounds[round] = scoreBlue === scoreRed?'seri': scoreBlue >= scoreRed? 'blue':'red'
-    localStorage.setItem('winner-rounds', JSON.stringify(winnerRounds));
-}
-
 function changeRound(e) {
     activeRound.textContent = e.activeRound.toUpperCase()
-    saveWinnerRound(round)
-    rounds.push(round)
     round = e.activeRound
     blueScore = document.getElementById(`${round}-blueScore`);
     redScore = document.getElementById(`${round}-redScore`);
