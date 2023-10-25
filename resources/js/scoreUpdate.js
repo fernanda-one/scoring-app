@@ -1,15 +1,15 @@
+import {updateRoundJuri} from "./library/JuriFunc";
+
 require("./bootstrap");
 import {
     startPertandingan,
     loadDataSaved,
     updateScore,
-    redPenalty,
     activeRound,
-    bluePenalty,
     changeScoreElement,
     channelUpdateScore,
     channelOperator,
-    userData
+    userData, getDataGelanggang, partaiId, kelas
 } from "./library/ScoreFunc";
 
 let round = 'round-1';
@@ -34,6 +34,10 @@ function updateDataGelanggang(e) {
             startPertandingan(e)
             break;
         case 'finish':
+            // localStorage.clear()
+            // location.reload();
+            break;
+        case 'reset':
             localStorage.clear()
             location.reload();
             break;
@@ -47,11 +51,21 @@ function updateDataGelanggang(e) {
     }
 }
 
+function saveWinnerRound(round) {
+    const scoreBlue = parseInt(blueScore.textContent)
+    const scoreRed = parseInt(blueScore.textContent)
+    winnerRounds[round] = scoreBlue === scoreRed?'seri': scoreBlue >= scoreRed? 'blue':'red'
+    localStorage.setItem('winner-rounds', JSON.stringify(winnerRounds));
+}
+
 function changeRound(e) {
     activeRound.textContent = e.activeRound.toUpperCase()
+    saveWinnerRound(round)
+    rounds.push(round)
     round = e.activeRound
     blueScore = document.getElementById(`${round}-blueScore`);
     redScore = document.getElementById(`${round}-redScore`);
+    updateRoundJuri(round)
     changeScoreElement(redScore, blueScore)
     switch (round){
         case 'round-1':
@@ -76,12 +90,19 @@ function changeColorRound(round, status) {
     elements.forEach((element) => {
         const elementId = `${round}-${element}`;
         const elementClassList = document.getElementById(elementId).classList;
+        const blueScore = document.getElementById(`${round}-blueScore`);
+        const redScore = document.getElementById(`${round}-redScore`);
         if (status) {
             elementClassList.remove('bg-grayDefault');
-            elementClassList.add(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault');
+            elementClassList.add(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault' , 'shadow-inset-custom');
+            console.log(blueScore)
+            blueScore.innerText = 0;
+            redScore.innerText = 0;
         } else {
             elementClassList.add('bg-grayDefault');
-            elementClassList.remove(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault');
+            blueScore.innerText = ''
+            redScore.innerText = ''
+            elementClassList.remove(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault','shadow-inset-custom');
         }
     });
 }

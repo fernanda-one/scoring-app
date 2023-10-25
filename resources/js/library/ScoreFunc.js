@@ -3,6 +3,8 @@ const kontingenMerah = document.getElementById('kontingen_merah');
 const namaBiru = document.getElementById('nama_biru');
 const kontingenBiru = document.getElementById('kontingen_biru');
 const babak = document.getElementById('babak');
+export let partaiId = ''
+export let kelas;
 let redScore = ''
 let blueScore = ''
 let userElement = document.getElementById("user");
@@ -35,41 +37,6 @@ const savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
     bluePenalty: 'teguran-pertama',
     redPenalty: 'teguran-pertama'
 };
-channelUpdateScore
-    .here((users) => {
-        console.log(users);
-        console.log(`anda telah terhubung dalam Gelanggang`);
-    })
-    .joining((user) => {
-        console.log({ user }, "joined");
-    })
-    .leaving((user) => {
-        console.log({ user }, "leaved");
-    })
-
-channelOperator
-    .here((users) => {
-        console.log(users);
-        console.log(`anda telah terhubung dalam Channel Operator`);
-    })
-    .joining((user) => {
-        console.log({ user }, "joined");
-    })
-    .leaving((user) => {
-        console.log({ user }, "leaved");
-    })
-
-channelKetuaPertandingan
-    .here((users) => {
-        console.log(`anda telah terhubung dalam Channel Ketua Pertandingan`);
-    })
-    .joining((user) => {
-        console.log({ user }, "joined");
-    })
-    .leaving((user) => {
-        console.log({ user }, "leaved");
-    })
-
 export let redPenalty = '';
 export let bluePenalty = '';
 function changeScoreElement (newRedScoreElement, newBlueScoreElement){
@@ -77,7 +44,6 @@ function changeScoreElement (newRedScoreElement, newBlueScoreElement){
     blueScore = newBlueScoreElement
 }
 function updateScore(event, redPenalty, bluePenalty) {
-    console.log(event)
     redPenalty = event.red_penalty
     bluePenalty = event.blue_penalty
     const redScoreValue = event.red_score - pelanggaranPoint[redPenalty];
@@ -98,6 +64,8 @@ function updateScore(event, redPenalty, bluePenalty) {
     blueScore.textContent = blueScoreValue;
 }
 function startPertandingan(e) {
+    partaiId = e.id
+    kelas = e.kelas
     namaMerah.textContent = e.redName;
     kontingenMerah.textContent = e.redContingent;
     namaBiru.textContent = e.blueName;
@@ -106,6 +74,8 @@ function startPertandingan(e) {
     activeRound.textContent = e.activeRound.toUpperCase();
 
     const gelanggangData = {
+        partaiId : e.id,
+        kelas : e.kelas,
         namaMerah: namaMerah.textContent,
         kontingenMerah: kontingenMerah.textContent,
         namaBiru: namaBiru.textContent,
@@ -117,8 +87,20 @@ function startPertandingan(e) {
     localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
 }
 
+export function getDataGelanggang(){
+    return {
+        namaMerah: namaMerah.textContent,
+        kontingenMerah: kontingenMerah.textContent,
+        namaBiru: namaBiru.textContent,
+        kontingenBiru: kontingenBiru.textContent,
+        babak: babak.textContent,
+        activeRound: activeRound.textContent,
+    };
+}
+
 function loadDataSaved() {
-    console.log(savedGelanggangData.activeRound)
+    partaiId = savedGelanggangData.partaiId;
+    kelas = savedGelanggangData.kelas;
     namaMerah.textContent = savedGelanggangData.namaMerah;
     kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
     namaBiru.textContent = savedGelanggangData.namaBiru;

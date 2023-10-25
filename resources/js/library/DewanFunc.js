@@ -18,7 +18,6 @@ const pelanggaranBlue = {
     'peringatan-ketiga': document.getElementById('peringatan-biru-ketiga'),
 }
 export function changeIndicatorPelanggaran(corner, penalty) {
-    console.log(corner, penalty)
     let nameElemenet = pelanggaranRed
     let color = 'bg-redDefault'
     if (corner !== 'red'){
@@ -33,6 +32,16 @@ export function changeIndicatorPelanggaran(corner, penalty) {
             nameElemenet[itemPelanggaran].classList.add('bg-grayDefault')
             nameElemenet[itemPelanggaran].classList.remove(color)
         }
+    })
+}
+
+export function clearIndicator(){
+    const namesElement = [pelanggaranRed, pelanggaranBlue]
+    namesElement.map(nameElemenet =>{
+        pelanggaran.map(itemPelanggaran =>{
+            nameElemenet[itemPelanggaran].classList.add('bg-grayDefault')
+            nameElemenet[itemPelanggaran].classList.remove('bg-redDefault', 'bg-blueDark')
+        })
     })
 }
 

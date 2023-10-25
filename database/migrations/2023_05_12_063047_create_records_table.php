@@ -16,13 +16,13 @@ class CreateRecordsTable extends Migration
         Schema::create('log_pertandingan', function (Blueprint $table) {
             $table->id();
             $table->integer('partai');
-            $table->string('juri_pertama');
-            $table->string('juri_kedua');
-            $table->string('juri_ketiga');
-            $table->string('dewan');
             $table->string('sudut_merah');
             $table->string('sudut_biru');
-            $table->string('round_time')->nullable();
+            $table->string('kontingen_merah');
+            $table->string('kontingen_biru');
+            $table->string('babak');
+            $table->string('round_time');
+            $table->string('pemenang');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('records');
+        Schema::dropIfExists('log_pertandingan');
     }
 }

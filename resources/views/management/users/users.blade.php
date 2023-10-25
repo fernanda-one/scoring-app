@@ -98,7 +98,7 @@
                 Status
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Created At
+                    Last Update
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Action
@@ -128,7 +128,7 @@
                         @endif
                     </td>
                     <td class="px-6 py-4">
-                        {{$user->created_at}}
+                        {{$user->updated_at}}
                     </td>
                     <td class="px-6 py-4 flex">
                         <!-- Edit Modal -->
