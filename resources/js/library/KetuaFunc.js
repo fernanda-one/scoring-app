@@ -1,4 +1,4 @@
-let round = 'round-2';
+let round = JSON.parse(localStorage.getItem("gelanggangData")).activeRound || 'ROUND';
 let savedGelanggangData = {};
 let savedKetuaData = {
     'round-1': {
@@ -22,6 +22,8 @@ const namaMerah = document.getElementById('nama_merah');
 const kontingenMerah = document.getElementById('kontingen_merah');
 const namaBiru = document.getElementById('nama_biru');
 const kontingenBiru = document.getElementById('kontingen_biru');
+const babak = document.getElementById('babak');
+const activeRound = document.getElementById('round');
 
 const redCorner = {
     'jurror1': document.getElementById(`${round}-jurror1-red`),
@@ -43,8 +45,6 @@ const blueCorner = {
     'boardPoint': document.getElementById(`${round}-board-point-blue`),
 }
 
-console.log({ketuaData});
-
 function storeGelanggangData(data) {
     savedGelanggangData = data;
     console.log({savedGelanggangData});
@@ -55,6 +55,8 @@ function startPertandingan(e) {
     kontingenMerah.textContent = e.redContingent;
     namaBiru.textContent = e.blueName;
     kontingenBiru.textContent = e.blueContingent;
+    babak.textContent = e.babak.toUpperCase();
+    activeRound.textContent = e.activeRound.toUpperCase();
 
     const gelanggangData = {
         namaMerah: e.redName,
@@ -74,6 +76,8 @@ function loadDataSaved() {
     kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
     namaBiru.textContent = savedGelanggangData.namaBiru;
     kontingenBiru.textContent = savedGelanggangData.kontingenBiru;
+    babak.textContent = savedGelanggangData.babak;
+    activeRound.textContent = savedGelanggangData.activeRound;
     if (ketuaData) {
         savedKetuaData = ketuaData;
         // round1

@@ -48,8 +48,6 @@ function updateDataGelanggang(e) {
             startPertandingan(e)
             break;
         case 'finish':
-            localStorage.clear()
-            location.reload();
             break;
         case 'round':
             changeRound(e)
