@@ -10,8 +10,10 @@ class HistoryController extends Controller
 {
     public function index()
     {
+        $record = Record::latest();
         return view('management.history.history', [
-            'title' => 'history'
+            'title' => 'history',
+            'data' => $record->paginate(10)
             ]);
     }
     public function create(Request $request)
@@ -19,6 +21,7 @@ class HistoryController extends Controller
         $validatedData = $request->validate([
             'partai' => 'required|unique:log_pertandingan',
             'kelas' => 'required',
+            'jenis_kelamin' => 'required',
             'sudut_biru' => 'required',
             'sudut_merah' => 'required',
             'kontingen_merah' => 'required',

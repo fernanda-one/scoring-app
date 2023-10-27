@@ -60,22 +60,46 @@ class GelanggangController extends Controller
     public function listGelanggang()
     {
         $search = \request('search') ?? '';
+
         $gelanggang = DB::table('gelanggangs')
-            ->select(
+            ->select([
                 'gelanggangs.id as id',
                 'gelanggangs.nama_gelanggang',
-                DB::raw('STRING_AGG(roles.name, \', \') as nama_role'),
-                DB::raw('STRING_AGG(users.name, \', \') as nama_user')
-            )
+            ])
             ->leftJoin('users_gelanggangs', 'users_gelanggangs.gelanggang_id', '=', 'gelanggangs.id')
             ->leftJoin('users', 'users.id', '=', 'users_gelanggangs.user_id')
             ->leftJoin('roles', 'roles.id', '=', 'users.role_id')
             ->groupBy('gelanggangs.id', 'gelanggangs.nama_gelanggang');
 
         if ($search != ''){
-            $gelanggang->where('gelanggangs.nama_gelanggang','like', '%'.$search.'%');
+            $gelanggang->where('gelanggangs.nama_gelanggang', 'like', '%'.$search.'%');
         }
+
         $gelanggang = $gelanggang->get();
+
+// Loop melalui hasil query dan gabungkan peran dan pengguna untuk setiap baris
+        $gelanggang->transform(function ($row) {
+            $roles = DB::table('users_gelanggangs')
+                ->select('roles.name')
+                ->join('users', 'users.id', '=', 'users_gelanggangs.user_id')
+                ->join('roles', 'roles.id', '=', 'users.role_id')
+                ->where('users_gelanggangs.gelanggang_id', $row->id)
+                ->pluck('name')
+                ->implode(', ');
+
+            $users = DB::table('users_gelanggangs')
+                ->select('users.name')
+                ->join('users', 'users.id', '=', 'users_gelanggangs.user_id')
+                ->where('users_gelanggangs.gelanggang_id', $row->id)
+                ->pluck('name')
+                ->implode(', ');
+
+            $row->nama_role = $roles;
+            $row->nama_user = $users;
+
+            return $row;
+        });
+
         $result = [];
 
         foreach ($gelanggang as $row) {

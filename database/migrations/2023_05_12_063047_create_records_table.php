@@ -16,6 +16,8 @@ class CreateRecordsTable extends Migration
         Schema::create('log_pertandingan', function (Blueprint $table) {
             $table->id();
             $table->integer('partai');
+            $table->string('kelas');
+            $table->string('jenis_kelamin');
             $table->string('sudut_merah');
             $table->string('sudut_biru');
             $table->string('kontingen_merah');
