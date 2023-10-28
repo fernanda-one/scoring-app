@@ -37,6 +37,10 @@ Route::post('/operator-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Operator($request->message));
     return null;
 })->middleware('auth');
+Route::post('/ketua-pertandingan-update', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\KetuaPertandingan($request->message));
+    return null;
+})->middleware('auth');
 Route::post('/verif-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Operator($request->message));
     return null;

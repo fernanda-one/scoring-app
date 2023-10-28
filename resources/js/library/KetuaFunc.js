@@ -1,4 +1,4 @@
-let round = JSON.parse(localStorage.getItem("gelanggangData")).activeRound || 'ROUND';
+let round = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound || 'ROUND';
 let savedGelanggangData = {};
 let savedKetuaData = {
     'round-1': {
@@ -45,96 +45,7 @@ const blueCorner = {
     'boardPoint': document.getElementById(`${round}-board-point-blue`),
 }
 
-function storeGelanggangData(data) {
-    savedGelanggangData = data;
-    console.log({savedGelanggangData});
-}
-
-function startPertandingan(e) {
-    namaMerah.textContent = e.redName;
-    kontingenMerah.textContent = e.redContingent;
-    namaBiru.textContent = e.blueName;
-    kontingenBiru.textContent = e.blueContingent;
-    babak.textContent = e.babak.toUpperCase();
-    activeRound.textContent = e.activeRound.toUpperCase();
-
-    const gelanggangData = {
-        namaMerah: e.redName,
-        kontingenMerah: e.redContingent,
-        namaBiru: e.blueName,
-        kontingenBiru: e.blueContingent,
-        babak: e.babak.toUpperCase(),
-        activeRound: e.activeRound,
-    };
-
-    localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
-}
-
-function loadDataSaved() {
-    console.log(savedGelanggangData.activeRound)
-    namaMerah.textContent = savedGelanggangData.namaMerah;
-    kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
-    namaBiru.textContent = savedGelanggangData.namaBiru;
-    kontingenBiru.textContent = savedGelanggangData.kontingenBiru;
-    babak.textContent = savedGelanggangData.babak;
-    activeRound.textContent = savedGelanggangData.activeRound;
-    if (ketuaData) {
-        savedKetuaData = ketuaData;
-        // round1
-        document.getElementById(`round-1-jurror1-red`).innerHTML = ketuaData['round-1']?.red?.jurror1 || '';
-        document.getElementById(`round-1-jurror2-red`).innerHTML = ketuaData['round-1']?.red?.jurror2 || '';
-        document.getElementById(`round-1-jurror3-red`).innerHTML = ketuaData['round-1']?.red?.jurror3 || '';    
-        document.getElementById(`round-1-point-red`).innerHTML = ketuaData['round-1']?.red?.point || '';    
-        document.getElementById(`round-1-dropping-red`).innerHTML = ketuaData['round-1']?.red?.dropping || '';    
-        document.getElementById(`round-1-penalty-red`).innerHTML = ketuaData['round-1']?.red?.penalty || '';  
-        document.getElementById(`round-1-board-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;
-
-        document.getElementById(`round-1-jurror1-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror1 || '';
-        document.getElementById(`round-1-jurror2-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror2 || '';
-        document.getElementById(`round-1-jurror3-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror3 || '';    
-        document.getElementById(`round-1-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || '';    
-        document.getElementById(`round-1-dropping-blue`).innerHTML = ketuaData['round-1']?.blue?.dropping || '';    
-        document.getElementById(`round-1-penalty-blue`).innerHTML = ketuaData['round-1']?.blue?.penalty || '';  
-        document.getElementById(`round-1-board-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;
-        
-        // round 2
-        document.getElementById(`round-2-jurror1-red`).innerHTML = ketuaData['round-2']?.red?.jurror1 || '';
-        document.getElementById(`round-2-jurror2-red`).innerHTML = ketuaData['round-2']?.red?.jurror2 || '';
-        document.getElementById(`round-2-jurror3-red`).innerHTML = ketuaData['round-2']?.red?.jurror3 || '';    
-        document.getElementById(`round-2-point-red`).innerHTML = ketuaData['round-2']?.red?.point || '';    
-        document.getElementById(`round-2-dropping-red`).innerHTML = ketuaData['round-2']?.red?.dropping || '';    
-        document.getElementById(`round-2-penalty-red`).innerHTML = ketuaData['round-2']?.red?.penalty || '';  
-        document.getElementById(`round-2-board-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;
-
-        document.getElementById(`round-2-jurror1-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror1 || '';
-        document.getElementById(`round-2-jurror2-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror2 || '';
-        document.getElementById(`round-2-jurror3-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror3 || '';    
-        document.getElementById(`round-2-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || '';    
-        document.getElementById(`round-2-dropping-blue`).innerHTML = ketuaData['round-2']?.blue?.dropping || '';    
-        document.getElementById(`round-2-penalty-blue`).innerHTML = ketuaData['round-2']?.blue?.penalty || '';  
-        document.getElementById(`round-2-board-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;
-
-        // round 3
-        document.getElementById(`round-3-jurror1-red`).innerHTML = ketuaData['round-3']?.red?.jurror1 || '';
-        document.getElementById(`round-3-jurror2-red`).innerHTML = ketuaData['round-3']?.red?.jurror2 || '';
-        document.getElementById(`round-3-jurror3-red`).innerHTML = ketuaData['round-3']?.red?.jurror3 || '';    
-        document.getElementById(`round-3-point-red`).innerHTML = ketuaData['round-3']?.red?.point || '';    
-        document.getElementById(`round-3-dropping-red`).innerHTML = ketuaData['round-3']?.red?.dropping || '';    
-        document.getElementById(`round-3-penalty-red`).innerHTML = ketuaData['round-3']?.red?.penalty || '';  
-        document.getElementById(`round-3-board-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;
-
-        document.getElementById(`round-3-jurror1-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror1 || '';
-        document.getElementById(`round-3-jurror2-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror2 || '';
-        document.getElementById(`round-3-jurror3-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror3 || '';    
-        document.getElementById(`round-3-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || '';    
-        document.getElementById(`round-3-dropping-blue`).innerHTML = ketuaData['round-3']?.blue?.dropping || '';    
-        document.getElementById(`round-3-penalty-blue`).innerHTML = ketuaData['round-3']?.blue?.penalty || '';  
-        document.getElementById(`round-3-board-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;
-    }
-}
-
-function changeRound(event) {
-    round = event.activeRound
+function initialDynamicDom() {
     redCorner['jurror1'] = document.getElementById(`${round}-jurror1-red`);
     redCorner['jurror2'] = document.getElementById(`${round}-jurror2-red`);
     redCorner['jurror3'] = document.getElementById(`${round}-jurror3-red`);
@@ -150,6 +61,103 @@ function changeRound(event) {
     blueCorner['dropping'] = document.getElementById(`${round}-dropping-blue`);
     blueCorner['penalty'] = document.getElementById(`${round}-penalty-blue`);
     blueCorner['boardPoint'] = document.getElementById(`${round}-board-point-blue`);
+}
+
+function initialGeneralDom() {
+    // round1
+    document.getElementById(`round-1-jurror1-red`).innerHTML = ketuaData['round-1']?.red?.jurror1 || '';
+    document.getElementById(`round-1-jurror2-red`).innerHTML = ketuaData['round-1']?.red?.jurror2 || '';
+    document.getElementById(`round-1-jurror3-red`).innerHTML = ketuaData['round-1']?.red?.jurror3 || '';    
+    document.getElementById(`round-1-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;    
+    document.getElementById(`round-1-dropping-red`).innerHTML = ketuaData['round-1']?.red?.dropping || '';    
+    document.getElementById(`round-1-penalty-red`).innerHTML = ketuaData['round-1']?.red?.penalty || '';  
+    document.getElementById(`round-1-board-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;
+
+    document.getElementById(`round-1-jurror1-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror1 || '';
+    document.getElementById(`round-1-jurror2-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror2 || '';
+    document.getElementById(`round-1-jurror3-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror3 || '';    
+    document.getElementById(`round-1-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;    
+    document.getElementById(`round-1-dropping-blue`).innerHTML = ketuaData['round-1']?.blue?.dropping || '';    
+    document.getElementById(`round-1-penalty-blue`).innerHTML = ketuaData['round-1']?.blue?.penalty || '';  
+    document.getElementById(`round-1-board-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;
+    
+    // round 2
+    document.getElementById(`round-2-jurror1-red`).innerHTML = ketuaData['round-2']?.red?.jurror1 || '';
+    document.getElementById(`round-2-jurror2-red`).innerHTML = ketuaData['round-2']?.red?.jurror2 || '';
+    document.getElementById(`round-2-jurror3-red`).innerHTML = ketuaData['round-2']?.red?.jurror3 || '';    
+    document.getElementById(`round-2-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;    
+    document.getElementById(`round-2-dropping-red`).innerHTML = ketuaData['round-2']?.red?.dropping || '';    
+    document.getElementById(`round-2-penalty-red`).innerHTML = ketuaData['round-2']?.red?.penalty || '';  
+    document.getElementById(`round-2-board-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;
+
+    document.getElementById(`round-2-jurror1-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror1 || '';
+    document.getElementById(`round-2-jurror2-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror2 || '';
+    document.getElementById(`round-2-jurror3-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror3 || '';    
+    document.getElementById(`round-2-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;    
+    document.getElementById(`round-2-dropping-blue`).innerHTML = ketuaData['round-2']?.blue?.dropping || '';    
+    document.getElementById(`round-2-penalty-blue`).innerHTML = ketuaData['round-2']?.blue?.penalty || '';  
+    document.getElementById(`round-2-board-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;
+
+    // round 3
+    document.getElementById(`round-3-jurror1-red`).innerHTML = ketuaData['round-3']?.red?.jurror1 || '';
+    document.getElementById(`round-3-jurror2-red`).innerHTML = ketuaData['round-3']?.red?.jurror2 || '';
+    document.getElementById(`round-3-jurror3-red`).innerHTML = ketuaData['round-3']?.red?.jurror3 || '';    
+    document.getElementById(`round-3-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;    
+    document.getElementById(`round-3-dropping-red`).innerHTML = ketuaData['round-3']?.red?.dropping || '';    
+    document.getElementById(`round-3-penalty-red`).innerHTML = ketuaData['round-3']?.red?.penalty || '';  
+    document.getElementById(`round-3-board-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;
+
+    document.getElementById(`round-3-jurror1-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror1 || '';
+    document.getElementById(`round-3-jurror2-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror2 || '';
+    document.getElementById(`round-3-jurror3-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror3 || '';    
+    document.getElementById(`round-3-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;    
+    document.getElementById(`round-3-dropping-blue`).innerHTML = ketuaData['round-3']?.blue?.dropping || '';    
+    document.getElementById(`round-3-penalty-blue`).innerHTML = ketuaData['round-3']?.blue?.penalty || '';  
+    document.getElementById(`round-3-board-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;
+}
+
+function storeGelanggangData(data) {
+    savedGelanggangData = data;
+}
+
+function startPertandingan(e) {
+    round = e.activeRound;
+    namaMerah.textContent = e.redName;
+    kontingenMerah.textContent = e.redContingent;
+    namaBiru.textContent = e.blueName;
+    kontingenBiru.textContent = e.blueContingent;
+    babak.textContent = e.babak.toUpperCase();
+    activeRound.textContent = e.activeRound.toUpperCase();
+
+    const gelanggangData = {
+        namaMerah: e.redName,
+        kontingenMerah: e.redContingent,
+        namaBiru: e.blueName,
+        kontingenBiru: e.blueContingent,
+        babak: e.babak.toUpperCase(),
+        activeRound: e.activeRound,
+    };
+    initialDynamicDom();
+
+    localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
+}
+
+function loadDataSaved() {
+    namaMerah.textContent = savedGelanggangData.namaMerah;
+    kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
+    namaBiru.textContent = savedGelanggangData.namaBiru;
+    kontingenBiru.textContent = savedGelanggangData.kontingenBiru;
+    babak.textContent = savedGelanggangData.babak;
+    activeRound.textContent = savedGelanggangData.activeRound;
+    if (ketuaData) {
+        savedKetuaData = ketuaData;
+        initialGeneralDom();
+    }
+}
+
+function changeRound(event) {
+    round = event.activeRound
+    initialDynamicDom();
 }
 
 function storeJurror(jurror, scorePiece, sudut) {

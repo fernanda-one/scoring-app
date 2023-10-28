@@ -1,6 +1,7 @@
 import {isEmpty} from "lodash";
-import {toInteger} from "lodash/lang";
+import { toInteger } from "lodash/lang";
 
+let rounds = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound?.toLowerCase() || 'ROUND'
 const dataJuri = {
     blueScore : document.getElementById(`round-1-blueScore`),
     redScore : document.getElementById(`round-1-redScore`),
@@ -12,7 +13,24 @@ export function updateRoundJuri(round){
     dataJuri.redScore = document.getElementById(`${round}-redScore`);
     dataJuri.blueInput = document.getElementById(`${round}-blueInput`);
     dataJuri.redInput = document.getElementById(`${round}-redInput`);
+    rounds = round;
 }
+let savedJuriData = {
+    'round-1': {
+        'red': {},
+        'blue': {},
+    },
+    'round-2': {
+        'red': {},
+        'blue': {},
+    },
+    'round-3': {
+        'red': {},
+        'blue': {},
+    },
+}
+
+const juriData = JSON.parse(localStorage.getItem("dataJuri"));
 export const timeouts = {
     pukulanred: [],
     pukulanblue: [],
@@ -31,6 +49,26 @@ export const timeouts = {
     jurikeduatendanganblue: [],
     juriketigatendanganblue: [],
 };
+
+export function loadDataSaved() {
+    if (juriData) {
+        savedJuriData = juriData;
+        document.getElementById(`round-1-redInput`).innerHTML = juriData['round-1']?.red?.scorePiece || '';
+        document.getElementById(`round-1-redScore`).innerHTML = 0;
+        document.getElementById(`round-1-blueInput`).innerHTML = juriData['round-1']?.blue?.scorePiece || '';
+        document.getElementById(`round-1-blueScore`).innerHTML = 0;
+
+        document.getElementById(`round-2-redInput`).innerHTML = juriData['round-2']?.red?.scorePiece || '';
+        document.getElementById(`round-2-redScore`).innerHTML = 0;
+        document.getElementById(`round-2-blueInput`).innerHTML = juriData['round-2']?.blue?.scorePiece || '';
+        document.getElementById(`round-2-blueScore`).innerHTML = 0;
+
+        document.getElementById(`round-3-redInput`).innerHTML = juriData['round-3']?.red?.scorePiece || '';
+        document.getElementById(`round-3-redScore`).innerHTML = 0;
+        document.getElementById(`round-3-blueInput`).innerHTML = juriData['round-3']?.blue?.scorePiece || '';
+        document.getElementById(`round-3-blueScore`).innerHTML = 0;
+    }
+}
 
 export function getId(id){
     return id.toLowerCase().replace(/ /g, '-');
@@ -60,11 +98,18 @@ export function startTimeout(element, params, posisi, sudut = 'red') {
     }, 2000);
 }
 
-
 export function cancelTimeout(params) {
     params = params.toLowerCase()
     clearTimeout(timeouts[`${params}`]);
 }
+
+function storeJurrorData(sudut, scorePiece) {
+    let dataJuriToAdd = {};
+    dataJuriToAdd["scorePiece"] = scorePiece;
+    savedJuriData[rounds][sudut] = { ...savedJuriData[rounds][sudut], ...dataJuriToAdd };
+    localStorage.setItem('dataJuri', JSON.stringify(savedJuriData));
+}
+
 export function inputPoint(element, point,sudut = 'red' ){
     element = dataJuri[`${element}`]
     const text = element.innerHTML;
@@ -88,10 +133,12 @@ export function inputPoint(element, point,sudut = 'red' ){
         element.innerHTML = joinValues
         const scorePiece = joinValues
         pushKetuaPertandingan(sudut, scorePiece);
+        storeJurrorData(sudut, scorePiece);
         return values.length
-    }else {
+    } else {
         element.innerHTML = point;
         pushKetuaPertandingan(sudut, point);
+        storeJurrorData(sudut, point);
     }
 }
 function strikeoutLastValue(element, posisi, sudut) {
@@ -118,6 +165,7 @@ function strikeoutLastValue(element, posisi, sudut) {
         const scorePiece = formattedValues.join(",");
         element.innerHTML = scorePiece;
         pushKetuaPertandingan(sudut, scorePiece);
+        storeJurrorData(sudut, scorePiece);
     }
 }
 

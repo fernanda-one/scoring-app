@@ -2,6 +2,7 @@ import {channelOperator} from "./library/ScoreFunc";
 
 require("./bootstrap");
 import {
+    loadDataSaved,
     cancelTimeout,
     getId, handleAction,
     indicatorUpdate, inputPoint,
@@ -28,7 +29,9 @@ channelGelanggang
     .listen(`.juri.${userData.gelanggang_id}`, (event) => {
         updateScore(event);
     });
+
 enabledAction(false)
+loadDataSaved()
 
 pukulanBiru.addEventListener("click", function (event) {
     startTimeout('blueInput', 'pukulanblue', inputPoint('blueInput',1,'blue'), 'blue')
@@ -57,16 +60,9 @@ function pushScore(blueScore,redScore){
             "redPenalty":'pertama',
             "bluePenalty":'pertama',
             "blueScore":blueScore,
-            "redScore":redScore,
-        },
-    });
-}
-
-function pushKetuaPertandingan(sudut,scorePiece){
-    axios.post("/ketua-pertandingan-update", {
-        message: {
-            "sudut": sudut,
-            "scorePiece": scorePiece,
+            "redScore": redScore,
+            "droppingRed": [],
+            "droppingBlue": [],
         },
     });
 }
@@ -122,6 +118,7 @@ function enabledAction(status = true) {
 function updateDataJuri(e) {
     switch (e.action) {
         case 'start':
+            updateRoundJuri(e.activeRound)
             break;
         case 'finish':
             break;

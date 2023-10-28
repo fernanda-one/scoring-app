@@ -1,7 +1,6 @@
 require("./bootstrap");
 const {value} = require("lodash/seq");
 
-let round = 'round1'
 const userElement = document.getElementById("user");
 const userData = JSON.parse(userElement.getAttribute("data-user"));
 const userDetails = JSON.parse(userElement.getAttribute("detail-user"));
@@ -93,7 +92,7 @@ function pushDropVerification({juriPertama, juriKedua, juriKetiga, redPopup, blu
 }
 
 function changeColorJurror(event) {
-    if (event.id == 'Juri Pertama') {
+    if (event.id == 'Juri Pertama' && window.location.pathname != '/juri') {
         let juri_pertama = event.juri_pertama
         if (juri_pertama == "RED CORNER") {
             jurror1Red.classList.remove("bg-grayDefault");
@@ -117,7 +116,7 @@ function changeColorJurror(event) {
             jurror1Red.classList.add("bg-grayDefault");
             jurror1Blue.classList.add("bg-grayDefault");
         }
-    } else if (event.id == 'Juri Kedua') {
+    } else if (event.id == 'Juri Kedua' && window.location.pathname != '/juri') {
         let juri_kedua = event.juri_kedua
         if (juri_kedua == "RED CORNER") {
             jurror2Red.classList.remove("bg-grayDefault");
@@ -141,7 +140,7 @@ function changeColorJurror(event) {
             jurror2Red.classList.add("bg-grayDefault");
             jurror2Blue.classList.add("bg-grayDefault");
         }
-    } else if (event.id == 'Juri Ketiga') {
+    } else if (event.id == 'Juri Ketiga' && window.location.pathname != '/juri') {
         let juri_ketiga = event.juri_ketiga
         if (juri_ketiga == "RED CORNER") {
             jurror3Red.classList.remove("bg-grayDefault");
