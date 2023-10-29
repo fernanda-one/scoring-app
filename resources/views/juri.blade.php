@@ -19,7 +19,7 @@
         <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}" detail-user="{{auth()->user()}}">
         <x-drop-verification/>
 
-        <div class="flex justify-between uppercase">
+        <div id="header" class="hidden lg:flex justify-between uppercase">
             <div>
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
                     <p id="nama_merah" class="font-bold text-whiteDefault text-xl">Sudut Merah</p>
@@ -47,20 +47,23 @@
         </div>
     </header>
     <s class="text-whiteDefault">1</s>
-    <div class="flex justify-between">
-        <div class="w-full flex mt-[5%]">
-            <div id="round-1-redInput-div"  class="bg-redDefault py-3 w-[70%] rounded-r-[20px] pl-6 shadow-inset-custom">
+    <div id="first-line-point-group" class="flex lg:justify-between gap-2 lg:gap-0 mt-[0%] lg:mt-[5%]">
+        <div class="w-full flex justify-between lg:justify-normal">
+            <div id="round-1-redInput-div"  class="bg-redDefault py-3 w-[83%] lg:w-[70%] rounded-r-[20px] pl-6 shadow-inset-custom">
                 <p id="round-1-redInput" class="text-whiteDefault"></p>
             </div>
-            <div id="round-1-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%] shadow-inset-custom">
+            <div id="round-1-redScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-redDefault rounded-full ml-[2%] shadow-inset-custom">
                 <p id="round-1-redScore" class="text-whiteDefault">0</p>
             </div>
         </div>
-        <div class="w-full flex mt-[5%] justify-end">
+        <button id="visible-header" type="button" class="bg-blueDefault text-white h-8 px-6 rounded-xl block lg:hidden">
+            Lihat
+        </button>
+        <div class="w-full flex justify-end">
             <div id="round-1-blueScore-div" class="flex items-center justify-center w-[54px] h-[54px] bg-blueDefault rounded-full mr-[2%] shadow-inset-custom">
                 <p id="round-1-blueScore" class="text-whiteDefault">0</p>
             </div>
-            <div id="round-1-blueInput-div" class="bg-blueDefault py-3 w-[70%] rounded-l-[20px] pr-6 shadow-inset-custom">
+            <div id="round-1-blueInput-div" class="bg-blueDefault py-3 w-[83%] lg:w-[70%] rounded-l-[20px] pr-6 shadow-inset-custom">
                 <p id="round-1-blueInput" class="text-whiteDefault text-right"></p>
             </div>
         </div>
@@ -102,16 +105,16 @@
         </div>
     </div>
 
-    <div class="flex justify-between mt-[5%] ml-[2%] mr-[2%]">
+    <div class="flex justify-between mt-0 lg:mt-[5%] ml-0 mr-0 lg:ml-[2%] lg:mr-[2%]">
         <!--left side-->
-        <div class="flex flex-col justify-start w-[50%]">
+        <div class="flex flex-row lg:flex-col justify-start w-[50%]">
             <div class="flex items-center">
                 <button id="pukul-merah" type="button" class="bg-redDefault shadow-inset-custom hover:bg-redDark disabled:cursor-not-allowed rounded-[24px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 transform transition-transform ease-in-out duration-100 active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" width="90" height="89" viewBox="0 0 90 89" fill="none">
                         <path d="M47.2546 9.01951C46.3879 9.03584 45.4879 9.37549 44.6212 10.0564C43.3379 11.0411 42.2212 12.7409 41.6545 14.8866C41.1045 17.0323 41.2379 19.1649 41.8379 20.8043C42.4379 22.4209 43.4046 23.4823 44.6046 23.8905C45.6046 24.2335 46.7046 24.1028 47.7713 23.466C48.1546 21.2452 49.4213 19.5012 51.3213 18.3059C51.338 18.2749 51.338 18.2439 51.3546 18.2112C51.9046 16.0639 51.7713 13.933 51.1713 12.3001C50.5713 10.6753 49.6046 9.61226 48.4046 9.2024C48.0213 9.07503 47.6379 9.01298 47.2546 9.01951ZM82.6716 17.0715C82.1382 17.189 80.8382 17.6332 79.5549 18.239C78.1049 18.915 76.6549 19.6858 75.8215 20.1169L75.6715 20.1903L75.5215 20.2312C69.1715 21.9637 65.9381 23.1557 60.8047 24.0212C60.438 25.0173 59.8047 26.0623 58.9214 27.1237H58.9047V27.1401C57.8714 28.3484 56.838 29.5404 55.788 30.7162C63.4214 29.3282 68.9215 27.9892 77.9049 24.511L78.5882 24.2498L79.2382 24.6254C80.1549 25.1805 81.4716 25.5724 82.5049 25.6541C83.0216 25.7031 83.4716 25.6541 83.7383 25.5888C83.9716 25.5235 83.9716 25.4745 83.9716 25.4908C84.8716 23.5476 85.1883 21.5065 84.8883 19.9715C84.6049 18.5199 83.9382 17.5809 82.6716 17.0715ZM55.688 20.0499C54.2047 20.0336 52.338 20.7553 51.088 22.6005C50.1046 27.4177 46.6379 30.7815 41.5545 32.8226L40.4212 30.112C42.5379 29.2629 44.1879 28.2831 45.4379 27.0747C44.9212 27.0421 44.3879 26.9278 43.8712 26.7482C42.1379 26.144 40.7712 24.854 39.8545 23.2537C37.4212 23.7109 36.0878 24.2824 34.3878 25.6378C33.7045 31.5979 35.5212 36.66 38.9879 41.4118C45.9379 37.2642 51.2713 31.5326 56.6047 25.2622C57.9714 23.5966 58.2714 22.3882 58.188 21.6861C58.088 21.0003 57.738 20.5871 56.988 20.285C56.6213 20.1364 56.1713 20.0532 55.688 20.0499ZM32.2378 34.6515C31.9545 38.4399 32.1211 42.5712 32.0711 46.8984V47.5189L31.6211 47.9435C22.906 56.2061 15.971 69.7593 13.7143 85.3048H20.4844C22.0044 78.5771 23.396 71.8658 26.2661 66.4118C29.3044 60.6476 34.2378 56.2877 42.3045 55.3896L43.1046 55.2916L43.6212 55.8958C49.9879 63.3583 56.1713 72.8619 57.938 85.3048H64.5381C63.4881 70.8697 56.738 59.7495 48.3546 47.9108C46.7213 45.6084 46.6546 43.0447 47.2713 40.579C47.4213 39.9585 47.6213 39.3217 47.8379 38.6685C45.2546 40.8893 42.4545 42.9141 39.3379 44.6613L38.1878 45.2982L37.4045 44.2857C35.0711 41.3138 33.2711 38.1133 32.2378 34.6515Z" fill="white"/>
                     </svg>
                 </button>
-                <div class="flex flex-col items-center ml-24">
+                <div class="hidden lg:flex lg:flex-col lg:items-center ml-24">
                     <p class="text-base font-bold">
                         PUNCH CORRECTION
                     </p>
@@ -128,7 +131,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center mt-[3%]">
+            <div class="flex items-center mt-0 lg:mt-[3%]">
                 <button id="tendang-merah" type="button" class="bg-redDefault shadow-inset-custom hover:bg-redDark disabled:cursor-not-allowed rounded-[24px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 transform transition-transform ease-in-out duration-100 active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" width="92" height="90" viewBox="0 0 92 90" fill="none">
                         <g clip-path="url(#clip0_108_809)">
@@ -141,7 +144,7 @@
                         </defs>
                     </svg>
                 </button>
-                <div class="flex flex-col items-center ml-24">
+                <div class="hidden lg:flex lg:flex-col lg:items-center ml-24">
                     <p class="text-base font-bold">
                         KICK CORRECTION
                     </p>
@@ -161,9 +164,9 @@
         </div>
 
         <!--Right side-->
-        <div class="flex flex-col justify-start items-end w-[50%]">
+        <div class="flex flex-row lg:flex-col justify-end lg:justify-start items-end w-[50%]">
             <div class="flex items-center">
-                <div class="flex flex-col items-center mr-24">
+                <div class="hidden lg:flex lg:flex-col lg:items-center mr-24">
                     <p class="text-base font-bold">
                         PUNCH CORRECTION
                     </p>
@@ -186,7 +189,7 @@
                 </button>
             </div>
             <div class="flex items-center mt-[3%]">
-                <div class="flex flex-col items-center mr-24">
+                <div class="hidden lg:flex lg:flex-col lg:items-center mr-24">
                     <p class="text-base font-bold">
                         KICK CORRECTION
                     </p>

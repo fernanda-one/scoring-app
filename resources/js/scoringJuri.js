@@ -11,7 +11,10 @@ import {
 } from "./library/JuriFunc";
 
 let userElement = document.getElementById("user");
- const userData = JSON.parse(userElement.getAttribute("data-user"));
+const userData = JSON.parse(userElement.getAttribute("data-user"));
+const header = document.getElementById("header");
+const visibleHeader = document.getElementById("visible-header");
+const firstLinePointGroup = document.getElementById("first-line-point-group");
 const pukulanBiru = document.getElementById("pukul-biru");
 const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
@@ -32,6 +35,22 @@ channelGelanggang
 
 enabledAction(false)
 loadDataSaved()
+
+visibleHeader.addEventListener("click", function() {
+    if (header.classList.contains("hidden")) {
+        visibleHeader.textContent = "Tutup"
+        header.classList.remove("hidden");
+        header.classList.add("flex");
+        firstLinePointGroup.classList.remove("mt-[0%]");
+        firstLinePointGroup.classList.add("mt-[5%]");
+    } else {
+        visibleHeader.textContent = "Lihat"
+        header.classList.add("hidden");
+        header.classList.remove("flex")
+        firstLinePointGroup.classList.remove("mt-[5%]");
+        firstLinePointGroup.classList.add("mt-[0%]");
+    }
+})
 
 pukulanBiru.addEventListener("click", function (event) {
     startTimeout('blueInput', 'pukulanblue', inputPoint('blueInput',1,'blue'), 'blue')
