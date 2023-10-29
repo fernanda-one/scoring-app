@@ -1,4 +1,5 @@
-let round = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound || 'ROUND';
+let gelanggangData = JSON.parse(localStorage.getItem("gelanggangData"));
+let round = gelanggangData?.activeRound?.toLowerCase() || 'ROUND';
 let savedGelanggangData = {};
 let savedKetuaData = {
     'round-1': {
@@ -157,6 +158,9 @@ function loadDataSaved() {
 
 function changeRound(event) {
     round = event.activeRound
+    activeRound.textContent = event.activeRound
+    gelanggangData.activeRound = round
+    localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
     initialDynamicDom();
 }
 
@@ -188,15 +192,22 @@ function storeJurror(jurror, scorePiece, sudut) {
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
 }
 
-function storePoint(point) {
-    redCorner.point.innerText = point.red_score;
-    blueCorner.point.innerText = point.blue_score;
-    redCorner.boardPoint.innerText = point.red_score;
-    blueCorner.boardPoint.innerText = point.blue_score;
+function storePoint() {
+    const scoreData = JSON.parse(localStorage.getItem("scoreData"));
+    const redScore = scoreData?.redScore;
+    const blueScore = scoreData?.blueScore;
+    redCorner.point.innerText = redScore;
+    blueCorner.point.innerText = blueScore;
+    redCorner.boardPoint.innerText = redScore;
+    blueCorner.boardPoint.innerText = blueScore;
 
-     // Simpan data poin sesuai dengan sudutnya
-     savedKetuaData[round]['red'].point = point.red_score;
-     savedKetuaData[round]['blue'].point = point.blue_score;
+    // Simpan data poin sesuai dengan sudutnya
+    savedKetuaData[round]['red'].point = redScore;
+    savedKetuaData[round]['blue'].point = blueScore;
+    console.log({scoreData}, 'siu');
+    console.log({redScore}, 'siu');
+    console.log({ blueScore }, 'siu');
+    console.log({ savedKetuaData }, 'siu');
  
      // Simpan ke localStorage
      localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));

@@ -49,8 +49,8 @@ function updateScore(event, redPenalty, bluePenalty) {
     const blueScoreValue = event.blue_score - pelanggaranPoint[bluePenalty];
 
     const scoreData = {
-        redScore: event.red_score,
-        blueScore: event.blue_score,
+        redScore: redScoreValue,
+        blueScore: blueScoreValue,
         redPenalty: event.red_penalty,
         bluePenalty: event.blue_penalty,
         droppingRed: event.droppingRed,
@@ -58,9 +58,10 @@ function updateScore(event, redPenalty, bluePenalty) {
     };
 
     localStorage.setItem('scoreData', JSON.stringify(scoreData));
-
-    redScore.textContent = redScoreValue;
-    blueScore.textContent = blueScoreValue;
+    if (window.location.pathname !== '/ketua_pertandingan') {
+        redScore.textContent = redScoreValue;
+        blueScore.textContent = blueScoreValue;
+    }
 }
 function startPertandingan(e) {
     partaiId = e.id

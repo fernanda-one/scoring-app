@@ -13,6 +13,7 @@ import {
 } from "./library/ScoreFunc";
 
 let round = 'round-1';
+let gelanggangData = JSON.parse(localStorage.getItem("gelanggangData"));
 let blueScore = document.getElementById(`${round}-blueScore`);
 let redScore = document.getElementById(`${round}-redScore`);
 changeScoreElement(redScore, blueScore)
@@ -71,6 +72,8 @@ function changeRound(e) {
             changeColorRound('round-3',true )
             break;
     }
+    gelanggangData.activeRound = round;
+    localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
 }
 
 function changeColorRound(round, status) {

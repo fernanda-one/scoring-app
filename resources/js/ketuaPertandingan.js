@@ -16,6 +16,7 @@ import {
 import {
     channelUpdateScore,
     channelOperator,
+    updateScore,
     userData,
     savedGelanggangData,
 } from "./library/ScoreFunc.js"
@@ -25,7 +26,8 @@ loadDataSaved();
 
 channelUpdateScore
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        storePoint(event);
+        updateScore(event);
+        storePoint();
         storeDroppingRed(event.droppingRed)
         storeDroppingBlue(event.droppingBlue)
         storeRedPenalty(event.red_penalty)
