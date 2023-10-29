@@ -88,3 +88,5 @@ Route::get('/papan_score',[\App\Http\Controllers\PapanScoreController::class, 'i
 Route::get('/ketua_pertandingan',[\App\Http\Controllers\KetuaPertandingaController::class, 'index'])->middleware('auth');
 
 Route::get('/operator',[\App\Http\Controllers\OperatorController::class, 'index'])->middleware('auth');
+
+Route::get('/download/partai',[\App\Http\Controllers\Data::class,'getDownloadExcel']);

@@ -84,16 +84,15 @@ class PartaiController extends Controller
     public function edit(Request $request,$id)
     {
         $validatedData = $request->validate([
-            'id' => 'required|unique:pertandingan',
             'babak' => 'required',
             'sudut_biru'=> 'required|max:100|min:3',
             'sudut_merah'=> 'required|max:100|min:3',
             'contingen_sudut_biru'=> 'required|max:100|min:3',
             'contingen_sudut_merah'=> 'required|max:100|min:3',
-            'kelas'=> 'required|max:100|min:3',
+            'kelas'=> 'required|max:2|min:1',
             'jenis_kelamin'=> 'required',
         ]);
-        $pertandingan = Partai::findOrFail($id);
+        $pertandingan = Partai::findOrFail(1);
         $pertandingan->update($validatedData);
 
         return redirect('/management/pertandingan')->with('success', 'User updated successfully.');
