@@ -29,15 +29,19 @@
                         </button>
                         <div class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Import Data Pertandingan</h3>
-                            <div class="border border-gray-300 my-6"></div>
+                            <div class="border border-gray-300"></div>
                             <form class="space-y-6" action="/management/import-pertandingan" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="grid lg:grid-cols-1 md:gap-6">
+                                <div class="grid lg:grid-cols-1 ">
                                     <div class="flex flex-col items-start justify-center w-full mb-6 mt-4">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Data Pertandingan</label>
+                                        <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white" for="file_input">Data Pertandingan</label>
                                         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none" id="file_input" type="file" name="excel_file">
                                     </div>
+                                    <div>
+                                        <a href="./download/partai" class="text-blue-500 decoration-1 underline hover:text-blue-700">donwload contoh file import partai</a>
+                                    </div>
                                 </div>
+
                                 <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
                             </form>
                         </div>
@@ -244,14 +248,14 @@
                         <div class="px-6 py-6 lg:px-8">
                             <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Update User</h3>
                             <div class="border border-gray-300 my-6"></div>
-                            <form class="space-y-6" action="/edit-user/{{$partai->id}}" method="post" enctype="multipart/form-data">
+                            <form class="space-y-6" action="/edit-pertandingan/{{$partai->id}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('put')
                                 <div class="grid md:grid-cols-3 md:gap-6">
                                     <div class="grid md:grid-cols-2 md:gap-6">
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Partai</label>
-                                            <input value="{{ old('id')??$partai->id }}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
+                                            <input value="{{ old('id')??$partai->id}}" type="number" name="id" id="id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                         </div>
                                         <div class="relative z-0 w-full mb-4 group">
                                             <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>

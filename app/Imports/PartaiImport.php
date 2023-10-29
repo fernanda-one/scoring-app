@@ -27,46 +27,49 @@ class PartaiImport implements ToCollection
     */
     public function collection(Collection $collection)
     {
-        $gIds = array();
-        $gelanggang = Gelanggang::latest();
-        foreach ($gelanggang as $id) {
-            $gIds[] = $id['id'];
-        }
-
+        $allkelas =['A','B','C','D','F','G','H','I','J'];
+        $errorKelas=[];
+        $firstIteration = true;
+        $data = [];
         foreach ($collection as $row){
-            $gelanggang_id = in_array($row[2], $gIds) ? $row[2] : null;
+            if ($firstIteration) {
+                $firstIteration = false;
+                continue;
+            }
+            $kelas = strtoupper($row[6]);
+            if (!array_search($kelas, $allkelas)){
+                $errorKelas[]=intval($row[0]);
+            }
             $data[] = [
                 'id' => intval($row[0]),
-                'babak' => intval($row[1]),
-                'gelanggang_id' => intval($gelanggang_id),
-                'sudut_merah' => $row[3],
-                'sudut_biru' => $row[4],
-                'contingen_sudut_merah' => $row[5],
-                'contingen_sudut_biru' => $row[6],
-                'kelas' => $row[7],
-                'jenis_kelamin' => $row[8],
-                'status' => $row[9],
+                'babak' => $row[1],
+                'sudut_merah' => $row[2],
+                'sudut_biru' => $row[3],
+                'contingen_sudut_merah' => $row[4],
+                'contingen_sudut_biru' => $row[5],
+                'kelas' => $kelas,
+                'jenis_kelamin' => strtolower($row[7]),
             ];
         }
-        array_shift($data);
         $existingIds = Partai::whereIn('id', array_column($data, 'id'))->pluck('id')->toArray();
-
         if (count($existingIds) > 0) {
             $existingIdsString = implode(', ', $existingIds);
             $this->message = "Data with IDs: $existingIdsString already exists and was not imported !";
+            if(count($errorKelas)>0){
+                $existingIdsString = implode(', ', $errorKelas);
+                $this->message = "Data with IDs: $existingIdsString Class Not Found !";
+            }
         } else {
             foreach ($data as $row) {
                 Partai::create([
                     'id' => $row['id'],
                     'babak' => $row['babak'],
-                    'gelanggang_id' => $row['gelanggang_id'],
                     'sudut_merah' => $row['sudut_merah'],
                     'sudut_biru' => $row['sudut_biru'],
                     'contingen_sudut_merah' => $row['contingen_sudut_merah'],
                     'contingen_sudut_biru' => $row['contingen_sudut_biru'],
                     'kelas' => $row['kelas'],
                     'jenis_kelamin' => $row['jenis_kelamin'],
-                    'status' => $row['status'],
                 ]);
             }
         }
