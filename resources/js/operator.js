@@ -1,18 +1,17 @@
 require("./bootstrap");
-const {value} = require("lodash/seq");
-const {getDataGelanggang, partaiId, kelas} = require("./library/ScoreFunc");
 const roundsElement = {
      'round-1' : document.getElementById('round-1'),
      'round-2' : document.getElementById('round-2'),
      'round-3' : document.getElementById('round-3')
 }
 let activeRound = 'round-1'
-const countMinimumToStart =5
+const countMinimumToStart = 5
 const start = document.getElementById('start')
 const next = document.getElementById('next')
 const prev = document.getElementById('prev')
 const pausePlay = document.getElementById('pause')
 let pauseStatus = true
+let isButtonDisable = true
 const finish = document.getElementById('finish')
 const userElement = document.getElementById("user");
 const userData = JSON.parse(userElement.getAttribute("data-user"));
@@ -20,6 +19,12 @@ const partaiElement = document.getElementById("partai");
 const dataPartai = JSON.parse(partaiElement.getAttribute("data-partai"));
 const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
 const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
+console.log(localStorage.getItem('dataOperator'))
+// localStorage.clear()
+
+if (localStorage.getItem('dataOperator')){
+    loadSaveData()
+}
 
 const actionButtonNames = ['start','pausePlay']
 const userActiveList = {
@@ -85,14 +90,14 @@ roundsElement['round-3'].addEventListener('click',(ev)=>{
 
 start.addEventListener('click', (evt)=>{
     updatePertandingan('start')
-    changeDisabledButtons(false)
+    changeDisabledButtons()
 })
 finish.addEventListener('click', (evt) =>{
   finishGelanggang()
 })
 
 pausePlay.addEventListener('click', ()=>{
-    togglePausePlay(pauseStatus)
+    togglePausePlay()
     updatePertandingan(pauseStatus?'pause':'play')
 })
 function finishGelanggang(){
@@ -101,12 +106,14 @@ function finishGelanggang(){
         roundsElement[round].classList.remove('bg-grayDark','bg-yellowDefault')
     })
     updatePertandingan('finish')
-    changeDisabledButtons(true)
+    changeDisabledButtons()
     togglePausePlay(false)
     changeStatusRound('round-1')
+    location.reload()
+    localStorage.clear()
 }
 
-function togglePausePlay(status = true){
+function togglePausePlay(status = pauseStatus){
     if (status){
         pausePlay.textContent = 'PAUSE'
         pauseStatus = !status
@@ -131,6 +138,9 @@ function uploadDataWinner(winner) {
     // });
 }
 function  updatePertandingan(action = 'round'){
+    if (action !== 'finish'){
+        saveData(action==='start', action ==='pause' || action === 'play')
+    }
     axios.post("/operator-update", {
         message: {
             'blueName':dataPartai.sudut_biru,
@@ -180,30 +190,38 @@ function roundDone() {
     const nextRound = arraySliceName[0] + '-' + (roundNum < 3?roundNum +1:done =true)
     console.log(nextRound)
     if (!done){
-        activeRound = activeRound.toLowerCase()
-        roundsElement[activeRound].classList.add('bg-grayDark')
-        roundsElement[activeRound].classList.remove('bg-yellowDefault')
-        roundsElement[activeRound].disabled = true
-        roundsElement[nextRound].classList.remove('bg-grayDark')
-        roundsElement[nextRound].classList.add('bg-yellowDefault')
-        roundsElement[nextRound].disabled = true
+        changeIndicatorRound(activeRound.toLowerCase(),nextRound)
     } else {
         console.log('done')
         finishGelanggang()
     }
     activeRound = nextRound
     updatePertandingan()
-    togglePausePlay(false)
+    togglePausePlay()
 }
 
-function changeDisabledButtons(status) {
-    rounds.forEach(round =>{
+function changeIndicatorRound(activeRound = activeRound.toLowerCase(),nextRound) {
+    roundsElement[activeRound].classList.add('bg-grayDark')
+    roundsElement[activeRound].classList.remove('bg-yellowDefault')
+    roundsElement[activeRound].disabled = true
+    roundsElement[nextRound].classList.remove('bg-grayDark')
+    roundsElement[nextRound].classList.add('bg-yellowDefault')
+    roundsElement[nextRound].disabled = true
+}
+
+function changeDisabledButtons() {
+    const rounds =[
+        'round-1','round-2','round-3'
+    ]
+    rounds.map(round =>{
         roundsElement[round].disabled = true
     })
-    pausePlay.disabled = status
-    finish.disabled = status
-    prev.disabled = !status
-    next.disabled = !status
+    pausePlay.disabled = !isButtonDisable
+    finish.disabled = !isButtonDisable
+    start.disabled = isButtonDisable
+    prev.disabled = isButtonDisable
+    next.disabled = isButtonDisable
+    isButtonDisable = !isButtonDisable
 }
 
 function changeStatusRound(roundName) {
@@ -219,3 +237,30 @@ function changeStatusRound(roundName) {
     })
 }
 
+function saveData(isFromStart = false , isFromPause = false){
+    const data = {
+        pauseStatus : isFromPause? !pauseStatus: pauseStatus,
+        isButtonDisable : isFromStart? isButtonDisable: !isButtonDisable,
+        activeRound : activeRound,
+    }
+    localStorage.setItem('dataOperator',JSON.stringify(data))
+}
+
+function loadSaveData(){
+    const data = JSON.parse(localStorage.getItem('dataOperator'))
+    pauseStatus = data.pauseStatus
+    isButtonDisable = data.isButtonDisable
+    activeRound = data.activeRound
+    const arraySliceName = activeRound.split('-')
+    const roundNum = parseInt(arraySliceName[1])
+    for (let i  = 0; i < roundNum ; i++) {
+        let done= false
+        const nextRound = arraySliceName[0] + '-' + (i <= 3?i+1 :done =true)
+        const thisRound = arraySliceName[0] + '-' + (i === 0?1 : i <= 3 ?i:done =true)
+        if (!done){
+            changeIndicatorRound(thisRound.toLowerCase(), nextRound.toLowerCase())
+        }
+    }
+    changeDisabledButtons()
+    togglePausePlay()
+}
