@@ -9,5 +9,6 @@
     "/js/papanScore.js": "/js/papanScore.js",
     "/js/library/DewanFunc.js": "/js/library/DewanFunc.js",
     "/js/library/JuriFunc.js": "/js/library/JuriFunc.js",
+    "/js/library/LogoutFunc.js": "/js/library/LogoutFunc.js",
     "/css/app.css": "/css/app.css"
 }
