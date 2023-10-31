@@ -1,4 +1,12 @@
-import {activeRound, channelOperator, getDataGelanggang, kelas, partaiId, userData} from "./library/ScoreFunc";
+import {
+    activeRound,
+    channelOperator,
+    channelUpdateScore,
+    getDataGelanggang,
+    kelas,
+    partaiId, updateScore,
+    userData
+} from "./library/ScoreFunc";
 
 require("./bootstrap");
 const {toNumber} = require("lodash");
@@ -32,6 +40,8 @@ let bluePenalty='pertama'
 let redPenalty = 'pertama';
 let droppingRed = JSON.parse(localStorage.getItem('scoreData'))?.droppingRed || [] ;
 let droppingBlue = JSON.parse(localStorage.getItem('scoreData'))?.droppingBlue || [];
+let pureScoreRed = 0;
+let pureScoreBlue = 0;
 const rounds = []
 const winnerRounds = {
     'round-1':'',
@@ -39,6 +49,15 @@ const winnerRounds = {
     'round-3':'',
 }
 
+function updateDataScore(event) {
+    pureScoreRed = event.red_score;
+    pureScoreBlue = event.blue_score;
+}
+
+channelUpdateScore
+    .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
+        updateDataScore(event)
+    });
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataDewan(event)
@@ -58,13 +77,10 @@ function handlePenaltyClick(color, penalty) {
 function handleScoreChange(color, scoreChange) {
     return function () {
         if (color === 'red') {
-            redScore = toNumber(redScore) + scoreChange;
-            droppingRed.push(scoreChange)
+            pushScore(scoreChange, 0);
         } else if (color === 'blue') {
-            blueScore = toNumber(blueScore) + scoreChange;
-            droppingBlue.unshift(scoreChange)
+            pushScore(0 , scoreChange);
         }
-        pushScore();
     };
 }
 
@@ -92,11 +108,13 @@ jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 2));
 jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -2));
 
 
-function pushScore(){
+function pushScore(droppingRed = 0, droppingBlue = 0){
+    pureScoreRed += droppingRed
+    pureScoreBlue += droppingBlue
     axios.post("/score-update", {
         message: {
-            "blueScore":toNumber(blueScore),
-            "redScore":toNumber(redScore),
+            "blueScore":pureScoreBlue,
+            "redScore":pureScoreRed,
             "redPenalty":redPenalty,
             "bluePenalty": bluePenalty,
             "droppingRed": droppingRed,
@@ -146,8 +164,7 @@ function updateDataDewan(e) {
             cekWinner()
             break;
         case 'round':
-            bluePenalty='pertama'
-            redPenalty = 'pertama';
+            changeRoundDewan()
             clearIndicator()
             break;
         case 'pause':
@@ -157,4 +174,11 @@ function updateDataDewan(e) {
             enabledAction()
             break;
     }
+}
+
+function changeRoundDewan(){
+    bluePenalty='pertama'
+    redPenalty = 'pertama';
+    pureScoreRed = 0;
+    pureScoreBlue =0;
 }

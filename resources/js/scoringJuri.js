@@ -1,4 +1,4 @@
-import {channelOperator} from "./library/ScoreFunc";
+import {channelOperator, channelUpdateScore} from "./library/ScoreFunc";
 
 require("./bootstrap");
 import {
@@ -20,6 +20,8 @@ const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
 const roundView = document.getElementById(`round`)
+let pureScoreRed = 0;
+let pureScoreBlue = 0;
 const buttonAction = ['pukul-biru','tendang-biru','pukul-merah','tendang-merah']
 let bluePenalty='pertama'
 let redPenalty = 'pertama';
@@ -28,6 +30,18 @@ channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataJuri(event)
     });
+function updateDataScore(event) {
+    pureScoreRed = event.red_score;
+    pureScoreBlue = event.blue_score;
+    redPenalty = event.red_penalty
+    bluePenalty = event.blue_penalty
+}
+
+channelUpdateScore
+    .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
+        updateDataScore(event)
+    });
+
 channelGelanggang
     .listen(`.juri.${userData.gelanggang_id}`, (event) => {
         updateScore(event);
@@ -73,33 +87,30 @@ tendanganBiru.addEventListener("click", function (event) {
     handleAction(event, 'blue', 'tendangan');
 });
 
-function pushScore(blueScore,redScore){
+function pushScore(){
     axios.post("/score-update", {
         message: {
-            "redPenalty":'pertama',
-            "bluePenalty":'pertama',
-            "blueScore":blueScore,
-            "redScore": redScore,
-            "droppingRed": [],
-            "droppingBlue": [],
+            "redPenalty":redPenalty,
+            "bluePenalty":bluePenalty,
+            "blueScore": pureScoreBlue,
+            "redScore": pureScoreRed,
+            "droppingRed": 0,
+            "droppingBlue": 0,
         },
     });
 }
 
 function updateScore(event) {
+    console.log(event)
     const gerakan = event.gerakan;
     const sudut = event.sudut
     const id = event.id
-    const pointBiru = event.blue_score
-    const pointMerah = event.red_score
     const name = sudut + gerakan;
     const sudutPointTime = name + 'time';
     const exp = event.expired;
-    redPenalty = event.redPenalty
-    bluePenalty = event.bluePenalty
     const score = {
-        'redScore': pointMerah,
-        'blueScore': pointBiru,
+        'redScore': 0,
+        'blueScore': 0,
     }
     const sudutScore = event.sudut + 'Score';
     const elementName = getId(id+' '+gerakan+' '+sudut )
@@ -116,7 +127,9 @@ function updateScore(event) {
             localStorage.removeItem(sudutPointTime);
             localStorage.removeItem(name);
             cancelTimeout(gerakan+sudut)
-            pushScore(score['blueScore'], score['redScore'])
+            pureScoreRed += score['redScore']
+            pureScoreBlue += score['blueScore']
+            pushScore()
             return score;
         }
         localStorage.removeItem(sudutPointTime)
@@ -142,8 +155,7 @@ function updateDataJuri(e) {
         case 'finish':
             break;
         case 'round':
-            bluePenalty='pertama'
-            redPenalty = 'pertama';
+            changeRoundJuri()
             updateRoundJuri(e.activeRound)
             break;
         case 'pause':
@@ -155,3 +167,9 @@ function updateDataJuri(e) {
     }
 }
 
+function changeRoundJuri(){
+    bluePenalty='pertama'
+    redPenalty = 'pertama';
+    pureScoreRed = 0;
+    pureScoreBlue =0;
+}

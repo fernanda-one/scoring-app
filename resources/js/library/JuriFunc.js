@@ -171,7 +171,7 @@ function strikeoutLastValue(element, posisi, sudut) {
 
 export function handleAction(event, color, action) {
     event.preventDefault();
-    pushMessage(color, action, toInteger(dataJuri.blueScore.textContent), toInteger(dataJuri.redScore.textContent));
+    pushMessage(color, action);
 }
 
 function pushMessage(sudut,gerakan, blueScore = 0,redScore = 0){

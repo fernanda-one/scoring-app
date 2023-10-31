@@ -19,7 +19,7 @@ let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById('timer');
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 let timerStarted = false
-const timePerRound = 120;
+const timePerRound = 60;
 let countdown;
 let isPaused = false;
 let endTime;
@@ -28,7 +28,6 @@ changeScoreElement(redScore, blueScore)
 loadDataSaved()
 
 function updateIndicatorDewan(event) {
-    // console.log(event.blue_penalty)
     changeIndicatorPelanggaran('blue', event.blue_penalty)
     changeIndicatorPelanggaran('red', event.red_penalty)
 }
@@ -45,7 +44,7 @@ channelUpdateScore
 
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        // console.log(event);
+        console.log(event);
         updateDataGelanggang(event);
     });
 
@@ -118,11 +117,11 @@ function startTimer(seconds) {
         if (secondsLeft === 0) {
             clearInterval(countdown);
             if (!isPaused){
-                timerStarted = false;
+                clearTimerState()
                 timerDisplay.textContent = '00:00';
             }
             // console.log('done')
-            clearTimerState();
+            // clearTimerState();
             return;
         }
 
@@ -138,9 +137,12 @@ function updateDataGelanggang(e) {
             startPertandingan(e)
             break;
         case 'finish':
+            // localStorage.clear()
+            // location.reload();
+            break;
+        case 'reset':
             localStorage.clear()
             location.reload();
-            break;
         case 'round':
             changeRound(e)
             break;

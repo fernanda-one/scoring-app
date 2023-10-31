@@ -1,3 +1,4 @@
+import puppeteer from 'puppeteer';
 
 require("./bootstrap");
 import {
@@ -44,19 +45,29 @@ channelKetuaPertandingan
         storeJurror(event.id, event.scorePiece, event.sudut)
     });
 
+function screenShot(){
+    axios.get('/capture-screenshot')
+}
+
+
 function updateDataGelanggang(e) {
     switch (e.action) {
         case 'start':
             startPertandingan(e)
             break;
         case 'finish':
+            screenShot()
             break;
         case 'round':
             changeRound(e)
             break;
-        case 'pause':
+        case 'reset':
+            localStorage.clear()
+            location.reload();
             break;
         case 'play':
+            break;
+        case 'pause':
             break;
     }
 }

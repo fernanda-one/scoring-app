@@ -3,6 +3,8 @@ const kontingenMerah = document.getElementById('kontingen_merah');
 const namaBiru = document.getElementById('nama_biru');
 const kontingenBiru = document.getElementById('kontingen_biru');
 const babak = document.getElementById('babak');
+let pureScoreRed = 0;
+let pureScoreBlue = 0;
 export let partaiId = ''
 export let kelas;
 let redScore = ''
@@ -45,12 +47,16 @@ function changeScoreElement (newRedScoreElement, newBlueScoreElement){
 function updateScore(event, redPenalty, bluePenalty) {
     redPenalty = event.red_penalty
     bluePenalty = event.blue_penalty
-    const redScoreValue = event.red_score - pelanggaranPoint[redPenalty];
-    const blueScoreValue = event.blue_score - pelanggaranPoint[bluePenalty];
+    pureScoreRed = event.red_score
+    pureScoreBlue = event.blue_score
+    const redScoreValue = pureScoreRed - pelanggaranPoint[redPenalty];
+    const blueScoreValue = pureScoreBlue - pelanggaranPoint[bluePenalty];
 
     const scoreData = {
         redScore: redScoreValue,
         blueScore: blueScoreValue,
+        pureScoreRed: pureScoreRed,
+        pureScoreBlue: pureScoreBlue,
         redPenalty: event.red_penalty,
         bluePenalty: event.blue_penalty,
         droppingRed: event.droppingRed,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PuppeteerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,34 +20,34 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/score', function (){
     return view('scoring');
-})->middleware('auth');
+});
 
 Route::post('/score-event', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Scoring($request->message));
     return null;
-})->middleware('auth');
+});
 Route::post('/score-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\ScoringUpdate($request->message));
     return null;
-})->middleware('auth');
+});
 Route::post('/drop-verification', function (\Illuminate\Http\Request $request){
     event(new \App\Events\DropVerification($request->message));
     return null;
-})->middleware('auth');
+});
 Route::post('/operator-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Operator($request->message));
     return null;
-})->middleware('auth');
+});
 Route::post('/ketua-pertandingan-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\KetuaPertandingan($request->message));
     return null;
-})->middleware('auth');
+});
 Route::post('/verif-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Operator($request->message));
     return null;
-})->middleware('auth');
+});
 
-
+Route::get('/capture-screenshot', [PuppeteerController::class, 'captureScreenshot']);
 Route::get('/register',[\App\Http\Controllers\UserController::class, 'index']);
 Route::post('/register',[\App\Http\Controllers\UserController::class, 'create']);
 

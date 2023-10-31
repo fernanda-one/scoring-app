@@ -7,7 +7,7 @@ const roundsElement = {
      'round-3' : document.getElementById('round-3')
 }
 let activeRound = 'round-1'
-const coutMinimumToStart =5
+const countMinimumToStart =5
 const start = document.getElementById('start')
 const next = document.getElementById('next')
 const prev = document.getElementById('prev')
@@ -29,14 +29,13 @@ const userActiveList = {
     'dewan': document.getElementById("status_dewan"),
     'ketua_pertandingan': document.getElementById("status_ketua"),
 }
-// start.disabled = true
 const rounds =[
     'round-1','round-2','round-3'
 ]
 const allRoundStatus = {
     'round-1': true,
-    'round-2': false,
-    'round-3': false
+    'round-2': true,
+    'round-3': true
 }
 const roleIds = {
     '2': 'operator',
@@ -48,18 +47,15 @@ const roleIds = {
 }
 const roles = ['ketua_pertandingan','dewan','juri_pertama','juri_kedua','juri_ketiga']
 
-roundsElement['round-1'].addEventListener('click',(ev)=>{
-    changeStatusRound('round-1')
-    updatePertandingan()
-})
-roundsElement['round-2'].addEventListener('click',(ev)=>{
-    changeStatusRound('round-2')
-    updatePertandingan()
-})
-roundsElement['round-3'].addEventListener('click',(ev)=>{
-    changeStatusRound('round-3')
-    updatePertandingan()
-})
+channelOperator
+    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
+        if(event.action === 'merah' || event.action === 'biru'){
+            uploadDataWinner(event.action)
+            updatePertandingan('reset')
+        }
+        event.action === 'round-done'?roundDone():''
+    });
+
 channelUpdateScore
     .here((users) => {
         cekStatususer(users)
@@ -74,36 +70,41 @@ channelUpdateScore
         // console.log(event)
     });
 
-function roundDone(activeRound) {
-    activeRound = activeRound.toLowerCase()
-    roundsElement[activeRound].classList.add('bg-grayDark')
-    roundsElement[activeRound].classList.remove('bg-yellowDefault')
-    togglePausePlay(false)
-}
-channelOperator
-    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        if(event.action === 'merah' || event.action === 'biru'){
-            uploadDataWinner(event.action)
-            updatePertandingan('reset')
-        }
-        event.action === 'round-done'?roundDone(event.activeRound):''
-    });
+roundsElement['round-1'].addEventListener('click',(ev)=>{
+    changeStatusRound('round-1')
+    updatePertandingan()
+})
+roundsElement['round-2'].addEventListener('click',(ev)=>{
+    changeStatusRound('round-2')
+    updatePertandingan()
+})
+roundsElement['round-3'].addEventListener('click',(ev)=>{
+    changeStatusRound('round-3')
+    updatePertandingan()
+})
 
 start.addEventListener('click', (evt)=>{
     updatePertandingan('start')
     changeDisabledButtons(false)
 })
 finish.addEventListener('click', (evt) =>{
-    updatePertandingan('finish')
-    changeDisabledButtons(true)
-    togglePausePlay(false)
-    changeStatusRound('round-1')
+  finishGelanggang()
 })
 
 pausePlay.addEventListener('click', ()=>{
     togglePausePlay(pauseStatus)
     updatePertandingan(pauseStatus?'pause':'play')
 })
+function finishGelanggang(){
+    const rounds = ['round-2','round-3']
+    rounds.map(round =>{
+        roundsElement[round].classList.remove('bg-grayDark','bg-yellowDefault')
+    })
+    updatePertandingan('finish')
+    changeDisabledButtons(true)
+    togglePausePlay(false)
+    changeStatusRound('round-1')
+}
 
 function togglePausePlay(status = true){
     if (status){
@@ -111,25 +112,25 @@ function togglePausePlay(status = true){
         pauseStatus = !status
     } else {
         pausePlay.textContent = 'PLAY'
-        pauseStatus = !pauseStatus
+        pauseStatus = !status
     }
 }
 
 function uploadDataWinner(winner) {
-    axios.post("/create-history", {
-        'partai':dataPartai.id,
-        'kelas':dataPartai.kelas,
-        'jenis_kelamin':dataPartai.jenis_kelamin,
-        'sudut_biru':dataPartai.sudut_biru,
-        'sudut_merah':dataPartai.sudut_merah,
-        'kontingen_biru':dataPartai.contingen_sudut_biru,
-        'kontingen_merah':dataPartai.contingen_sudut_merah,
-        'babak':dataPartai.babak,
-        'round_time':activeRound,
-        'pemenang':winner,
-    });
+    // axios.post("/create-history", {
+    //     'partai':dataPartai.id,
+    //     'kelas':dataPartai.kelas,
+    //     'jenis_kelamin':dataPartai.jenis_kelamin,
+    //     'sudut_biru':dataPartai.sudut_biru,
+    //     'sudut_merah':dataPartai.sudut_merah,
+    //     'kontingen_biru':dataPartai.contingen_sudut_biru,
+    //     'kontingen_merah':dataPartai.contingen_sudut_merah,
+    //     'babak':dataPartai.babak,
+    //     'round_time':activeRound,
+    //     'pemenang':winner,
+    // });
 }
-function updatePertandingan(action = 'round'){
+function  updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
         message: {
             'blueName':dataPartai.sudut_biru,
@@ -157,7 +158,7 @@ function cekStatususer(users) {
             userList[roleIds[`${user.role_id}`]] = true;
         }
      })
-    if (trueCount === coutMinimumToStart){
+    if (trueCount === countMinimumToStart){
         start.disabled = false;
     }
     roles.map(role =>{
@@ -172,10 +173,32 @@ function cekStatususer(users) {
     })
 }
 
+function roundDone() {
+    const arraySliceName = activeRound.split('-')
+    const roundNum = parseInt(arraySliceName[1])
+    let done= false
+    const nextRound = arraySliceName[0] + '-' + (roundNum < 3?roundNum +1:done =true)
+    console.log(nextRound)
+    if (!done){
+        activeRound = activeRound.toLowerCase()
+        roundsElement[activeRound].classList.add('bg-grayDark')
+        roundsElement[activeRound].classList.remove('bg-yellowDefault')
+        roundsElement[activeRound].disabled = true
+        roundsElement[nextRound].classList.remove('bg-grayDark')
+        roundsElement[nextRound].classList.add('bg-yellowDefault')
+        roundsElement[nextRound].disabled = true
+    } else {
+        console.log('done')
+        finishGelanggang()
+    }
+    activeRound = nextRound
+    updatePertandingan()
+    togglePausePlay(false)
+}
 
 function changeDisabledButtons(status) {
     rounds.forEach(round =>{
-        roundsElement[round].disabled = status
+        roundsElement[round].disabled = true
     })
     pausePlay.disabled = status
     finish.disabled = status

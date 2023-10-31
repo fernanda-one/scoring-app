@@ -1,5 +1,7 @@
 let gelanggangData = JSON.parse(localStorage.getItem("gelanggangData"));
 let round = gelanggangData?.activeRound?.toLowerCase() || 'ROUND';
+const dropRed = []
+const dropBlue = []
 let savedGelanggangData = {};
 let savedKetuaData = {
     'round-1': {
@@ -68,52 +70,52 @@ function initialGeneralDom() {
     // round1
     document.getElementById(`round-1-jurror1-red`).innerHTML = ketuaData['round-1']?.red?.jurror1 || '';
     document.getElementById(`round-1-jurror2-red`).innerHTML = ketuaData['round-1']?.red?.jurror2 || '';
-    document.getElementById(`round-1-jurror3-red`).innerHTML = ketuaData['round-1']?.red?.jurror3 || '';    
-    document.getElementById(`round-1-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;    
-    document.getElementById(`round-1-dropping-red`).innerHTML = ketuaData['round-1']?.red?.dropping || '';    
-    document.getElementById(`round-1-penalty-red`).innerHTML = ketuaData['round-1']?.red?.penalty || '';  
+    document.getElementById(`round-1-jurror3-red`).innerHTML = ketuaData['round-1']?.red?.jurror3 || '';
+    document.getElementById(`round-1-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;
+    document.getElementById(`round-1-dropping-red`).innerHTML = ketuaData['round-1']?.red?.dropping || '';
+    document.getElementById(`round-1-penalty-red`).innerHTML = ketuaData['round-1']?.red?.penalty || '';
     document.getElementById(`round-1-board-point-red`).innerHTML = ketuaData['round-1']?.red?.point || 0;
 
     document.getElementById(`round-1-jurror1-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror1 || '';
     document.getElementById(`round-1-jurror2-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror2 || '';
-    document.getElementById(`round-1-jurror3-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror3 || '';    
-    document.getElementById(`round-1-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;    
-    document.getElementById(`round-1-dropping-blue`).innerHTML = ketuaData['round-1']?.blue?.dropping || '';    
-    document.getElementById(`round-1-penalty-blue`).innerHTML = ketuaData['round-1']?.blue?.penalty || '';  
+    document.getElementById(`round-1-jurror3-blue`).innerHTML = ketuaData['round-1']?.blue?.jurror3 || '';
+    document.getElementById(`round-1-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;
+    document.getElementById(`round-1-dropping-blue`).innerHTML = ketuaData['round-1']?.blue?.dropping || '';
+    document.getElementById(`round-1-penalty-blue`).innerHTML = ketuaData['round-1']?.blue?.penalty || '';
     document.getElementById(`round-1-board-point-blue`).innerHTML = ketuaData['round-1']?.blue?.point || 0;
-    
+
     // round 2
     document.getElementById(`round-2-jurror1-red`).innerHTML = ketuaData['round-2']?.red?.jurror1 || '';
     document.getElementById(`round-2-jurror2-red`).innerHTML = ketuaData['round-2']?.red?.jurror2 || '';
-    document.getElementById(`round-2-jurror3-red`).innerHTML = ketuaData['round-2']?.red?.jurror3 || '';    
-    document.getElementById(`round-2-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;    
-    document.getElementById(`round-2-dropping-red`).innerHTML = ketuaData['round-2']?.red?.dropping || '';    
-    document.getElementById(`round-2-penalty-red`).innerHTML = ketuaData['round-2']?.red?.penalty || '';  
+    document.getElementById(`round-2-jurror3-red`).innerHTML = ketuaData['round-2']?.red?.jurror3 || '';
+    document.getElementById(`round-2-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;
+    document.getElementById(`round-2-dropping-red`).innerHTML = ketuaData['round-2']?.red?.dropping || '';
+    document.getElementById(`round-2-penalty-red`).innerHTML = ketuaData['round-2']?.red?.penalty || '';
     document.getElementById(`round-2-board-point-red`).innerHTML = ketuaData['round-2']?.red?.point || 0;
 
     document.getElementById(`round-2-jurror1-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror1 || '';
     document.getElementById(`round-2-jurror2-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror2 || '';
-    document.getElementById(`round-2-jurror3-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror3 || '';    
-    document.getElementById(`round-2-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;    
-    document.getElementById(`round-2-dropping-blue`).innerHTML = ketuaData['round-2']?.blue?.dropping || '';    
-    document.getElementById(`round-2-penalty-blue`).innerHTML = ketuaData['round-2']?.blue?.penalty || '';  
+    document.getElementById(`round-2-jurror3-blue`).innerHTML = ketuaData['round-2']?.blue?.jurror3 || '';
+    document.getElementById(`round-2-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;
+    document.getElementById(`round-2-dropping-blue`).innerHTML = ketuaData['round-2']?.blue?.dropping || '';
+    document.getElementById(`round-2-penalty-blue`).innerHTML = ketuaData['round-2']?.blue?.penalty || '';
     document.getElementById(`round-2-board-point-blue`).innerHTML = ketuaData['round-2']?.blue?.point || 0;
 
     // round 3
     document.getElementById(`round-3-jurror1-red`).innerHTML = ketuaData['round-3']?.red?.jurror1 || '';
     document.getElementById(`round-3-jurror2-red`).innerHTML = ketuaData['round-3']?.red?.jurror2 || '';
-    document.getElementById(`round-3-jurror3-red`).innerHTML = ketuaData['round-3']?.red?.jurror3 || '';    
-    document.getElementById(`round-3-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;    
-    document.getElementById(`round-3-dropping-red`).innerHTML = ketuaData['round-3']?.red?.dropping || '';    
-    document.getElementById(`round-3-penalty-red`).innerHTML = ketuaData['round-3']?.red?.penalty || '';  
+    document.getElementById(`round-3-jurror3-red`).innerHTML = ketuaData['round-3']?.red?.jurror3 || '';
+    document.getElementById(`round-3-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;
+    document.getElementById(`round-3-dropping-red`).innerHTML = ketuaData['round-3']?.red?.dropping || '';
+    document.getElementById(`round-3-penalty-red`).innerHTML = ketuaData['round-3']?.red?.penalty || '';
     document.getElementById(`round-3-board-point-red`).innerHTML = ketuaData['round-3']?.red?.point || 0;
 
     document.getElementById(`round-3-jurror1-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror1 || '';
     document.getElementById(`round-3-jurror2-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror2 || '';
-    document.getElementById(`round-3-jurror3-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror3 || '';    
-    document.getElementById(`round-3-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;    
-    document.getElementById(`round-3-dropping-blue`).innerHTML = ketuaData['round-3']?.blue?.dropping || '';    
-    document.getElementById(`round-3-penalty-blue`).innerHTML = ketuaData['round-3']?.blue?.penalty || '';  
+    document.getElementById(`round-3-jurror3-blue`).innerHTML = ketuaData['round-3']?.blue?.jurror3 || '';
+    document.getElementById(`round-3-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;
+    document.getElementById(`round-3-dropping-blue`).innerHTML = ketuaData['round-3']?.blue?.dropping || '';
+    document.getElementById(`round-3-penalty-blue`).innerHTML = ketuaData['round-3']?.blue?.penalty || '';
     document.getElementById(`round-3-board-point-blue`).innerHTML = ketuaData['round-3']?.blue?.point || 0;
 }
 
@@ -204,22 +206,33 @@ function storePoint() {
     // Simpan data poin sesuai dengan sudutnya
     savedKetuaData[round]['red'].point = redScore;
     savedKetuaData[round]['blue'].point = blueScore;
-    console.log({scoreData}, 'siu');
-    console.log({redScore}, 'siu');
-    console.log({ blueScore }, 'siu');
-    console.log({ savedKetuaData }, 'siu');
- 
      // Simpan ke localStorage
      localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
 }
 
 function storeDroppingRed(value) {
+    if(value === -2){
+        dropRed.push('-2')
+    } else if (value === 2){
+        dropRed.push('2')
+    }
+    value = dropRed.join(',')
     redCorner.dropping.innerText = value;
     savedKetuaData[round]['red'].dropping = value;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
 }
 
 function storeDroppingBlue(value) {
+    if(value === -2){
+        dropBlue.reverse()
+        dropBlue.push('-2')
+        dropBlue.reverse()
+    } else if (value === 2){
+        dropBlue.reverse()
+        dropBlue.push('2')
+        dropBlue.reverse()
+    }
+    value = dropBlue.join(',')
     blueCorner.dropping.innerText = value;
     savedKetuaData[round]['blue'].dropping = value;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
@@ -230,14 +243,14 @@ function storeRedPenalty(value) {
     redCorner.penalty.innerText = redPenalty;
     savedKetuaData[round]['red'].penalty = redPenalty;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
-} 
+}
 
 function storeBluePenalty(value) {
     let bluePenalty = value.replace(/-/g, " ");
     blueCorner.penalty.innerText = bluePenalty;
     savedKetuaData[round]['blue'].penalty = bluePenalty;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
-} 
+}
 
 export {
     storeGelanggangData,
