@@ -134,6 +134,9 @@
                 </button>
             </a>
         </div>
+        <div class="mt-16">
+            <x-logout-button></x-logout-button>
+        </div>
     </div>
     <script src="{{ mix('js/operator.js') }}"></script>
 </body>

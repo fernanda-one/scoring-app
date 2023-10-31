@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{mix('css/app.css')}}">
     <script src="{{ mix('js/app.js') }}"></script>
 </head>
-<body>
+<body class="font-poppins">
 <header>
     <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}" detail-user="{{auth()->user()}}">
     <div class="flex justify-between">
@@ -184,6 +184,8 @@
             </button>
         </div>
     </div>
+
+    <x-logout-button></x-logout-button>
 
     <!--right side-->
     <div class="flex flex-col justify-start items-end w-[50%]">

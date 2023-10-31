@@ -33,6 +33,9 @@
             <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
                 <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
             </div>
+            <div class="mt-14">
+                <x-logout-button></x-logout-button>
+            </div>
         </div>
         <div>
             <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">

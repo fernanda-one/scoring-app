@@ -163,6 +163,8 @@
             </div>
         </div>
 
+        <x-logout-button></x-logout-button>
+
         <!--Right side-->
         <div class="flex flex-row lg:flex-col justify-end lg:justify-start items-end w-[50%]">
             <div class="flex items-center">

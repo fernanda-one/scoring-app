@@ -44,6 +44,9 @@
                     <p id="timer" class="text-base lg:text-lg font-semibold">00 : 00</p>
                 </div>
         </div>
+        <div class="mt-8">
+            <x-logout-button></x-logout-button>
+        </div>
         <x-drop-verification-result/>
     </header>
 
