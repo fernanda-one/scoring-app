@@ -1,7 +1,7 @@
 let gelanggangData = JSON.parse(localStorage.getItem("gelanggangData"));
 let round = gelanggangData?.activeRound?.toLowerCase() || 'ROUND';
-const dropRed = []
-const dropBlue = []
+let dropRed = []
+let dropBlue = []
 let savedGelanggangData = {};
 let savedKetuaData = {
     'round-1': {
@@ -159,10 +159,12 @@ function loadDataSaved() {
 }
 
 function changeRound(event) {
+    const gelanggang = JSON.parse(localStorage.getItem("gelanggangData"));
     round = event.activeRound
-    activeRound.textContent = event.activeRound
-    gelanggangData.activeRound = round
-    localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
+    activeRound.textContent = round
+    gelanggang.activeRound = round
+    localStorage.setItem("gelanggangData", JSON.stringify(gelanggang));
+    resetDropping();
     initialDynamicDom();
 }
 
@@ -236,6 +238,11 @@ function storeDroppingBlue(value) {
     blueCorner.dropping.innerText = value;
     savedKetuaData[round]['blue'].dropping = value;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
+}
+
+function resetDropping() {
+    dropRed = [];
+    dropBlue = [];
 }
 
 function storeRedPenalty(value) {
