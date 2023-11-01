@@ -155,6 +155,7 @@ function updateDataJuri(e) {
         case 'finish':
             break;
         case 'round':
+            enabledAction(false)
             changeRoundJuri()
             updateRoundJuri(e.activeRound)
             break;
