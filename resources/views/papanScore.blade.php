@@ -44,9 +44,6 @@
                     <p id="timer" class="text-base lg:text-lg font-semibold">00 : 00</p>
                 </div>
         </div>
-        <div class="mt-8">
-            <x-logout-button></x-logout-button>
-        </div>
         <x-drop-verification-result/>
     </header>
 
@@ -271,6 +268,9 @@
                 <p id="blueScore" class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">0</p>
             </div>
         </div>
+    </div>
+    <div class="-mt-8">
+        <x-logout-button></x-logout-button>
     </div>
 
     <script src="{{ mix('js/dropVerification.js') }}">

@@ -28,13 +28,13 @@ class AuthController extends Controller
         return back()->with('error', 'Login failed!');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
 
-        request()->session()->invalidate();
+        $request->session()->invalidate();
 
-        request()->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
         return redirect('/login');
     }
