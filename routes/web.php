@@ -46,6 +46,10 @@ Route::post('/verif-update', function (\Illuminate\Http\Request $request){
     event(new \App\Events\Operator($request->message));
     return null;
 });
+Route::post('/penalty', function (\Illuminate\Http\Request $request){
+    event(new \App\Events\IndicatorPelanggaran($request->message));
+    return null;
+});
 
 Route::get('/capture-screenshot', [PuppeteerController::class, 'captureScreenshot']);
 Route::get('/register',[\App\Http\Controllers\UserController::class, 'index']);

@@ -3,17 +3,18 @@ import {
     channelOperator,
     channelUpdateScore,
     getDataGelanggang,
-    kelas,
-    partaiId, updateScore,
     userData
 } from "./library/ScoreFunc";
 
 require("./bootstrap");
-const {toNumber} = require("lodash");
-import {changeIndicatorPelanggaran, clearIndicator} from './library/DewanFunc'
-let round = 'round-1'
-let blueScore = document.getElementById(`${round}-blueScore`).textContent;
-let redScore = document.getElementById(`${round}-redScore`).textContent;
+import {
+    cekWinner,
+    changeRoundDewan,
+    clearIndicator, enabledAction,
+    handlePenaltyClick,
+    handleScoreChange, loadDataSave,
+    saveData, updateDataScore, updatePertandingan
+} from './library/DewanFunc'
 const teguranMerahPertama = document.getElementById('teguran-merah-pertama');
 const binaanMerahPertama = document.getElementById('binaan-merah-pertama')
 const peringatanMerahPertama = document.getElementById('peringatan-merah-pertama')
@@ -32,57 +33,26 @@ const jatuhanMerahSah = document.getElementById('jatuhan-merah-plus')
 const jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus')
 const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
-const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-minus',
-    'jatuhan-merah-plus','peringatan-biru-ketiga','peringatan-biru-kedua','binaan-biru-kedua','teguran-biru-kedua',
-    'peringatan-biru-pertama','binaan-biru-pertama','teguran-biru-pertama','peringatan-merah-ketiga','peringatan-merah-kedua','binaan-merah-kedua',
-    'teguran-merah-kedua','peringatan-merah-pertama','binaan-merah-pertama','teguran-merah-pertama', 'popup-biru','popup-merah', 'disk-merah', 'disk-biru']
-let bluePenalty='pertama'
-let redPenalty = 'pertama';
-let droppingRed = JSON.parse(localStorage.getItem('scoreData'))?.droppingRed || [] ;
-let droppingBlue = JSON.parse(localStorage.getItem('scoreData'))?.droppingBlue || [];
-let pureScoreRed = 0;
-let pureScoreBlue = 0;
-const rounds = []
-const winnerRounds = {
-    'round-1':'',
-    'round-2':'',
-    'round-3':'',
-}
+const diskMerah = document.getElementById('disk-merah')
+const diskBiru = document.getElementById('disk-biru')
+let peringatanPenalty, peringatanPenaltyBlue = false
 
-function updateDataScore(event) {
-    pureScoreRed = event.red_score;
-    pureScoreBlue = event.blue_score;
+if (localStorage.getItem('dataDewan')){
+    loadDataSave()
 }
 
 channelUpdateScore
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
         updateDataScore(event)
+        saveData()
     });
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataDewan(event)
+        saveData()
     });
 
-function handlePenaltyClick(color, penalty) {
-    return function () {
-        if (color === 'red') {
-            redPenalty = penalty;
-        } else if (color === 'blue') {
-            bluePenalty = penalty;
-        }
-        changeIndicatorPelanggaran(color, penalty);
-        pushScore();
-    };
-}
-function handleScoreChange(color, scoreChange) {
-    return function () {
-        if (color === 'red') {
-            pushScore(scoreChange, 0);
-        } else if (color === 'blue') {
-            pushScore(0 , scoreChange);
-        }
-    };
-}
+
 
 // Add event listeners for red penalties
 teguranMerahPertama.addEventListener("click", handlePenaltyClick('red', 'teguran-pertama'));
@@ -101,61 +71,22 @@ peringatanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'peri
 peringatanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'peringatan-kedua'));
 peringatanBiruKetiga.addEventListener("click", handlePenaltyClick('blue', 'peringatan-ketiga'));
 
-jatuhanMerahSah.addEventListener("click", handleScoreChange('red', 2));
-jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -2));
+jatuhanMerahSah.addEventListener("click", handleScoreChange('red', 3));
+jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -3));
 
-jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 2));
-jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -2));
+jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 3));
+jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -3));
+localStorage.clear()
+diskMerah.addEventListener("click",  disqualification('biru'))
+diskBiru.addEventListener("click",  disqualification('merah'))
 
-
-function pushScore(droppingRed = 0, droppingBlue = 0){
-    pureScoreRed += droppingRed
-    pureScoreBlue += droppingBlue
-    axios.post("/score-update", {
-        message: {
-            "blueScore":pureScoreBlue,
-            "redScore":pureScoreRed,
-            "redPenalty":redPenalty,
-            "bluePenalty": bluePenalty,
-            "droppingRed": droppingRed,
-            "droppingBlue": droppingBlue,
-        },
-    });
-}
-
-function enabledAction(status = true) {
-    buttonAction.map(action =>{
-        const button = document.getElementById(action)
-        button.disabled = !status;
-    })
-}
-enabledAction(false)
-function cekWinner(){
-    let red = 0;
-    let blue =0;
-    rounds.map(round =>{
-        winnerRounds[round] === 'red'? red++ : blue++
-    })
-    if (red > blue){
-        updatePertandingan('merah')
-    } else {
-        updatePertandingan('biru')
+function disqualification(corner){
+    return function () {
+        updatePertandingan(corner)
     }
 }
-function updatePertandingan(winner){
-    const dataPartai = getDataGelanggang()
-    axios.post("/operator-update", {
-        message: {
-            'blueName':dataPartai.namaBiru,
-            'redName':dataPartai.namaMerah,
-            'blueContingent':dataPartai.kontingenMerah,
-            'redContingent':dataPartai.kontingenBiru,
-            'babak':dataPartai.babak,
-            'activeRound':activeRound.textContent,
-            'action': winner
-        },
-    });
-}
+
+enabledAction(true)
 function updateDataDewan(e) {
     switch (e.action) {
         case 'start':
@@ -165,7 +96,7 @@ function updateDataDewan(e) {
             break;
         case 'round':
             enabledAction(false);
-            changeRoundDewan()
+            changeRoundDewan(e.activeRound, peringatanPenalty, peringatanPenaltyBlue)
             clearIndicator()
             break;
         case 'pause':
@@ -175,11 +106,4 @@ function updateDataDewan(e) {
             enabledAction()
             break;
     }
-}
-
-function changeRoundDewan(){
-    bluePenalty='pertama'
-    redPenalty = 'pertama';
-    pureScoreRed = 0;
-    pureScoreBlue =0;
 }

@@ -213,10 +213,10 @@ function storePoint() {
 }
 
 function storeDroppingRed(value) {
-    if(value === -2){
-        dropRed.push('-2')
-    } else if (value === 2){
-        dropRed.push('2')
+    if(value === -3){
+        dropRed.push('-3')
+    } else if (value === 3){
+        dropRed.push('3')
     }
     value = dropRed.join(',')
     redCorner.dropping.innerText = value;
@@ -225,13 +225,13 @@ function storeDroppingRed(value) {
 }
 
 function storeDroppingBlue(value) {
-    if(value === -2){
+    if(value === -3){
         dropBlue.reverse()
-        dropBlue.push('-2')
+        dropBlue.push('-3')
         dropBlue.reverse()
-    } else if (value === 2){
+    } else if (value === 3){
         dropBlue.reverse()
-        dropBlue.push('2')
+        dropBlue.push('3')
         dropBlue.reverse()
     }
     value = dropBlue.join(',')

@@ -9,7 +9,7 @@ import {
     changeScoreElement,
     channelUpdateScore,
     channelOperator,
-    userData, getDataGelanggang,
+    userData, getDataGelanggang, channelPenalty,
 } from "./library/ScoreFunc";
 import {getId, indicatorUpdate, startTimeoutIndicator} from "./library/JuriFunc";
 
@@ -19,26 +19,27 @@ let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById('timer');
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 let timerStarted = false
-const timePerRound = 60;
+const timePerRound = 120;
 let countdown;
 let isPaused = false;
 let endTime;
 let secondsRemaining = 0;
 changeScoreElement(redScore, blueScore)
 loadDataSaved()
-
-function updateIndicatorDewan(event) {
-    changeIndicatorPelanggaran('blue', event.blue_penalty)
-    changeIndicatorPelanggaran('red', event.red_penalty)
+if (localStorage.getItem('timerStarted')){
+    loadSaveTimer()
 }
 channelGelanggang
     .listen(`.juri.${userData.gelanggang_id}`, (event) => {
         updateindicator(event);
     });
+channelPenalty
+    .listen(`.penalty.${userData.gelanggang_id}`, (event) => {
+        changeIndicatorPelanggaran(event.color, event.penalty);
+    });
 
 channelUpdateScore
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        updateIndicatorDewan(event)
         updateScore(event)
     });
 
@@ -66,11 +67,19 @@ function updateTimer(action) {
     }
 }
 function saveTimerState() {
+    localStorage.setItem('timerStarted', timerStarted)
     localStorage.setItem('timerIsPaused', isPaused);
     localStorage.setItem('timerSecondsRemaining', secondsRemaining);
     localStorage.setItem('timerEndTime', endTime);
 }
 
+function loadSaveTimer(){
+    timerStarted =  localStorage.getItem('timerStarted')
+    isPaused = localStorage.getItem('timerIsPaused');
+    secondsRemaining = localStorage.getItem('timerSecondsRemaining');
+    endTime = localStorage.getItem('timerEndTime');
+    startTimer(secondsRemaining)
+}
 function displayTimeLeft(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainderSeconds = seconds % 60;
@@ -143,6 +152,7 @@ function updateDataGelanggang(e) {
         case 'reset':
             localStorage.clear()
             location.reload();
+            break;
         case 'round':
             changeRound(e)
             break;

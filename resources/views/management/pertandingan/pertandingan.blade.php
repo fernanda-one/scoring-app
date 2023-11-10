@@ -38,7 +38,7 @@
                                         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none" id="file_input" type="file" name="excel_file">
                                     </div>
                                     <div>
-                                        <a href="./download/partai" class="text-blue-500 decoration-1 underline hover:text-blue-700">donwload contoh file import partai</a>
+                                        <a href="/download/partai" class="text-blue-500 decoration-1 underline hover:text-blue-700">donwload contoh file import partai</a>
                                     </div>
                                 </div>
 

@@ -39,3 +39,6 @@ Broadcast::channel('presence.ketuaPertandingan.{id}', function ($user , $id){
 Broadcast::channel('presence.dropVerification.{id}', function ($user , $id){
     return $user;
 });
+Broadcast::channel('presence.penalty.{id}', function ($user , $id){
+    return $user;
+});

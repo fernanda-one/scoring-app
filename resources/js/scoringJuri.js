@@ -19,13 +19,18 @@ const pukulanBiru = document.getElementById("pukul-biru");
 const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
-const roundView = document.getElementById(`round`)
+let round = ''
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
 const buttonAction = ['pukul-biru','tendang-biru','pukul-merah','tendang-merah']
 let bluePenalty='pertama'
 let redPenalty = 'pertama';
+let actionStatus = false
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
+
+if (localStorage.getItem('dataJuri')){
+    loadDataSaveJuri()
+}
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataJuri(event)
@@ -98,6 +103,7 @@ function pushScore(){
             "droppingBlue": 0,
         },
     });
+    saveData()
 }
 
 function updateScore(event) {
@@ -141,6 +147,7 @@ function updateScore(event) {
 }
 
 function enabledAction(status = true) {
+    actionStatus = status
     buttonAction.map(action =>{
         const button = document.getElementById(action)
         button.disabled = !status;
@@ -156,7 +163,7 @@ function updateDataJuri(e) {
             break;
         case 'round':
             enabledAction(false)
-            changeRoundJuri()
+            changeRoundJuri(e.activeRound)
             updateRoundJuri(e.activeRound)
             break;
         case 'pause':
@@ -168,9 +175,32 @@ function updateDataJuri(e) {
     }
 }
 
-function changeRoundJuri(){
-    bluePenalty='pertama'
-    redPenalty = 'pertama';
-    pureScoreRed = 0;
-    pureScoreBlue =0;
+function changeRoundJuri(roundActive){
+    if(!peringatanPenalty){
+        bluePenalty='pertama'
+        redPenalty = 'pertama';
+    }
+    round = roundActive
+}
+
+function saveData(){
+    // const data ={
+    //     bluePenalty:bluePenalty,
+    //     redPenalty:redPenalty,
+    //     pureScoreRed:pureScoreRed,
+    //     pureScoreBlue:pureScoreBlue,
+    //     actionStatus:actionStatus,
+    //     round : round
+    // }
+    // localStorage.setItem('dataJuriScoring', JSON.stringify(data))
+}
+
+function loadDataSaveJuri(){
+    // const data = JSON.parse(localStorage.getItem('dataJuriScoring'))
+    // bluePenalty = data.bluePenalty
+    // redPenalty = data.redPenalty
+    // pureScoreRed = data.pureScoreRed
+    // pureScoreBlue = data.pureScoreBlue
+    // updateRoundJuri(data.round)
+    // enabledAction(data.actionStatus)
 }

@@ -109,8 +109,6 @@ function finishGelanggang(){
     changeDisabledButtons()
     togglePausePlay(false)
     changeStatusRound('round-1')
-    location.reload()
-    localStorage.clear()
 }
 
 function togglePausePlay(status = pauseStatus){
@@ -138,9 +136,6 @@ function uploadDataWinner(winner) {
     // });
 }
 function  updatePertandingan(action = 'round'){
-    if (action !== 'finish'){
-        saveData(action==='start', action ==='pause' || action === 'play')
-    }
     axios.post("/operator-update", {
         message: {
             'blueName':dataPartai.sudut_biru,
@@ -152,6 +147,13 @@ function  updatePertandingan(action = 'round'){
             'action': action
         },
     });
+    if (action !== 'finish'){
+        saveData(action==='start', action ==='pause' || action === 'play')
+    }
+    if (action === 'reset'){
+        location.reload()
+        localStorage.clear()
+    }
 }
 function cekStatususer(users) {
     const userList = {
@@ -187,7 +189,10 @@ function roundDone() {
     const arraySliceName = activeRound.split('-')
     const roundNum = parseInt(arraySliceName[1])
     let done= false
-    const nextRound = arraySliceName[0] + '-' + (roundNum < 3?roundNum +1:done =true)
+    if (roundNum < 3){
+        done = true
+    }
+    const nextRound = arraySliceName[0] + '-' + (roundNum < 3?roundNum + 1: roundNum)
     console.log(nextRound)
     if (!done){
         changeIndicatorRound(activeRound.toLowerCase(),nextRound)
