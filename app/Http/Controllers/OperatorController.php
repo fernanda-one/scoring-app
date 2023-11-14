@@ -12,13 +12,13 @@ class OperatorController extends Controller
     {
         $partai = Partai::where('status', true)
             ->orderBy('id', 'asc');
-        $idToSkip = $partai->paginate(1)[0]->id;
+        $idToSkip = $partai->paginate(1)[0]->id??null;
 
         $gelangang = UserGelanggang::where('user_id', auth()->user()->id)->first();
         return view('operator', [
             'title' => 'operator',
-            'partai_pertama'=>$partai->paginate(1),
-            'partai_kedua'=>$partai->where('id', '!=', $idToSkip)->where('status',true)->paginate(1),
+            'partai_pertama'=>$partai->paginate(1)??null,
+            'partai_kedua'=>$partai->where('id', '!=', $idToSkip)->where('status',true)->paginate(1)??null,
             'gelanggang'=>$gelangang
         ]);
     }

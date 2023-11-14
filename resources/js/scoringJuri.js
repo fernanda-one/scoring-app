@@ -172,14 +172,13 @@ function updateDataJuri(e) {
         case 'play':
             enabledAction()
             break;
+        case 'reset':
+            localStorage.clear()
+            break;
     }
 }
 
 function changeRoundJuri(roundActive){
-    if(!peringatanPenalty){
-        bluePenalty='pertama'
-        redPenalty = 'pertama';
-    }
     round = roundActive
 }
 

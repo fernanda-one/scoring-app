@@ -35,7 +35,6 @@ const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
 const diskMerah = document.getElementById('disk-merah')
 const diskBiru = document.getElementById('disk-biru')
-let peringatanPenalty, peringatanPenaltyBlue = false
 
 if (localStorage.getItem('dataDewan')){
     loadDataSave()
@@ -76,7 +75,6 @@ jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -3));
 
 jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 3));
 jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -3));
-localStorage.clear()
 diskMerah.addEventListener("click",  disqualification('biru'))
 diskBiru.addEventListener("click",  disqualification('merah'))
 
@@ -96,14 +94,17 @@ function updateDataDewan(e) {
             break;
         case 'round':
             enabledAction(false);
-            changeRoundDewan(e.activeRound, peringatanPenalty, peringatanPenaltyBlue)
-            clearIndicator()
+            clearIndicator();
+            changeRoundDewan(e.activeRound)
             break;
         case 'pause':
             enabledAction(false)
             break;
         case 'play':
             enabledAction()
+            break;
+        case 'reset':
+            localStorage.clear()
             break;
     }
 }

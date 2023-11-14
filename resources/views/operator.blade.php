@@ -16,8 +16,8 @@
 </head>
 <body>
     <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelanggang}}">
-    <label for="partai"></label><input id="partai" type="text" hidden="hidden" data-partai="{{$partai_pertama[0]}}">
-    <div class="w-[52.75rem] h-[24.375rem] mx-auto my-auto">
+        <label for="partai"></label><input id="partai" type="text" hidden="hidden" data-partai="{{$partai_pertama[0]}}">
+        <div class="w-[52.75rem] h-[24.375rem] mx-auto my-auto">
         <div class="mx-auto mt-3">
             <div  class="mx-auto flex justify-center space-x-[3.125rem] mt-1">
                 <button id="status_dewan" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
@@ -41,6 +41,7 @@
         </div>
         <div class="flex mt-4 justify-between mx-4">
             <div class="flex-row space-y-[2.625rem] my-4 ">
+                @if(!empty($partai_pertama[0]))
                 <div class="flex space-x-3">
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
                         {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
@@ -54,8 +55,8 @@
                         </span>
                     </div>
                 </div>
-
-                @if(!empty($partai_kedua[0]))
+                @endif
+            @if(!empty($partai_kedua[0]))
                     <div class="flex space-x-3">
                     <span class="flex justify-center items-center w-16 h-16 border-[2px] border-black font-bold">
                         {{$partai_kedua[0]->id}} {{$partai_kedua[0]->kelas}}
@@ -83,6 +84,7 @@
                 </button>
             </div>
             <div class="flex-row space-y-[2.625rem] my-4">
+                @if(!empty($partai_pertama[0]))
                 <div class="flex space-x-3">
                     <div class="flex-row space-y-2">
                         <span id="nama_peserta_sudut_biru" class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
@@ -96,7 +98,8 @@
                         {{$partai_pertama[0]->id}} {{$partai_pertama[0]->kelas}}
                     </span>
                 </div>
-                @if(!empty($partai_kedua[0]))
+                @endif
+            @if(!empty($partai_kedua[0]))
                     <div class="flex space-x-3">
                         <div class="flex-row space-y-2">
                         <span class="flex justify-center items-center w-48 h-7 font-bold text-white bg-blueDark">
@@ -114,7 +117,7 @@
             </div>
         </div>
         <div class="flex justify-center mx-auto space-x-5 mt-6">
-            <button id="start" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
+            <button id="start" {{empty($partai_pertama[0])?'disabled':''}} class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 START
             </button>
             <button id="pause" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
@@ -123,12 +126,12 @@
             <button id="finish" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                 FINISH
             </button>
-            <a href="{{ $partai_pertama->previousPageUrl() }}">
+            <a href="{{ $partai_pertama->previousPageUrl()}}">
                 <button id="prev" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                     PREV
                 </button>
             </a>
-            <a href="{{ $partai_pertama->nextPageUrl() }}">
+            <a href="{{ $partai_pertama->nextPageUrl()}}">
                 <button id="next" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
                     NEXT
                 </button>

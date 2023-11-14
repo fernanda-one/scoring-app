@@ -6,14 +6,19 @@ let bluePenalty='pertama'
 let redPenalty = 'pertama';
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
-const rounds = []
+let peringatanPenaltyRed, peringatanPenaltyBlue = false
+const pelanggaranPoint = {
+    'pertama':0,
+    'teguran-pertama': 0,
+    'teguran-kedua': 1,
+    'binaan-pertama': 2,
+    'binaan-kedua': 3,
+    'peringatan-pertama': 5,
+    'peringatan-kedua': 7,
+    'peringatan-ketiga': 9,
+}
 let pelanggaranBiru = ['pertama']
 let pelanggaranMerah = ['pertama']
-const winnerRounds = {
-    'round-1':'',
-    'round-2':'',
-    'round-3':'',
-}
 const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-minus',
     'jatuhan-merah-plus','peringatan-biru-ketiga','peringatan-biru-kedua','binaan-biru-kedua','teguran-biru-kedua',
     'peringatan-biru-pertama','binaan-biru-pertama','teguran-biru-pertama','peringatan-merah-ketiga','peringatan-merah-kedua','binaan-merah-kedua',
@@ -41,10 +46,14 @@ const pelanggaranBlueElement = {
 const dataDewan = {
     blueInput : document.getElementById(`round-1-blueInput`),
     redInput : document.getElementById(`round-1-redInput`),
+    redScore : document.getElementById('round-1-redScore'),
+    blueScore : document.getElementById('round-1-blueScore')
 }
 export function updateRoundDewan(round) {
     dataDewan.blueInput = document.getElementById(`${round}-blueInput`);
     dataDewan.redInput = document.getElementById(`${round}-redInput`);
+    dataDewan.blueScore = document.getElementById(`${round}-blueScore`);
+    dataDewan.redScore = document.getElementById(`${round}-redScore`);
 }
 export function enabledAction(status = true) {
     actionStatus = status
@@ -80,17 +89,12 @@ export function updateDataScore(event) {
 }
 
 export function cekWinner(){
-    rounds.push(pureScoreRed > pureScoreBlue? 'merah':'biru')
-    console.log(rounds)
-    let red = 0;
-    let blue = 0;
-    rounds.map(round =>{
-        round === 'merah'? red += 1 : blue += 1
-    })
+    const red = parseInt(dataDewan['blueScore'].textContent)
+    const blue = parseInt(dataDewan['redScore'].textContent)
+    console.log(red, blue)
     if (red > blue){
         updatePertandingan('merah')
     } else {
-        console.log(red ,blue)
         updatePertandingan('biru')
     }
 }
@@ -109,15 +113,27 @@ export function updatePertandingan(winner){
         },
     });
 }
-
-export function changeRoundDewan(round, peringatanPenaltyRed, peringatanPenaltyBlue){
+export function changeRoundDewan(round){
     updateRoundDewan(round)
-    rounds.push(pureScoreRed > pureScoreBlue? 'merah':'biru')
+    updateDataIndicator()
+    pushScore()
+}
+
+export function updateDataIndicator(){
     if(!peringatanPenaltyRed){
+        pureScoreRed -= pelanggaranPoint[redPenalty]
         redPenalty = 'pertama';
+    } else {
+        pelanggaranMerah = ['pertama']
+        changeIndicatorPelanggaran('red', redPenalty)
     }
+
     if(!peringatanPenaltyBlue){
+        pureScoreBlue -= pelanggaranPoint[bluePenalty]
         bluePenalty='pertama'
+    } else {
+        pelanggaranBiru = ['pertama']
+        changeIndicatorPelanggaran('blue', bluePenalty)
     }
 }
 
@@ -214,8 +230,16 @@ export function changeIndicatorPelanggaran(corner, penalty) {
     }
     pelanggaranMerah.sort(compare)
     pelanggaranBiru.sort(compare)
-    redPenalty = pelanggaranMerah[pelanggaranMerah.length - 1]
-    bluePenalty = pelanggaranBiru[pelanggaranBiru.length - 1]
+    const pelanggaranMerahValue = pelanggaranMerah[pelanggaranMerah.length - 1]
+    const pelanggaranBiruValue =  pelanggaranBiru[pelanggaranBiru.length - 1]
+    if (pelanggaran.indexOf(pelanggaranBiruValue) > 3){
+        peringatanPenaltyBlue = true
+    }
+    if (pelanggaran.indexOf(pelanggaranMerahValue) > 3){
+        peringatanPenaltyRed = true
+    }
+    redPenalty = pelanggaranMerahValue
+    bluePenalty = pelanggaranBiruValue
     pelanggaran.map(itemPelanggaran =>{
         if (dataPelanggaran.includes(itemPelanggaran)){
             nameElemenet[itemPelanggaran].classList.remove('bg-grayDefault')
@@ -242,6 +266,7 @@ function compare(value1, value2) {
 }
 
 export function clearIndicator(){
+    console.log('clear')
     const namesElement = [pelanggaranRedElement, pelanggaranBlueElement]
     namesElement.map(nameElemenet =>{
         pelanggaran.map(itemPelanggaran =>{

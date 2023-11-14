@@ -1,4 +1,4 @@
-import {changeIndicatorPelanggaran} from "./library/DewanFunc";
+import {changeIndicatorPelanggaran, clearIndicator, updateDataIndicator} from "./library/DewanFunc";
 
 require("./bootstrap");
 import {
@@ -19,7 +19,7 @@ let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById('timer');
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 let timerStarted = false
-const timePerRound = 120;
+const timePerRound = 10;
 let countdown;
 let isPaused = false;
 let endTime;
@@ -35,6 +35,7 @@ channelGelanggang
     });
 channelPenalty
     .listen(`.penalty.${userData.gelanggang_id}`, (event) => {
+        console.log(event)
         changeIndicatorPelanggaran(event.color, event.penalty);
     });
 
@@ -154,6 +155,7 @@ function updateDataGelanggang(e) {
             location.reload();
             break;
         case 'round':
+            clearIndicator()
             changeRound(e)
             break;
         case 'pause':
@@ -173,10 +175,9 @@ function updateindicator(event) {
     startTimeoutIndicator(elementName, sudut)
 }
 function changeRound(e) {
+    updateDataIndicator()
     activeRound.textContent = e.activeRound.toUpperCase()
-    round = e.activeRound
-    blueScore.textContent = 0;
-    redScore.textContent = 0;
+    round = e.activeRound;
 }
 
 
