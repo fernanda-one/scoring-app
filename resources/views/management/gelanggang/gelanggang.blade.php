@@ -124,11 +124,11 @@
             <td class="pl-10 py-4 flex">
                 <!-- Edit Modal -->
                 <button data-modal-target="edit-modal-{{$g['id']}}" data-modal-toggle="edit-modal-{{$g['id']}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Edit Gelanggang
+                    Edit
                 </button>
                 <!-- Delete Modal -->
                 <button data-modal-target="delete-modal-{{$g['id']}}" data-modal-toggle="delete-modal-{{$g['id']}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Hapus Gelanggang
+                    Delete
                 </button>
             </td>
         </tr>
@@ -319,7 +319,7 @@
                     <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
-                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin ingin menghapus pertandingan ini?</h3>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin ingin menghapus gelanggang ini?</h3>
                     <form action="/management/delete-gelanggang/{{$g['id']}}" method="post" class="inline">
                         @method('delete')
                         @csrf

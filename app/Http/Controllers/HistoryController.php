@@ -10,6 +10,9 @@ class HistoryController extends Controller
 {
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("admin");
+        }
         $record = Record::latest();
         return view('management.history.history', [
             'title' => 'history',

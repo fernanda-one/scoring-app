@@ -13,6 +13,9 @@ class GelanggangController extends Controller
 {
     public function index(Request $request)
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("admin");
+        }
         $gelanggang = $this->listGelanggang();
         $dataUsers = $this->dataUsers();
 //        dd($gelanggang);

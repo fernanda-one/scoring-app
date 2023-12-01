@@ -10,6 +10,9 @@ class OperatorController extends Controller
 {
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("operator");
+        }
         $partai = Partai::where('status', true)
             ->orderBy('id', 'asc');
         $idToSkip = $partai->paginate(1)[0]->id??null;

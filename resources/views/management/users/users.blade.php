@@ -133,11 +133,11 @@
                     <td class="px-6 py-4 flex">
                         <!-- Edit Modal -->
                         <button data-modal-target="edit-modal-{{$user->id}}" data-modal-toggle="edit-modal-{{$user->id}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                            Edit User
+                            Edit
                         </button>
                         <!-- Delete Modal -->
                         <button data-modal-target="delete-modal-{{$user->id}}" data-modal-toggle="delete-modal-{{$user->id}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                            Delete User
+                            Delete
                         </button>
                     </td>
                 </tr>

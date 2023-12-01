@@ -13,6 +13,9 @@ class PartaiController extends Controller
 {
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("admin");
+        }
         $kelas =[
             (object)[
                 'name'=>'A',

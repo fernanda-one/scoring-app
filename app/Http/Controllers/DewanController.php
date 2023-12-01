@@ -9,6 +9,9 @@ class DewanController extends Controller
 {
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("dewan");
+        }
         $gelangang = UserGelanggang::where('user_id', auth()->user()->id)->first();
         return view('dewan', [
             'title' => 'dewan',

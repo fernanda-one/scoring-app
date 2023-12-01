@@ -35,7 +35,6 @@ const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
 const diskMerah = document.getElementById('disk-merah')
 const diskBiru = document.getElementById('disk-biru')
-
 if (localStorage.getItem('dataDewan')){
     loadDataSave()
 }
@@ -48,7 +47,9 @@ channelUpdateScore
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataDewan(event)
-        saveData()
+        if (event !== "reset"){
+            saveData()
+        }
     });
 
 
@@ -105,6 +106,7 @@ function updateDataDewan(e) {
             break;
         case 'reset':
             localStorage.clear()
+            location.reload()
             break;
     }
 }

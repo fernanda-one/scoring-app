@@ -21,7 +21,7 @@
                 <div class="border border-gray-300 my-6"></div>
                 <p>Apakah Anda yakin untuk keluar dari pertandingan?</p>
                 <div class="flex justify-end gap-4 mt-6">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    <form id="logout-form" action="{{ route('logout') }}" method="GET">
                         @csrf
                         <button type="button" data-modal-hide="logout-modal" class="bg-grayDefault px-3 py-2 text-white rounded-lg">Batal</button>
                         <button type="submit" class="bg-redDefault px-3 py-2 text-white rounded-lg">Keluar</button>

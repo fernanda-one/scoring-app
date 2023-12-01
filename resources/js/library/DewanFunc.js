@@ -91,7 +91,6 @@ export function updateDataScore(event) {
 export function cekWinner(){
     const red = parseInt(dataDewan['blueScore'].textContent)
     const blue = parseInt(dataDewan['redScore'].textContent)
-    console.log(red, blue)
     if (red > blue){
         updatePertandingan('merah')
     } else {
@@ -112,6 +111,7 @@ export function updatePertandingan(winner){
             'action': winner
         },
     });
+    localStorage.clear()
 }
 export function changeRoundDewan(round){
     updateRoundDewan(round)
@@ -154,6 +154,7 @@ export function loadDataSave(){
     pureScoreRed = data.pureScoreRed;
     pureScoreBlue = data.pureScoreBlue;
     enabledAction(data.actionStatus)
+    console.log(bluePenalty, redPenalty)
     bluePenalty !== 'pertama'?changeIndicatorPelanggaran('blue',bluePenalty):''
     redPenalty !== 'pertama'?changeIndicatorPelanggaran('red',redPenalty):''
 }

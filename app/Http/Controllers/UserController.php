@@ -22,6 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("admin");
+        }
         $users = User::latest();
         $search = \request('search') ?? '';
         if ($search != ''){

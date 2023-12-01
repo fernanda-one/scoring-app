@@ -21,7 +21,7 @@ const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang
 const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
 console.log(localStorage.getItem('dataOperator'))
 // localStorage.clear()
-
+let users
 if (localStorage.getItem('dataOperator')){
     loadSaveData()
 }
@@ -62,17 +62,28 @@ channelOperator
     });
 
 channelUpdateScore
-    .here((users) => {
-        cekStatususer(users)
+    .here((usersCB) => {
+        users = usersCB
+        console.log(users)
+        cekStatususer()
     })
-    .joining((users) => {
-        // console.log({ users }, "joined");
+    .joining((user) => {
+        users.push(user)
+        cekStatususer()
     })
-    .leaving((users) => {
-        // console.log({ users }, "leaved");
+    .leaving((user) => {
+        console.log(user)
+        console.log(users)
+        let indexToRemove = users.indexOf(user);
+        if (indexToRemove !== -1) {
+            users.splice(indexToRemove, 1);
+            console.log('Array setelah menghapus elemen:', users)
+            cekStatususer()
+        } else {
+            console.log('Elemen tidak ditemukan dalam array.');
+        }
     })
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        // console.log(event)
     });
 
 roundsElement['round-1'].addEventListener('click',(ev)=>{
@@ -122,18 +133,18 @@ function togglePausePlay(status = pauseStatus){
 }
 
 function uploadDataWinner(winner) {
-    axios.post("/create-history", {
-        'partai':dataPartai.id,
-        'kelas':dataPartai.kelas,
-        'jenis_kelamin':dataPartai.jenis_kelamin,
-        'sudut_biru':dataPartai.sudut_biru,
-        'sudut_merah':dataPartai.sudut_merah,
-        'kontingen_biru':dataPartai.contingen_sudut_biru,
-        'kontingen_merah':dataPartai.contingen_sudut_merah,
-        'babak':dataPartai.babak,
-        'round_time':activeRound,
-        'pemenang':winner,
-    });
+    // axios.post("/create-history", {
+    //     'partai':dataPartai.id,
+    //     'kelas':dataPartai.kelas,
+    //     'jenis_kelamin':dataPartai.jenis_kelamin,
+    //     'sudut_biru':dataPartai.sudut_biru,
+    //     'sudut_merah':dataPartai.sudut_merah,
+    //     'kontingen_biru':dataPartai.contingen_sudut_biru,
+    //     'kontingen_merah':dataPartai.contingen_sudut_merah,
+    //     'babak':dataPartai.babak,
+    //     'round_time':activeRound,
+    //     'pemenang':winner,
+    // });
 }
 function  updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
@@ -155,7 +166,7 @@ function  updatePertandingan(action = 'round'){
         localStorage.clear()
     }
 }
-function cekStatususer(users) {
+function cekStatususer() {
     const userList = {
         'juri_pertama':false,
         'juri_kedua': false,

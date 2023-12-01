@@ -9,6 +9,9 @@ class KetuaPertandingaController extends Controller
 {
     public function index()
     {
+        if (env("MANAGEMENT_ROLE")){
+            $this->authorize("ketua");
+        }
         $gelangang = UserGelanggang::where('user_id', auth()->user()->id)->first();
         return view('ketuaPertandingan', [
             'title' => 'ketua pertandingan',

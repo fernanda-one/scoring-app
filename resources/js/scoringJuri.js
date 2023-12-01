@@ -174,6 +174,7 @@ function updateDataJuri(e) {
             break;
         case 'reset':
             localStorage.clear()
+            location.reload()
             break;
     }
 }
