@@ -19,7 +19,7 @@ let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById('timer');
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 let timerStarted = false
-const timePerRound = 10;
+const timePerRound = 60;
 let countdown;
 let isPaused = false;
 let endTime;
