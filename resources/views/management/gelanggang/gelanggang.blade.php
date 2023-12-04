@@ -5,14 +5,14 @@
     <div class="lg:flex lg:justify-between my-4">
         <form action="#" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
-                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
+                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari . . .">
             </div>
         </form>
 
         <div class="flex justify-between">
             <!-- Tambah toggle -->
             <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-                Add
+                Tambah
             </button>
         </div>
 
@@ -96,10 +96,10 @@
                 Operator
             </th>
             <th scope="col" class="pr-6 py-3">
-                Guest
+                Tamu
             </th>
             <th scope="col" class="pl-10 py-3">
-                Action
+                Tindakan
             </th>
         </tr>
         </thead>
@@ -124,11 +124,11 @@
             <td class="pl-10 py-4 flex">
                 <!-- Edit Modal -->
                 <button data-modal-target="edit-modal-{{$g['id']}}" data-modal-toggle="edit-modal-{{$g['id']}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Edit
+                    Ubah
                 </button>
                 <!-- Delete Modal -->
                 <button data-modal-target="delete-modal-{{$g['id']}}" data-modal-toggle="delete-modal-{{$g['id']}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                    Delete
+                    Hapus
                 </button>
             </td>
         </tr>

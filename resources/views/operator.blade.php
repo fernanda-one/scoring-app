@@ -29,7 +29,7 @@
             </div>
             <div class="mx-auto flex justify-center mt-4 space-x-[3.125rem]">
                 <button id="status_juri_pertama" disabled class="w-[12.5rem] border-black border-[1px] bg-gray-200 h-9">
-                    JURI 1
+                    JURI I
                 </button>
                 <button id="status_juri_kedua" disabled class="w-[12.5rem] border-black border-[1px] h-9 bg-gray-200">
                     JURI II
@@ -74,13 +74,13 @@
             </div>
             <div class="flex flex-col space-y-[0.875rem]">
                 <button id="round-1" disabled class="w-36 h-14 bg-yellowDefault border-[2px] border-black font-medium disabled:cursor-not-allowed">
-                    Rounde I
+                    RONDE I
                 </button>
                 <button id="round-2" disabled class="w-36 h-14 border-[2px] border-black font-medium disabled:cursor-not-allowed">
-                    Rounde II
+                    RONDE II
                 </button>
                 <button id="round-3" disabled class="w-36 h-14 border-[2px] border-black font-medium disabled:cursor-not-allowed">
-                    Rounde III
+                    RONDE III
                 </button>
             </div>
             <div class="flex-row space-y-[2.625rem] my-4">
@@ -118,22 +118,22 @@
         </div>
         <div class="flex justify-center mx-auto space-x-5 mt-6">
             <button id="start" {{empty($partai_pertama[0])?'disabled':''}} class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                START
+                HIDUPKAN
             </button>
             <button id="pause" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                PLAY
+                MULAI
             </button>
             <button id="finish" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                FINISH
+                AKHIRI
             </button>
             <a href="{{ $partai_pertama->previousPageUrl()}}">
                 <button id="prev" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                    PREV
+                    SEBELUM
                 </button>
             </a>
             <a href="{{ $partai_pertama->nextPageUrl()}}">
                 <button id="next" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                    NEXT
+                    SELANJUT
                 </button>
             </a>
         </div>

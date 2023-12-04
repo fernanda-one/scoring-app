@@ -1,16 +1,16 @@
 @extends('layouts.dashboard')
 @section('container')
 <header class="flex-col mt-[4%]">
-    <p class="text-2xl">History</p>
+    <p class="text-2xl">Riwayat Pertandingan</p>
     <div class="lg:flex lg:justify-between my-4">
         <form action="#" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
-                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
+                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari . . .">
             </div>
         </form>
 
 {{--        <button type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">--}}
-{{--            Export--}}
+{{--            Expor--}}
 {{--        </button>--}}
     </div>
 </header>
@@ -43,7 +43,7 @@
                 Babak
             </th>
             <th scope="col" class="px-6 py-3">
-                Round Terakhir
+                Ronde Terakhir
             </th>
             <th scope="col" class="px-6 py-3">
                 Jenis kelamin
@@ -64,7 +64,7 @@
                 Pemenang
             </th>
             <th scope="col" class="px-6 py-3">
-                Action
+                Tindakan
             </th>
         </tr>
         </thead>

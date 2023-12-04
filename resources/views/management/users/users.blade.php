@@ -1,17 +1,17 @@
 @extends('layouts.dashboard')
 @section('container')
 <header class="flex-col mt-[4%]">
-    <p class="text-2xl">Users</p>
+    <p class="text-2xl">Pengguna</p>
     <div class="lg:flex lg:justify-between my-4">
         <form action="/management" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
-                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
+                <input type="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari . . . ">
             </div>
         </form>
 
         <!-- Tambah toggle -->
         <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Add
+            Tambah
         </button>
 
         <!-- Tambah modal -->
@@ -32,26 +32,26 @@
                             @csrf
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                                     <input value="{{ old('name') }}" type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+                                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Pengguna</label>
                                     <input value="{{ old('username') }}" type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                             </div>
                             <div class="grid lg:grid-cols-2 md:gap-6">
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Role User</label>
+                                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Peran Pengguna</label>
                                     <select id="role" name="role_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Choose a Role</option>
+                                        <option selected>Pilih Peran</option>
                                         @foreach($roles as $role)
                                             <option value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="relative z-0 w-full mb-4 group">
-                                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sandi</label>
                                     <input value="{{ old('password') }}" type="password" name="password" id="f-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                 </div>
                             </div>
@@ -86,22 +86,22 @@
                     No
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Name
+                    Nama
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Username
+                    Nama Pengguna
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Role
+                    Peran
                 </th>
                 <th scope="col" class="px-6 py-3">
-                Status
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Last Update
+                    Terakhir Dilihat
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Action
+                    Tindakan
                 </th>
             </tr>
             </thead>
@@ -122,9 +122,9 @@
                     </td>
                     <td class="px-6 py-4">
                        @if($user->status)
-                            <span>active</span>
+                            <span>Tidak Aktif</span>
                         @else
-                            <span>active</span>
+                            <span> Aktif </span>
                         @endif
                     </td>
                     <td class="px-6 py-4">
@@ -133,11 +133,11 @@
                     <td class="px-6 py-4 flex">
                         <!-- Edit Modal -->
                         <button data-modal-target="edit-modal-{{$user->id}}" data-modal-toggle="edit-modal-{{$user->id}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                            Edit
+                            Ubah
                         </button>
                         <!-- Delete Modal -->
                         <button data-modal-target="delete-modal-{{$user->id}}" data-modal-toggle="delete-modal-{{$user->id}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                            Delete
+                            Hapus
                         </button>
                     </td>
                 </tr>
@@ -213,7 +213,7 @@
                                     @method('delete')
                                     @csrf
                                     <button type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                        Yes, I'm sure
+                                        Iya, saya yakin
                                     </button>
                                 </form>
                                 <button data-modal-hide="delete-modal-{{$user->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">

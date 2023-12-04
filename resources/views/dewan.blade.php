@@ -15,26 +15,26 @@
     <div class="flex justify-between">
         <div>
             <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">Sudut Merah</p>
+                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">SUDUT MERAH</p>
             </div>
             <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                <p id="kontingen_merah" class="text-whiteDefault text-base">Kontingen</p>
+                <p id="kontingen_merah" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
         <div>
             <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px] shadow-inset-custom">
-                <p id="babak" class="font-bold text-whiteDefault text-xl">Babak</p>
+                <p id="babak" class="font-bold text-whiteDefault text-xl">BABAK</p>
             </div>
             <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
+                <p id="round" class="font-bold text-whiteDefault text-base">RONDE</p>
             </div>
         </div>
         <div>
             <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">Sudut Biru</p>
+                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">SUDUT BIRU</p>
             </div>
             <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                <p id="kontingen_biru" class="text-whiteDefault text-base">Kontingen</p>
+                <p id="kontingen_biru" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
     </div>
@@ -65,6 +65,7 @@
             <p id="round-2-redInput" class="text-whiteDefault"></p>
         </div>
         <div id="round-2-redScore-div"  class="flex items-center justify-center w-[54px] h-[54px] bg-grayDefault rounded-full ml-[2%]">
+            <p id="round-2-redScore" class="text-whiteDefault"></p>
             <p id="round-2-redScore" class="text-whiteDefault"></p>
         </div>
     </div>
@@ -159,10 +160,10 @@
 
         <div class="flex justify-between w-[70%]">
             <button type="button" id="jatuhan-merah-plus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault disabled:cursor-not-allowed   rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DROP +</p>
+                <p class="font-bold text-whiteDefault text-lg">JATUHAN +</p>
             </button>
             <button type="button" id="jatuhan-merah-minus" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-redDefault disabled:cursor-not-allowed   rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DROP -</p>
+                <p class="font-bold text-whiteDefault text-lg">JATUHAN -</p>
             </button>
             <button type="button" id="peringatan-merah-ketiga" class="shadow-inset-custom flex justify-center items-center w-[50%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="44" viewBox="0 0 48 44" fill="none">
@@ -175,12 +176,12 @@
 
         <div class="flex justify-between w-[70%]">
             <button type="button" id="disk-merah" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[100%] bg-redDefault  rounded-[14px] text-sm px-5 disabled:cursor-not-allowed  py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DISK</p>
+                <p class="font-bold text-whiteDefault text-lg">DISKULIFIKASI</p>
             </button>
         </div>
         <div class="flex justify-between w-[70%]">
             <button type="button" id="popup-merah" class="shadow-inset-custom flex justify-center items-center w-[100%] bg-redDefault hover:bg-redDefault  rounded-[14px] text-sm px-5 py-2.5 disabled:cursor-not-allowed  text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">Pop Up</p>
+                <p class="font-bold text-whiteDefault text-lg">MULAI PENGAMBILAN KEPUTUSAN</p>
             </button>
         </div>
     </div>
@@ -256,22 +257,22 @@
                 </svg>
             </button>
             <button type="button" id="jatuhan-biru-minus" class="shadow-inset-custom  flex justify-center items-center w-[25%] bg-blueDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DROP -</p>
+                <p class="font-bold text-whiteDefault text-lg">JATUHAN -</p>
             </button>
             <button type="button"  id="jatuhan-biru-plus" class="shadow-inset-custom  flex justify-center items-center w-[25%] bg-blueDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DROP +</p>
+                <p class="font-bold text-whiteDefault text-lg">JATUHAN +</p>
             </button>
 
         </div>
 
         <div class="flex justify-between w-[70%]">
             <button id="disk-biru"  type="button" class="shadow-inset-custom flex justify-center items-center w-[100%] bg-blueDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">DISK</p>
+                <p class="font-bold text-whiteDefault text-lg">DISKULIFIKASI</p>
             </button>
         </div>
         <div class="flex justify-between w-[70%]">
             <button  type="button" id="popup-biru" class="shadow-inset-custom flex justify-center items-center w-[100%] bg-blueDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
-                <p class="font-bold text-whiteDefault text-lg">Pop Up</p>
+                <p class="font-bold text-whiteDefault text-lg">MULAI PENGAMBILAN KEPUTUSAN</p>
             </button>
         </div>
     </div>

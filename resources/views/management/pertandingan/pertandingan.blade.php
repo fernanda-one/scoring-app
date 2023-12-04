@@ -6,14 +6,14 @@
         <form action="#" method="get" enctype="multipart/form-data">
             <div class="relative py-2">
                 <label for="search"></label>
-                <input type="search" id="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search">
+                <input type="search" id="search" name="search" value="{{ request('search') != '' ? request('search') : '' }}" class="block lg:w-[392px] w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Cari . . .">
             </div>
         </form>
 
         <div class="flex justify-between">
             <!-- Import toggle -->
         <button  data-modal-target="import-modal" data-modal-toggle="import-modal" type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Import
+            Impor
         </button>
 
             <!-- Import modal -->
@@ -38,11 +38,11 @@
                                         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none" id="file_input" type="file" name="excel_file">
                                     </div>
                                     <div>
-                                        <a href="/download/partai" class="text-blue-500 decoration-1 underline hover:text-blue-700">donwload contoh file import partai</a>
+                                        <a href="/download/partai" class="text-blue-500 decoration-1 underline hover:text-blue-700">unduh contoh berkas "impor partai"</a>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                <button type="submit" class="w-auto text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Kirim</button>
                             </form>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
 
             <!-- Tambah toggle -->
         <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="w-full lg:w-auto text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 focus:outline-none">
-            Add
+            Tambah
         </button>
         </div>
 
@@ -154,7 +154,7 @@
     @if($partais->total() == 0)
         <div id="toast-undo" class="fixed flex items-center justify-between w-full max-w-xs p-4 space-x-4 text-black bg-red-500 divide-x divide-red-200 rounded-lg shadow top-5 right-5" role="alert">
             <div class="text-sm font-bold">
-                Upps, data not found
+                Upps, data tidak ditemukan
             </div>
             <div class="flex items-center ml-auto space-x-2">
                 <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-600 hover:text-red-900 rounded-lg focus:ring-2 focus:ring-red-300 p-1.5 hover:bg-red-100 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#toast-undo" aria-label="Close">
@@ -191,7 +191,7 @@
                 Sudut Merah
             </th>
             <th scope="col" class="px-6 py-3">
-                Action
+                Tindakan
             </th>
         </tr>
         </thead>
@@ -222,11 +222,11 @@
                 <td class="px-6 py-4 flex">
                     <!-- Edit Modal -->
                     <button data-modal-target="edit-modal-{{$partai->id}}" data-modal-toggle="edit-modal-{{$partai->id}}" class="mr-4 whitespace-nowrap block text-white bg-blueDefault hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                        Edit
+                        Ubah
                     </button>
                     <!-- Delete Modal -->
                     <button data-modal-target="delete-modal-{{$partai->id}}" data-modal-toggle="delete-modal-{{$partai->id}}" class="whitespace-nowrap block text-white bg-redDefault hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 text-center" type="button">
-                        Delete
+                        Hapus
                     </button>
 
                 </td>
@@ -327,7 +327,7 @@
                                 @method('delete')
                                 @csrf
                                 <button type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                    Yes, I'm sure
+                                    Iya, saya yakin
                                 </button>
                             </form>
                             <button data-modal-hide="delete-modal-{{$partai->id}}" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">

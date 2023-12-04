@@ -20,26 +20,26 @@
     <div class="flex justify-between uppercase">
         <div>
             <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">Sudut Merah</p>
+                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">SUDUT MERAH</p>
             </div>
             <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                <p id="kontingen_merah" class="text-whiteDefault text-base">Kontingen</p>
+                <p id="kontingen_merah" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
         <div>
             <div class="flex mx-auto justify-center w-[150px] 2xl:w-[325px] xl:w-[285px] lg:w-[230px] md:w-[205px] bg-grayDefault py-3 rounded-b-[90px] shadow-inset-custom">
-                <p id="babak" class="font-bold text-whiteDefault text-xl">Babak</p>
+                <p id="babak" class="font-bold text-whiteDefault text-xl">BABAK</p>
             </div>
             <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
+                <p id="round" class="font-bold text-whiteDefault text-base">RONDE</p>
             </div>
         </div>
         <div>
             <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">Sudut Biru</p>
+                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">SUDUT BIRU</p>
             </div>
             <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                <p id="kontingen_biru" class="text-whiteDefault text-base">Kontingen</p>
+                <p id="kontingen_biru" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
     </div>
@@ -50,27 +50,27 @@
     <!--left side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT MERAH</p>
         </div>
         <div class="flex bg-redOpacity rounded-b-[8px]">
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">PELANGGARAN</p>
                 </div>
             </div>
             <div class="w-[75%] border-l border-grayDefault">
@@ -100,7 +100,7 @@
     <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
         <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
             <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
-                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">RONDE</p>
                 <p class="font-bold text-2xl text-whiteDefault">1</p>
             </div>
             <div class="flex justify-between w-full h-[50%]">
@@ -113,7 +113,7 @@
     <!--right side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT BIRU</p>
         </div>
         <div class="flex bg-blueOpacity rounded-b-[8px]">
             <div class="w-[75%] border-r border-grayDefault">
@@ -138,22 +138,22 @@
             </div>
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">PELANGGARAN</p>
                 </div>
             </div>
         </div>
@@ -165,27 +165,27 @@
     <!--left side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT MERAH</p>
         </div>
         <div class="flex bg-redOpacity rounded-b-[8px]">
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">PELANGGARAN</p>
                 </div>
             </div>
             <div class="w-[75%] border-l border-grayDefault">
@@ -215,7 +215,7 @@
     <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
         <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
             <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
-                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">RONDE</p>
                 <p class="font-bold text-2xl text-whiteDefault">2</p>
             </div>
             <div class="flex justify-between w-full h-[50%]">
@@ -228,7 +228,7 @@
     <!--right side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT BIRU</p>
         </div>
         <div class="flex bg-blueOpacity rounded-b-[8px]">
             <div class="w-[75%] border-r border-grayDefault">
@@ -253,22 +253,22 @@
             </div>
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">PELANGGARAN</p>
                 </div>
             </div>
         </div>
@@ -280,27 +280,27 @@
     <!--left side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] ml-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-redDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">RED</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT MERAH</p>
         </div>
         <div class="flex bg-redOpacity rounded-b-[8px]">
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center text-base h-[40px] ml-[4%]">Juror 1</p>
+                    <p class="flex items-center text-base h-[40px] ml-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 2</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">Juror 3</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">POINT</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center h-[40px] ml-[4%]">DROPPING</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center h-[40px] ml-[4%]">Penalty</p>
+                    <p class="flex items-center h-[40px] ml-[4%]">PELANGGARAN</p>
                 </div>
             </div>
             <div class="w-[75%] border-l border-grayDefault">
@@ -330,7 +330,7 @@
     <div class="flex items-center mt-[5%] w-[15%] h-[288px] drop-shadow-xl">
         <div class="flex flex-col w-full h-[190px] rounded-[8px] bg-greenDefault">
             <div class="flex flex-col items-center justify-center border-b-[2px] h-[50%]">
-                <p class="font-bold text-2xl text-whiteDefault">ROUND</p>
+                <p class="font-bold text-2xl text-whiteDefault">RONDE</p>
                 <p class="font-bold text-2xl text-whiteDefault">3</p>
             </div>
             <div class="flex justify-between w-full h-[50%]">
@@ -343,7 +343,7 @@
     <!--right side-->
     <div class="flex flex-col w-[38%] h-[288px] rounded-[8px] mr-[1%] mt-[5%] border-[1px] border-grayDefault drop-shadow-xl">
         <div class="border-b border-grayDefault bg-blueDefault rounded-t-[7px]">
-            <p class="flex justify-center my-2 text-whiteDefault">BLUE</p>
+            <p class="flex justify-center my-2 text-whiteDefault">SUDUT BIRU</p>
         </div>
         <div class="flex bg-blueOpacity rounded-b-[8px]">
             <div class="w-[75%] border-r border-grayDefault">
@@ -368,22 +368,22 @@
             </div>
             <div class="w-[25%]">
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 1</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 1</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 2</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 2</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Juror 3</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JURI 3</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">POINT</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">NILAI</p>
                 </div>
                 <div class="border-b border-grayDefault">
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">DROPPING</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">JATUHAN</p>
                 </div>
                 <div>
-                    <p class="flex items-center justify-end h-[40px] mr-[4%]">Penalty</p>
+                    <p class="flex items-center justify-end h-[40px] mr-[4%]">PELANGGARAN</p>
                 </div>
             </div>
         </div>

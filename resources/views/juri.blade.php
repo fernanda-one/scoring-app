@@ -33,7 +33,7 @@
                     <p id="babak" class="font-bold text-whiteDefault text-xl">Babak</p>
                 </div>
                 <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                    <p id="round" class="font-bold text-whiteDefault text-base">ROUND</p>
+                    <p id="round" class="font-bold text-whiteDefault text-base">RONDE</p>
                 </div>
             </div>
             <div>
@@ -116,7 +116,7 @@
                 </button>
                 <div class="hidden lg:flex lg:flex-col lg:items-center ml-24">
                     <p class="text-base font-bold">
-                        PUNCH CORRECTION
+                        INDICATOR PUKULAN
                     </p>
                     <div class="flex justify-center mt-[8%]">
                         <div id="juri-pertama-pukulan-red" class="flex items-center justify-center bg-grayDefault shadow-inset-custom w-[68px] h-[45px] rounded-[10px]">
@@ -146,7 +146,7 @@
                 </button>
                 <div class="hidden lg:flex lg:flex-col lg:items-center ml-24">
                     <p class="text-base font-bold">
-                        KICK CORRECTION
+                        INDICATOR TENDANGAN
                     </p>
                     <div class="flex justify-center mt-[8%]">
                         <div id="juri-pertama-tendangan-red" class="flex items-center justify-center bg-grayDefault shadow-inset-custom w-[68px] h-[45px] rounded-[10px]">
@@ -170,7 +170,7 @@
             <div class="flex items-center">
                 <div class="hidden lg:flex lg:flex-col lg:items-center mr-24">
                     <p class="text-base font-bold">
-                        PUNCH CORRECTION
+                        INDICATOR PUKULAN
                     </p>
                     <div class="flex justify-center mt-[8%]">
                         <div id="juri-pertama-pukulan-blue" class="flex items-center justify-center bg-grayDefault shadow-inset-custom w-[68px] h-[45px] rounded-[10px]">
@@ -193,7 +193,7 @@
             <div class="flex items-center mt-[3%]">
                 <div class="hidden lg:flex lg:flex-col lg:items-center mr-24">
                     <p class="text-base font-bold">
-                        KICK CORRECTION
+                        INDICATOR TENDANGAN
                     </p>
                     <div class="flex justify-center mt-[8%]">
                         <div id="juri-pertama-tendangan-blue" class="flex items-center justify-center bg-grayDefault shadow-inset-custom w-[68px] h-[45px] rounded-[10px]">

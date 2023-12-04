@@ -18,7 +18,7 @@
                     <p id="nama_merah" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT MERAH</p>
                 </div>
                 <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                    <p id="kontingen_merah" class="text-whiteDefault text-sm lg:text-xl">Kontingen</p>
+                    <p id="kontingen_merah" class="text-whiteDefault text-sm lg:text-xl">KONTINGEN</p>
                 </div>
             </div>
             <div>
@@ -26,7 +26,7 @@
                     <p id="babak" class="font-extrabold text-whiteDefault text-lg lg:text-xl">BABAK</p>
                 </div>
                 <div class="flex mx-auto justify-center w-[100px] 2xl:w-[200px] xl:w-[185px] lg:w-[140px] md:w-[105px] bg-grayDark py-2 rounded-b-[90px] shadow-inset-custom">
-                    <p id="round" class="font-extrabold text-whiteDefault text-sm lg:text-base">ROUND</p>
+                    <p id="round" class="font-extrabold text-whiteDefault text-sm lg:text-base">RONDE</p>
                 </div>
             </div>
             <div>
@@ -34,13 +34,13 @@
                     <p id="nama_biru" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT BIRU</p>
                 </div>
                 <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                    <p id="kontingen_biru" class="text-whiteDefault text-sm lg:text-xl">Kontingen</p>
+                    <p id="kontingen_biru" class="text-whiteDefault text-sm lg:text-xl">KONTINGEN</p>
                 </div>
             </div>
         </div>
         <div class="flex justify-center items-center w-full h-[200px]">
                 <div class="w-[12rem] h-[8rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-5 text-whiteDefault shadow-inset-custom">
-                    <p class="text-base lg:text-lg font-semibold">Timer</p>
+                    <p class="text-base lg:text-lg font-semibold">WAKTU</p>
                     <p id="timer" class="text-base lg:text-lg font-semibold">00 : 00</p>
                 </div>
         </div>

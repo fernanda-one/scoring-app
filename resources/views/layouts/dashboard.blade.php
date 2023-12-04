@@ -22,7 +22,7 @@
                 </button>
                 <a href="/management" class="flex ml-2 md:mr-24">
                     <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Scoring</span>
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Administrasi Penjurian</span>
                 </a>
             </div>
             <div class="flex items-center">
@@ -84,7 +84,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
                         <path d="M9.6 4.68754C9.6 5.71585 9.22072 6.70204 8.54559 7.42916C7.87045 8.15628 6.95478 8.56478 6 8.56478C5.04522 8.56478 4.12955 8.15628 3.45442 7.42916C2.77928 6.70204 2.4 5.71585 2.4 4.68754C2.4 3.65923 2.77928 2.67304 3.45442 1.94592C4.12955 1.2188 5.04522 0.810303 6 0.810303C6.95478 0.810303 7.87045 1.2188 8.54559 1.94592C9.22072 2.67304 9.6 3.65923 9.6 4.68754ZM19.2 4.68754C19.2 5.19671 19.1069 5.70089 18.926 6.17129C18.7451 6.6417 18.4799 7.06913 18.1456 7.42916C17.8113 7.78919 17.4144 8.07479 16.9777 8.26964C16.5409 8.46449 16.0728 8.56478 15.6 8.56478C15.1272 8.56478 14.6591 8.46449 14.2223 8.26964C13.7856 8.07479 13.3887 7.78919 13.0544 7.42916C12.7201 7.06913 12.455 6.6417 12.274 6.17129C12.0931 5.70089 12 5.19671 12 4.68754C12 3.65923 12.3793 2.67304 13.0544 1.94592C13.7295 1.2188 14.6452 0.810303 15.6 0.810303C16.5548 0.810303 17.4705 1.2188 18.1456 1.94592C18.8207 2.67304 19.2 3.65923 19.2 4.68754ZM14.316 18.9041C14.3712 18.4815 14.4 18.0511 14.4 17.6117C14.4028 15.5811 13.7685 13.6091 12.6 12.0155C13.5121 11.4484 14.5468 11.1498 15.6 11.1498C16.6532 11.1498 17.6878 11.4483 18.5999 12.0155C19.512 12.5826 20.2695 13.3984 20.7961 14.3807C21.3227 15.363 21.6 16.4773 21.6 17.6117V18.9041H14.316ZM6 11.1496C7.5913 11.1496 9.11742 11.8304 10.2426 13.0423C11.3679 14.2542 12 15.8978 12 17.6117V18.9041H0V17.6117C0 15.8978 0.632141 14.2542 1.75736 13.0423C2.88258 11.8304 4.4087 11.1496 6 11.1496Z" fill="black"/>
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Pengguna</span>
                 </a>
             </li>
             <li>
@@ -117,7 +117,7 @@
                             </clipPath>
                         </defs>
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">History</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Riwayat Pertandingan</span>
                 </a>
             </li>
         </ul>
@@ -129,7 +129,7 @@
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">Logout</span>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Keluar</span>
                 </a>
             </li>
         </ul>
