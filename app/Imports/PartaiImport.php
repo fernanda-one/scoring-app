@@ -40,6 +40,9 @@ class PartaiImport implements ToCollection
             if (!array_search($kelas, $allkelas)){
                 $errorKelas[]=intval($row[0]);
             }
+            if (!$row[1]){
+                continue;
+            }
             $data[] = [
                 'id' => intval($row[0]),
                 'babak' => $row[1],

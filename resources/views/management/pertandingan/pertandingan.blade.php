@@ -298,7 +298,7 @@
                                         <input value="{{ old('contingen_sudut_merah')??$partai->contingen_sudut_merah }}" type="text" name="contingen_sudut_merah" id="contingen_sudut_merah" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                     </div>
                                     <div class="relative z-0 w-full mb-4 group">
-                                        <label for="contingen_sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sudut Biru</label>
+                                        <label for="contingen_sudut_biru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Asal Sudut Biru</label>
                                         <input value="{{ old('contingen_sudut_biru')??$partai->contingen_sudut_biru }}" type="text" name="contingen_sudut_biru" id="contingen_sudut_biru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="" required>
                                     </div>
                                 </div>
@@ -339,8 +339,6 @@
             </div>
 
         @endforeach
-
 </div>
-
     {{ $partais->appends(request()->except('page'))->onEachSide(1)->links('partials.pagination') }}
 @endsection

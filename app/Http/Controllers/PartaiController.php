@@ -95,10 +95,10 @@ class PartaiController extends Controller
             'kelas'=> 'required|max:2|min:1',
             'jenis_kelamin'=> 'required',
         ]);
-        $pertandingan = Partai::findOrFail(1);
+        $pertandingan = Partai::findOrFail($id);
         $pertandingan->update($validatedData);
 
-        return redirect('/management/pertandingan')->with('success', 'User updated successfully.');
+        return redirect('/management/pertandingan')->with('success', 'Berhasil merubah pertandingan.');
     }
     public function destroy($id)
     {
