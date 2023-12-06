@@ -156,6 +156,9 @@ function uploadDataWinner(winner) {
         'round_time':activeRound,
         'pemenang':winner,
     });
+    setTimeout(()=>{
+        location.reload()
+    }, 500)
 }
 function  updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
@@ -174,7 +177,6 @@ function  updatePertandingan(action = 'round'){
         saveData(action==='start', action ==='pause' || action === 'play')
     }
     if (action === 'reset'){
-        location.reload()
         localStorage.clear()
     }
 }
