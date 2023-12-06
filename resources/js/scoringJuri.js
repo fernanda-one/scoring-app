@@ -19,7 +19,9 @@ const pukulanMerah = document.getElementById("pukul-merah");
 const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
-// localStorage.clear()
+// localStorage.clear()\
+enabledAction(false)
+
 if (localStorage.getItem('dataJuriScoring')){
     console.log(JSON.parse(localStorage.getItem('dataJuriScoring')))
     loadDataSaveJuri()
