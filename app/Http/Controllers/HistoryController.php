@@ -38,4 +38,11 @@ class HistoryController extends Controller
 
         Record::create($validatedData);
     }
+
+    public function destroy($id)
+    {
+        Record::destroy($id);
+        Record::where("partai", $id)->delete();
+        return redirect('/management/history')->with('success', 'Riwayat pertandingan berhasil dihapus!');
+    }
 }
