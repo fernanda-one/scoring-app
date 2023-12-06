@@ -157,7 +157,7 @@ function uploadDataWinner(winner) {
         'pemenang':winner,
     });
     setTimeout(()=>{
-        location.reload()
+        // location.reload()
     }, 500)
 }
 function  updatePertandingan(action = 'round'){
