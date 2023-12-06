@@ -16,7 +16,9 @@ let round = 'round-1';
 let blueScore = document.getElementById(`${round}-blueScore`);
 let redScore = document.getElementById(`${round}-redScore`);
 changeScoreElement(redScore, blueScore)
-loadDataSaved()
+if (localStorage.getItem('gelanggangData')){
+    loadDataSaved()
+}
 channelUpdateScore
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
         updateScore(event)

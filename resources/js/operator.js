@@ -19,8 +19,14 @@ const partaiElement = document.getElementById("partai");
 const dataPartai = JSON.parse(partaiElement.getAttribute("data-partai"));
 const channelUpdateScore = Echo.join(`presence.updateScore.${userData.gelanggang_id}`);
 const channelOperator = Echo.join(`presence.operator.${userData.gelanggang_id}`);
-console.log(localStorage.getItem('dataOperator'))
-// localStorage.clear()
+const timesValue = {
+    "satu": 90,
+    "dua": 120,
+    "tiga": 150,
+    "empat":180
+}
+const timeElement = document.getElementById("time");
+let matchTime = 120
 let users
 if (localStorage.getItem('dataOperator')){
     loadSaveData()
@@ -107,6 +113,11 @@ finish.addEventListener('click', (evt) =>{
   finishGelanggang()
 })
 
+timeElement.addEventListener('change', (ev)=>{
+    const timeSelectedOption = timeElement.value;
+    matchTime = timesValue[timeSelectedOption]
+})
+
 pausePlay.addEventListener('click', ()=>{
     togglePausePlay()
     updatePertandingan(pauseStatus?'pause':'play')
@@ -133,18 +144,18 @@ function togglePausePlay(status = pauseStatus){
 }
 
 function uploadDataWinner(winner) {
-    axios.post("/create-history", {
-        'partai':dataPartai.id,
-        'kelas':dataPartai.kelas,
-        'jenis_kelamin':dataPartai.jenis_kelamin,
-        'sudut_biru':dataPartai.sudut_biru,
-        'sudut_merah':dataPartai.sudut_merah,
-        'kontingen_biru':dataPartai.contingen_sudut_biru,
-        'kontingen_merah':dataPartai.contingen_sudut_merah,
-        'babak':dataPartai.babak,
-        'round_time':activeRound,
-        'pemenang':winner,
-    });
+    // axios.post("/create-history", {
+    //     'partai':dataPartai.id,
+    //     'kelas':dataPartai.kelas,
+    //     'jenis_kelamin':dataPartai.jenis_kelamin,
+    //     'sudut_biru':dataPartai.sudut_biru,
+    //     'sudut_merah':dataPartai.sudut_merah,
+    //     'kontingen_biru':dataPartai.contingen_sudut_biru,
+    //     'kontingen_merah':dataPartai.contingen_sudut_merah,
+    //     'babak':dataPartai.babak,
+    //     'round_time':activeRound,
+    //     'pemenang':winner,
+    // });
 }
 function  updatePertandingan(action = 'round'){
     axios.post("/operator-update", {
@@ -155,6 +166,7 @@ function  updatePertandingan(action = 'round'){
             'redContingent':dataPartai.contingen_sudut_merah,
             'babak':dataPartai.babak,
             'activeRound':activeRound,
+            "time": matchTime,
             'action': action
         },
     });

@@ -6,6 +6,8 @@ const babak = document.getElementById('babak');
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
 export let partaiId = ''
+const rounds = ['round-1','round-2','round-3'];
+
 export let kelas;
 let redScore = ''
 let blueScore = ''
@@ -17,13 +19,13 @@ export const channelOperator = Echo.join(`presence.operator.${userData.gelanggan
 export const activeRound = document.getElementById('round');
 const pelanggaranPoint = {
     'pertama':0,
-    'teguran-pertama': 0,
-    'teguran-kedua': 1,
-    'binaan-pertama': 2,
-    'binaan-kedua': 3,
+    'binaan-pertama': 0,
+    'binaan-kedua': 0,
+    'teguran-pertama': 1,
+    'teguran-kedua': 2,
     'peringatan-pertama': 5,
-    'peringatan-kedua': 7,
-    'peringatan-ketiga': 9,
+    'peringatan-kedua': 10,
+    'peringatan-ketiga': 15,
 }
 export const savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
     namaMerah: 'Sudut Merah',

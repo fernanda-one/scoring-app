@@ -6,23 +6,24 @@ let bluePenalty='pertama'
 let redPenalty = 'pertama';
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
+const rounds = ['round-1','round-2','round-3'];
 let peringatanPenaltyRed, peringatanPenaltyBlue = false
 const pelanggaranPoint = {
     'pertama':0,
-    'teguran-pertama': 0,
-    'teguran-kedua': 1,
-    'binaan-pertama': 2,
-    'binaan-kedua': 3,
+    'binaan-pertama': 0,
+    'binaan-kedua': 0,
+    'teguran-pertama': 1,
+    'teguran-kedua': 2,
     'peringatan-pertama': 5,
-    'peringatan-kedua': 7,
-    'peringatan-ketiga': 9,
+    'peringatan-kedua': 10,
+    'peringatan-ketiga': 15,
 }
 let pelanggaranBiru = ['pertama']
 let pelanggaranMerah = ['pertama']
 const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-minus',
     'jatuhan-merah-plus','peringatan-biru-ketiga','peringatan-biru-kedua','binaan-biru-kedua','teguran-biru-kedua',
     'peringatan-biru-pertama','binaan-biru-pertama','teguran-biru-pertama','peringatan-merah-ketiga','peringatan-merah-kedua','binaan-merah-kedua',
-    'teguran-merah-kedua','peringatan-merah-pertama','binaan-merah-pertama','teguran-merah-pertama', 'popup-biru','popup-merah', 'disk-merah', 'disk-biru']
+    'teguran-merah-kedua','peringatan-merah-pertama','binaan-merah-pertama','teguran-merah-pertama', 'disk-merah', 'disk-biru']
 
 let actionStatus = false;
 const pelanggaranRedElement = {
@@ -100,6 +101,7 @@ export function cekWinner(){
 
 export function updatePertandingan(winner){
     const dataPartai = getDataGelanggang()
+    localStorage.clear()
     axios.post("/operator-update", {
         message: {
             'blueName':dataPartai.namaBiru,
@@ -107,11 +109,11 @@ export function updatePertandingan(winner){
             'blueContingent':dataPartai.kontingenMerah,
             'redContingent':dataPartai.kontingenBiru,
             'babak':dataPartai.babak,
+            'time':0,
             'activeRound':activeRound.textContent,
             'action': winner
         },
     });
-    localStorage.clear()
 }
 export function changeRoundDewan(round){
     updateRoundDewan(round)
@@ -145,6 +147,15 @@ export function saveData(){
         pureScoreBlue : pureScoreBlue,
         actionStatus: actionStatus
     }
+    rounds.map(round =>{
+        data[round] = {
+            blueInput : document.getElementById(`${round}-blueInput`).textContent,
+            redInput : document.getElementById(`${round}-redInput`).textContent,
+            redScore : document.getElementById(`${round}-redScore`).textContent,
+            blueScore : document.getElementById(`${round}-blueScore`).textContent
+        }
+    })
+    console.log(data)
     localStorage.setItem('dataDewan', JSON.stringify(data))
 }
 export function loadDataSave(){
@@ -153,11 +164,18 @@ export function loadDataSave(){
     redPenalty = data.redPenalty;
     pureScoreRed = data.pureScoreRed;
     pureScoreBlue = data.pureScoreBlue;
-    enabledAction(data.actionStatus)
-    console.log(bluePenalty, redPenalty)
+    console.log(data)
+    rounds.map(round =>{
+        document.getElementById(`${round}-blueInput`).textContent = data[round].blueInput
+        document.getElementById(`${round}-redInput`).textContent = data[round].redInput
+        document.getElementById(`${round}-redScore`).textContent = data[round].redScore
+        document.getElementById(`${round}-blueScore`).textContent = data[round].blueScore
+    })
+    enabledAction(true)
     bluePenalty !== 'pertama'?changeIndicatorPelanggaran('blue',bluePenalty):''
     redPenalty !== 'pertama'?changeIndicatorPelanggaran('red',redPenalty):''
 }
+
 
 export function pushScore(droppingRed = 0, droppingBlue = 0){
     pureScoreRed += droppingRed
@@ -267,7 +285,6 @@ function compare(value1, value2) {
 }
 
 export function clearIndicator(){
-    console.log('clear')
     const namesElement = [pelanggaranRedElement, pelanggaranBlueElement]
     namesElement.map(nameElemenet =>{
         pelanggaran.map(itemPelanggaran =>{

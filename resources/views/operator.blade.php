@@ -117,23 +117,30 @@
             </div>
         </div>
         <div class="flex justify-center mx-auto space-x-5 mt-6">
-            <button id="start" {{empty($partai_pertama[0])?'disabled':''}} class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
+            <label for="time"></label>
+            <select id="time" name="role_id" class="w-26 h-10 border-[2px] text-center align-middle border-black disabled:cursor-not-allowed">
+                <option  value="satu">01:30</option>
+                <option selected value="dua">02:00</option>
+                <option value="tiga">02:30</option>
+                <option value="empat">03:00</option>
+            </select>
+            <button id="start" {{empty($partai_pertama[0])?'disabled':''}} class="w-24 h-10 border-[2px] border-black disabled:cursor-not-allowed">
                 HIDUPKAN
             </button>
-            <button id="pause" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
+            <button id="pause" disabled class="w-24 h-10 border-[2px] border-black disabled:cursor-not-allowed">
                 MULAI
             </button>
-            <button id="finish" disabled class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
+            <button id="finish" disabled class="w-24 h-10 border-[2px] border-black disabled:cursor-not-allowed">
                 AKHIRI
             </button>
             <a href="{{ $partai_pertama->previousPageUrl()}}">
-                <button id="prev" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                    SEBELUM
+                <button id="prev" class="w-24 h-10 border-[2px] border-black disabled:cursor-not-allowed">
+                    KEMBALI
                 </button>
             </a>
             <a href="{{ $partai_pertama->nextPageUrl()}}">
-                <button id="next" class="w-24 h-8 border-[2px] border-black disabled:cursor-not-allowed">
-                    SELANJUT
+                <button id="next" class="w-24 h-10 border-[2px] border-black disabled:cursor-not-allowed">
+                    LANJUT
                 </button>
             </a>
         </div>

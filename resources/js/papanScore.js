@@ -19,7 +19,7 @@ let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById('timer');
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 let timerStarted = false
-const timePerRound = 60;
+let timePerRound = 120;
 let countdown;
 let isPaused = false;
 let endTime;
@@ -144,6 +144,7 @@ function startTimer(seconds) {
 function updateDataGelanggang(e) {
     switch (e.action) {
         case 'start':
+            timePerRound = e.time
             startPertandingan(e)
             break;
         case 'finish':

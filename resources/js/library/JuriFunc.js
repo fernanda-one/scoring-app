@@ -1,36 +1,28 @@
 import {isEmpty} from "lodash";
 import { toInteger } from "lodash/lang";
-
-let rounds = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound?.toLowerCase() || 'ROUND'
+const rounds = ['round-1','round-2','round-3'];
+let pureScoreRed = 0;
+let pureScoreBlue = 0;
+let bluePenalty='pertama'
+const buttonAction = ['pukul-biru','tendang-biru','pukul-merah','tendang-merah']
+let redPenalty = 'pertama';
+let roundGelanggang = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound?.toLowerCase() || 'ROUND'
 const dataJuri = {
     blueScore : document.getElementById(`round-1-blueScore`),
     redScore : document.getElementById(`round-1-redScore`),
     blueInput : document.getElementById(`round-1-blueInput`),
     redInput : document.getElementById(`round-1-redInput`),
 }
+let actionStatus = false
 export function updateRoundJuri(round){
     dataJuri.blueScore = document.getElementById(`${round}-blueScore`);
     dataJuri.redScore = document.getElementById(`${round}-redScore`);
     dataJuri.blueInput = document.getElementById(`${round}-blueInput`);
     dataJuri.redInput = document.getElementById(`${round}-redInput`);
-    rounds = round;
-}
-let savedJuriData = {
-    'round-1': {
-        'red': {},
-        'blue': {},
-    },
-    'round-2': {
-        'red': {},
-        'blue': {},
-    },
-    'round-3': {
-        'red': {},
-        'blue': {},
-    },
+    roundGelanggang = round;
 }
 
-const juriData = JSON.parse(localStorage.getItem("dataJuri"));
+
 export const timeouts = {
     pukulanred: [],
     pukulanblue: [],
@@ -49,26 +41,6 @@ export const timeouts = {
     jurikeduatendanganblue: [],
     juriketigatendanganblue: [],
 };
-
-export function loadDataSaved() {
-    if (juriData) {
-        savedJuriData = juriData;
-        document.getElementById(`round-1-redInput`).innerHTML = juriData['round-1']?.red?.scorePiece || '';
-        document.getElementById(`round-1-redScore`).innerHTML = 0;
-        document.getElementById(`round-1-blueInput`).innerHTML = juriData['round-1']?.blue?.scorePiece || '';
-        document.getElementById(`round-1-blueScore`).innerHTML = 0;
-
-        document.getElementById(`round-2-redInput`).innerHTML = juriData['round-2']?.red?.scorePiece || '';
-        document.getElementById(`round-2-redScore`).innerHTML = 0;
-        document.getElementById(`round-2-blueInput`).innerHTML = juriData['round-2']?.blue?.scorePiece || '';
-        document.getElementById(`round-2-blueScore`).innerHTML = 0;
-
-        document.getElementById(`round-3-redInput`).innerHTML = juriData['round-3']?.red?.scorePiece || '';
-        document.getElementById(`round-3-redScore`).innerHTML = 0;
-        document.getElementById(`round-3-blueInput`).innerHTML = juriData['round-3']?.blue?.scorePiece || '';
-        document.getElementById(`round-3-blueScore`).innerHTML = 0;
-    }
-}
 
 export function getId(id){
     return id.toLowerCase().replace(/ /g, '-');
@@ -103,13 +75,6 @@ export function cancelTimeout(params) {
     clearTimeout(timeouts[`${params}`]);
 }
 
-function storeJurrorData(sudut, scorePiece) {
-    let dataJuriToAdd = {};
-    dataJuriToAdd["scorePiece"] = scorePiece;
-    savedJuriData[rounds][sudut] = { ...savedJuriData[rounds][sudut], ...dataJuriToAdd };
-    localStorage.setItem('dataJuri', JSON.stringify(savedJuriData));
-}
-
 export function inputPoint(element, point,sudut = 'red' ){
     element = dataJuri[`${element}`]
     const text = element.innerHTML;
@@ -133,13 +98,17 @@ export function inputPoint(element, point,sudut = 'red' ){
         element.innerHTML = joinValues
         const scorePiece = joinValues
         pushKetuaPertandingan(sudut, scorePiece);
-        storeJurrorData(sudut, scorePiece);
+        saveDataJuri()
         return values.length
     } else {
         element.innerHTML = point;
         pushKetuaPertandingan(sudut, point);
-        storeJurrorData(sudut, point);
+        saveDataJuri()
     }
+}
+
+export function changeRoundJuri(roundActive){
+    roundGelanggang = roundActive
 }
 function strikeoutLastValue(element, posisi, sudut) {
     element = dataJuri[`${element}`]
@@ -165,8 +134,10 @@ function strikeoutLastValue(element, posisi, sudut) {
         const scorePiece = formattedValues.join(",");
         element.innerHTML = scorePiece;
         pushKetuaPertandingan(sudut, scorePiece);
-        storeJurrorData(sudut, scorePiece);
+        saveDataJuri()
+
     }
+    saveDataJuri()
 }
 
 export function handleAction(event, color, action) {
@@ -193,4 +164,107 @@ function pushKetuaPertandingan(sudut,scorePiece){
             "scorePiece": scorePiece,
         },
     });
+}
+
+export function saveDataJuri(){
+    const data = {
+        bluePenalty : bluePenalty,
+        redPenalty: redPenalty,
+        pureScoreRed : pureScoreRed,
+        pureScoreBlue : pureScoreBlue,
+        actionStatus: actionStatus
+    }
+    rounds.map(round =>{
+        data[round] = {
+            blueInput : document.getElementById(`${round}-blueInput`).innerHTML,
+            redInput : document.getElementById(`${round}-redInput`).innerHTML,
+            redScore : document.getElementById(`${round}-redScore`).textContent,
+            blueScore : document.getElementById(`${round}-blueScore`).textContent
+        }
+    })
+    localStorage.setItem('dataJuriScoring', JSON.stringify(data))
+}
+
+export function loadDataSaveJuri(){
+    const data = JSON.parse(localStorage.getItem('dataJuriScoring'));
+    bluePenalty = data.bluePenalty;
+    redPenalty = data.redPenalty;
+    pureScoreRed = data.pureScoreRed;
+    pureScoreBlue = data.pureScoreBlue;
+    console.log(data)
+    rounds.map(round =>{
+        document.getElementById(`${round}-blueInput`).innerHTML = data[round].blueInput
+        document.getElementById(`${round}-redInput`).innerHTML = data[round].redInput
+        document.getElementById(`${round}-redScore`).textContent = data[round].redScore
+        document.getElementById(`${round}-blueScore`).textContent = data[round].blueScore
+    })
+}
+
+export function updateDataScore(event) {
+    pureScoreRed = event.red_score;
+    pureScoreBlue = event.blue_score;
+    redPenalty = event.red_penalty
+    bluePenalty = event.blue_penalty
+}
+
+export function updateScore(event) {
+    console.log(event)
+    const gerakan = event.gerakan;
+    const sudut = event.sudut
+    const id = event.id
+    const name = sudut + gerakan;
+    const sudutPointTime = name + 'time';
+    const exp = event.expired;
+    const score = {
+        'redScore': 0,
+        'blueScore': 0,
+    }
+    const sudutScore = event.sudut + 'Score';
+    const elementName = getId(id+' '+gerakan+' '+sudut )
+    indicatorUpdate(elementName, sudut)
+    startTimeoutIndicator(elementName, sudut)
+    if (localStorage.getItem(sudutPointTime) && localStorage.getItem(name)) {
+        const time = localStorage.getItem(sudutPointTime);
+        if ( exp - time <= 2000 && localStorage.getItem(name) !== id) {
+            if (gerakan === 'tendangan') {
+                score[`${sudutScore}`] += 2
+            } else {
+                score[`${sudutScore}`] += 1
+            }
+            localStorage.removeItem(sudutPointTime);
+            localStorage.removeItem(name);
+            cancelTimeout(gerakan+sudut)
+            pureScoreRed += score['redScore']
+            pureScoreBlue += score['blueScore']
+            pushScore()
+            return score;
+        }
+        localStorage.removeItem(sudutPointTime)
+        localStorage.removeItem(name)
+    }
+    localStorage.setItem(sudutPointTime, exp);
+    localStorage.setItem(name, id);
+    return score;
+}
+
+function pushScore(){
+    saveDataJuri()
+    axios.post("/score-update", {
+        message: {
+            "redPenalty":redPenalty,
+            "bluePenalty":bluePenalty,
+            "blueScore": pureScoreBlue,
+            "redScore": pureScoreRed,
+            "droppingRed": 0,
+            "droppingBlue": 0,
+        },
+    });
+}
+
+export function enabledAction(status = true) {
+    actionStatus = status
+    buttonAction.map(action =>{
+        const button = document.getElementById(action)
+        button.disabled = !status;
+    })
 }

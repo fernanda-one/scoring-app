@@ -101,13 +101,13 @@
     <!--left side-->
     <div class="flex flex-col justify-start w-[50%]">
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
                     <path d="M23.6406 14.708L18.735 10.7835C18.0497 10.2352 17.2062 9.95971 16.3506 10.0048C15.495 10.0498 14.681 10.4126 14.0497 11.0303L6.47095 18.4406C5.71271 19.1808 5.28126 20.2266 5.28126 21.3252L5.28126 30.3747C5.28126 35.0747 8.95314 38.208 12.625 38.208L28.3608 38.208C32.5578 38.208 32.5578 32.333 28.3608 32.333L27.3125 32.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M27.3125 32.333L30.4593 32.333C34.6562 32.333 34.6562 26.458 30.4593 26.458L27.3125 26.458L31.9023 26.458C36.0993 26.458 36.0993 20.583 31.9023 20.583L27.3125 20.583L39.2479 20.583C39.978 20.5825 40.678 20.2728 41.194 19.7219C41.7101 19.1711 42 18.4242 42 17.6455C42 16.8664 41.7099 16.1193 41.1934 15.5684C40.6769 15.0175 39.9765 14.708 39.2461 14.708L18.1328 14.708" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-merah-pertama" class="shadow-inset-custom focus-red-button flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M14.708 21.8679L10.7835 26.7735C10.2352 27.4588 9.95971 28.3023 10.0048 29.1579C10.0498 30.0136 10.4126 30.8275 11.0303 31.4588L18.4406 39.0376C19.1808 39.7958 20.2266 40.2273 21.3252 40.2273H30.3747C35.0747 40.2273 38.208 36.5554 38.208 32.8835L38.208 17.1477C38.208 12.9508 32.333 12.9508 32.333 17.1477L32.333 18.196" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M32.333 18.1562L32.333 15.0095C32.333 10.8125 26.458 10.8125 26.458 15.0095L26.458 18.1562L26.458 13.5664C26.458 9.36945 20.583 9.36945 20.583 13.5664L20.583 18.1562L20.583 6.22082C20.5825 5.49076 20.2728 4.79076 19.7219 4.2747C19.1711 3.75864 18.4242 3.46875 17.6455 3.46875C16.8664 3.46875 16.1193 3.75889 15.5684 4.27535C15.0175 4.79181 14.708 5.49227 14.708 6.22266L14.708 27.3359" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -126,7 +126,7 @@
         </div>
 
         <div class="flex justify-between w-[70%]">
-            <button type="button" id="teguran-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="47" viewBox="0 0 45 47" fill="none">
                     <path d="M20.0474 12.3038C18.9717 10.629 17.1915 9.7915 14.7068 9.7915C10.9798 9.7915 4.60919 14.6631 4.60919 19.0562C4.60919 23.4492 4.60919 25.9969 4.60919 30.2967C4.60919 34.5965 8.14392 37.2082 10.9798 37.2082C14.9733 37.2082 18.9668 37.2082 22.9602 37.2082C24.4812 37.2082 25.7141 35.893 25.7141 34.2707L25.7141 34.2618C25.7141 32.6444 24.4849 31.3332 22.9686 31.3332" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M17.9702 13.6895L34.8969 13.6895C36.4167 13.6895 37.6486 15.0035 37.6486 16.6245C37.6486 16.6272 37.6486 16.63 37.6486 16.6326C37.6444 18.2594 36.4068 19.5759 34.8817 19.5759L22.4253 19.5759" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -134,7 +134,7 @@
                     <path d="M23.2296 25.458L25.7195 25.458C27.2404 25.458 28.4734 26.7731 28.4734 28.3955C28.4734 30.0179 27.2404 31.333 25.7195 31.333L22.9656 31.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-merah-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed  rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M12.304 24.9524C10.6292 26.028 9.79169 27.8082 9.79169 30.2929C9.79169 34.02 14.6633 40.3906 19.0564 40.3906C23.4494 40.3906 25.9971 40.3906 30.2969 40.3906C34.5967 40.3906 37.2083 36.8558 37.2083 34.02C37.2083 30.0264 37.2083 26.033 37.2083 22.0396C37.2083 20.5186 35.8932 19.2856 34.2708 19.2856H34.2619C32.6445 19.2856 31.3333 20.5149 31.3333 22.0312" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M13.6898 27.0295L13.6898 10.1028C13.6898 8.58304 15.0038 7.35107 16.6248 7.35107C16.6276 7.35107 16.6303 7.35107 16.6329 7.35108C18.2597 7.35531 19.5762 8.59287 19.5762 10.118L19.5762 22.5744" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -201,13 +201,13 @@
                     <path d="M14.667 17.6623L14.667 14.5199C14.667 10.3289 20.542 10.3289 20.542 14.5199L20.542 17.6623L20.542 13.0789C20.542 8.88794 26.417 8.88794 26.417 13.0789L26.417 17.6623L26.417 5.74377C26.4175 5.01474 26.7272 4.31574 27.2781 3.80041C27.8289 3.28509 28.5758 2.99561 29.3545 2.99561C30.1336 2.99561 30.8807 3.28534 31.4316 3.80106C31.9825 4.31679 32.292 5.01626 32.292 5.74561L32.292 26.8289" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-biru-pertama" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-biru-pertama" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="45" viewBox="0 0 47 45" fill="none">
                     <path d="M32.292 21.8141L36.2165 26.8241C36.7648 27.524 37.0403 28.3854 36.9952 29.2593C36.9502 30.1331 36.5874 30.9644 35.9697 31.6091L28.5594 39.3491C27.8192 40.1235 26.7734 40.5641 25.6748 40.5641H16.6253C11.9253 40.5641 8.79199 36.8141 8.79199 33.0641L8.79199 16.9935C8.79199 12.7072 14.667 12.7072 14.667 16.9935L14.667 18.0641" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M14.667 18.064L14.667 14.8502C14.667 10.564 20.542 10.564 20.542 14.8502L20.542 18.064L20.542 13.3765C20.542 9.09022 26.417 9.09022 26.417 13.3765L26.417 18.064L26.417 5.87459C26.4175 5.12899 26.7272 4.4141 27.2781 3.88706C27.8289 3.36002 28.5758 3.06396 29.3545 3.06396C30.1336 3.06396 30.8807 3.36028 31.4316 3.88773C31.9825 4.41517 32.292 5.13054 32.292 5.87647L32.292 27.439" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="teguran-biru-pertama" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-biru-pertama" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="47" viewBox="0 0 43 47" fill="none">
                     <path d="M20.8443 14.708L25.6317 10.7835C26.3004 10.2352 27.1236 9.95971 27.9586 10.0048C28.7936 10.0498 29.5879 10.4126 30.204 11.0303L37.6 18.4406C38.3399 19.1808 38.761 20.2266 38.761 21.3252L38.761 30.3747C38.761 35.0747 35.1777 38.208 31.5943 38.208L16.238 38.208C12.1422 38.208 12.1422 32.333 16.238 32.333L17.261 32.333" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M17.261 32.333L14.1901 32.333C10.0943 32.333 10.0943 26.458 14.1901 26.458L17.261 26.458L12.7818 26.458C8.68609 26.458 8.68609 20.583 12.7818 20.583L17.261 20.583L5.61338 20.583C4.90092 20.5825 4.21781 20.2728 3.71419 19.7219C3.21057 19.1711 2.92767 18.4242 2.92767 17.6455C2.92767 16.8664 3.21082 16.1193 3.71482 15.5684C4.21883 15.0175 4.9024 14.708 5.61517 14.708L26.2193 14.708" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
@@ -230,7 +230,7 @@
                     <path d="M21.5417 21.7398L21.5417 19.2534C21.5417 17.7347 20.2265 16.5034 18.6042 16.5034C16.9818 16.5034 15.6667 17.7347 15.6667 19.2534L15.6667 22.0034" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="binaan-biru-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="teguran-biru-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="44" viewBox="0 0 47 44" fill="none">
                     <path d="M34.696 24.9175C36.3709 25.9916 37.2083 27.7693 37.2083 30.2504C37.2083 33.9722 32.3367 40.3338 27.9437 40.3338C23.5506 40.3338 21.0029 40.3338 16.7031 40.3338C12.4033 40.3338 9.79168 36.8041 9.79168 33.9722C9.79168 29.9843 9.79168 25.9966 9.79168 22.0088C9.79168 20.49 11.1068 19.2588 12.7292 19.2588H12.7381C14.3555 19.2588 15.6667 20.4863 15.6667 22.0004" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M33.3103 26.9913L33.3103 10.0886C33.3103 8.57104 31.9962 7.34082 30.3752 7.34082C30.3725 7.34082 30.3697 7.34082 30.3671 7.34083C28.7403 7.34505 27.4238 8.58085 27.4238 10.1038L27.4238 22.5425" stroke="white" stroke-width="3" stroke-linecap="round"/>
@@ -238,7 +238,7 @@
                     <path d="M21.5417 21.7398L21.5417 19.2534C21.5417 17.7347 20.2266 16.5034 18.6042 16.5034C16.9818 16.5034 15.6667 17.7347 15.6667 19.2534L15.6667 22.0034" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button type="button" id="teguran-biru-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
+            <button type="button" id="binaan-biru-kedua" class="shadow-inset-custom flex justify-center items-center w-[25%] bg-grayDefault disabled:cursor-not-allowed rounded-[14px] text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="47" viewBox="0 0 43 47" fill="none">
                     <path d="M24.3509 12.3038C25.4007 10.629 27.138 9.7915 29.5627 9.7915C33.1999 9.7915 39.4169 14.6631 39.4169 19.0562C39.4169 23.4492 39.4169 25.9969 39.4169 30.2967C39.4169 34.5965 35.9674 37.2082 33.1999 37.2082C29.3026 37.2082 25.4055 37.2082 21.5084 37.2082C20.0241 37.2082 18.8209 35.893 18.8209 34.2707L18.8209 34.2618C18.8209 32.6444 20.0205 31.3332 21.5002 31.3332" stroke="white" stroke-width="3" stroke-linecap="round"/>
                     <path d="M26.378 13.6895L9.85948 13.6895C8.3764 13.6895 7.17413 15.0035 7.17413 16.6245C7.17413 16.6272 7.17413 16.63 7.17414 16.6326C7.17826 18.2594 8.38598 19.5759 9.87435 19.5759L22.0304 19.5759" stroke="white" stroke-width="3" stroke-linecap="round"/>

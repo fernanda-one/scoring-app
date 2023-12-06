@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 class Operator implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private int $roomId;
+    private int $roomId, $time;
     private string $blueName, $redName, $activeRound, $babak, $blueContingent, $redContingent, $action;
     /**
      * Create a new event instance.
@@ -34,6 +34,7 @@ class Operator implements ShouldBroadcast
         $this->babak = $message->babak;
         $this->activeRound = $message->activeRound;
         $this->action = $message->action;
+        $this->time = $message->time;
     }
 
     /**
@@ -61,6 +62,7 @@ class Operator implements ShouldBroadcast
                 'babak'=> $this->babak,
                 'activeRound'=> $this->activeRound,
                 'action'=> $this->action,
+            'time'=>$this->time
             ];
     }
     private function getGelanggangId($user)

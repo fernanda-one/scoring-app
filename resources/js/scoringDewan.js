@@ -15,6 +15,7 @@ import {
     handleScoreChange, loadDataSave,
     saveData, updateDataScore, updatePertandingan
 } from './library/DewanFunc'
+import {handleAction, inputPoint, startTimeout} from "./library/JuriFunc";
 const teguranMerahPertama = document.getElementById('teguran-merah-pertama');
 const binaanMerahPertama = document.getElementById('binaan-merah-pertama')
 const peringatanMerahPertama = document.getElementById('peringatan-merah-pertama')
@@ -35,6 +36,8 @@ const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
 const diskMerah = document.getElementById('disk-merah')
 const diskBiru = document.getElementById('disk-biru')
+enabledAction(false)
+// localStorage.clear();
 if (localStorage.getItem('dataDewan')){
     loadDataSave()
 }
@@ -42,14 +45,14 @@ if (localStorage.getItem('dataDewan')){
 channelUpdateScore
     .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
         updateDataScore(event)
-        saveData()
+        setTimeout(() => {
+            saveData()
+        }, 200);
     });
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         updateDataDewan(event)
-        if (event !== "reset"){
-            saveData()
-        }
+
     });
 
 
@@ -85,12 +88,13 @@ function disqualification(corner){
     }
 }
 
-enabledAction(true)
 function updateDataDewan(e) {
     switch (e.action) {
         case 'start':
+            saveData()
             break;
         case 'finish':
+            localStorage.clear()
             cekWinner()
             break;
         case 'round':
