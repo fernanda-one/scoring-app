@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $managementRole = [
             "admin"=>["Admin"],
+            "adtor"=>["Admin","Operator"],
             "juri"=>['Juri Pertama',"Juri Kedua","Juri Ketiga"],
             "ketua"=>["Ketua"],
             "dewan"=>['Dewan'],

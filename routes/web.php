@@ -83,6 +83,7 @@ Route::delete('/management/delete-gelanggang/{id}',[\App\Http\Controllers\Gelang
 
 Route::get('/management/history',[\App\Http\Controllers\HistoryController::class, 'index'])->middleware('auth')->middleware('auth');
 Route::post('/create-history',[\App\Http\Controllers\HistoryController::class, 'create'])->middleware('auth')->middleware('auth');
+Route::delete('/delete-history/{id}',[\App\Http\Controllers\HistoryController::class, 'destroy'])->middleware('auth');
 
 Route::get('/juri',[\App\Http\Controllers\JuriController::class, 'index'])->middleware('auth');
 
