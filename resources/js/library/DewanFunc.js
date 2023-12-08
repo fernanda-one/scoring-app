@@ -16,10 +16,10 @@ const pelanggaranPoint = {
     'teguran-kedua': 2,
     'peringatan-pertama': 5,
     'peringatan-kedua': 10,
-    'peringatan-ketiga': 15,
+    'peringatan-ketiga': 0,
 }
-let pelanggaranBiru = ['pertama']
-let pelanggaranMerah = ['pertama']
+let pelanggaranBiru = []
+let pelanggaranMerah = []
 const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-minus',
     'jatuhan-merah-plus','peringatan-biru-ketiga','peringatan-biru-kedua','binaan-biru-kedua','teguran-biru-kedua',
     'peringatan-biru-pertama','binaan-biru-pertama','teguran-biru-pertama','peringatan-merah-ketiga','peringatan-merah-kedua','binaan-merah-kedua',
@@ -184,8 +184,8 @@ export function pushScore(droppingRed = 0, droppingBlue = 0){
         message: {
             "blueScore":pureScoreBlue,
             "redScore":pureScoreRed,
-            "redPenalty":redPenalty,
-            "bluePenalty": bluePenalty,
+            "redPenalty":pelanggaranMerah,
+            "bluePenalty": pelanggaranBiru,
             "droppingRed": droppingRed,
             "droppingBlue": droppingBlue,
         },

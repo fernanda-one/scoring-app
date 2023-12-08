@@ -145,19 +145,19 @@ function togglePausePlay(status = pauseStatus){
 
 function uploadDataWinner(winner) {
     axios.post("/create-history", {
-        'partai':dataPartai.id,
-        'kelas':dataPartai.kelas,
-        'jenis_kelamin':dataPartai.jenis_kelamin,
-        'sudut_biru':dataPartai.sudut_biru,
-        'sudut_merah':dataPartai.sudut_merah,
-        'kontingen_biru':dataPartai.contingen_sudut_biru,
-        'kontingen_merah':dataPartai.contingen_sudut_merah,
-        'babak':dataPartai.babak,
-        'round_time':activeRound,
-        'pemenang':winner,
+        // 'partai':dataPartai.id,
+        // 'kelas':dataPartai.kelas,
+        // 'jenis_kelamin':dataPartai.jenis_kelamin,
+        // 'sudut_biru':dataPartai.sudut_biru,
+        // 'sudut_merah':dataPartai.sudut_merah,
+        // 'kontingen_biru':dataPartai.contingen_sudut_biru,
+        // 'kontingen_merah':dataPartai.contingen_sudut_merah,
+        // 'babak':dataPartai.babak,
+        // 'round_time':activeRound,
+        // 'pemenang':winner,
     });
     setTimeout(()=>{
-        // location.reload()
+        location.reload()
     }, 500)
 }
 function  updatePertandingan(action = 'round'){

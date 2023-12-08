@@ -246,14 +246,16 @@ function resetDropping() {
 }
 
 function storeRedPenalty(value) {
-    let redPenalty = value.replace(/-/g, " ");
+    let redPenalty = value.join(", ");
+    redPenalty = redPenalty.replace(/-/g, ' ');
     redCorner.penalty.innerText = redPenalty;
     savedKetuaData[round]['red'].penalty = redPenalty;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));
 }
 
 function storeBluePenalty(value) {
-    let bluePenalty = value.replace(/-/g, " ");
+    let bluePenalty = value.join(", ");
+    bluePenalty = bluePenalty.replace(/-/g, ' ');
     blueCorner.penalty.innerText = bluePenalty;
     savedKetuaData[round]['blue'].penalty = bluePenalty;
     localStorage.setItem('dataKetuaPertandingan', JSON.stringify(savedKetuaData));

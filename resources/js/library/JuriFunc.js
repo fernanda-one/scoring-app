@@ -3,9 +3,9 @@ import { toInteger } from "lodash/lang";
 const rounds = ['round-1','round-2','round-3'];
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
-let bluePenalty='pertama'
+let bluePenalty=['pertama']
 const buttonAction = ['pukul-biru','tendang-biru','pukul-merah','tendang-merah']
-let redPenalty = 'pertama';
+let redPenalty = ['pertama'];
 let roundGelanggang = JSON.parse(localStorage.getItem("gelanggangData"))?.activeRound?.toLowerCase() || 'ROUND'
 const dataJuri = {
     blueScore : document.getElementById(`round-1-blueScore`),

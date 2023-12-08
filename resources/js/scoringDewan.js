@@ -65,6 +65,11 @@ binaanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'binaan-ked
 peringatanMerahPertama.addEventListener("click", handlePenaltyClick('red', 'peringatan-pertama'));
 peringatanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'peringatan-kedua'));
 peringatanMerahKetiga.addEventListener("click", handlePenaltyClick('red', 'peringatan-ketiga'));
+peringatanMerahKetiga.addEventListener("click", function (){
+    setTimeout(()=>{
+        updatePertandingan("biru")
+    },200)
+});
 
 teguranBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'teguran-pertama'));
 teguranBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'teguran-kedua'));
@@ -72,7 +77,12 @@ binaanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'binaan-p
 binaanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'binaan-kedua'));
 peringatanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'peringatan-pertama'));
 peringatanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'peringatan-kedua'));
-peringatanBiruKetiga.addEventListener("click", handlePenaltyClick('blue', 'peringatan-ketiga'));
+peringatanBiruKetiga.addEventListener("click", function (){
+    setTimeout(()=>{
+        updatePertandingan("merah")
+    },200)
+});
+
 
 jatuhanMerahSah.addEventListener("click", handleScoreChange('red', 3));
 jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -3));

@@ -98,6 +98,7 @@ function updatePertandingan(action = 'round'){
             'blueContingent':dataPartai.kontingenBiru,
             'redContingent':dataPartai.kontingenMerah,
             'babak':dataPartai.babak,
+            'time':0,
             'activeRound':dataPartai.activeRound,
             'action': 'round-done'
         },

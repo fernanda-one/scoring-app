@@ -25,7 +25,7 @@ const pelanggaranPoint = {
     'teguran-kedua': 2,
     'peringatan-pertama': 5,
     'peringatan-kedua': 10,
-    'peringatan-ketiga': 15,
+    'peringatan-ketiga': 0,
 }
 export const savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
     namaMerah: 'Sudut Merah',
@@ -52,8 +52,16 @@ function updateScore(event, redPenalty, bluePenalty) {
     bluePenalty = event.blue_penalty
     pureScoreRed = event.red_score
     pureScoreBlue = event.blue_score
-    const redScoreValue = pureScoreRed - pelanggaranPoint[redPenalty];
-    const blueScoreValue = pureScoreBlue - pelanggaranPoint[bluePenalty];
+    let pointPelanggaranSudutMerah = 0;
+    let pointPelanggaranSudutBiru= 0;
+    redPenalty.map(penalty => {
+        pointPelanggaranSudutMerah += pelanggaranPoint[penalty]
+    })
+    bluePenalty.map(penalty => {
+        pointPelanggaranSudutBiru += pelanggaranPoint[penalty]
+    })
+    const redScoreValue = pureScoreRed - pointPelanggaranSudutMerah;
+    const blueScoreValue = pureScoreBlue - pointPelanggaranSudutBiru;
 
     const scoreData = {
         redScore: redScoreValue,
