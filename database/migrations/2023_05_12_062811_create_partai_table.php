@@ -24,7 +24,7 @@ class CreatePartaiTable extends Migration
             $table->string('contingen_sudut_biru');
             $table->string('kelas');
             $table->string('jenis_kelamin');
-            $table->boolean('status')->default('true');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
