@@ -8,7 +8,7 @@
                     <div class="flex justify-center">
                         <a href="#" class="flex items-center my-4 text-2xl font-semibold text-gray-900 dark:text-white">
                             <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-                            Penjurian
+                            Pencak Guru
                         </a>
                     </div>
                     <form class="space-y-4 md:space-y-6" action="/login" method="post">
