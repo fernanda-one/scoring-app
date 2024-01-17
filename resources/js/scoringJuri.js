@@ -1,12 +1,17 @@
-import {channelOperator, channelUpdateScore} from "./library/ScoreFunc";
+import { channelOperator, channelUpdateScore } from "./library/ScoreFunc";
 
 require("./bootstrap");
 import {
-    changeRoundJuri, enabledAction,
-     handleAction,
-     inputPoint, loadDataSaveJuri, saveDataJuri,
+    changeRoundJuri,
+    enabledAction,
+    handleAction,
+    inputPoint,
+    loadDataSaveJuri,
+    saveDataJuri,
     startTimeout,
-     updateDataScore, updateRoundJuri, updateScore,
+    updateDataScore,
+    updateRoundJuri,
+    updateScore,
 } from "./library/JuriFunc";
 
 let userElement = document.getElementById("user");
@@ -20,92 +25,94 @@ const tendanganBiru = document.getElementById("tendang-biru");
 const tendanganMerah = document.getElementById("tendang-merah");
 const channelGelanggang = Echo.join(`presence.juri.${userData.gelanggang_id}`);
 // localStorage.clear()\
-enabledAction(false)
+enabledAction(false);
 
-if (localStorage.getItem('dataJuriScoring')){
-    console.log(JSON.parse(localStorage.getItem('dataJuriScoring')))
-    loadDataSaveJuri()
+if (localStorage.getItem("dataJuriScoring")) {
+    console.log(JSON.parse(localStorage.getItem("dataJuriScoring")));
+    loadDataSaveJuri();
 }
-channelOperator
-    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        updateDataJuri(event)
-    });
+channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
+    updateDataJuri(event);
+});
 
-channelUpdateScore
-    .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        updateDataScore(event)
-        setTimeout(() => {
-            saveDataJuri()
-        }, 200);
-    });
+channelUpdateScore.listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
+    updateDataScore(event);
+    setTimeout(() => {
+        saveDataJuri();
+    }, 200);
+});
 
-channelGelanggang
-    .listen(`.juri.${userData.gelanggang_id}`, (event) => {
-        updateScore(event);
-    });
+channelGelanggang.listen(`.juri.${userData.gelanggang_id}`, (event) => {
+    updateScore(event);
+});
 
-visibleHeader.addEventListener("click", function() {
+visibleHeader.addEventListener("click", function () {
     if (header.classList.contains("hidden")) {
-        visibleHeader.textContent = "Tutup"
+        visibleHeader.textContent = "Tutup";
         header.classList.remove("hidden");
         header.classList.add("flex");
         firstLinePointGroup.classList.remove("mt-[0%]");
         firstLinePointGroup.classList.add("mt-[5%]");
     } else {
-        visibleHeader.textContent = "Lihat"
+        visibleHeader.textContent = "Lihat";
         header.classList.add("hidden");
-        header.classList.remove("flex")
+        header.classList.remove("flex");
         firstLinePointGroup.classList.remove("mt-[5%]");
         firstLinePointGroup.classList.add("mt-[0%]");
     }
-})
+});
 
 pukulanBiru.addEventListener("click", function (event) {
-    startTimeout('blueInput', 'pukulanblue', inputPoint('blueInput',1,'blue'), 'blue')
-    handleAction(event, 'blue', 'pukulan');
-
+    startTimeout(
+        "blueInput",
+        "pukulanblue",
+        inputPoint("blueInput", 1, "blue"),
+        "blue"
+    );
+    handleAction(event, "blue", "pukulan");
 });
 
 pukulanMerah.addEventListener("click", function (event) {
-    startTimeout('redInput', 'pukulanred',inputPoint('redInput', 1))
-    handleAction(event, 'red', 'pukulan');
+    startTimeout("redInput", "pukulanred", inputPoint("redInput", 1));
+    handleAction(event, "red", "pukulan");
 });
 
 tendanganMerah.addEventListener("click", function (event) {
-    startTimeout('redInput', 'tendanganred', inputPoint('redInput',2))
-    handleAction(event, 'red', 'tendangan');
+    startTimeout("redInput", "tendanganred", inputPoint("redInput", 2));
+    handleAction(event, "red", "tendangan");
 });
 
 tendanganBiru.addEventListener("click", function (event) {
-    startTimeout('blueInput', 'tendanganblue',inputPoint('blueInput',2,'blue'),'blue')
-    handleAction(event, 'blue', 'tendangan');
+    startTimeout(
+        "blueInput",
+        "tendanganblue",
+        inputPoint("blueInput", 2, "blue"),
+        "blue"
+    );
+    handleAction(event, "blue", "tendangan");
 });
-
 
 function updateDataJuri(e) {
     switch (e.action) {
-        case 'start':
-            updateRoundJuri(e.activeRound)
+        case "start":
+            updateRoundJuri(e.activeRound);
             break;
-        case 'finish':
+        case "finish":
             break;
-        case 'round':
-            enabledAction(false)
-            changeRoundJuri(e.activeRound)
-            updateRoundJuri(e.activeRound)
+        case "round":
+            enabledAction(false);
+            changeRoundJuri(e.activeRound);
+            updateRoundJuri(e.activeRound);
             break;
-        case 'pause':
-            enabledAction(false)
+        case "pause":
+            enabledAction(false);
             break;
-        case 'play':
-            enabledAction()
+        case "play":
+            enabledAction();
             break;
-        case 'reset':
-            localStorage.clear()
-            location.reload()
+        case "reset":
+            localStorage.clear();
+            location.reload();
             break;
     }
 }
-
-
-
