@@ -9,6 +9,8 @@ const countMinimumToStart = 5
 const start = document.getElementById('start')
 const next = document.getElementById('next')
 const prev = document.getElementById('prev')
+const segarkan = document.getElementById('segarkan')
+const kunci = document.getElementById('kunci')
 const pausePlay = document.getElementById('pause')
 let pauseStatus = true
 let isButtonDisable = true
@@ -31,7 +33,7 @@ let users
 if (localStorage.getItem('dataOperator')){
     loadSaveData()
 }
-
+let submit = true
 const actionButtonNames = ['start','pausePlay']
 const userActiveList = {
     'juri_pertama':document.getElementById("status_juri_pertama"),
@@ -61,8 +63,8 @@ const roles = ['ketua_pertandingan','dewan','juri_pertama','juri_kedua','juri_ke
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
         if(event.action === 'merah' || event.action === 'biru'){
-            uploadDataWinner(event.action)
             updatePertandingan('reset')
+            uploadDataWinner(event.action)
         }
         event.action === 'round-done'?roundDone():''
     });
@@ -113,6 +115,13 @@ finish.addEventListener('click', (evt) =>{
   finishGelanggang()
 })
 
+kunci.addEventListener('click', (evt) =>{
+    toggleLock()
+})
+segarkan.addEventListener('click', (evt) =>{
+    updatePertandingan('reset')
+})
+
 timeElement.addEventListener('change', (ev)=>{
     const timeSelectedOption = timeElement.value;
     matchTime = timesValue[timeSelectedOption]
@@ -143,22 +152,34 @@ function togglePausePlay(status = pauseStatus){
     }
 }
 
+function toggleLock(status = submit){
+    if (status){
+        kunci.textContent = 'KUNCI'
+        submit = !status
+    } else {
+        kunci.textContent = 'BATAL'
+        submit = !status
+    }
+}
+
 function uploadDataWinner(winner) {
-    axios.post("/create-history", {
-        // 'partai':dataPartai.id,
-        // 'kelas':dataPartai.kelas,
-        // 'jenis_kelamin':dataPartai.jenis_kelamin,
-        // 'sudut_biru':dataPartai.sudut_biru,
-        // 'sudut_merah':dataPartai.sudut_merah,
-        // 'kontingen_biru':dataPartai.contingen_sudut_biru,
-        // 'kontingen_merah':dataPartai.contingen_sudut_merah,
-        // 'babak':dataPartai.babak,
-        // 'round_time':activeRound,
-        // 'pemenang':winner,
-    });
-    setTimeout(()=>{
-        location.reload()
-    }, 500)
+    if(submit){
+        axios.post("/create-history", {
+            'partai':dataPartai.id,
+            'kelas':dataPartai.kelas,
+            'jenis_kelamin':dataPartai.jenis_kelamin,
+            'sudut_biru':dataPartai.sudut_biru,
+            'sudut_merah':dataPartai.sudut_merah,
+            'kontingen_biru':dataPartai.contingen_sudut_biru,
+            'kontingen_merah':dataPartai.contingen_sudut_merah,
+            'babak':dataPartai.babak,
+            'round_time':activeRound,
+            'pemenang':winner,
+        });
+        setTimeout(()=>{
+            location.reload()
+        }, 500)
+    }
 }
 function  updatePertandingan(action = 'round'){
     axios.post("/operator-update", {

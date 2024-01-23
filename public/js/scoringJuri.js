@@ -2411,50 +2411,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   updateScore: () => (/* binding */ updateScore),
 /* harmony export */   userData: () => (/* binding */ userData)
 /* harmony export */ });
-var namaMerah = document.getElementById('nama_merah');
-var kontingenMerah = document.getElementById('kontingen_merah');
-var namaBiru = document.getElementById('nama_biru');
-var kontingenBiru = document.getElementById('kontingen_biru');
-var babak = document.getElementById('babak');
+var namaMerah = document.getElementById("nama_merah");
+var kontingenMerah = document.getElementById("kontingen_merah");
+var namaBiru = document.getElementById("nama_biru");
+var kontingenBiru = document.getElementById("kontingen_biru");
+var babak = document.getElementById("babak");
 var pureScoreRed = 0;
 var pureScoreBlue = 0;
-var partaiId = '';
-var rounds = ['round-1', 'round-2', 'round-3'];
+var partaiId = "";
+var rounds = ["round-1", "round-2", "round-3"];
 var kelas;
-var redScore = '';
-var blueScore = '';
+var redScore = "";
+var blueScore = "";
 var userElement = document.getElementById("user");
 var userData = JSON.parse(userElement.getAttribute("data-user"));
 var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
 var channelPenalty = Echo.join("presence.penalty.".concat(userData.gelanggang_id));
 var channelOperator = Echo.join("presence.operator.".concat(userData.gelanggang_id));
-var activeRound = document.getElementById('round');
+var activeRound = document.getElementById("round");
 var pelanggaranPoint = {
-  'pertama': 0,
-  'binaan-pertama': 0,
-  'binaan-kedua': 0,
-  'teguran-pertama': 1,
-  'teguran-kedua': 2,
-  'peringatan-pertama': 5,
-  'peringatan-kedua': 10,
-  'peringatan-ketiga': 0
+  pertama: 0,
+  "binaan-pertama": 0,
+  "binaan-kedua": 0,
+  "teguran-pertama": 1,
+  "teguran-kedua": 2,
+  "peringatan-pertama": 5,
+  "peringatan-kedua": 10,
+  "peringatan-ketiga": 0
 };
-var savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
-  namaMerah: 'Sudut Merah',
-  kontingenMerah: 'Kontingen',
-  namaBiru: 'Sudut Biru',
-  kontingenBiru: 'kontingen',
-  babak: 'BABAK',
-  activeRound: 'ROUND'
+var savedGelanggangData = JSON.parse(localStorage.getItem("gelanggangData")) || {
+  namaMerah: "Sudut Merah",
+  kontingenMerah: "Kontingen",
+  namaBiru: "Sudut Biru",
+  kontingenBiru: "kontingen",
+  babak: "BABAK",
+  activeRound: "ROUND"
 };
-var savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
+var savedScoreData = JSON.parse(localStorage.getItem("scoreData")) || {
   redScore: 0,
   blueScore: 0,
-  bluePenalty: 'teguran-pertama',
-  redPenalty: 'teguran-pertama'
+  bluePenalty: "teguran-pertama",
+  redPenalty: "teguran-pertama"
 };
-var redPenalty = '';
-var bluePenalty = '';
+var redPenalty = "";
+var bluePenalty = "";
 function changeScoreElement(newRedScoreElement, newBlueScoreElement) {
   redScore = newRedScoreElement;
   blueScore = newBlueScoreElement;
@@ -2484,8 +2484,8 @@ function updateScore(event, redPenalty, bluePenalty) {
     droppingRed: event.droppingRed,
     droppingBlue: event.droppingBlue
   };
-  localStorage.setItem('scoreData', JSON.stringify(scoreData));
-  if (window.location.pathname !== '/ketua_pertandingan') {
+  localStorage.setItem("scoreData", JSON.stringify(scoreData));
+  if (window.location.pathname !== "/ketua_pertandingan") {
     redScore.textContent = redScoreValue;
     blueScore.textContent = blueScoreValue;
   }
@@ -2509,7 +2509,7 @@ function startPertandingan(e) {
     babak: babak.textContent,
     activeRound: activeRound.textContent
   };
-  localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
+  localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
 }
 function getDataGelanggang() {
   return {
@@ -33524,8 +33524,8 @@ var tendanganMerah = document.getElementById("tendang-merah");
 var channelGelanggang = Echo.join("presence.juri.".concat(userData.gelanggang_id));
 // localStorage.clear()\
 (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
-if (localStorage.getItem('dataJuriScoring')) {
-  console.log(JSON.parse(localStorage.getItem('dataJuriScoring')));
+if (localStorage.getItem("dataJuriScoring")) {
+  console.log(JSON.parse(localStorage.getItem("dataJuriScoring")));
   (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.loadDataSaveJuri)();
 }
 _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelOperator.listen(".operator.".concat(userData.gelanggang_id), function (event) {
@@ -33556,40 +33556,40 @@ visibleHeader.addEventListener("click", function () {
   }
 });
 pukulanBiru.addEventListener("click", function (event) {
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('blueInput', 'pukulanblue', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('blueInput', 1, 'blue'), 'blue');
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'blue', 'pukulan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)("blueInput", "pukulanblue", (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)("blueInput", 1, "blue"), "blue");
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, "blue", "pukulan");
 });
 pukulanMerah.addEventListener("click", function (event) {
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('redInput', 'pukulanred', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('redInput', 1));
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'red', 'pukulan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)("redInput", "pukulanred", (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)("redInput", 1));
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, "red", "pukulan");
 });
 tendanganMerah.addEventListener("click", function (event) {
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('redInput', 'tendanganred', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('redInput', 2));
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'red', 'tendangan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)("redInput", "tendanganred", (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)("redInput", 2));
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, "red", "tendangan");
 });
 tendanganBiru.addEventListener("click", function (event) {
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('blueInput', 'tendanganblue', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('blueInput', 2, 'blue'), 'blue');
-  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'blue', 'tendangan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)("blueInput", "tendanganblue", (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)("blueInput", 2, "blue"), "blue");
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, "blue", "tendangan");
 });
 function updateDataJuri(e) {
   switch (e.action) {
-    case 'start':
+    case "start":
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateRoundJuri)(e.activeRound);
       break;
-    case 'finish':
+    case "finish":
       break;
-    case 'round':
+    case "round":
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.changeRoundJuri)(e.activeRound);
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateRoundJuri)(e.activeRound);
       break;
-    case 'pause':
+    case "pause":
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
       break;
-    case 'play':
+    case "play":
       (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)();
       break;
-    case 'reset':
+    case "reset":
       localStorage.clear();
       location.reload();
       break;

@@ -1,5 +1,5 @@
-import {isEmpty} from "lodash";
-import {activeRound, getDataGelanggang} from "./ScoreFunc";
+import { isEmpty } from "lodash";
+import { activeRound, getDataGelanggang } from "./ScoreFunc";
 
 const pelanggaran = ['teguran-pertama', 'teguran-kedua','binaan-pertama', 'binaan-kedua','peringatan-pertama', 'peringatan-kedua','peringatan-ketiga']
 let bluePenalty= 'pertama';
@@ -9,8 +9,7 @@ let redPelanggaran = [];
 let bluePelanggaran = [];
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
-const rounds = ['round-1','round-2','round-3'];
-let peringatanPenaltyRed, peringatanPenaltyBlue = false
+const rounds = ["round-1", "round-2", "round-3"];
 const pelanggaranPoint = {
     'pertama':0,
     'binaan-pertama': 0,
@@ -30,29 +29,29 @@ const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-mi
 
 let actionStatus = false;
 const pelanggaranRedElement = {
-    'teguran-pertama': document.getElementById('teguran-merah-pertama'),
-    'teguran-kedua': document.getElementById('teguran-merah-kedua'),
-    'binaan-pertama': document.getElementById('binaan-merah-pertama'),
-    'binaan-kedua': document.getElementById('binaan-merah-kedua'),
-    'peringatan-pertama': document.getElementById('peringatan-merah-pertama'),
-    'peringatan-kedua': document.getElementById('peringatan-merah-kedua'),
-    'peringatan-ketiga': document.getElementById('peringatan-merah-ketiga'),
-}
+    "teguran-pertama": document.getElementById("teguran-merah-pertama"),
+    "teguran-kedua": document.getElementById("teguran-merah-kedua"),
+    "binaan-pertama": document.getElementById("binaan-merah-pertama"),
+    "binaan-kedua": document.getElementById("binaan-merah-kedua"),
+    "peringatan-pertama": document.getElementById("peringatan-merah-pertama"),
+    "peringatan-kedua": document.getElementById("peringatan-merah-kedua"),
+    "peringatan-ketiga": document.getElementById("peringatan-merah-ketiga"),
+};
 const pelanggaranBlueElement = {
-    'teguran-pertama': document.getElementById('teguran-biru-pertama'),
-    'teguran-kedua': document.getElementById('teguran-biru-kedua'),
-    'binaan-pertama': document.getElementById('binaan-biru-pertama'),
-    'binaan-kedua': document.getElementById('binaan-biru-kedua'),
-    'peringatan-pertama': document.getElementById('peringatan-biru-pertama'),
-    'peringatan-kedua': document.getElementById('peringatan-biru-kedua'),
-    'peringatan-ketiga': document.getElementById('peringatan-biru-ketiga'),
-}
+    "teguran-pertama": document.getElementById("teguran-biru-pertama"),
+    "teguran-kedua": document.getElementById("teguran-biru-kedua"),
+    "binaan-pertama": document.getElementById("binaan-biru-pertama"),
+    "binaan-kedua": document.getElementById("binaan-biru-kedua"),
+    "peringatan-pertama": document.getElementById("peringatan-biru-pertama"),
+    "peringatan-kedua": document.getElementById("peringatan-biru-kedua"),
+    "peringatan-ketiga": document.getElementById("peringatan-biru-ketiga"),
+};
 const dataDewan = {
-    blueInput : document.getElementById(`round-1-blueInput`),
-    redInput : document.getElementById(`round-1-redInput`),
-    redScore : document.getElementById('round-1-redScore'),
-    blueScore : document.getElementById('round-1-blueScore')
-}
+    blueInput: document.getElementById(`round-1-blueInput`),
+    redInput: document.getElementById(`round-1-redInput`),
+    redScore: document.getElementById("round-1-redScore"),
+    blueScore: document.getElementById("round-1-blueScore"),
+};
 export function updateRoundDewan(round) {
     dataDewan.blueInput = document.getElementById(`${round}-blueInput`);
     dataDewan.redInput = document.getElementById(`${round}-redInput`);
@@ -60,11 +59,11 @@ export function updateRoundDewan(round) {
     dataDewan.redScore = document.getElementById(`${round}-redScore`);
 }
 export function enabledAction(status = true) {
-    actionStatus = status
-    buttonAction.map(action =>{
-        const button = document.getElementById(action)
+    actionStatus = status;
+    buttonAction.map((action) => {
+        const button = document.getElementById(action);
         button.disabled = !status;
-    })
+    });
 }
 export function handlePenaltyClick(color, penalty) {
     return function () {
@@ -85,19 +84,19 @@ export function handlePenaltyClick(color, penalty) {
         }
         if (color === 'red') {
             redPenalty = penalty;
-        } else if (color === 'blue') {
+        } else if (color === "blue") {
             bluePenalty = penalty;
         }
         changeIndicatorPelanggaran(color, penalty);
-        pushIndicator(color, penalty)
         pushScore();
+        pushIndicator(color, penalty);
     };
 }
-function pushIndicator(color, penalty){
+function pushIndicator(color, penalty) {
     axios.post("/penalty", {
         message: {
-            'color':color,
-            'penalty':penalty
+            color: color,
+            penalty: penalty,
         },
     });
 }
@@ -107,13 +106,16 @@ export function updateDataScore(event) {
     pureScoreBlue = event.blue_score;
 }
 
-export function cekWinner(){
-    const red = parseInt(dataDewan['blueScore'].textContent)
-    const blue = parseInt(dataDewan['redScore'].textContent)
-    if (red > blue){
-        updatePertandingan('merah')
+export function cekWinner() {
+    console.log("tes");
+    const red = parseInt(dataDewan["blueScore"].textContent);
+    const blue = parseInt(dataDewan["redScore"].textContent);
+    if (red > blue) {
+        console.log("masuk");
+        updatePertandingan("merah");
     } else {
-        updatePertandingan('biru')
+        console.log("masuk");
+        updatePertandingan("biru");
     }
 }
 
@@ -186,15 +188,15 @@ export function updateDataIndicator(){
     }
 }
 
-export function saveData(){
+export function saveData() {
     const data = {
-        bluePenalty : bluePenalty,
+        bluePenalty: bluePenalty,
         redPenalty: redPenalty,
-        pureScoreRed : pureScoreRed,
-        pureScoreBlue : pureScoreBlue,
-        actionStatus: actionStatus
-    }
-    rounds.map(round =>{
+        pureScoreRed: pureScoreRed,
+        pureScoreBlue: pureScoreBlue,
+        actionStatus: actionStatus,
+    };
+    rounds.map((round) => {
         data[round] = {
             blueInput : document.getElementById(`${round}-blueInput`).textContent,
             redInput : document.getElementById(`${round}-redInput`).textContent,
@@ -203,9 +205,10 @@ export function saveData(){
         }
     })
     localStorage.setItem('dataDewan', JSON.stringify(data))
+
 }
-export function loadDataSave(){
-    const data = JSON.parse(localStorage.getItem('dataDewan'));
+export function loadDataSave() {
+    const data = JSON.parse(localStorage.getItem("dataDewan"));
     bluePenalty = data.bluePenalty;
     redPenalty = data.redPenalty;
     pureScoreRed = data.pureScoreRed;
@@ -221,76 +224,74 @@ export function loadDataSave(){
     redPenalty !== 'pertama'?changeIndicatorPelanggaran('red',redPenalty):''
 }
 
-
-export function pushScore(droppingRed = 0, droppingBlue = 0){
-    pureScoreRed += droppingRed
-    pureScoreBlue += droppingBlue
+export function pushScore(droppingRed = 0, droppingBlue = 0) {
+    console.log("🚀 ~ pushScore ~ pushScore:");
+    pureScoreRed += droppingRed;
+    pureScoreBlue += droppingBlue;
     axios.post("/score-update", {
         message: {
-            "blueScore":pureScoreBlue,
-            "redScore":pureScoreRed,
-            "redPenalty":pelanggaranMerah,
-            "bluePenalty": pelanggaranBiru,
-            "droppingRed": droppingRed,
-            "droppingBlue": droppingBlue,
+            blueScore: pureScoreBlue,
+            redScore: pureScoreRed,
+            redPenalty: pelanggaranMerah,
+            bluePenalty: pelanggaranBiru,
+            droppingRed: droppingRed,
+            droppingBlue: droppingBlue,
         },
     });
-    saveData()
+    saveData();
 }
 
 export function handleScoreChange(color, scoreChange) {
     return function () {
-        if (color === 'red') {
-            let text =  dataDewan.redInput.innerHTML
+        if (color === "red") {
+            let text = dataDewan.redInput.innerHTML;
             if (!isEmpty(text)) {
                 const values = text.split(",");
-                const formattedValues = values.map(value => {
+                const formattedValues = values.map((value) => {
                     return value;
                 });
-                formattedValues.push(`${scoreChange}`)
-                dataDewan.redInput.innerHTML = formattedValues.join(",")
-            }else {
-                dataDewan.redInput.innerHTML = scoreChange
-            }
-            pushScore(scoreChange, 0);
-        } else if (color === 'blue') {
-            let text = dataDewan.blueInput.innerHTML
-            if (!isEmpty(text)) {
-                const values = text.split(",");
-                const formattedValues = values.map(value => {
-                    return value;
-                });
-                formattedValues.reverse()
-                formattedValues.push(`${scoreChange}`)
-                formattedValues.reverse()
-                dataDewan.blueInput.innerHTML = formattedValues.join(",")
+                formattedValues.push(`${scoreChange}`);
+                dataDewan.redInput.innerHTML = formattedValues.join(",");
             } else {
-                dataDewan.blueInput.innerHTML = scoreChange
+                dataDewan.redInput.innerHTML = scoreChange;
             }
-            pushScore(0 , scoreChange);
+            // pushScore(scoreChange, 0);
+        } else if (color === "blue") {
+            let text = dataDewan.blueInput.innerHTML;
+            if (!isEmpty(text)) {
+                const values = text.split(",");
+                const formattedValues = values.map((value) => {
+                    return value;
+                });
+                formattedValues.reverse();
+                formattedValues.push(`${scoreChange}`);
+                formattedValues.reverse();
+                dataDewan.blueInput.innerHTML = formattedValues.join(",");
+            } else {
+                dataDewan.blueInput.innerHTML = scoreChange;
+            }
+            // pushScore(0, scoreChange);
         }
     };
 }
+
 export function changeIndicatorPelanggaran(corner, penalty) {
-    let nameElemenet = pelanggaranRedElement
-    let dataPelanggaran
-    let color = 'bg-redDefault'
-    if (corner !== 'red'){
-        nameElemenet = pelanggaranBlueElement
-        if (!pelanggaranBiru.includes(penalty)){
-            pelanggaranBiru.push(penalty)
+    if (corner !== "red") {
+        if (!pelanggaranBiru.includes(penalty)) {
+            pelanggaranBiru.push(penalty);
         } else {
-            pelanggaranBiru = pelanggaranBiru.filter(item => item !== penalty)
+            pelanggaranBiru = pelanggaranBiru.filter(
+                (item) => item !== penalty
+            );
         }
-        dataPelanggaran = pelanggaranBiru
-        color = 'bg-blueDark'
     } else {
-        if(!pelanggaranMerah.includes(penalty)){
-            pelanggaranMerah.push(penalty)
+        if (!pelanggaranMerah.includes(penalty)) {
+            pelanggaranMerah.push(penalty);
         } else {
-            pelanggaranMerah = pelanggaranMerah.filter(item => item !== penalty)
+            pelanggaranMerah = pelanggaranMerah.filter(
+                (item) => item !== penalty
+            );
         }
-        dataPelanggaran = pelanggaranMerah
     }
     console.log("🚀 ~ changeIndicatorPelanggaran ~ dataPelanggaran:", dataPelanggaran)
     pelanggaranMerah.sort(compare)
@@ -310,10 +311,19 @@ export function changeIndicatorPelanggaran(corner, penalty) {
             nameElemenet[itemPelanggaran].classList.remove('bg-grayDefault')
             nameElemenet[itemPelanggaran].classList.add(color)
         } else {
-            nameElemenet[itemPelanggaran].classList.add('bg-grayDefault')
-            nameElemenet[itemPelanggaran].classList.remove(color)
+            pelanggaranRedElement[itemPelanggaran].classList.remove(redColor);
+            pelanggaranRedElement[itemPelanggaran].classList.add(grayDefault);
         }
-    })
+        if (isBluePelanggaran) {
+            pelanggaranBlueElement[itemPelanggaran].classList.add(blueColor);
+            pelanggaranBlueElement[itemPelanggaran].classList.remove(
+                grayDefault
+            );
+        } else {
+            pelanggaranBlueElement[itemPelanggaran].classList.remove(blueColor);
+            pelanggaranBlueElement[itemPelanggaran].classList.add(grayDefault);
+        }
+    });
 }
 
 function compare(value1, value2) {
@@ -329,13 +339,15 @@ function compare(value1, value2) {
     }
 }
 
-export function clearIndicator(){
-    const namesElement = [pelanggaranRedElement, pelanggaranBlueElement]
-    namesElement.map(nameElemenet =>{
-        pelanggaran.map(itemPelanggaran =>{
-            nameElemenet[itemPelanggaran].classList.add('bg-grayDefault')
-            nameElemenet[itemPelanggaran].classList.remove('bg-redDefault', 'bg-blueDark')
-        })
-    })
+export function clearIndicator() {
+    const namesElement = [pelanggaranRedElement, pelanggaranBlueElement];
+    namesElement.map((nameElemenet) => {
+        pelanggaran.map((itemPelanggaran) => {
+            nameElemenet[itemPelanggaran].classList.add("bg-grayDefault");
+            nameElemenet[itemPelanggaran].classList.remove(
+                "bg-redDefault",
+                "bg-blueDark"
+            );
+        });
+    });
 }
-

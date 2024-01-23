@@ -3,19 +3,19 @@ import {
     channelOperator,
     channelUpdateScore,
     getDataGelanggang,
-    userData
+    userData,
 } from "./library/ScoreFunc";
 
 require("./bootstrap");
 import {
     cekWinner,
     changeRoundDewan,
-    clearIndicator, enabledAction,
+    clearIndicator,
+    enabledAction,
     handlePenaltyClick,
     handleScoreChange, loadDataSave,
     saveData, updateDataScore, updatePertandingan
 } from './library/DewanFunc'
-import {handleAction, inputPoint, startTimeout} from "./library/JuriFunc";
 const teguranMerahPertama = document.getElementById('teguran-merah-pertama');
 const binaanMerahPertama = document.getElementById('binaan-merah-pertama')
 const peringatanMerahPertama = document.getElementById('peringatan-merah-pertama')
@@ -42,85 +42,119 @@ if (localStorage.getItem('dataDewan')){
     loadDataSave()
 }
 
-channelUpdateScore
-    .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        updateDataScore(event)
-        setTimeout(() => {
-            saveData()
-        }, 200);
-    });
-channelOperator
-    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        updateDataDewan(event)
-
-    });
-
-
-
-// Add event listeners for red penalties
-teguranMerahPertama.addEventListener("click", handlePenaltyClick('red', 'teguran-pertama'));
-teguranMerahKedua.addEventListener("click", handlePenaltyClick('red', 'teguran-kedua'));
-binaanMerahPertama.addEventListener("click", handlePenaltyClick('red', 'binaan-pertama'));
-binaanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'binaan-kedua'));
-peringatanMerahPertama.addEventListener("click", handlePenaltyClick('red', 'peringatan-pertama'));
-peringatanMerahKedua.addEventListener("click", handlePenaltyClick('red', 'peringatan-kedua'));
-peringatanMerahKetiga.addEventListener("click", handlePenaltyClick('red', 'peringatan-ketiga'));
-peringatanMerahKetiga.addEventListener("click", function (){
-    setTimeout(()=>{
-        updatePertandingan("biru")
-    },200)
+channelUpdateScore.listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
+    updateDataScore(event);
+    // console.log("🚀 ~ channelUpdateScore.listen ~ event:", event);
+    setTimeout(() => {
+        saveData();
+    }, 200);
+});
+channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
+    updateDataDewan(event);
 });
 
-teguranBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'teguran-pertama'));
-teguranBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'teguran-kedua'));
-binaanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'binaan-pertama'));
-binaanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'binaan-kedua'));
-peringatanBiruPertama.addEventListener("click", handlePenaltyClick('blue', 'peringatan-pertama'));
-peringatanBiruKedua.addEventListener("click", handlePenaltyClick('blue', 'peringatan-kedua'));
-peringatanBiruKetiga.addEventListener("click", function (){
-    setTimeout(()=>{
-        updatePertandingan("merah")
-    },200)
+teguranMerahPertama.addEventListener(
+    "click",
+    handlePenaltyClick("red", "teguran-pertama")
+);
+teguranMerahKedua.addEventListener(
+    "click",
+    handlePenaltyClick("red", "teguran-kedua")
+);
+binaanMerahPertama.addEventListener(
+    "click",
+    handlePenaltyClick("red", "binaan-pertama")
+);
+binaanMerahKedua.addEventListener(
+    "click",
+    handlePenaltyClick("red", "binaan-kedua")
+);
+peringatanMerahPertama.addEventListener(
+    "click",
+    handlePenaltyClick("red", "peringatan-pertama")
+);
+peringatanMerahKedua.addEventListener(
+    "click",
+    handlePenaltyClick("red", "peringatan-kedua")
+);
+peringatanMerahKetiga.addEventListener(
+    "click",
+    handlePenaltyClick("red", "peringatan-ketiga")
+);
+peringatanMerahKetiga.addEventListener("click", function () {
+    setTimeout(() => {
+        updatePertandingan("biru");
+    }, 200);
 });
 
+teguranBiruPertama.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "teguran-pertama")
+);
+teguranBiruKedua.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "teguran-kedua")
+);
+binaanBiruPertama.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "binaan-pertama")
+);
+binaanBiruKedua.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "binaan-kedua")
+);
+peringatanBiruPertama.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "peringatan-pertama")
+);
+peringatanBiruKedua.addEventListener(
+    "click",
+    handlePenaltyClick("blue", "peringatan-kedua")
+);
+peringatanBiruKetiga.addEventListener("click", function () {
+    setTimeout(() => {
+        updatePertandingan("merah");
+    }, 200);
+});
 
-jatuhanMerahSah.addEventListener("click", handleScoreChange('red', 3));
-jatuhanMerahTidakSah.addEventListener("click", handleScoreChange('red', -3));
+jatuhanMerahSah.addEventListener("click", handleScoreChange("red", 3));
+jatuhanMerahTidakSah.addEventListener("click", handleScoreChange("red", -3));
 
-jatuhanBiruSah.addEventListener("click", handleScoreChange('blue', 3));
-jatuhanBiruTidakSah.addEventListener("click", handleScoreChange('blue', -3));
-diskMerah.addEventListener("click",  disqualification('biru'))
-diskBiru.addEventListener("click",  disqualification('merah'))
+jatuhanBiruSah.addEventListener("click", handleScoreChange("blue", 3));
+jatuhanBiruTidakSah.addEventListener("click", handleScoreChange("blue", -3));
+diskMerah.addEventListener("click", disqualification("biru"));
+diskBiru.addEventListener("click", disqualification("merah"));
 
-function disqualification(corner){
+function disqualification(corner) {
     return function () {
-        updatePertandingan(corner)
-    }
+        updatePertandingan(corner);
+    };
 }
+enabledAction();
 
 function updateDataDewan(e) {
     switch (e.action) {
-        case 'start':
-            saveData()
+        case "start":
+            saveData();
             break;
-        case 'finish':
-            localStorage.clear()
-            cekWinner()
+        case "finish":
+            localStorage.clear();
+            cekWinner();
             break;
-        case 'round':
-            enabledAction(false);
+        case "round":
+            // enabledAction(false);
             clearIndicator();
-            changeRoundDewan(e.activeRound)
+            changeRoundDewan(e.activeRound);
             break;
-        case 'pause':
-            enabledAction(false)
+        case "pause":
+            enabledAction(false);
             break;
-        case 'play':
-            enabledAction()
+        case "play":
+            enabledAction();
             break;
-        case 'reset':
-            localStorage.clear()
-            location.reload()
+        case "reset":
+            localStorage.clear();
+            location.reload();
             break;
     }
 }

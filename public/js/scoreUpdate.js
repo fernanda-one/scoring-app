@@ -2411,50 +2411,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   updateScore: () => (/* binding */ updateScore),
 /* harmony export */   userData: () => (/* binding */ userData)
 /* harmony export */ });
-var namaMerah = document.getElementById('nama_merah');
-var kontingenMerah = document.getElementById('kontingen_merah');
-var namaBiru = document.getElementById('nama_biru');
-var kontingenBiru = document.getElementById('kontingen_biru');
-var babak = document.getElementById('babak');
+var namaMerah = document.getElementById("nama_merah");
+var kontingenMerah = document.getElementById("kontingen_merah");
+var namaBiru = document.getElementById("nama_biru");
+var kontingenBiru = document.getElementById("kontingen_biru");
+var babak = document.getElementById("babak");
 var pureScoreRed = 0;
 var pureScoreBlue = 0;
-var partaiId = '';
-var rounds = ['round-1', 'round-2', 'round-3'];
+var partaiId = "";
+var rounds = ["round-1", "round-2", "round-3"];
 var kelas;
-var redScore = '';
-var blueScore = '';
+var redScore = "";
+var blueScore = "";
 var userElement = document.getElementById("user");
 var userData = JSON.parse(userElement.getAttribute("data-user"));
 var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
 var channelPenalty = Echo.join("presence.penalty.".concat(userData.gelanggang_id));
 var channelOperator = Echo.join("presence.operator.".concat(userData.gelanggang_id));
-var activeRound = document.getElementById('round');
+var activeRound = document.getElementById("round");
 var pelanggaranPoint = {
-  'pertama': 0,
-  'binaan-pertama': 0,
-  'binaan-kedua': 0,
-  'teguran-pertama': 1,
-  'teguran-kedua': 2,
-  'peringatan-pertama': 5,
-  'peringatan-kedua': 10,
-  'peringatan-ketiga': 0
+  pertama: 0,
+  "binaan-pertama": 0,
+  "binaan-kedua": 0,
+  "teguran-pertama": 1,
+  "teguran-kedua": 2,
+  "peringatan-pertama": 5,
+  "peringatan-kedua": 10,
+  "peringatan-ketiga": 0
 };
-var savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
-  namaMerah: 'Sudut Merah',
-  kontingenMerah: 'Kontingen',
-  namaBiru: 'Sudut Biru',
-  kontingenBiru: 'kontingen',
-  babak: 'BABAK',
-  activeRound: 'ROUND'
+var savedGelanggangData = JSON.parse(localStorage.getItem("gelanggangData")) || {
+  namaMerah: "Sudut Merah",
+  kontingenMerah: "Kontingen",
+  namaBiru: "Sudut Biru",
+  kontingenBiru: "kontingen",
+  babak: "BABAK",
+  activeRound: "ROUND"
 };
-var savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
+var savedScoreData = JSON.parse(localStorage.getItem("scoreData")) || {
   redScore: 0,
   blueScore: 0,
-  bluePenalty: 'teguran-pertama',
-  redPenalty: 'teguran-pertama'
+  bluePenalty: "teguran-pertama",
+  redPenalty: "teguran-pertama"
 };
-var redPenalty = '';
-var bluePenalty = '';
+var redPenalty = "";
+var bluePenalty = "";
 function changeScoreElement(newRedScoreElement, newBlueScoreElement) {
   redScore = newRedScoreElement;
   blueScore = newBlueScoreElement;
@@ -2484,8 +2484,8 @@ function updateScore(event, redPenalty, bluePenalty) {
     droppingRed: event.droppingRed,
     droppingBlue: event.droppingBlue
   };
-  localStorage.setItem('scoreData', JSON.stringify(scoreData));
-  if (window.location.pathname !== '/ketua_pertandingan') {
+  localStorage.setItem("scoreData", JSON.stringify(scoreData));
+  if (window.location.pathname !== "/ketua_pertandingan") {
     redScore.textContent = redScoreValue;
     blueScore.textContent = blueScoreValue;
   }
@@ -2509,7 +2509,7 @@ function startPertandingan(e) {
     babak: babak.textContent,
     activeRound: activeRound.textContent
   };
-  localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
+  localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
 }
 function getDataGelanggang() {
   return {
@@ -33512,14 +33512,15 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var round = 'round-1';
+var round = "round-1";
 var blueScore = document.getElementById("".concat(round, "-blueScore"));
 var redScore = document.getElementById("".concat(round, "-redScore"));
 (0,_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.changeScoreElement)(redScore, blueScore);
-if (localStorage.getItem('gelanggangData')) {
+if (localStorage.getItem("gelanggangData")) {
   (0,_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.loadDataSaved)();
 }
 _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.channelUpdateScore.listen(".updateScore.".concat(_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.userData.gelanggang_id), function (event) {
+  console.log("🚀 ~ channelUpdateScore.listen ~ event:", event);
   (0,_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.updateScore)(event);
 });
 _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.channelOperator.listen(".operator.".concat(_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.userData.gelanggang_id), function (event) {
@@ -33527,23 +33528,23 @@ _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.channelOperator.listen(".operato
 });
 function updateDataGelanggang(e) {
   switch (e.action) {
-    case 'start':
+    case "start":
       (0,_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.startPertandingan)(e);
       break;
-    case 'finish':
+    case "finish":
       // localStorage.clear()
       // location.reload();
       break;
-    case 'reset':
+    case "reset":
       localStorage.clear();
       location.reload();
       break;
-    case 'round':
+    case "round":
       changeRound(e);
       break;
-    case 'pause':
+    case "pause":
       break;
-    case 'play':
+    case "play":
       break;
   }
 }
@@ -33558,21 +33559,21 @@ function changeRound(e) {
   gelanggangData.activeRound = round;
   localStorage.setItem("gelanggangData", JSON.stringify(gelanggangData));
   switch (round) {
-    case 'round-1':
-      changeColorRound('round-2', false);
-      changeColorRound('round-3', false);
+    case "round-1":
+      changeColorRound("round-2", false);
+      changeColorRound("round-3", false);
       break;
-    case 'round-2':
-      changeColorRound('round-2', true);
-      changeColorRound('round-3', false);
+    case "round-2":
+      changeColorRound("round-2", true);
+      changeColorRound("round-3", false);
       break;
-    case 'round-3':
-      changeColorRound('round-3', true);
+    case "round-3":
+      changeColorRound("round-3", true);
       break;
   }
 }
 function changeColorRound(round, status) {
-  var elements = ['blueScore-div', 'redScore-div', 'blueInput-div', 'redInput-div'];
+  var elements = ["blueScore-div", "redScore-div", "blueInput-div", "redInput-div"];
   elements.forEach(function (element) {
     var elementId = "".concat(round, "-").concat(element);
     var elementClassList = document.getElementById(elementId).classList;
@@ -33584,10 +33585,10 @@ function changeColorRound(round, status) {
       blueScore.innerText = 0;
       redScore.innerText = 0;
     } else {
-      elementClassList.add('bg-grayDefault');
-      blueScore.innerText = '';
-      redScore.innerText = '';
-      elementClassList.remove(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault', 'shadow-inset-custom');
+      elementClassList.add("bg-grayDefault");
+      blueScore.innerText = "";
+      redScore.innerText = "";
+      elementClassList.remove(element.includes("blue") ? "bg-blueDefault" : "bg-redDefault", "shadow-inset-custom");
     }
   });
 }
