@@ -2,8 +2,11 @@ import {isEmpty} from "lodash";
 import {activeRound, getDataGelanggang} from "./ScoreFunc";
 
 const pelanggaran = ['teguran-pertama', 'teguran-kedua','binaan-pertama', 'binaan-kedua','peringatan-pertama', 'peringatan-kedua','peringatan-ketiga']
-let bluePenalty='pertama'
+let bluePenalty= 'pertama';
+const peringatan = ['peringatan-pertama', 'peringatan-kedua','peringatan-ketiga']
 let redPenalty = 'pertama';
+let redPelanggaran = [];
+let bluePelanggaran = [];
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
 const rounds = ['round-1','round-2','round-3'];
@@ -18,8 +21,8 @@ const pelanggaranPoint = {
     'peringatan-kedua': 10,
     'peringatan-ketiga': 0,
 }
-let pelanggaranBiru = []
-let pelanggaranMerah = []
+let pelanggaranBiru = ['pertama']
+let pelanggaranMerah = ['pertama']
 const buttonAction = ['jatuhan-biru-minus','jatuhan-biru-plus','jatuhan-merah-minus',
     'jatuhan-merah-plus','peringatan-biru-ketiga','peringatan-biru-kedua','binaan-biru-kedua','teguran-biru-kedua',
     'peringatan-biru-pertama','binaan-biru-pertama','teguran-biru-pertama','peringatan-merah-ketiga','peringatan-merah-kedua','binaan-merah-kedua',
@@ -65,6 +68,21 @@ export function enabledAction(status = true) {
 }
 export function handlePenaltyClick(color, penalty) {
     return function () {
+        if(peringatan.includes(penalty)){
+            if (color === 'red') {
+                if (redPelanggaran.includes(penalty)){
+                    redPelanggaran = redPelanggaran.filter(pelanggaran => pelanggaran != penalty)
+                } else{
+                    redPelanggaran.push(penalty);
+                }
+            } else if (color === 'blue') {
+                if (bluePelanggaran.includes(penalty)){
+                    bluePelanggaran = bluePelanggaran.filter(pelanggaran => pelanggaran != penalty)
+                } else{
+                    bluePelanggaran.push(penalty);
+                }
+            }
+        }
         if (color === 'red') {
             redPenalty = penalty;
         } else if (color === 'blue') {
@@ -100,41 +118,70 @@ export function cekWinner(){
 }
 
 export function updatePertandingan(winner){
-    const dataPartai = getDataGelanggang()
-    localStorage.clear()
-    axios.post("/operator-update", {
-        message: {
-            'blueName':dataPartai.namaBiru,
-            'redName':dataPartai.namaMerah,
-            'blueContingent':dataPartai.kontingenMerah,
-            'redContingent':dataPartai.kontingenBiru,
-            'babak':dataPartai.babak,
-            'time':0,
-            'activeRound':activeRound.textContent,
-            'action': winner
-        },
-    });
+    // const dataPartai = getDataGelanggang()
+    // localStorage.clear()
+    // axios.post("/operator-update", {
+    //     message: {
+    //         'blueName':dataPartai.namaBiru,
+    //         'redName':dataPartai.namaMerah,
+    //         'blueContingent':dataPartai.kontingenMerah,
+    //         'redContingent':dataPartai.kontingenBiru,
+    //         'babak':dataPartai.babak,
+    //         'time':0,
+    //         'activeRound':activeRound.textContent,
+    //         'action': winner
+    //     },
+    // });
 }
 export function changeRoundDewan(round){
     updateRoundDewan(round)
+    console.log("🚀 ~ changeRoundDewan ~ round:", round)
     updateDataIndicator()
     pushScore()
 }
 
 export function updateDataIndicator(){
-    if(!peringatanPenaltyRed){
-        pureScoreRed -= pelanggaranPoint[redPenalty]
+    if(redPelanggaran.length > 0){
+        console.log("🚀 ~ updateDataIndicator ~ redPelanggaran.length:", redPelanggaran)
+        redPelanggaran.map(pelanggaran => {
+            // pureScoreRed -= pelanggaranPoint[pelanggaran]
+            pelanggaranMerah = pelanggaranMerah.filter( oldPelanggaran => oldPelanggaran !== pelanggaran)  
+        })
+        pelanggaranMerah.map(pelanggaran => {
+            pureScoreRed -= pelanggaranPoint[pelanggaran]
+        })
+        pelanggaranMerah = redPelanggaran
         redPenalty = 'pertama';
+        changeIndicatorPelanggaran('red', redPenalty)
     } else {
-        pelanggaranMerah = ['pertama']
+        pelanggaranMerah.map(pelanggaran => {
+            pureScoreRed -= pelanggaranPoint[pelanggaran]
+        })
+        pelanggaranMerah = []
+        console.log("🚀 ~ updateDataIndicator ~ pelanggaranMerah:", pelanggaranMerah)
+        redPenalty = 'pertama';
         changeIndicatorPelanggaran('red', redPenalty)
     }
 
-    if(!peringatanPenaltyBlue){
-        pureScoreBlue -= pelanggaranPoint[bluePenalty]
+    if(bluePelanggaran.length > 0){
+        console.log("🚀 ~ updateDataIndicator ~ bluePelanggaran.length:", bluePelanggaran)
+        bluePelanggaran.map(pelanggaran => {
+            // pureScoreBlue -= pelanggaranPoint[pelanggaran]
+            pelanggaranBiru = pelanggaranBiru.filter(oldPelanggaran => oldPelanggaran !== pelanggaran)  
+        })
+        pelanggaranBiru.map(pelanggaran => {
+            pureScoreBlue -= pelanggaranPoint[pelanggaran]
+        })
+        pelanggaranBiru = bluePelanggaran
         bluePenalty='pertama'
+        changeIndicatorPelanggaran('blue', bluePenalty)
     } else {
-        pelanggaranBiru = ['pertama']
+        pelanggaranBiru.map(pelanggaran => {
+            pureScoreBlue -= pelanggaranPoint[pelanggaran]
+        })
+        pelanggaranBiru = []
+        console.log("🚀 ~ updateDataIndicator ~ pelanggaranBiru:", pelanggaranBiru)
+        bluePenalty = 'pertama'
         changeIndicatorPelanggaran('blue', bluePenalty)
     }
 }
@@ -155,7 +202,6 @@ export function saveData(){
             blueScore : document.getElementById(`${round}-blueScore`).textContent
         }
     })
-    console.log(data)
     localStorage.setItem('dataDewan', JSON.stringify(data))
 }
 export function loadDataSave(){
@@ -164,7 +210,6 @@ export function loadDataSave(){
     redPenalty = data.redPenalty;
     pureScoreRed = data.pureScoreRed;
     pureScoreBlue = data.pureScoreBlue;
-    console.log(data)
     rounds.map(round =>{
         document.getElementById(`${round}-blueInput`).textContent = data[round].blueInput
         document.getElementById(`${round}-redInput`).textContent = data[round].redInput
@@ -247,6 +292,7 @@ export function changeIndicatorPelanggaran(corner, penalty) {
         }
         dataPelanggaran = pelanggaranMerah
     }
+    console.log("🚀 ~ changeIndicatorPelanggaran ~ dataPelanggaran:", dataPelanggaran)
     pelanggaranMerah.sort(compare)
     pelanggaranBiru.sort(compare)
     const pelanggaranMerahValue = pelanggaranMerah[pelanggaranMerah.length - 1]
@@ -269,7 +315,6 @@ export function changeIndicatorPelanggaran(corner, penalty) {
         }
     })
 }
-
 
 function compare(value1, value2) {
     const index1 = pelanggaran.indexOf(value1);

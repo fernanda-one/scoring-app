@@ -2097,6 +2097,448 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 /***/ }),
 
+/***/ "./resources/js/library/JuriFunc.js":
+/*!******************************************!*\
+  !*** ./resources/js/library/JuriFunc.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cancelTimeout: () => (/* binding */ cancelTimeout),
+/* harmony export */   changeRoundJuri: () => (/* binding */ changeRoundJuri),
+/* harmony export */   enabledAction: () => (/* binding */ enabledAction),
+/* harmony export */   getId: () => (/* binding */ getId),
+/* harmony export */   handleAction: () => (/* binding */ handleAction),
+/* harmony export */   indicatorUpdate: () => (/* binding */ indicatorUpdate),
+/* harmony export */   inputPoint: () => (/* binding */ inputPoint),
+/* harmony export */   loadDataSaveJuri: () => (/* binding */ loadDataSaveJuri),
+/* harmony export */   saveDataJuri: () => (/* binding */ saveDataJuri),
+/* harmony export */   startTimeout: () => (/* binding */ startTimeout),
+/* harmony export */   startTimeoutIndicator: () => (/* binding */ startTimeoutIndicator),
+/* harmony export */   timeouts: () => (/* binding */ timeouts),
+/* harmony export */   updateDataScore: () => (/* binding */ updateDataScore),
+/* harmony export */   updateRoundJuri: () => (/* binding */ updateRoundJuri),
+/* harmony export */   updateScore: () => (/* binding */ updateScore)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_lang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/lang */ "./node_modules/lodash/lang.js");
+/* harmony import */ var lodash_lang__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_lang__WEBPACK_IMPORTED_MODULE_1__);
+var _JSON$parse;
+
+
+var rounds = ['round-1', 'round-2', 'round-3'];
+var pureScoreRed = 0;
+var pureScoreBlue = 0;
+var bluePenalty = ['pertama'];
+var buttonAction = ['pukul-biru', 'tendang-biru', 'pukul-merah', 'tendang-merah'];
+var redPenalty = ['pertama'];
+var roundGelanggang = ((_JSON$parse = JSON.parse(localStorage.getItem("gelanggangData"))) === null || _JSON$parse === void 0 || (_JSON$parse = _JSON$parse.activeRound) === null || _JSON$parse === void 0 ? void 0 : _JSON$parse.toLowerCase()) || 'ROUND';
+var dataJuri = {
+  blueScore: document.getElementById("round-1-blueScore"),
+  redScore: document.getElementById("round-1-redScore"),
+  blueInput: document.getElementById("round-1-blueInput"),
+  redInput: document.getElementById("round-1-redInput")
+};
+var actionStatus = false;
+function updateRoundJuri(round) {
+  dataJuri.blueScore = document.getElementById("".concat(round, "-blueScore"));
+  dataJuri.redScore = document.getElementById("".concat(round, "-redScore"));
+  dataJuri.blueInput = document.getElementById("".concat(round, "-blueInput"));
+  dataJuri.redInput = document.getElementById("".concat(round, "-redInput"));
+  roundGelanggang = round;
+}
+var timeouts = {
+  pukulanred: [],
+  pukulanblue: [],
+  tendanganblue: [],
+  tendanganred: [],
+  juripertamapukulanred: [],
+  jurikeduapukulanred: [],
+  juriketigapukulanred: [],
+  juripertamapukulanblue: [],
+  jurikeduapukulanblue: [],
+  juriketigapukulanblue: [],
+  juripertamatendanganred: [],
+  jurikeduatendanganred: [],
+  juriketigatendanganred: [],
+  juripertamatendanganblue: [],
+  jurikeduatendanganblue: [],
+  juriketigatendanganblue: []
+};
+function getId(id) {
+  return id.toLowerCase().replace(/ /g, '-');
+}
+function indicatorUpdate(id, sudut) {
+  console.log(id);
+  var indicator = document.getElementById(id);
+  if (sudut === 'blue') {
+    indicator.classList.toggle('bg-blueDefault');
+    indicator.classList.toggle('bg-grayDefault');
+  } else {
+    indicator.classList.toggle('bg-redDefault');
+    indicator.classList.toggle('bg-grayDefault');
+  }
+}
+function startTimeoutIndicator(element, sudut) {
+  var name = element.replace(/-/g, '');
+  timeouts["".concat(name)] = setTimeout(function () {
+    indicatorUpdate(element, sudut);
+  }, 2000);
+}
+function startTimeout(element, params, posisi) {
+  var sudut = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'red';
+  timeouts["".concat(params)] = setTimeout(function () {
+    strikeoutLastValue(element, posisi, sudut);
+  }, 2000);
+}
+function cancelTimeout(params) {
+  params = params.toLowerCase();
+  clearTimeout(timeouts["".concat(params)]);
+}
+function inputPoint(element, point) {
+  var sudut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'red';
+  element = dataJuri["".concat(element)];
+  var text = element.innerHTML;
+  var values = text.split(",");
+  if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(text)) {
+    var formattedValues = values.map(function (value) {
+      if (!value.includes("<s>")) {
+        return "".concat(value.trim());
+      } else {
+        return value;
+      }
+    });
+    if (sudut === 'blue') {
+      formattedValues.reverse();
+      formattedValues.push("".concat(point));
+      formattedValues.reverse();
+    } else {
+      formattedValues.push("".concat(point));
+    }
+    var joinValues = formattedValues.join(",");
+    element.innerHTML = joinValues;
+    var scorePiece = joinValues;
+    pushKetuaPertandingan(sudut, scorePiece);
+    saveDataJuri();
+    return values.length;
+  } else {
+    element.innerHTML = point;
+    pushKetuaPertandingan(sudut, point);
+    saveDataJuri();
+  }
+}
+function changeRoundJuri(roundActive) {
+  roundGelanggang = roundActive;
+}
+function strikeoutLastValue(element, posisi, sudut) {
+  element = dataJuri["".concat(element)];
+  var text = element.innerHTML;
+  if (text !== "") {
+    var values = text.split(",");
+    if (sudut === 'blue') {
+      values = values.reverse();
+    }
+    var valuePosisi = values.splice(posisi, 1)[0];
+    values.splice(posisi, 0, "<s>".concat(valuePosisi.trim(), "</s>"));
+    if (sudut === 'blue') {
+      values = values.reverse();
+    }
+    var formattedValues = values.map(function (value) {
+      if (!value.includes("<s>")) {
+        return "".concat(value.trim());
+      } else {
+        return value;
+      }
+    });
+    var scorePiece = formattedValues.join(",");
+    element.innerHTML = scorePiece;
+    pushKetuaPertandingan(sudut, scorePiece);
+    saveDataJuri();
+  }
+  saveDataJuri();
+}
+function handleAction(event, color, action) {
+  event.preventDefault();
+  pushMessage(color, action);
+}
+function pushMessage(sudut, gerakan) {
+  var blueScore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var redScore = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  axios.post("/score-event", {
+    message: {
+      "gerakan": gerakan,
+      "sudut": sudut,
+      "blueScore": blueScore,
+      "redScore": redScore,
+      "time": Date.now()
+    }
+  });
+}
+function pushKetuaPertandingan(sudut, scorePiece) {
+  axios.post("/ketua-pertandingan-update", {
+    message: {
+      "sudut": sudut,
+      "scorePiece": scorePiece
+    }
+  });
+}
+function saveDataJuri() {
+  var data = {
+    bluePenalty: bluePenalty,
+    redPenalty: redPenalty,
+    pureScoreRed: pureScoreRed,
+    pureScoreBlue: pureScoreBlue,
+    actionStatus: actionStatus
+  };
+  rounds.map(function (round) {
+    data[round] = {
+      blueInput: document.getElementById("".concat(round, "-blueInput")).innerHTML,
+      redInput: document.getElementById("".concat(round, "-redInput")).innerHTML,
+      redScore: document.getElementById("".concat(round, "-redScore")).textContent,
+      blueScore: document.getElementById("".concat(round, "-blueScore")).textContent
+    };
+  });
+  localStorage.setItem('dataJuriScoring', JSON.stringify(data));
+}
+function loadDataSaveJuri() {
+  var data = JSON.parse(localStorage.getItem('dataJuriScoring'));
+  bluePenalty = data.bluePenalty;
+  redPenalty = data.redPenalty;
+  pureScoreRed = data.pureScoreRed;
+  pureScoreBlue = data.pureScoreBlue;
+  console.log(data);
+  rounds.map(function (round) {
+    document.getElementById("".concat(round, "-blueInput")).innerHTML = data[round].blueInput;
+    document.getElementById("".concat(round, "-redInput")).innerHTML = data[round].redInput;
+    document.getElementById("".concat(round, "-redScore")).textContent = data[round].redScore;
+    document.getElementById("".concat(round, "-blueScore")).textContent = data[round].blueScore;
+  });
+}
+function updateDataScore(event) {
+  pureScoreRed = event.red_score;
+  pureScoreBlue = event.blue_score;
+  redPenalty = event.red_penalty;
+  bluePenalty = event.blue_penalty;
+}
+function updateScore(event) {
+  console.log(event);
+  var gerakan = event.gerakan;
+  var sudut = event.sudut;
+  var id = event.id;
+  var name = sudut + gerakan;
+  var sudutPointTime = name + 'time';
+  var exp = event.expired;
+  var score = {
+    'redScore': 0,
+    'blueScore': 0
+  };
+  var sudutScore = event.sudut + 'Score';
+  var elementName = getId(id + ' ' + gerakan + ' ' + sudut);
+  indicatorUpdate(elementName, sudut);
+  startTimeoutIndicator(elementName, sudut);
+  if (localStorage.getItem(sudutPointTime) && localStorage.getItem(name)) {
+    var time = localStorage.getItem(sudutPointTime);
+    if (exp - time <= 2000 && localStorage.getItem(name) !== id) {
+      if (gerakan === 'tendangan') {
+        score["".concat(sudutScore)] += 2;
+      } else {
+        score["".concat(sudutScore)] += 1;
+      }
+      localStorage.removeItem(sudutPointTime);
+      localStorage.removeItem(name);
+      cancelTimeout(gerakan + sudut);
+      pureScoreRed += score['redScore'];
+      pureScoreBlue += score['blueScore'];
+      pushScore();
+      return score;
+    }
+    localStorage.removeItem(sudutPointTime);
+    localStorage.removeItem(name);
+  }
+  localStorage.setItem(sudutPointTime, exp);
+  localStorage.setItem(name, id);
+  return score;
+}
+function pushScore() {
+  saveDataJuri();
+  axios.post("/score-update", {
+    message: {
+      "redPenalty": redPenalty,
+      "bluePenalty": bluePenalty,
+      "blueScore": pureScoreBlue,
+      "redScore": pureScoreRed,
+      "droppingRed": 0,
+      "droppingBlue": 0
+    }
+  });
+}
+function enabledAction() {
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  actionStatus = status;
+  buttonAction.map(function (action) {
+    var button = document.getElementById(action);
+    button.disabled = !status;
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/library/ScoreFunc.js":
+/*!*******************************************!*\
+  !*** ./resources/js/library/ScoreFunc.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   activeRound: () => (/* binding */ activeRound),
+/* harmony export */   bluePenalty: () => (/* binding */ bluePenalty),
+/* harmony export */   changeScoreElement: () => (/* binding */ changeScoreElement),
+/* harmony export */   channelOperator: () => (/* binding */ channelOperator),
+/* harmony export */   channelPenalty: () => (/* binding */ channelPenalty),
+/* harmony export */   channelUpdateScore: () => (/* binding */ channelUpdateScore),
+/* harmony export */   getDataGelanggang: () => (/* binding */ getDataGelanggang),
+/* harmony export */   kelas: () => (/* binding */ kelas),
+/* harmony export */   loadDataSaved: () => (/* binding */ loadDataSaved),
+/* harmony export */   partaiId: () => (/* binding */ partaiId),
+/* harmony export */   redPenalty: () => (/* binding */ redPenalty),
+/* harmony export */   savedGelanggangData: () => (/* binding */ savedGelanggangData),
+/* harmony export */   startPertandingan: () => (/* binding */ startPertandingan),
+/* harmony export */   updateScore: () => (/* binding */ updateScore),
+/* harmony export */   userData: () => (/* binding */ userData)
+/* harmony export */ });
+var namaMerah = document.getElementById('nama_merah');
+var kontingenMerah = document.getElementById('kontingen_merah');
+var namaBiru = document.getElementById('nama_biru');
+var kontingenBiru = document.getElementById('kontingen_biru');
+var babak = document.getElementById('babak');
+var pureScoreRed = 0;
+var pureScoreBlue = 0;
+var partaiId = '';
+var rounds = ['round-1', 'round-2', 'round-3'];
+var kelas;
+var redScore = '';
+var blueScore = '';
+var userElement = document.getElementById("user");
+var userData = JSON.parse(userElement.getAttribute("data-user"));
+var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
+var channelPenalty = Echo.join("presence.penalty.".concat(userData.gelanggang_id));
+var channelOperator = Echo.join("presence.operator.".concat(userData.gelanggang_id));
+var activeRound = document.getElementById('round');
+var pelanggaranPoint = {
+  'pertama': 0,
+  'binaan-pertama': 0,
+  'binaan-kedua': 0,
+  'teguran-pertama': 1,
+  'teguran-kedua': 2,
+  'peringatan-pertama': 5,
+  'peringatan-kedua': 10,
+  'peringatan-ketiga': 0
+};
+var savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
+  namaMerah: 'Sudut Merah',
+  kontingenMerah: 'Kontingen',
+  namaBiru: 'Sudut Biru',
+  kontingenBiru: 'kontingen',
+  babak: 'BABAK',
+  activeRound: 'ROUND'
+};
+var savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
+  redScore: 0,
+  blueScore: 0,
+  bluePenalty: 'teguran-pertama',
+  redPenalty: 'teguran-pertama'
+};
+var redPenalty = '';
+var bluePenalty = '';
+function changeScoreElement(newRedScoreElement, newBlueScoreElement) {
+  redScore = newRedScoreElement;
+  blueScore = newBlueScoreElement;
+}
+function updateScore(event, redPenalty, bluePenalty) {
+  redPenalty = event.red_penalty;
+  bluePenalty = event.blue_penalty;
+  pureScoreRed = event.red_score;
+  pureScoreBlue = event.blue_score;
+  var pointPelanggaranSudutMerah = 0;
+  var pointPelanggaranSudutBiru = 0;
+  redPenalty.map(function (penalty) {
+    pointPelanggaranSudutMerah += pelanggaranPoint[penalty];
+  });
+  bluePenalty.map(function (penalty) {
+    pointPelanggaranSudutBiru += pelanggaranPoint[penalty];
+  });
+  var redScoreValue = pureScoreRed - pointPelanggaranSudutMerah;
+  var blueScoreValue = pureScoreBlue - pointPelanggaranSudutBiru;
+  var scoreData = {
+    redScore: redScoreValue,
+    blueScore: blueScoreValue,
+    pureScoreRed: pureScoreRed,
+    pureScoreBlue: pureScoreBlue,
+    redPenalty: event.red_penalty,
+    bluePenalty: event.blue_penalty,
+    droppingRed: event.droppingRed,
+    droppingBlue: event.droppingBlue
+  };
+  localStorage.setItem('scoreData', JSON.stringify(scoreData));
+  if (window.location.pathname !== '/ketua_pertandingan') {
+    redScore.textContent = redScoreValue;
+    blueScore.textContent = blueScoreValue;
+  }
+}
+function startPertandingan(e) {
+  partaiId = e.id;
+  kelas = e.kelas;
+  namaMerah.textContent = e.redName;
+  kontingenMerah.textContent = e.redContingent;
+  namaBiru.textContent = e.blueName;
+  kontingenBiru.textContent = e.blueContingent;
+  babak.textContent = e.babak.toUpperCase();
+  activeRound.textContent = e.activeRound.toUpperCase();
+  var gelanggangData = {
+    partaiId: e.id,
+    kelas: e.kelas,
+    namaMerah: namaMerah.textContent,
+    kontingenMerah: kontingenMerah.textContent,
+    namaBiru: namaBiru.textContent,
+    kontingenBiru: kontingenBiru.textContent,
+    babak: babak.textContent,
+    activeRound: activeRound.textContent
+  };
+  localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
+}
+function getDataGelanggang() {
+  return {
+    namaMerah: namaMerah.textContent,
+    kontingenMerah: kontingenMerah.textContent,
+    namaBiru: namaBiru.textContent,
+    kontingenBiru: kontingenBiru.textContent,
+    babak: babak.textContent,
+    activeRound: activeRound.textContent
+  };
+}
+function loadDataSaved() {
+  partaiId = savedGelanggangData.partaiId;
+  kelas = savedGelanggangData.kelas;
+  namaMerah.textContent = savedGelanggangData.namaMerah;
+  kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
+  namaBiru.textContent = savedGelanggangData.namaBiru;
+  kontingenBiru.textContent = savedGelanggangData.kontingenBiru;
+  babak.textContent = savedGelanggangData.babak;
+  activeRound.textContent = savedGelanggangData.activeRound;
+  redPenalty = savedScoreData.redPenalty;
+  bluePenalty = savedScoreData.bluePenalty;
+  redScore.textContent = savedScoreData.redScore;
+  blueScore.textContent = savedScoreData.blueScore;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/laravel-echo/dist/echo.js":
 /*!************************************************!*\
   !*** ./node_modules/laravel-echo/dist/echo.js ***!
@@ -32995,6 +33437,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -33046,217 +33500,100 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!*************************************!*\
   !*** ./resources/js/scoringJuri.js ***!
   \*************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/ScoreFunc */ "./resources/js/library/ScoreFunc.js");
+/* harmony import */ var _library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/JuriFunc */ "./resources/js/library/JuriFunc.js");
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-var _require = __webpack_require__(/*! lodash/lang */ "./node_modules/lodash/lang.js"),
-  toInteger = _require.toInteger;
-var _require2 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-  isEmpty = _require2.isEmpty;
-localStorage.clear();
-var roundNow = 'ROUND 1';
-var round = roundNow.toLowerCase().replace(/ /g, '');
+
+var userElement = document.getElementById("user");
+var userData = JSON.parse(userElement.getAttribute("data-user"));
+var header = document.getElementById("header");
+var visibleHeader = document.getElementById("visible-header");
+var firstLinePointGroup = document.getElementById("first-line-point-group");
 var pukulanBiru = document.getElementById("pukul-biru");
 var pukulanMerah = document.getElementById("pukul-merah");
 var tendanganBiru = document.getElementById("tendang-biru");
 var tendanganMerah = document.getElementById("tendang-merah");
-var userElement = document.getElementById("user");
-var userData = userElement.getAttribute("data-user");
-var blueScore = document.getElementById("".concat(round, "-blueScore"));
-var redScore = document.getElementById("".concat(round, "-redScore"));
-var blueInput = document.getElementById("".concat(round, "-blueInput"));
-var redInput = document.getElementById("".concat(round, "-redInput"));
-var roundView = document.getElementById("round");
-var redPenalty,
-  bluePenalty = 0;
-roundView.textContent = roundNow;
-var timeouts = {
-  pukulanred: [],
-  pukulanblue: [],
-  tendanganblue: [],
-  tendanganred: [],
-  juripertamapukulanred: [],
-  jurikeduapukulanred: [],
-  juriketigapukulanred: [],
-  juripertamapukulanblue: [],
-  jurikeduapukulanblue: [],
-  juriketigapukulanblue: [],
-  juripertamatendanganred: [],
-  jurikeduatendanganred: [],
-  juriketigatendanganred: [],
-  juripertamatendanganblue: [],
-  jurikeduatendanganblue: [],
-  juriketigatendanganblue: []
-};
-var kondisiTertentuTerpenuhi;
-var channelGelanggang = Echo.join("presence.juri.".concat(userData));
-channelGelanggang.here(function (users) {
-  console.log(users);
-  console.log("anda telah terhubung sebagai juri");
-}).joining(function (user) {
-  console.log({
-    user: user
-  }, "joined");
-}).leaving(function (user) {
-  console.log({
-    user: user
-  }, "leaved");
-}).listen(".juri.".concat(userData), function (event) {
-  updateScore(event);
+var channelGelanggang = Echo.join("presence.juri.".concat(userData.gelanggang_id));
+// localStorage.clear()\
+(0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
+if (localStorage.getItem('dataJuriScoring')) {
+  console.log(JSON.parse(localStorage.getItem('dataJuriScoring')));
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.loadDataSaveJuri)();
+}
+_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelOperator.listen(".operator.".concat(userData.gelanggang_id), function (event) {
+  updateDataJuri(event);
+});
+_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelUpdateScore.listen(".updateScore.".concat(userData.gelanggang_id), function (event) {
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateDataScore)(event);
+  setTimeout(function () {
+    (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.saveDataJuri)();
+  }, 200);
+});
+channelGelanggang.listen(".juri.".concat(userData.gelanggang_id), function (event) {
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateScore)(event);
+});
+visibleHeader.addEventListener("click", function () {
+  if (header.classList.contains("hidden")) {
+    visibleHeader.textContent = "Tutup";
+    header.classList.remove("hidden");
+    header.classList.add("flex");
+    firstLinePointGroup.classList.remove("mt-[0%]");
+    firstLinePointGroup.classList.add("mt-[5%]");
+  } else {
+    visibleHeader.textContent = "Lihat";
+    header.classList.add("hidden");
+    header.classList.remove("flex");
+    firstLinePointGroup.classList.remove("mt-[5%]");
+    firstLinePointGroup.classList.add("mt-[0%]");
+  }
 });
 pukulanBiru.addEventListener("click", function (event) {
-  inputPoint(blueInput, 1);
-  startTimeout(blueInput, 'pukulanblue');
-  handleAction(event, 'blue', 'pukulan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('blueInput', 'pukulanblue', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('blueInput', 1, 'blue'), 'blue');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'blue', 'pukulan');
 });
 pukulanMerah.addEventListener("click", function (event) {
-  inputPoint(redInput, 1);
-  startTimeout(redInput, 'pukulanred');
-  handleAction(event, 'red', 'pukulan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('redInput', 'pukulanred', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('redInput', 1));
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'red', 'pukulan');
 });
 tendanganMerah.addEventListener("click", function (event) {
-  inputPoint(redInput, 2);
-  startTimeout(redInput, 'tendanganred');
-  handleAction(event, 'red', 'tendangan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('redInput', 'tendanganred', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('redInput', 2));
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'red', 'tendangan');
 });
 tendanganBiru.addEventListener("click", function (event) {
-  inputPoint(blueInput, 2);
-  startTimeout(blueInput, 'tendanganblue');
-  handleAction(event, 'blue', 'tendangan');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.startTimeout)('blueInput', 'tendanganblue', (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.inputPoint)('blueInput', 2, 'blue'), 'blue');
+  (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.handleAction)(event, 'blue', 'tendangan');
 });
-function pushMessage(sudut, gerakan) {
-  var blueScore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  var redScore = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-  axios.post("/score-event", {
-    message: {
-      "gerakan": gerakan,
-      "sudut": sudut,
-      "blueScore": blueScore,
-      "redScore": redScore,
-      "time": Date.now()
-    }
-  });
-}
-function inputPoint(element, point) {
-  var text = element.innerHTML;
-  var values = text.split(",");
-  if (!isEmpty(text)) {
-    var formattedValues = values.map(function (value) {
-      if (!value.includes("<s>")) {
-        return "".concat(value.trim());
-      } else {
-        return value;
-      }
-    });
-    formattedValues.push("".concat(point));
-    element.innerHTML = formattedValues.join(",");
-  } else {
-    element.innerHTML = point;
+function updateDataJuri(e) {
+  switch (e.action) {
+    case 'start':
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateRoundJuri)(e.activeRound);
+      break;
+    case 'finish':
+      break;
+    case 'round':
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.changeRoundJuri)(e.activeRound);
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.updateRoundJuri)(e.activeRound);
+      break;
+    case 'pause':
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
+      break;
+    case 'play':
+      (0,_library_JuriFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)();
+      break;
+    case 'reset':
+      localStorage.clear();
+      location.reload();
+      break;
   }
-}
-function handleAction(event, color, action) {
-  event.preventDefault();
-  pushMessage(color, action, toInteger(blueScore.textContent), toInteger(redScore.textContent));
-}
-function pushScore(blueScore, redScore) {
-  axios.post("/score-update", {
-    message: {
-      "blueScore": blueScore,
-      "redScore": redScore,
-      "redPenalty": redPenalty,
-      "bluePenalty": bluePenalty
-    }
-  });
-}
-function updateScore(event) {
-  var gerakan = event.gerakan;
-  var sudut = event.sudut;
-  var id = event.id;
-  var pointBiru = event.blue_score;
-  var pointMerah = event.red_score;
-  var name = sudut + gerakan;
-  var sudutPointTime = name + 'time';
-  var exp = event.expired;
-  redPenalty = event.redPenalty;
-  bluePenalty = event.bluePenalty;
-  var score = {
-    'redScore': pointMerah,
-    'blueScore': pointBiru
-  };
-  var sudutScore = event.sudut + 'Score';
-  var elementName = getId(id + ' ' + gerakan + ' ' + sudut);
-  indicatorUpdate(elementName, sudut);
-  startTimeoutIndicator(elementName, sudut);
-  if (localStorage.getItem(sudutPointTime) && localStorage.getItem(name)) {
-    var time = localStorage.getItem(sudutPointTime);
-    if (exp - time <= 2000 && localStorage.getItem(name) !== id) {
-      if (gerakan === 'tendangan') {
-        score["".concat(sudutScore)] += 2;
-      } else {
-        score["".concat(sudutScore)] += 1;
-      }
-      localStorage.removeItem(sudutPointTime);
-      localStorage.removeItem(name);
-      cancelTimeout(gerakan + sudut);
-      console.log('masukmasuk');
-      pushScore(score['blueScore'], score['redScore']);
-      return score;
-    }
-    console.log('masukkeluar');
-    localStorage.removeItem(sudutPointTime);
-    localStorage.removeItem(name);
-  }
-  localStorage.setItem(sudutPointTime, exp);
-  localStorage.setItem(name, id);
-  console.log('keluar');
-  return score;
-}
-function indicatorUpdate(id, sudut) {
-  var indicator = document.getElementById(id);
-  if (sudut === 'blue') {
-    indicator.classList.toggle('bg-blueDefault');
-    indicator.classList.toggle('bg-grayDefault');
-  } else {
-    indicator.classList.toggle('bg-redDefault');
-    indicator.classList.toggle('bg-grayDefault');
-  }
-}
-function getId(id) {
-  return id.toLowerCase().replace(/ /g, '-');
-}
-function strikeoutLastValue(element) {
-  var text = element.innerHTML;
-  if (text !== "") {
-    var values = text.split(",");
-    var lastValues = values.pop();
-    var formattedValues = values.map(function (value) {
-      if (!value.includes("<s>")) {
-        return "".concat(value.trim());
-      } else {
-        return value;
-      }
-    });
-    formattedValues.push("<s>".concat(lastValues.trim(), "</s>"));
-    element.innerHTML = formattedValues.join(",");
-  }
-}
-function startTimeout(element, params) {
-  timeouts["".concat(params)] = setTimeout(function () {
-    strikeoutLastValue(element);
-  }, 2000);
-}
-function startTimeoutIndicator(element, sudut) {
-  var name = element.replace(/-/g, '');
-  timeouts["".concat(name)] = setTimeout(function () {
-    indicatorUpdate(element, sudut);
-  }, 2000);
-}
-function cancelTimeout(params) {
-  params = params.toLowerCase();
-  clearTimeout(timeouts["".concat(params)]);
 }
 })();
 

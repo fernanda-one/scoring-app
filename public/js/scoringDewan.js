@@ -2097,6 +2097,817 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 /***/ }),
 
+/***/ "./resources/js/library/DewanFunc.js":
+/*!*******************************************!*\
+  !*** ./resources/js/library/DewanFunc.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cekWinner: () => (/* binding */ cekWinner),
+/* harmony export */   changeIndicatorPelanggaran: () => (/* binding */ changeIndicatorPelanggaran),
+/* harmony export */   changeRoundDewan: () => (/* binding */ changeRoundDewan),
+/* harmony export */   clearIndicator: () => (/* binding */ clearIndicator),
+/* harmony export */   enabledAction: () => (/* binding */ enabledAction),
+/* harmony export */   handlePenaltyClick: () => (/* binding */ handlePenaltyClick),
+/* harmony export */   handleScoreChange: () => (/* binding */ handleScoreChange),
+/* harmony export */   loadDataSave: () => (/* binding */ loadDataSave),
+/* harmony export */   pushScore: () => (/* binding */ pushScore),
+/* harmony export */   saveData: () => (/* binding */ saveData),
+/* harmony export */   updateDataIndicator: () => (/* binding */ updateDataIndicator),
+/* harmony export */   updateDataScore: () => (/* binding */ updateDataScore),
+/* harmony export */   updatePertandingan: () => (/* binding */ updatePertandingan),
+/* harmony export */   updateRoundDewan: () => (/* binding */ updateRoundDewan)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ScoreFunc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScoreFunc */ "./resources/js/library/ScoreFunc.js");
+
+
+var pelanggaran = ['teguran-pertama', 'teguran-kedua', 'binaan-pertama', 'binaan-kedua', 'peringatan-pertama', 'peringatan-kedua', 'peringatan-ketiga'];
+var bluePenalty = 'pertama';
+var peringatan = ['peringatan-pertama', 'peringatan-kedua', 'peringatan-ketiga'];
+var redPenalty = 'pertama';
+var redPelanggaran = [];
+var bluePelanggaran = [];
+var pureScoreRed = 0;
+var pureScoreBlue = 0;
+var rounds = ['round-1', 'round-2', 'round-3'];
+var peringatanPenaltyRed,
+  peringatanPenaltyBlue = false;
+var pelanggaranPoint = {
+  'pertama': 0,
+  'binaan-pertama': 0,
+  'binaan-kedua': 0,
+  'teguran-pertama': 1,
+  'teguran-kedua': 2,
+  'peringatan-pertama': 5,
+  'peringatan-kedua': 10,
+  'peringatan-ketiga': 0
+};
+var pelanggaranBiru = ['pertama'];
+var pelanggaranMerah = ['pertama'];
+var buttonAction = ['jatuhan-biru-minus', 'jatuhan-biru-plus', 'jatuhan-merah-minus', 'jatuhan-merah-plus', 'peringatan-biru-ketiga', 'peringatan-biru-kedua', 'binaan-biru-kedua', 'teguran-biru-kedua', 'peringatan-biru-pertama', 'binaan-biru-pertama', 'teguran-biru-pertama', 'peringatan-merah-ketiga', 'peringatan-merah-kedua', 'binaan-merah-kedua', 'teguran-merah-kedua', 'peringatan-merah-pertama', 'binaan-merah-pertama', 'teguran-merah-pertama', 'disk-merah', 'disk-biru'];
+var actionStatus = false;
+var pelanggaranRedElement = {
+  'teguran-pertama': document.getElementById('teguran-merah-pertama'),
+  'teguran-kedua': document.getElementById('teguran-merah-kedua'),
+  'binaan-pertama': document.getElementById('binaan-merah-pertama'),
+  'binaan-kedua': document.getElementById('binaan-merah-kedua'),
+  'peringatan-pertama': document.getElementById('peringatan-merah-pertama'),
+  'peringatan-kedua': document.getElementById('peringatan-merah-kedua'),
+  'peringatan-ketiga': document.getElementById('peringatan-merah-ketiga')
+};
+var pelanggaranBlueElement = {
+  'teguran-pertama': document.getElementById('teguran-biru-pertama'),
+  'teguran-kedua': document.getElementById('teguran-biru-kedua'),
+  'binaan-pertama': document.getElementById('binaan-biru-pertama'),
+  'binaan-kedua': document.getElementById('binaan-biru-kedua'),
+  'peringatan-pertama': document.getElementById('peringatan-biru-pertama'),
+  'peringatan-kedua': document.getElementById('peringatan-biru-kedua'),
+  'peringatan-ketiga': document.getElementById('peringatan-biru-ketiga')
+};
+var dataDewan = {
+  blueInput: document.getElementById("round-1-blueInput"),
+  redInput: document.getElementById("round-1-redInput"),
+  redScore: document.getElementById('round-1-redScore'),
+  blueScore: document.getElementById('round-1-blueScore')
+};
+function updateRoundDewan(round) {
+  dataDewan.blueInput = document.getElementById("".concat(round, "-blueInput"));
+  dataDewan.redInput = document.getElementById("".concat(round, "-redInput"));
+  dataDewan.blueScore = document.getElementById("".concat(round, "-blueScore"));
+  dataDewan.redScore = document.getElementById("".concat(round, "-redScore"));
+}
+function enabledAction() {
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  actionStatus = status;
+  buttonAction.map(function (action) {
+    var button = document.getElementById(action);
+    button.disabled = !status;
+  });
+}
+function handlePenaltyClick(color, penalty) {
+  return function () {
+    if (peringatan.includes(penalty)) {
+      if (color === 'red') {
+        if (redPelanggaran.includes(penalty)) {
+          redPelanggaran = redPelanggaran.filter(function (pelanggaran) {
+            return pelanggaran != penalty;
+          });
+        } else {
+          redPelanggaran.push(penalty);
+        }
+      } else if (color === 'blue') {
+        if (bluePelanggaran.includes(penalty)) {
+          bluePelanggaran = bluePelanggaran.filter(function (pelanggaran) {
+            return pelanggaran != penalty;
+          });
+        } else {
+          bluePelanggaran.push(penalty);
+        }
+      }
+    }
+    if (color === 'red') {
+      redPenalty = penalty;
+    } else if (color === 'blue') {
+      bluePenalty = penalty;
+    }
+    changeIndicatorPelanggaran(color, penalty);
+    pushIndicator(color, penalty);
+    pushScore();
+  };
+}
+function pushIndicator(color, penalty) {
+  axios.post("/penalty", {
+    message: {
+      'color': color,
+      'penalty': penalty
+    }
+  });
+}
+function updateDataScore(event) {
+  pureScoreRed = event.red_score;
+  pureScoreBlue = event.blue_score;
+}
+function cekWinner() {
+  var red = parseInt(dataDewan['blueScore'].textContent);
+  var blue = parseInt(dataDewan['redScore'].textContent);
+  if (red > blue) {
+    updatePertandingan('merah');
+  } else {
+    updatePertandingan('biru');
+  }
+}
+function updatePertandingan(winner) {
+  // const dataPartai = getDataGelanggang()
+  // localStorage.clear()
+  // axios.post("/operator-update", {
+  //     message: {
+  //         'blueName':dataPartai.namaBiru,
+  //         'redName':dataPartai.namaMerah,
+  //         'blueContingent':dataPartai.kontingenMerah,
+  //         'redContingent':dataPartai.kontingenBiru,
+  //         'babak':dataPartai.babak,
+  //         'time':0,
+  //         'activeRound':activeRound.textContent,
+  //         'action': winner
+  //     },
+  // });
+}
+function changeRoundDewan(round) {
+  updateRoundDewan(round);
+  console.log("🚀 ~ changeRoundDewan ~ round:", round);
+  updateDataIndicator();
+  pushScore();
+}
+function updateDataIndicator() {
+  if (redPelanggaran.length > 0) {
+    console.log("🚀 ~ updateDataIndicator ~ redPelanggaran.length:", redPelanggaran);
+    redPelanggaran.map(function (pelanggaran) {
+      // pureScoreRed -= pelanggaranPoint[pelanggaran]
+      pelanggaranMerah = pelanggaranMerah.filter(function (oldPelanggaran) {
+        return oldPelanggaran !== pelanggaran;
+      });
+    });
+    pelanggaranMerah.map(function (pelanggaran) {
+      pureScoreRed -= pelanggaranPoint[pelanggaran];
+    });
+    pelanggaranMerah = redPelanggaran;
+    redPenalty = 'pertama';
+    changeIndicatorPelanggaran('red', redPenalty);
+  } else {
+    pelanggaranMerah.map(function (pelanggaran) {
+      pureScoreRed -= pelanggaranPoint[pelanggaran];
+    });
+    pelanggaranMerah = [];
+    console.log("🚀 ~ updateDataIndicator ~ pelanggaranMerah:", pelanggaranMerah);
+    redPenalty = 'pertama';
+    changeIndicatorPelanggaran('red', redPenalty);
+  }
+  if (bluePelanggaran.length > 0) {
+    console.log("🚀 ~ updateDataIndicator ~ bluePelanggaran.length:", bluePelanggaran);
+    bluePelanggaran.map(function (pelanggaran) {
+      // pureScoreBlue -= pelanggaranPoint[pelanggaran]
+      pelanggaranBiru = pelanggaranBiru.filter(function (oldPelanggaran) {
+        return oldPelanggaran !== pelanggaran;
+      });
+    });
+    pelanggaranBiru.map(function (pelanggaran) {
+      pureScoreBlue -= pelanggaranPoint[pelanggaran];
+    });
+    pelanggaranBiru = bluePelanggaran;
+    bluePenalty = 'pertama';
+    changeIndicatorPelanggaran('blue', bluePenalty);
+  } else {
+    pelanggaranBiru.map(function (pelanggaran) {
+      pureScoreBlue -= pelanggaranPoint[pelanggaran];
+    });
+    pelanggaranBiru = [];
+    console.log("🚀 ~ updateDataIndicator ~ pelanggaranBiru:", pelanggaranBiru);
+    bluePenalty = 'pertama';
+    changeIndicatorPelanggaran('blue', bluePenalty);
+  }
+}
+function saveData() {
+  var data = {
+    bluePenalty: bluePenalty,
+    redPenalty: redPenalty,
+    pureScoreRed: pureScoreRed,
+    pureScoreBlue: pureScoreBlue,
+    actionStatus: actionStatus
+  };
+  rounds.map(function (round) {
+    data[round] = {
+      blueInput: document.getElementById("".concat(round, "-blueInput")).textContent,
+      redInput: document.getElementById("".concat(round, "-redInput")).textContent,
+      redScore: document.getElementById("".concat(round, "-redScore")).textContent,
+      blueScore: document.getElementById("".concat(round, "-blueScore")).textContent
+    };
+  });
+  localStorage.setItem('dataDewan', JSON.stringify(data));
+}
+function loadDataSave() {
+  var data = JSON.parse(localStorage.getItem('dataDewan'));
+  bluePenalty = data.bluePenalty;
+  redPenalty = data.redPenalty;
+  pureScoreRed = data.pureScoreRed;
+  pureScoreBlue = data.pureScoreBlue;
+  rounds.map(function (round) {
+    document.getElementById("".concat(round, "-blueInput")).textContent = data[round].blueInput;
+    document.getElementById("".concat(round, "-redInput")).textContent = data[round].redInput;
+    document.getElementById("".concat(round, "-redScore")).textContent = data[round].redScore;
+    document.getElementById("".concat(round, "-blueScore")).textContent = data[round].blueScore;
+  });
+  enabledAction(true);
+  bluePenalty !== 'pertama' ? changeIndicatorPelanggaran('blue', bluePenalty) : '';
+  redPenalty !== 'pertama' ? changeIndicatorPelanggaran('red', redPenalty) : '';
+}
+function pushScore() {
+  var droppingRed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var droppingBlue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  pureScoreRed += droppingRed;
+  pureScoreBlue += droppingBlue;
+  axios.post("/score-update", {
+    message: {
+      "blueScore": pureScoreBlue,
+      "redScore": pureScoreRed,
+      "redPenalty": pelanggaranMerah,
+      "bluePenalty": pelanggaranBiru,
+      "droppingRed": droppingRed,
+      "droppingBlue": droppingBlue
+    }
+  });
+  saveData();
+}
+function handleScoreChange(color, scoreChange) {
+  return function () {
+    if (color === 'red') {
+      var text = dataDewan.redInput.innerHTML;
+      if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(text)) {
+        var values = text.split(",");
+        var formattedValues = values.map(function (value) {
+          return value;
+        });
+        formattedValues.push("".concat(scoreChange));
+        dataDewan.redInput.innerHTML = formattedValues.join(",");
+      } else {
+        dataDewan.redInput.innerHTML = scoreChange;
+      }
+      pushScore(scoreChange, 0);
+    } else if (color === 'blue') {
+      var _text = dataDewan.blueInput.innerHTML;
+      if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(_text)) {
+        var _values = _text.split(",");
+        var _formattedValues = _values.map(function (value) {
+          return value;
+        });
+        _formattedValues.reverse();
+        _formattedValues.push("".concat(scoreChange));
+        _formattedValues.reverse();
+        dataDewan.blueInput.innerHTML = _formattedValues.join(",");
+      } else {
+        dataDewan.blueInput.innerHTML = scoreChange;
+      }
+      pushScore(0, scoreChange);
+    }
+  };
+}
+function changeIndicatorPelanggaran(corner, penalty) {
+  var nameElemenet = pelanggaranRedElement;
+  var dataPelanggaran;
+  var color = 'bg-redDefault';
+  if (corner !== 'red') {
+    nameElemenet = pelanggaranBlueElement;
+    if (!pelanggaranBiru.includes(penalty)) {
+      pelanggaranBiru.push(penalty);
+    } else {
+      pelanggaranBiru = pelanggaranBiru.filter(function (item) {
+        return item !== penalty;
+      });
+    }
+    dataPelanggaran = pelanggaranBiru;
+    color = 'bg-blueDark';
+  } else {
+    if (!pelanggaranMerah.includes(penalty)) {
+      pelanggaranMerah.push(penalty);
+    } else {
+      pelanggaranMerah = pelanggaranMerah.filter(function (item) {
+        return item !== penalty;
+      });
+    }
+    dataPelanggaran = pelanggaranMerah;
+  }
+  console.log("🚀 ~ changeIndicatorPelanggaran ~ dataPelanggaran:", dataPelanggaran);
+  pelanggaranMerah.sort(compare);
+  pelanggaranBiru.sort(compare);
+  var pelanggaranMerahValue = pelanggaranMerah[pelanggaranMerah.length - 1];
+  var pelanggaranBiruValue = pelanggaranBiru[pelanggaranBiru.length - 1];
+  if (pelanggaran.indexOf(pelanggaranBiruValue) > 3) {
+    peringatanPenaltyBlue = true;
+  }
+  if (pelanggaran.indexOf(pelanggaranMerahValue) > 3) {
+    peringatanPenaltyRed = true;
+  }
+  redPenalty = pelanggaranMerahValue;
+  bluePenalty = pelanggaranBiruValue;
+  pelanggaran.map(function (itemPelanggaran) {
+    if (dataPelanggaran.includes(itemPelanggaran)) {
+      nameElemenet[itemPelanggaran].classList.remove('bg-grayDefault');
+      nameElemenet[itemPelanggaran].classList.add(color);
+    } else {
+      nameElemenet[itemPelanggaran].classList.add('bg-grayDefault');
+      nameElemenet[itemPelanggaran].classList.remove(color);
+    }
+  });
+}
+function compare(value1, value2) {
+  var index1 = pelanggaran.indexOf(value1);
+  var index2 = pelanggaran.indexOf(value2);
+  if (index1 < index2) {
+    return -1;
+  } else if (index1 > index2) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+function clearIndicator() {
+  var namesElement = [pelanggaranRedElement, pelanggaranBlueElement];
+  namesElement.map(function (nameElemenet) {
+    pelanggaran.map(function (itemPelanggaran) {
+      nameElemenet[itemPelanggaran].classList.add('bg-grayDefault');
+      nameElemenet[itemPelanggaran].classList.remove('bg-redDefault', 'bg-blueDark');
+    });
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/library/JuriFunc.js":
+/*!******************************************!*\
+  !*** ./resources/js/library/JuriFunc.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cancelTimeout: () => (/* binding */ cancelTimeout),
+/* harmony export */   changeRoundJuri: () => (/* binding */ changeRoundJuri),
+/* harmony export */   enabledAction: () => (/* binding */ enabledAction),
+/* harmony export */   getId: () => (/* binding */ getId),
+/* harmony export */   handleAction: () => (/* binding */ handleAction),
+/* harmony export */   indicatorUpdate: () => (/* binding */ indicatorUpdate),
+/* harmony export */   inputPoint: () => (/* binding */ inputPoint),
+/* harmony export */   loadDataSaveJuri: () => (/* binding */ loadDataSaveJuri),
+/* harmony export */   saveDataJuri: () => (/* binding */ saveDataJuri),
+/* harmony export */   startTimeout: () => (/* binding */ startTimeout),
+/* harmony export */   startTimeoutIndicator: () => (/* binding */ startTimeoutIndicator),
+/* harmony export */   timeouts: () => (/* binding */ timeouts),
+/* harmony export */   updateDataScore: () => (/* binding */ updateDataScore),
+/* harmony export */   updateRoundJuri: () => (/* binding */ updateRoundJuri),
+/* harmony export */   updateScore: () => (/* binding */ updateScore)
+/* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash_lang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash/lang */ "./node_modules/lodash/lang.js");
+/* harmony import */ var lodash_lang__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_lang__WEBPACK_IMPORTED_MODULE_1__);
+var _JSON$parse;
+
+
+var rounds = ['round-1', 'round-2', 'round-3'];
+var pureScoreRed = 0;
+var pureScoreBlue = 0;
+var bluePenalty = ['pertama'];
+var buttonAction = ['pukul-biru', 'tendang-biru', 'pukul-merah', 'tendang-merah'];
+var redPenalty = ['pertama'];
+var roundGelanggang = ((_JSON$parse = JSON.parse(localStorage.getItem("gelanggangData"))) === null || _JSON$parse === void 0 || (_JSON$parse = _JSON$parse.activeRound) === null || _JSON$parse === void 0 ? void 0 : _JSON$parse.toLowerCase()) || 'ROUND';
+var dataJuri = {
+  blueScore: document.getElementById("round-1-blueScore"),
+  redScore: document.getElementById("round-1-redScore"),
+  blueInput: document.getElementById("round-1-blueInput"),
+  redInput: document.getElementById("round-1-redInput")
+};
+var actionStatus = false;
+function updateRoundJuri(round) {
+  dataJuri.blueScore = document.getElementById("".concat(round, "-blueScore"));
+  dataJuri.redScore = document.getElementById("".concat(round, "-redScore"));
+  dataJuri.blueInput = document.getElementById("".concat(round, "-blueInput"));
+  dataJuri.redInput = document.getElementById("".concat(round, "-redInput"));
+  roundGelanggang = round;
+}
+var timeouts = {
+  pukulanred: [],
+  pukulanblue: [],
+  tendanganblue: [],
+  tendanganred: [],
+  juripertamapukulanred: [],
+  jurikeduapukulanred: [],
+  juriketigapukulanred: [],
+  juripertamapukulanblue: [],
+  jurikeduapukulanblue: [],
+  juriketigapukulanblue: [],
+  juripertamatendanganred: [],
+  jurikeduatendanganred: [],
+  juriketigatendanganred: [],
+  juripertamatendanganblue: [],
+  jurikeduatendanganblue: [],
+  juriketigatendanganblue: []
+};
+function getId(id) {
+  return id.toLowerCase().replace(/ /g, '-');
+}
+function indicatorUpdate(id, sudut) {
+  console.log(id);
+  var indicator = document.getElementById(id);
+  if (sudut === 'blue') {
+    indicator.classList.toggle('bg-blueDefault');
+    indicator.classList.toggle('bg-grayDefault');
+  } else {
+    indicator.classList.toggle('bg-redDefault');
+    indicator.classList.toggle('bg-grayDefault');
+  }
+}
+function startTimeoutIndicator(element, sudut) {
+  var name = element.replace(/-/g, '');
+  timeouts["".concat(name)] = setTimeout(function () {
+    indicatorUpdate(element, sudut);
+  }, 2000);
+}
+function startTimeout(element, params, posisi) {
+  var sudut = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'red';
+  timeouts["".concat(params)] = setTimeout(function () {
+    strikeoutLastValue(element, posisi, sudut);
+  }, 2000);
+}
+function cancelTimeout(params) {
+  params = params.toLowerCase();
+  clearTimeout(timeouts["".concat(params)]);
+}
+function inputPoint(element, point) {
+  var sudut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'red';
+  element = dataJuri["".concat(element)];
+  var text = element.innerHTML;
+  var values = text.split(",");
+  if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(text)) {
+    var formattedValues = values.map(function (value) {
+      if (!value.includes("<s>")) {
+        return "".concat(value.trim());
+      } else {
+        return value;
+      }
+    });
+    if (sudut === 'blue') {
+      formattedValues.reverse();
+      formattedValues.push("".concat(point));
+      formattedValues.reverse();
+    } else {
+      formattedValues.push("".concat(point));
+    }
+    var joinValues = formattedValues.join(",");
+    element.innerHTML = joinValues;
+    var scorePiece = joinValues;
+    pushKetuaPertandingan(sudut, scorePiece);
+    saveDataJuri();
+    return values.length;
+  } else {
+    element.innerHTML = point;
+    pushKetuaPertandingan(sudut, point);
+    saveDataJuri();
+  }
+}
+function changeRoundJuri(roundActive) {
+  roundGelanggang = roundActive;
+}
+function strikeoutLastValue(element, posisi, sudut) {
+  element = dataJuri["".concat(element)];
+  var text = element.innerHTML;
+  if (text !== "") {
+    var values = text.split(",");
+    if (sudut === 'blue') {
+      values = values.reverse();
+    }
+    var valuePosisi = values.splice(posisi, 1)[0];
+    values.splice(posisi, 0, "<s>".concat(valuePosisi.trim(), "</s>"));
+    if (sudut === 'blue') {
+      values = values.reverse();
+    }
+    var formattedValues = values.map(function (value) {
+      if (!value.includes("<s>")) {
+        return "".concat(value.trim());
+      } else {
+        return value;
+      }
+    });
+    var scorePiece = formattedValues.join(",");
+    element.innerHTML = scorePiece;
+    pushKetuaPertandingan(sudut, scorePiece);
+    saveDataJuri();
+  }
+  saveDataJuri();
+}
+function handleAction(event, color, action) {
+  event.preventDefault();
+  pushMessage(color, action);
+}
+function pushMessage(sudut, gerakan) {
+  var blueScore = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var redScore = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+  axios.post("/score-event", {
+    message: {
+      "gerakan": gerakan,
+      "sudut": sudut,
+      "blueScore": blueScore,
+      "redScore": redScore,
+      "time": Date.now()
+    }
+  });
+}
+function pushKetuaPertandingan(sudut, scorePiece) {
+  axios.post("/ketua-pertandingan-update", {
+    message: {
+      "sudut": sudut,
+      "scorePiece": scorePiece
+    }
+  });
+}
+function saveDataJuri() {
+  var data = {
+    bluePenalty: bluePenalty,
+    redPenalty: redPenalty,
+    pureScoreRed: pureScoreRed,
+    pureScoreBlue: pureScoreBlue,
+    actionStatus: actionStatus
+  };
+  rounds.map(function (round) {
+    data[round] = {
+      blueInput: document.getElementById("".concat(round, "-blueInput")).innerHTML,
+      redInput: document.getElementById("".concat(round, "-redInput")).innerHTML,
+      redScore: document.getElementById("".concat(round, "-redScore")).textContent,
+      blueScore: document.getElementById("".concat(round, "-blueScore")).textContent
+    };
+  });
+  localStorage.setItem('dataJuriScoring', JSON.stringify(data));
+}
+function loadDataSaveJuri() {
+  var data = JSON.parse(localStorage.getItem('dataJuriScoring'));
+  bluePenalty = data.bluePenalty;
+  redPenalty = data.redPenalty;
+  pureScoreRed = data.pureScoreRed;
+  pureScoreBlue = data.pureScoreBlue;
+  console.log(data);
+  rounds.map(function (round) {
+    document.getElementById("".concat(round, "-blueInput")).innerHTML = data[round].blueInput;
+    document.getElementById("".concat(round, "-redInput")).innerHTML = data[round].redInput;
+    document.getElementById("".concat(round, "-redScore")).textContent = data[round].redScore;
+    document.getElementById("".concat(round, "-blueScore")).textContent = data[round].blueScore;
+  });
+}
+function updateDataScore(event) {
+  pureScoreRed = event.red_score;
+  pureScoreBlue = event.blue_score;
+  redPenalty = event.red_penalty;
+  bluePenalty = event.blue_penalty;
+}
+function updateScore(event) {
+  console.log(event);
+  var gerakan = event.gerakan;
+  var sudut = event.sudut;
+  var id = event.id;
+  var name = sudut + gerakan;
+  var sudutPointTime = name + 'time';
+  var exp = event.expired;
+  var score = {
+    'redScore': 0,
+    'blueScore': 0
+  };
+  var sudutScore = event.sudut + 'Score';
+  var elementName = getId(id + ' ' + gerakan + ' ' + sudut);
+  indicatorUpdate(elementName, sudut);
+  startTimeoutIndicator(elementName, sudut);
+  if (localStorage.getItem(sudutPointTime) && localStorage.getItem(name)) {
+    var time = localStorage.getItem(sudutPointTime);
+    if (exp - time <= 2000 && localStorage.getItem(name) !== id) {
+      if (gerakan === 'tendangan') {
+        score["".concat(sudutScore)] += 2;
+      } else {
+        score["".concat(sudutScore)] += 1;
+      }
+      localStorage.removeItem(sudutPointTime);
+      localStorage.removeItem(name);
+      cancelTimeout(gerakan + sudut);
+      pureScoreRed += score['redScore'];
+      pureScoreBlue += score['blueScore'];
+      pushScore();
+      return score;
+    }
+    localStorage.removeItem(sudutPointTime);
+    localStorage.removeItem(name);
+  }
+  localStorage.setItem(sudutPointTime, exp);
+  localStorage.setItem(name, id);
+  return score;
+}
+function pushScore() {
+  saveDataJuri();
+  axios.post("/score-update", {
+    message: {
+      "redPenalty": redPenalty,
+      "bluePenalty": bluePenalty,
+      "blueScore": pureScoreBlue,
+      "redScore": pureScoreRed,
+      "droppingRed": 0,
+      "droppingBlue": 0
+    }
+  });
+}
+function enabledAction() {
+  var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  actionStatus = status;
+  buttonAction.map(function (action) {
+    var button = document.getElementById(action);
+    button.disabled = !status;
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/library/ScoreFunc.js":
+/*!*******************************************!*\
+  !*** ./resources/js/library/ScoreFunc.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   activeRound: () => (/* binding */ activeRound),
+/* harmony export */   bluePenalty: () => (/* binding */ bluePenalty),
+/* harmony export */   changeScoreElement: () => (/* binding */ changeScoreElement),
+/* harmony export */   channelOperator: () => (/* binding */ channelOperator),
+/* harmony export */   channelPenalty: () => (/* binding */ channelPenalty),
+/* harmony export */   channelUpdateScore: () => (/* binding */ channelUpdateScore),
+/* harmony export */   getDataGelanggang: () => (/* binding */ getDataGelanggang),
+/* harmony export */   kelas: () => (/* binding */ kelas),
+/* harmony export */   loadDataSaved: () => (/* binding */ loadDataSaved),
+/* harmony export */   partaiId: () => (/* binding */ partaiId),
+/* harmony export */   redPenalty: () => (/* binding */ redPenalty),
+/* harmony export */   savedGelanggangData: () => (/* binding */ savedGelanggangData),
+/* harmony export */   startPertandingan: () => (/* binding */ startPertandingan),
+/* harmony export */   updateScore: () => (/* binding */ updateScore),
+/* harmony export */   userData: () => (/* binding */ userData)
+/* harmony export */ });
+var namaMerah = document.getElementById('nama_merah');
+var kontingenMerah = document.getElementById('kontingen_merah');
+var namaBiru = document.getElementById('nama_biru');
+var kontingenBiru = document.getElementById('kontingen_biru');
+var babak = document.getElementById('babak');
+var pureScoreRed = 0;
+var pureScoreBlue = 0;
+var partaiId = '';
+var rounds = ['round-1', 'round-2', 'round-3'];
+var kelas;
+var redScore = '';
+var blueScore = '';
+var userElement = document.getElementById("user");
+var userData = JSON.parse(userElement.getAttribute("data-user"));
+var channelUpdateScore = Echo.join("presence.updateScore.".concat(userData.gelanggang_id));
+var channelPenalty = Echo.join("presence.penalty.".concat(userData.gelanggang_id));
+var channelOperator = Echo.join("presence.operator.".concat(userData.gelanggang_id));
+var activeRound = document.getElementById('round');
+var pelanggaranPoint = {
+  'pertama': 0,
+  'binaan-pertama': 0,
+  'binaan-kedua': 0,
+  'teguran-pertama': 1,
+  'teguran-kedua': 2,
+  'peringatan-pertama': 5,
+  'peringatan-kedua': 10,
+  'peringatan-ketiga': 0
+};
+var savedGelanggangData = JSON.parse(localStorage.getItem('gelanggangData')) || {
+  namaMerah: 'Sudut Merah',
+  kontingenMerah: 'Kontingen',
+  namaBiru: 'Sudut Biru',
+  kontingenBiru: 'kontingen',
+  babak: 'BABAK',
+  activeRound: 'ROUND'
+};
+var savedScoreData = JSON.parse(localStorage.getItem('scoreData')) || {
+  redScore: 0,
+  blueScore: 0,
+  bluePenalty: 'teguran-pertama',
+  redPenalty: 'teguran-pertama'
+};
+var redPenalty = '';
+var bluePenalty = '';
+function changeScoreElement(newRedScoreElement, newBlueScoreElement) {
+  redScore = newRedScoreElement;
+  blueScore = newBlueScoreElement;
+}
+function updateScore(event, redPenalty, bluePenalty) {
+  redPenalty = event.red_penalty;
+  bluePenalty = event.blue_penalty;
+  pureScoreRed = event.red_score;
+  pureScoreBlue = event.blue_score;
+  var pointPelanggaranSudutMerah = 0;
+  var pointPelanggaranSudutBiru = 0;
+  redPenalty.map(function (penalty) {
+    pointPelanggaranSudutMerah += pelanggaranPoint[penalty];
+  });
+  bluePenalty.map(function (penalty) {
+    pointPelanggaranSudutBiru += pelanggaranPoint[penalty];
+  });
+  var redScoreValue = pureScoreRed - pointPelanggaranSudutMerah;
+  var blueScoreValue = pureScoreBlue - pointPelanggaranSudutBiru;
+  var scoreData = {
+    redScore: redScoreValue,
+    blueScore: blueScoreValue,
+    pureScoreRed: pureScoreRed,
+    pureScoreBlue: pureScoreBlue,
+    redPenalty: event.red_penalty,
+    bluePenalty: event.blue_penalty,
+    droppingRed: event.droppingRed,
+    droppingBlue: event.droppingBlue
+  };
+  localStorage.setItem('scoreData', JSON.stringify(scoreData));
+  if (window.location.pathname !== '/ketua_pertandingan') {
+    redScore.textContent = redScoreValue;
+    blueScore.textContent = blueScoreValue;
+  }
+}
+function startPertandingan(e) {
+  partaiId = e.id;
+  kelas = e.kelas;
+  namaMerah.textContent = e.redName;
+  kontingenMerah.textContent = e.redContingent;
+  namaBiru.textContent = e.blueName;
+  kontingenBiru.textContent = e.blueContingent;
+  babak.textContent = e.babak.toUpperCase();
+  activeRound.textContent = e.activeRound.toUpperCase();
+  var gelanggangData = {
+    partaiId: e.id,
+    kelas: e.kelas,
+    namaMerah: namaMerah.textContent,
+    kontingenMerah: kontingenMerah.textContent,
+    namaBiru: namaBiru.textContent,
+    kontingenBiru: kontingenBiru.textContent,
+    babak: babak.textContent,
+    activeRound: activeRound.textContent
+  };
+  localStorage.setItem('gelanggangData', JSON.stringify(gelanggangData));
+}
+function getDataGelanggang() {
+  return {
+    namaMerah: namaMerah.textContent,
+    kontingenMerah: kontingenMerah.textContent,
+    namaBiru: namaBiru.textContent,
+    kontingenBiru: kontingenBiru.textContent,
+    babak: babak.textContent,
+    activeRound: activeRound.textContent
+  };
+}
+function loadDataSaved() {
+  partaiId = savedGelanggangData.partaiId;
+  kelas = savedGelanggangData.kelas;
+  namaMerah.textContent = savedGelanggangData.namaMerah;
+  kontingenMerah.textContent = savedGelanggangData.kontingenMerah;
+  namaBiru.textContent = savedGelanggangData.namaBiru;
+  kontingenBiru.textContent = savedGelanggangData.kontingenBiru;
+  babak.textContent = savedGelanggangData.babak;
+  activeRound.textContent = savedGelanggangData.activeRound;
+  redPenalty = savedScoreData.redPenalty;
+  bluePenalty = savedScoreData.bluePenalty;
+  redScore.textContent = savedScoreData.redScore;
+  blueScore.textContent = savedScoreData.blueScore;
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/laravel-echo/dist/echo.js":
 /*!************************************************!*\
   !*** ./node_modules/laravel-echo/dist/echo.js ***!
@@ -2106,7 +2917,9 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Channel": () => (/* binding */ Channel),
+/* harmony export */   Channel: () => (/* binding */ Channel),
+/* harmony export */   Connector: () => (/* binding */ Connector),
+/* harmony export */   EventFormatter: () => (/* binding */ EventFormatter),
 /* harmony export */   "default": () => (/* binding */ Echo)
 /* harmony export */ });
 function _typeof(obj) {
@@ -2296,7 +3109,7 @@ var EventFormatter = /*#__PURE__*/function () {
   function EventFormatter(namespace) {
     _classCallCheck(this, EventFormatter);
 
-    this.setNamespace(namespace);
+    this.namespace = namespace; //
   }
   /**
    * Format the given event name.
@@ -3781,6 +4594,6577 @@ var Echo = /*#__PURE__*/function () {
 }();
 
 
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_DataView.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_DataView.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView');
+
+module.exports = DataView;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Hash.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_Hash.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var hashClear = __webpack_require__(/*! ./_hashClear */ "./node_modules/lodash/_hashClear.js"),
+    hashDelete = __webpack_require__(/*! ./_hashDelete */ "./node_modules/lodash/_hashDelete.js"),
+    hashGet = __webpack_require__(/*! ./_hashGet */ "./node_modules/lodash/_hashGet.js"),
+    hashHas = __webpack_require__(/*! ./_hashHas */ "./node_modules/lodash/_hashHas.js"),
+    hashSet = __webpack_require__(/*! ./_hashSet */ "./node_modules/lodash/_hashSet.js");
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = hashClear;
+Hash.prototype['delete'] = hashDelete;
+Hash.prototype.get = hashGet;
+Hash.prototype.has = hashHas;
+Hash.prototype.set = hashSet;
+
+module.exports = Hash;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_ListCache.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_ListCache.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ "./node_modules/lodash/_listCacheClear.js"),
+    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ "./node_modules/lodash/_listCacheDelete.js"),
+    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ "./node_modules/lodash/_listCacheGet.js"),
+    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ "./node_modules/lodash/_listCacheHas.js"),
+    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ "./node_modules/lodash/_listCacheSet.js");
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = listCacheClear;
+ListCache.prototype['delete'] = listCacheDelete;
+ListCache.prototype.get = listCacheGet;
+ListCache.prototype.has = listCacheHas;
+ListCache.prototype.set = listCacheSet;
+
+module.exports = ListCache;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Map.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/_Map.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map');
+
+module.exports = Map;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_MapCache.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_MapCache.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ "./node_modules/lodash/_mapCacheClear.js"),
+    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ "./node_modules/lodash/_mapCacheDelete.js"),
+    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ "./node_modules/lodash/_mapCacheGet.js"),
+    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ "./node_modules/lodash/_mapCacheHas.js"),
+    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ "./node_modules/lodash/_mapCacheSet.js");
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = mapCacheClear;
+MapCache.prototype['delete'] = mapCacheDelete;
+MapCache.prototype.get = mapCacheGet;
+MapCache.prototype.has = mapCacheHas;
+MapCache.prototype.set = mapCacheSet;
+
+module.exports = MapCache;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Promise.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_Promise.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Promise = getNative(root, 'Promise');
+
+module.exports = Promise;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Set.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/_Set.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var Set = getNative(root, 'Set');
+
+module.exports = Set;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_SetCache.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_SetCache.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var MapCache = __webpack_require__(/*! ./_MapCache */ "./node_modules/lodash/_MapCache.js"),
+    setCacheAdd = __webpack_require__(/*! ./_setCacheAdd */ "./node_modules/lodash/_setCacheAdd.js"),
+    setCacheHas = __webpack_require__(/*! ./_setCacheHas */ "./node_modules/lodash/_setCacheHas.js");
+
+/**
+ *
+ * Creates an array cache object to store unique values.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [values] The values to cache.
+ */
+function SetCache(values) {
+  var index = -1,
+      length = values == null ? 0 : values.length;
+
+  this.__data__ = new MapCache;
+  while (++index < length) {
+    this.add(values[index]);
+  }
+}
+
+// Add methods to `SetCache`.
+SetCache.prototype.add = SetCache.prototype.push = setCacheAdd;
+SetCache.prototype.has = setCacheHas;
+
+module.exports = SetCache;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Stack.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/_Stack.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var ListCache = __webpack_require__(/*! ./_ListCache */ "./node_modules/lodash/_ListCache.js"),
+    stackClear = __webpack_require__(/*! ./_stackClear */ "./node_modules/lodash/_stackClear.js"),
+    stackDelete = __webpack_require__(/*! ./_stackDelete */ "./node_modules/lodash/_stackDelete.js"),
+    stackGet = __webpack_require__(/*! ./_stackGet */ "./node_modules/lodash/_stackGet.js"),
+    stackHas = __webpack_require__(/*! ./_stackHas */ "./node_modules/lodash/_stackHas.js"),
+    stackSet = __webpack_require__(/*! ./_stackSet */ "./node_modules/lodash/_stackSet.js");
+
+/**
+ * Creates a stack cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Stack(entries) {
+  var data = this.__data__ = new ListCache(entries);
+  this.size = data.size;
+}
+
+// Add methods to `Stack`.
+Stack.prototype.clear = stackClear;
+Stack.prototype['delete'] = stackDelete;
+Stack.prototype.get = stackGet;
+Stack.prototype.has = stackHas;
+Stack.prototype.set = stackSet;
+
+module.exports = Stack;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Symbol.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_Symbol.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_Uint8Array.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_Uint8Array.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Built-in value references. */
+var Uint8Array = root.Uint8Array;
+
+module.exports = Uint8Array;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_WeakMap.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_WeakMap.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js"),
+    root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references that are verified to be native. */
+var WeakMap = getNative(root, 'WeakMap');
+
+module.exports = WeakMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayEach.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_arrayEach.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.forEach` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns `array`.
+ */
+function arrayEach(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (iteratee(array[index], index, array) === false) {
+      break;
+    }
+  }
+  return array;
+}
+
+module.exports = arrayEach;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayFilter.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_arrayFilter.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.filter` for arrays without support for
+ * iteratee shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {Array} Returns the new filtered array.
+ */
+function arrayFilter(array, predicate) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      resIndex = 0,
+      result = [];
+
+  while (++index < length) {
+    var value = array[index];
+    if (predicate(value, index, array)) {
+      result[resIndex++] = value;
+    }
+  }
+  return result;
+}
+
+module.exports = arrayFilter;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayLikeKeys.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_arrayLikeKeys.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseTimes = __webpack_require__(/*! ./_baseTimes */ "./node_modules/lodash/_baseTimes.js"),
+    isArguments = __webpack_require__(/*! ./isArguments */ "./node_modules/lodash/isArguments.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isIndex = __webpack_require__(/*! ./_isIndex */ "./node_modules/lodash/_isIndex.js"),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ "./node_modules/lodash/isTypedArray.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Creates an array of the enumerable property names of the array-like `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @param {boolean} inherited Specify returning inherited property names.
+ * @returns {Array} Returns the array of property names.
+ */
+function arrayLikeKeys(value, inherited) {
+  var isArr = isArray(value),
+      isArg = !isArr && isArguments(value),
+      isBuff = !isArr && !isArg && isBuffer(value),
+      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
+      skipIndexes = isArr || isArg || isBuff || isType,
+      result = skipIndexes ? baseTimes(value.length, String) : [],
+      length = result.length;
+
+  for (var key in value) {
+    if ((inherited || hasOwnProperty.call(value, key)) &&
+        !(skipIndexes && (
+           // Safari 9 has enumerable `arguments.length` in strict mode.
+           key == 'length' ||
+           // Node.js 0.10 has enumerable non-index properties on buffers.
+           (isBuff && (key == 'offset' || key == 'parent')) ||
+           // PhantomJS 2 has enumerable non-index properties on typed arrays.
+           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
+           // Skip index properties.
+           isIndex(key, length)
+        ))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = arrayLikeKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayMap.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_arrayMap.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.map` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the new mapped array.
+ */
+function arrayMap(array, iteratee) {
+  var index = -1,
+      length = array == null ? 0 : array.length,
+      result = Array(length);
+
+  while (++index < length) {
+    result[index] = iteratee(array[index], index, array);
+  }
+  return result;
+}
+
+module.exports = arrayMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arrayPush.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_arrayPush.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Appends the elements of `values` to `array`.
+ *
+ * @private
+ * @param {Array} array The array to modify.
+ * @param {Array} values The values to append.
+ * @returns {Array} Returns `array`.
+ */
+function arrayPush(array, values) {
+  var index = -1,
+      length = values.length,
+      offset = array.length;
+
+  while (++index < length) {
+    array[offset + index] = values[index];
+  }
+  return array;
+}
+
+module.exports = arrayPush;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_arraySome.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_arraySome.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * A specialized version of `_.some` for arrays without support for iteratee
+ * shorthands.
+ *
+ * @private
+ * @param {Array} [array] The array to iterate over.
+ * @param {Function} predicate The function invoked per iteration.
+ * @returns {boolean} Returns `true` if any element passes the predicate check,
+ *  else `false`.
+ */
+function arraySome(array, predicate) {
+  var index = -1,
+      length = array == null ? 0 : array.length;
+
+  while (++index < length) {
+    if (predicate(array[index], index, array)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+module.exports = arraySome;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_asciiToArray.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_asciiToArray.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts an ASCII `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function asciiToArray(string) {
+  return string.split('');
+}
+
+module.exports = asciiToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_assignValue.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_assignValue.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ "./node_modules/lodash/_baseAssignValue.js"),
+    eq = __webpack_require__(/*! ./eq */ "./node_modules/lodash/eq.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Assigns `value` to `key` of `object` if the existing value is not equivalent
+ * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * for equality comparisons.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function assignValue(object, key, value) {
+  var objValue = object[key];
+  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+      (value === undefined && !(key in object))) {
+    baseAssignValue(object, key, value);
+  }
+}
+
+module.exports = assignValue;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_assocIndexOf.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_assocIndexOf.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var eq = __webpack_require__(/*! ./eq */ "./node_modules/lodash/eq.js");
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+module.exports = assocIndexOf;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseAssign.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseAssign.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * The base implementation of `_.assign` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssign(object, source) {
+  return object && copyObject(source, keys(source), object);
+}
+
+module.exports = baseAssign;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseAssignIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseAssignIn.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+
+/**
+ * The base implementation of `_.assignIn` without support for multiple sources
+ * or `customizer` functions.
+ *
+ * @private
+ * @param {Object} object The destination object.
+ * @param {Object} source The source object.
+ * @returns {Object} Returns `object`.
+ */
+function baseAssignIn(object, source) {
+  return object && copyObject(source, keysIn(source), object);
+}
+
+module.exports = baseAssignIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseAssignValue.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_baseAssignValue.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var defineProperty = __webpack_require__(/*! ./_defineProperty */ "./node_modules/lodash/_defineProperty.js");
+
+/**
+ * The base implementation of `assignValue` and `assignMergeValue` without
+ * value checks.
+ *
+ * @private
+ * @param {Object} object The object to modify.
+ * @param {string} key The key of the property to assign.
+ * @param {*} value The value to assign.
+ */
+function baseAssignValue(object, key, value) {
+  if (key == '__proto__' && defineProperty) {
+    defineProperty(object, key, {
+      'configurable': true,
+      'enumerable': true,
+      'value': value,
+      'writable': true
+    });
+  } else {
+    object[key] = value;
+  }
+}
+
+module.exports = baseAssignValue;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseClamp.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseClamp.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.clamp` which doesn't coerce arguments.
+ *
+ * @private
+ * @param {number} number The number to clamp.
+ * @param {number} [lower] The lower bound.
+ * @param {number} upper The upper bound.
+ * @returns {number} Returns the clamped number.
+ */
+function baseClamp(number, lower, upper) {
+  if (number === number) {
+    if (upper !== undefined) {
+      number = number <= upper ? number : upper;
+    }
+    if (lower !== undefined) {
+      number = number >= lower ? number : lower;
+    }
+  }
+  return number;
+}
+
+module.exports = baseClamp;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseClone.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseClone.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Stack = __webpack_require__(/*! ./_Stack */ "./node_modules/lodash/_Stack.js"),
+    arrayEach = __webpack_require__(/*! ./_arrayEach */ "./node_modules/lodash/_arrayEach.js"),
+    assignValue = __webpack_require__(/*! ./_assignValue */ "./node_modules/lodash/_assignValue.js"),
+    baseAssign = __webpack_require__(/*! ./_baseAssign */ "./node_modules/lodash/_baseAssign.js"),
+    baseAssignIn = __webpack_require__(/*! ./_baseAssignIn */ "./node_modules/lodash/_baseAssignIn.js"),
+    cloneBuffer = __webpack_require__(/*! ./_cloneBuffer */ "./node_modules/lodash/_cloneBuffer.js"),
+    copyArray = __webpack_require__(/*! ./_copyArray */ "./node_modules/lodash/_copyArray.js"),
+    copySymbols = __webpack_require__(/*! ./_copySymbols */ "./node_modules/lodash/_copySymbols.js"),
+    copySymbolsIn = __webpack_require__(/*! ./_copySymbolsIn */ "./node_modules/lodash/_copySymbolsIn.js"),
+    getAllKeys = __webpack_require__(/*! ./_getAllKeys */ "./node_modules/lodash/_getAllKeys.js"),
+    getAllKeysIn = __webpack_require__(/*! ./_getAllKeysIn */ "./node_modules/lodash/_getAllKeysIn.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    initCloneArray = __webpack_require__(/*! ./_initCloneArray */ "./node_modules/lodash/_initCloneArray.js"),
+    initCloneByTag = __webpack_require__(/*! ./_initCloneByTag */ "./node_modules/lodash/_initCloneByTag.js"),
+    initCloneObject = __webpack_require__(/*! ./_initCloneObject */ "./node_modules/lodash/_initCloneObject.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isMap = __webpack_require__(/*! ./isMap */ "./node_modules/lodash/isMap.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isSet = __webpack_require__(/*! ./isSet */ "./node_modules/lodash/isSet.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_FLAT_FLAG = 2,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values supported by `_.clone`. */
+var cloneableTags = {};
+cloneableTags[argsTag] = cloneableTags[arrayTag] =
+cloneableTags[arrayBufferTag] = cloneableTags[dataViewTag] =
+cloneableTags[boolTag] = cloneableTags[dateTag] =
+cloneableTags[float32Tag] = cloneableTags[float64Tag] =
+cloneableTags[int8Tag] = cloneableTags[int16Tag] =
+cloneableTags[int32Tag] = cloneableTags[mapTag] =
+cloneableTags[numberTag] = cloneableTags[objectTag] =
+cloneableTags[regexpTag] = cloneableTags[setTag] =
+cloneableTags[stringTag] = cloneableTags[symbolTag] =
+cloneableTags[uint8Tag] = cloneableTags[uint8ClampedTag] =
+cloneableTags[uint16Tag] = cloneableTags[uint32Tag] = true;
+cloneableTags[errorTag] = cloneableTags[funcTag] =
+cloneableTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+ * traversed objects.
+ *
+ * @private
+ * @param {*} value The value to clone.
+ * @param {boolean} bitmask The bitmask flags.
+ *  1 - Deep clone
+ *  2 - Flatten inherited properties
+ *  4 - Clone symbols
+ * @param {Function} [customizer] The function to customize cloning.
+ * @param {string} [key] The key of `value`.
+ * @param {Object} [object] The parent object of `value`.
+ * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+ * @returns {*} Returns the cloned value.
+ */
+function baseClone(value, bitmask, customizer, key, object, stack) {
+  var result,
+      isDeep = bitmask & CLONE_DEEP_FLAG,
+      isFlat = bitmask & CLONE_FLAT_FLAG,
+      isFull = bitmask & CLONE_SYMBOLS_FLAG;
+
+  if (customizer) {
+    result = object ? customizer(value, key, object, stack) : customizer(value);
+  }
+  if (result !== undefined) {
+    return result;
+  }
+  if (!isObject(value)) {
+    return value;
+  }
+  var isArr = isArray(value);
+  if (isArr) {
+    result = initCloneArray(value);
+    if (!isDeep) {
+      return copyArray(value, result);
+    }
+  } else {
+    var tag = getTag(value),
+        isFunc = tag == funcTag || tag == genTag;
+
+    if (isBuffer(value)) {
+      return cloneBuffer(value, isDeep);
+    }
+    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+      result = (isFlat || isFunc) ? {} : initCloneObject(value);
+      if (!isDeep) {
+        return isFlat
+          ? copySymbolsIn(value, baseAssignIn(result, value))
+          : copySymbols(value, baseAssign(result, value));
+      }
+    } else {
+      if (!cloneableTags[tag]) {
+        return object ? value : {};
+      }
+      result = initCloneByTag(value, tag, isDeep);
+    }
+  }
+  // Check for circular references and return its corresponding clone.
+  stack || (stack = new Stack);
+  var stacked = stack.get(value);
+  if (stacked) {
+    return stacked;
+  }
+  stack.set(value, result);
+
+  if (isSet(value)) {
+    value.forEach(function(subValue) {
+      result.add(baseClone(subValue, bitmask, customizer, subValue, value, stack));
+    });
+  } else if (isMap(value)) {
+    value.forEach(function(subValue, key) {
+      result.set(key, baseClone(subValue, bitmask, customizer, key, value, stack));
+    });
+  }
+
+  var keysFunc = isFull
+    ? (isFlat ? getAllKeysIn : getAllKeys)
+    : (isFlat ? keysIn : keys);
+
+  var props = isArr ? undefined : keysFunc(value);
+  arrayEach(props || value, function(subValue, key) {
+    if (props) {
+      key = subValue;
+      subValue = value[key];
+    }
+    // Recursively populate clone (susceptible to call stack limits).
+    assignValue(result, key, baseClone(subValue, bitmask, customizer, key, value, stack));
+  });
+  return result;
+}
+
+module.exports = baseClone;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseConformsTo.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_baseConformsTo.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.conformsTo` which accepts `props` to check.
+ *
+ * @private
+ * @param {Object} object The object to inspect.
+ * @param {Object} source The object of property predicates to conform to.
+ * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+ */
+function baseConformsTo(object, source, props) {
+  var length = props.length;
+  if (object == null) {
+    return !length;
+  }
+  object = Object(object);
+  while (length--) {
+    var key = props[length],
+        predicate = source[key],
+        value = object[key];
+
+    if ((value === undefined && !(key in object)) || !predicate(value)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports = baseConformsTo;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseCreate.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseCreate.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
+
+/** Built-in value references. */
+var objectCreate = Object.create;
+
+/**
+ * The base implementation of `_.create` without support for assigning
+ * properties to the created object.
+ *
+ * @private
+ * @param {Object} proto The object to inherit from.
+ * @returns {Object} Returns the new object.
+ */
+var baseCreate = (function() {
+  function object() {}
+  return function(proto) {
+    if (!isObject(proto)) {
+      return {};
+    }
+    if (objectCreate) {
+      return objectCreate(proto);
+    }
+    object.prototype = proto;
+    var result = new object;
+    object.prototype = undefined;
+    return result;
+  };
+}());
+
+module.exports = baseCreate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGetAllKeys.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_baseGetAllKeys.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ "./node_modules/lodash/_arrayPush.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js");
+
+/**
+ * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
+ * `keysFunc` and `symbolsFunc` to get the enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Function} keysFunc The function to get the keys of `object`.
+ * @param {Function} symbolsFunc The function to get the symbols of `object`.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function baseGetAllKeys(object, keysFunc, symbolsFunc) {
+  var result = keysFunc(object);
+  return isArray(object) ? result : arrayPush(result, symbolsFunc(object));
+}
+
+module.exports = baseGetAllKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGetTag.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseGetTag.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    getRawTag = __webpack_require__(/*! ./_getRawTag */ "./node_modules/lodash/_getRawTag.js"),
+    objectToString = __webpack_require__(/*! ./_objectToString */ "./node_modules/lodash/_objectToString.js");
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseGt.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_baseGt.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.gt` which doesn't coerce arguments.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is greater than `other`,
+ *  else `false`.
+ */
+function baseGt(value, other) {
+  return value > other;
+}
+
+module.exports = baseGt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsArguments.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_baseIsArguments.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]';
+
+/**
+ * The base implementation of `_.isArguments`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ */
+function baseIsArguments(value) {
+  return isObjectLike(value) && baseGetTag(value) == argsTag;
+}
+
+module.exports = baseIsArguments;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsArrayBuffer.js":
+/*!***************************************************!*\
+  !*** ./node_modules/lodash/_baseIsArrayBuffer.js ***!
+  \***************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+var arrayBufferTag = '[object ArrayBuffer]';
+
+/**
+ * The base implementation of `_.isArrayBuffer` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
+ */
+function baseIsArrayBuffer(value) {
+  return isObjectLike(value) && baseGetTag(value) == arrayBufferTag;
+}
+
+module.exports = baseIsArrayBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsDate.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseIsDate.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var dateTag = '[object Date]';
+
+/**
+ * The base implementation of `_.isDate` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+ */
+function baseIsDate(value) {
+  return isObjectLike(value) && baseGetTag(value) == dateTag;
+}
+
+module.exports = baseIsDate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsEqual.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_baseIsEqual.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsEqualDeep = __webpack_require__(/*! ./_baseIsEqualDeep */ "./node_modules/lodash/_baseIsEqualDeep.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/**
+ * The base implementation of `_.isEqual` which supports partial comparisons
+ * and tracks traversed objects.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @param {boolean} bitmask The bitmask flags.
+ *  1 - Unordered comparison
+ *  2 - Partial comparison
+ * @param {Function} [customizer] The function to customize comparisons.
+ * @param {Object} [stack] Tracks traversed `value` and `other` objects.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ */
+function baseIsEqual(value, other, bitmask, customizer, stack) {
+  if (value === other) {
+    return true;
+  }
+  if (value == null || other == null || (!isObjectLike(value) && !isObjectLike(other))) {
+    return value !== value && other !== other;
+  }
+  return baseIsEqualDeep(value, other, bitmask, customizer, baseIsEqual, stack);
+}
+
+module.exports = baseIsEqual;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsEqualDeep.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_baseIsEqualDeep.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Stack = __webpack_require__(/*! ./_Stack */ "./node_modules/lodash/_Stack.js"),
+    equalArrays = __webpack_require__(/*! ./_equalArrays */ "./node_modules/lodash/_equalArrays.js"),
+    equalByTag = __webpack_require__(/*! ./_equalByTag */ "./node_modules/lodash/_equalByTag.js"),
+    equalObjects = __webpack_require__(/*! ./_equalObjects */ "./node_modules/lodash/_equalObjects.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ "./node_modules/lodash/isTypedArray.js");
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1;
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    objectTag = '[object Object]';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * A specialized version of `baseIsEqual` for arrays and objects which performs
+ * deep comparisons and tracks traversed objects enabling objects with circular
+ * references to be compared.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} [stack] Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function baseIsEqualDeep(object, other, bitmask, customizer, equalFunc, stack) {
+  var objIsArr = isArray(object),
+      othIsArr = isArray(other),
+      objTag = objIsArr ? arrayTag : getTag(object),
+      othTag = othIsArr ? arrayTag : getTag(other);
+
+  objTag = objTag == argsTag ? objectTag : objTag;
+  othTag = othTag == argsTag ? objectTag : othTag;
+
+  var objIsObj = objTag == objectTag,
+      othIsObj = othTag == objectTag,
+      isSameTag = objTag == othTag;
+
+  if (isSameTag && isBuffer(object)) {
+    if (!isBuffer(other)) {
+      return false;
+    }
+    objIsArr = true;
+    objIsObj = false;
+  }
+  if (isSameTag && !objIsObj) {
+    stack || (stack = new Stack);
+    return (objIsArr || isTypedArray(object))
+      ? equalArrays(object, other, bitmask, customizer, equalFunc, stack)
+      : equalByTag(object, other, objTag, bitmask, customizer, equalFunc, stack);
+  }
+  if (!(bitmask & COMPARE_PARTIAL_FLAG)) {
+    var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
+        othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
+
+    if (objIsWrapped || othIsWrapped) {
+      var objUnwrapped = objIsWrapped ? object.value() : object,
+          othUnwrapped = othIsWrapped ? other.value() : other;
+
+      stack || (stack = new Stack);
+      return equalFunc(objUnwrapped, othUnwrapped, bitmask, customizer, stack);
+    }
+  }
+  if (!isSameTag) {
+    return false;
+  }
+  stack || (stack = new Stack);
+  return equalObjects(object, other, bitmask, customizer, equalFunc, stack);
+}
+
+module.exports = baseIsEqualDeep;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsMap.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseIsMap.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]';
+
+/**
+ * The base implementation of `_.isMap` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+ */
+function baseIsMap(value) {
+  return isObjectLike(value) && getTag(value) == mapTag;
+}
+
+module.exports = baseIsMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsMatch.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_baseIsMatch.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Stack = __webpack_require__(/*! ./_Stack */ "./node_modules/lodash/_Stack.js"),
+    baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ "./node_modules/lodash/_baseIsEqual.js");
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1,
+    COMPARE_UNORDERED_FLAG = 2;
+
+/**
+ * The base implementation of `_.isMatch` without support for iteratee shorthands.
+ *
+ * @private
+ * @param {Object} object The object to inspect.
+ * @param {Object} source The object of property values to match.
+ * @param {Array} matchData The property names, values, and compare flags to match.
+ * @param {Function} [customizer] The function to customize comparisons.
+ * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+ */
+function baseIsMatch(object, source, matchData, customizer) {
+  var index = matchData.length,
+      length = index,
+      noCustomizer = !customizer;
+
+  if (object == null) {
+    return !length;
+  }
+  object = Object(object);
+  while (index--) {
+    var data = matchData[index];
+    if ((noCustomizer && data[2])
+          ? data[1] !== object[data[0]]
+          : !(data[0] in object)
+        ) {
+      return false;
+    }
+  }
+  while (++index < length) {
+    data = matchData[index];
+    var key = data[0],
+        objValue = object[key],
+        srcValue = data[1];
+
+    if (noCustomizer && data[2]) {
+      if (objValue === undefined && !(key in object)) {
+        return false;
+      }
+    } else {
+      var stack = new Stack;
+      if (customizer) {
+        var result = customizer(objValue, srcValue, key, object, source, stack);
+      }
+      if (!(result === undefined
+            ? baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG, customizer, stack)
+            : result
+          )) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+module.exports = baseIsMatch;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsNative.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseIsNative.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+    isMasked = __webpack_require__(/*! ./_isMasked */ "./node_modules/lodash/_isMasked.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    toSource = __webpack_require__(/*! ./_toSource */ "./node_modules/lodash/_toSource.js");
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+module.exports = baseIsNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsRegExp.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseIsRegExp.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var regexpTag = '[object RegExp]';
+
+/**
+ * The base implementation of `_.isRegExp` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
+ */
+function baseIsRegExp(value) {
+  return isObjectLike(value) && baseGetTag(value) == regexpTag;
+}
+
+module.exports = baseIsRegExp;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsSet.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseIsSet.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var setTag = '[object Set]';
+
+/**
+ * The base implementation of `_.isSet` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+ */
+function baseIsSet(value) {
+  return isObjectLike(value) && getTag(value) == setTag;
+}
+
+module.exports = baseIsSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseIsTypedArray.js":
+/*!**************************************************!*\
+  !*** ./node_modules/lodash/_baseIsTypedArray.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "./node_modules/lodash/isLength.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values of typed arrays. */
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ */
+function baseIsTypedArray(value) {
+  return isObjectLike(value) &&
+    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+}
+
+module.exports = baseIsTypedArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseKeys.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_baseKeys.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js"),
+    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ "./node_modules/lodash/_nativeKeys.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseKeysIn.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseKeysIn.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js"),
+    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ "./node_modules/lodash/_nativeKeysIn.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeysIn(object) {
+  if (!isObject(object)) {
+    return nativeKeysIn(object);
+  }
+  var isProto = isPrototype(object),
+      result = [];
+
+  for (var key in object) {
+    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeysIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseLt.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_baseLt.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.lt` which doesn't coerce arguments.
+ *
+ * @private
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is less than `other`,
+ *  else `false`.
+ */
+function baseLt(value, other) {
+  return value < other;
+}
+
+module.exports = baseLt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseTimes.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseTimes.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.times` without support for iteratee shorthands
+ * or max array length checks.
+ *
+ * @private
+ * @param {number} n The number of times to invoke `iteratee`.
+ * @param {Function} iteratee The function invoked per iteration.
+ * @returns {Array} Returns the array of results.
+ */
+function baseTimes(n, iteratee) {
+  var index = -1,
+      result = Array(n);
+
+  while (++index < n) {
+    result[index] = iteratee(index);
+  }
+  return result;
+}
+
+module.exports = baseTimes;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseToString.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_baseToString.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0;
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolToString = symbolProto ? symbolProto.toString : undefined;
+
+/**
+ * The base implementation of `_.toString` which doesn't convert nullish
+ * values to empty strings.
+ *
+ * @private
+ * @param {*} value The value to process.
+ * @returns {string} Returns the string.
+ */
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+  if (isArray(value)) {
+    // Recursively convert values (susceptible to call stack limits).
+    return arrayMap(value, baseToString) + '';
+  }
+  if (isSymbol(value)) {
+    return symbolToString ? symbolToString.call(value) : '';
+  }
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+module.exports = baseToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseTrim.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_baseTrim.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var trimmedEndIndex = __webpack_require__(/*! ./_trimmedEndIndex */ "./node_modules/lodash/_trimmedEndIndex.js");
+
+/** Used to match leading whitespace. */
+var reTrimStart = /^\s+/;
+
+/**
+ * The base implementation of `_.trim`.
+ *
+ * @private
+ * @param {string} string The string to trim.
+ * @returns {string} Returns the trimmed string.
+ */
+function baseTrim(string) {
+  return string
+    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+    : string;
+}
+
+module.exports = baseTrim;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseUnary.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_baseUnary.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+module.exports = baseUnary;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_baseValues.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_baseValues.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayMap = __webpack_require__(/*! ./_arrayMap */ "./node_modules/lodash/_arrayMap.js");
+
+/**
+ * The base implementation of `_.values` and `_.valuesIn` which creates an
+ * array of `object` property values corresponding to the property names
+ * of `props`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {Array} props The property names to get values for.
+ * @returns {Object} Returns the array of property values.
+ */
+function baseValues(object, props) {
+  return arrayMap(props, function(key) {
+    return object[key];
+  });
+}
+
+module.exports = baseValues;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cacheHas.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_cacheHas.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if a `cache` value for `key` exists.
+ *
+ * @private
+ * @param {Object} cache The cache to query.
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function cacheHas(cache, key) {
+  return cache.has(key);
+}
+
+module.exports = cacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneArrayBuffer.js":
+/*!**************************************************!*\
+  !*** ./node_modules/lodash/_cloneArrayBuffer.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Uint8Array = __webpack_require__(/*! ./_Uint8Array */ "./node_modules/lodash/_Uint8Array.js");
+
+/**
+ * Creates a clone of `arrayBuffer`.
+ *
+ * @private
+ * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+ * @returns {ArrayBuffer} Returns the cloned array buffer.
+ */
+function cloneArrayBuffer(arrayBuffer) {
+  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+  return result;
+}
+
+module.exports = cloneArrayBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneBuffer.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_cloneBuffer.js ***!
+  \*********************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined,
+    allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined;
+
+/**
+ * Creates a clone of  `buffer`.
+ *
+ * @private
+ * @param {Buffer} buffer The buffer to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Buffer} Returns the cloned buffer.
+ */
+function cloneBuffer(buffer, isDeep) {
+  if (isDeep) {
+    return buffer.slice();
+  }
+  var length = buffer.length,
+      result = allocUnsafe ? allocUnsafe(length) : new buffer.constructor(length);
+
+  buffer.copy(result);
+  return result;
+}
+
+module.exports = cloneBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneDataView.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_cloneDataView.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ "./node_modules/lodash/_cloneArrayBuffer.js");
+
+/**
+ * Creates a clone of `dataView`.
+ *
+ * @private
+ * @param {Object} dataView The data view to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned data view.
+ */
+function cloneDataView(dataView, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(dataView.buffer) : dataView.buffer;
+  return new dataView.constructor(buffer, dataView.byteOffset, dataView.byteLength);
+}
+
+module.exports = cloneDataView;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneRegExp.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_cloneRegExp.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/** Used to match `RegExp` flags from their coerced string values. */
+var reFlags = /\w*$/;
+
+/**
+ * Creates a clone of `regexp`.
+ *
+ * @private
+ * @param {Object} regexp The regexp to clone.
+ * @returns {Object} Returns the cloned regexp.
+ */
+function cloneRegExp(regexp) {
+  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+  result.lastIndex = regexp.lastIndex;
+  return result;
+}
+
+module.exports = cloneRegExp;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneSymbol.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_cloneSymbol.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * Creates a clone of the `symbol` object.
+ *
+ * @private
+ * @param {Object} symbol The symbol object to clone.
+ * @returns {Object} Returns the cloned symbol object.
+ */
+function cloneSymbol(symbol) {
+  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+}
+
+module.exports = cloneSymbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_cloneTypedArray.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_cloneTypedArray.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ "./node_modules/lodash/_cloneArrayBuffer.js");
+
+/**
+ * Creates a clone of `typedArray`.
+ *
+ * @private
+ * @param {Object} typedArray The typed array to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the cloned typed array.
+ */
+function cloneTypedArray(typedArray, isDeep) {
+  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+}
+
+module.exports = cloneTypedArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copyArray.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_copyArray.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Copies the values of `source` to `array`.
+ *
+ * @private
+ * @param {Array} source The array to copy values from.
+ * @param {Array} [array=[]] The array to copy values to.
+ * @returns {Array} Returns `array`.
+ */
+function copyArray(source, array) {
+  var index = -1,
+      length = source.length;
+
+  array || (array = Array(length));
+  while (++index < length) {
+    array[index] = source[index];
+  }
+  return array;
+}
+
+module.exports = copyArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copyObject.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_copyObject.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assignValue = __webpack_require__(/*! ./_assignValue */ "./node_modules/lodash/_assignValue.js"),
+    baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ "./node_modules/lodash/_baseAssignValue.js");
+
+/**
+ * Copies properties of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy properties from.
+ * @param {Array} props The property identifiers to copy.
+ * @param {Object} [object={}] The object to copy properties to.
+ * @param {Function} [customizer] The function to customize copied values.
+ * @returns {Object} Returns `object`.
+ */
+function copyObject(source, props, object, customizer) {
+  var isNew = !object;
+  object || (object = {});
+
+  var index = -1,
+      length = props.length;
+
+  while (++index < length) {
+    var key = props[index];
+
+    var newValue = customizer
+      ? customizer(object[key], source[key], key, object, source)
+      : undefined;
+
+    if (newValue === undefined) {
+      newValue = source[key];
+    }
+    if (isNew) {
+      baseAssignValue(object, key, newValue);
+    } else {
+      assignValue(object, key, newValue);
+    }
+  }
+  return object;
+}
+
+module.exports = copyObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copySymbols.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_copySymbols.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ "./node_modules/lodash/_getSymbols.js");
+
+/**
+ * Copies own symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbols(source, object) {
+  return copyObject(source, getSymbols(source), object);
+}
+
+module.exports = copySymbols;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_copySymbolsIn.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_copySymbolsIn.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ "./node_modules/lodash/_getSymbolsIn.js");
+
+/**
+ * Copies own and inherited symbols of `source` to `object`.
+ *
+ * @private
+ * @param {Object} source The object to copy symbols from.
+ * @param {Object} [object={}] The object to copy symbols to.
+ * @returns {Object} Returns `object`.
+ */
+function copySymbolsIn(source, object) {
+  return copyObject(source, getSymbolsIn(source), object);
+}
+
+module.exports = copySymbolsIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_coreJsData.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_coreJsData.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+module.exports = coreJsData;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_createRelationalOperation.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/lodash/_createRelationalOperation.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toNumber = __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js");
+
+/**
+ * Creates a function that performs a relational operation on two values.
+ *
+ * @private
+ * @param {Function} operator The function to perform the operation.
+ * @returns {Function} Returns the new relational operation function.
+ */
+function createRelationalOperation(operator) {
+  return function(value, other) {
+    if (!(typeof value == 'string' && typeof other == 'string')) {
+      value = toNumber(value);
+      other = toNumber(other);
+    }
+    return operator(value, other);
+  };
+}
+
+module.exports = createRelationalOperation;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_defineProperty.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_defineProperty.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js");
+
+var defineProperty = (function() {
+  try {
+    var func = getNative(Object, 'defineProperty');
+    func({}, '', {});
+    return func;
+  } catch (e) {}
+}());
+
+module.exports = defineProperty;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_equalArrays.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_equalArrays.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var SetCache = __webpack_require__(/*! ./_SetCache */ "./node_modules/lodash/_SetCache.js"),
+    arraySome = __webpack_require__(/*! ./_arraySome */ "./node_modules/lodash/_arraySome.js"),
+    cacheHas = __webpack_require__(/*! ./_cacheHas */ "./node_modules/lodash/_cacheHas.js");
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1,
+    COMPARE_UNORDERED_FLAG = 2;
+
+/**
+ * A specialized version of `baseIsEqualDeep` for arrays with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Array} array The array to compare.
+ * @param {Array} other The other array to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `array` and `other` objects.
+ * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
+ */
+function equalArrays(array, other, bitmask, customizer, equalFunc, stack) {
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
+      arrLength = array.length,
+      othLength = other.length;
+
+  if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
+    return false;
+  }
+  // Check that cyclic values are equal.
+  var arrStacked = stack.get(array);
+  var othStacked = stack.get(other);
+  if (arrStacked && othStacked) {
+    return arrStacked == other && othStacked == array;
+  }
+  var index = -1,
+      result = true,
+      seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new SetCache : undefined;
+
+  stack.set(array, other);
+  stack.set(other, array);
+
+  // Ignore non-index properties.
+  while (++index < arrLength) {
+    var arrValue = array[index],
+        othValue = other[index];
+
+    if (customizer) {
+      var compared = isPartial
+        ? customizer(othValue, arrValue, index, other, array, stack)
+        : customizer(arrValue, othValue, index, array, other, stack);
+    }
+    if (compared !== undefined) {
+      if (compared) {
+        continue;
+      }
+      result = false;
+      break;
+    }
+    // Recursively compare arrays (susceptible to call stack limits).
+    if (seen) {
+      if (!arraySome(other, function(othValue, othIndex) {
+            if (!cacheHas(seen, othIndex) &&
+                (arrValue === othValue || equalFunc(arrValue, othValue, bitmask, customizer, stack))) {
+              return seen.push(othIndex);
+            }
+          })) {
+        result = false;
+        break;
+      }
+    } else if (!(
+          arrValue === othValue ||
+            equalFunc(arrValue, othValue, bitmask, customizer, stack)
+        )) {
+      result = false;
+      break;
+    }
+  }
+  stack['delete'](array);
+  stack['delete'](other);
+  return result;
+}
+
+module.exports = equalArrays;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_equalByTag.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_equalByTag.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    Uint8Array = __webpack_require__(/*! ./_Uint8Array */ "./node_modules/lodash/_Uint8Array.js"),
+    eq = __webpack_require__(/*! ./eq */ "./node_modules/lodash/eq.js"),
+    equalArrays = __webpack_require__(/*! ./_equalArrays */ "./node_modules/lodash/_equalArrays.js"),
+    mapToArray = __webpack_require__(/*! ./_mapToArray */ "./node_modules/lodash/_mapToArray.js"),
+    setToArray = __webpack_require__(/*! ./_setToArray */ "./node_modules/lodash/_setToArray.js");
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1,
+    COMPARE_UNORDERED_FLAG = 2;
+
+/** `Object#toString` result references. */
+var boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]';
+
+/** Used to convert symbols to primitives and strings. */
+var symbolProto = Symbol ? Symbol.prototype : undefined,
+    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+
+/**
+ * A specialized version of `baseIsEqualDeep` for comparing objects of
+ * the same `toStringTag`.
+ *
+ * **Note:** This function only supports comparing values with tags of
+ * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {string} tag The `toStringTag` of the objects to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalByTag(object, other, tag, bitmask, customizer, equalFunc, stack) {
+  switch (tag) {
+    case dataViewTag:
+      if ((object.byteLength != other.byteLength) ||
+          (object.byteOffset != other.byteOffset)) {
+        return false;
+      }
+      object = object.buffer;
+      other = other.buffer;
+
+    case arrayBufferTag:
+      if ((object.byteLength != other.byteLength) ||
+          !equalFunc(new Uint8Array(object), new Uint8Array(other))) {
+        return false;
+      }
+      return true;
+
+    case boolTag:
+    case dateTag:
+    case numberTag:
+      // Coerce booleans to `1` or `0` and dates to milliseconds.
+      // Invalid dates are coerced to `NaN`.
+      return eq(+object, +other);
+
+    case errorTag:
+      return object.name == other.name && object.message == other.message;
+
+    case regexpTag:
+    case stringTag:
+      // Coerce regexes to strings and treat strings, primitives and objects,
+      // as equal. See http://www.ecma-international.org/ecma-262/7.0/#sec-regexp.prototype.tostring
+      // for more details.
+      return object == (other + '');
+
+    case mapTag:
+      var convert = mapToArray;
+
+    case setTag:
+      var isPartial = bitmask & COMPARE_PARTIAL_FLAG;
+      convert || (convert = setToArray);
+
+      if (object.size != other.size && !isPartial) {
+        return false;
+      }
+      // Assume cyclic values are equal.
+      var stacked = stack.get(object);
+      if (stacked) {
+        return stacked == other;
+      }
+      bitmask |= COMPARE_UNORDERED_FLAG;
+
+      // Recursively compare objects (susceptible to call stack limits).
+      stack.set(object, other);
+      var result = equalArrays(convert(object), convert(other), bitmask, customizer, equalFunc, stack);
+      stack['delete'](object);
+      return result;
+
+    case symbolTag:
+      if (symbolValueOf) {
+        return symbolValueOf.call(object) == symbolValueOf.call(other);
+      }
+  }
+  return false;
+}
+
+module.exports = equalByTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_equalObjects.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_equalObjects.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getAllKeys = __webpack_require__(/*! ./_getAllKeys */ "./node_modules/lodash/_getAllKeys.js");
+
+/** Used to compose bitmasks for value comparisons. */
+var COMPARE_PARTIAL_FLAG = 1;
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * A specialized version of `baseIsEqualDeep` for objects with support for
+ * partial deep comparisons.
+ *
+ * @private
+ * @param {Object} object The object to compare.
+ * @param {Object} other The other object to compare.
+ * @param {number} bitmask The bitmask flags. See `baseIsEqual` for more details.
+ * @param {Function} customizer The function to customize comparisons.
+ * @param {Function} equalFunc The function to determine equivalents of values.
+ * @param {Object} stack Tracks traversed `object` and `other` objects.
+ * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
+ */
+function equalObjects(object, other, bitmask, customizer, equalFunc, stack) {
+  var isPartial = bitmask & COMPARE_PARTIAL_FLAG,
+      objProps = getAllKeys(object),
+      objLength = objProps.length,
+      othProps = getAllKeys(other),
+      othLength = othProps.length;
+
+  if (objLength != othLength && !isPartial) {
+    return false;
+  }
+  var index = objLength;
+  while (index--) {
+    var key = objProps[index];
+    if (!(isPartial ? key in other : hasOwnProperty.call(other, key))) {
+      return false;
+    }
+  }
+  // Check that cyclic values are equal.
+  var objStacked = stack.get(object);
+  var othStacked = stack.get(other);
+  if (objStacked && othStacked) {
+    return objStacked == other && othStacked == object;
+  }
+  var result = true;
+  stack.set(object, other);
+  stack.set(other, object);
+
+  var skipCtor = isPartial;
+  while (++index < objLength) {
+    key = objProps[index];
+    var objValue = object[key],
+        othValue = other[key];
+
+    if (customizer) {
+      var compared = isPartial
+        ? customizer(othValue, objValue, key, other, object, stack)
+        : customizer(objValue, othValue, key, object, other, stack);
+    }
+    // Recursively compare objects (susceptible to call stack limits).
+    if (!(compared === undefined
+          ? (objValue === othValue || equalFunc(objValue, othValue, bitmask, customizer, stack))
+          : compared
+        )) {
+      result = false;
+      break;
+    }
+    skipCtor || (skipCtor = key == 'constructor');
+  }
+  if (result && !skipCtor) {
+    var objCtor = object.constructor,
+        othCtor = other.constructor;
+
+    // Non `Object` object instances with different constructors are not equal.
+    if (objCtor != othCtor &&
+        ('constructor' in object && 'constructor' in other) &&
+        !(typeof objCtor == 'function' && objCtor instanceof objCtor &&
+          typeof othCtor == 'function' && othCtor instanceof othCtor)) {
+      result = false;
+    }
+  }
+  stack['delete'](object);
+  stack['delete'](other);
+  return result;
+}
+
+module.exports = equalObjects;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_freeGlobal.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_freeGlobal.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof __webpack_require__.g == 'object' && __webpack_require__.g && __webpack_require__.g.Object === Object && __webpack_require__.g;
+
+module.exports = freeGlobal;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getAllKeys.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_getAllKeys.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ "./node_modules/lodash/_baseGetAllKeys.js"),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ "./node_modules/lodash/_getSymbols.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Creates an array of own enumerable property names and symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeys(object) {
+  return baseGetAllKeys(object, keys, getSymbols);
+}
+
+module.exports = getAllKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getAllKeysIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getAllKeysIn.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ "./node_modules/lodash/_baseGetAllKeys.js"),
+    getSymbolsIn = __webpack_require__(/*! ./_getSymbolsIn */ "./node_modules/lodash/_getSymbolsIn.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+
+/**
+ * Creates an array of own and inherited enumerable property names and
+ * symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names and symbols.
+ */
+function getAllKeysIn(object) {
+  return baseGetAllKeys(object, keysIn, getSymbolsIn);
+}
+
+module.exports = getAllKeysIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getMapData.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_getMapData.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isKeyable = __webpack_require__(/*! ./_isKeyable */ "./node_modules/lodash/_isKeyable.js");
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+module.exports = getMapData;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getMatchData.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getMatchData.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ "./node_modules/lodash/_isStrictComparable.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Gets the property names, values, and compare flags of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the match data of `object`.
+ */
+function getMatchData(object) {
+  var result = keys(object),
+      length = result.length;
+
+  while (length--) {
+    var key = result[length],
+        value = object[key];
+
+    result[length] = [key, value, isStrictComparable(value)];
+  }
+  return result;
+}
+
+module.exports = getMatchData;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getNative.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getNative.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ "./node_modules/lodash/_baseIsNative.js"),
+    getValue = __webpack_require__(/*! ./_getValue */ "./node_modules/lodash/_getValue.js");
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+module.exports = getNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getPrototype.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getPrototype.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var overArg = __webpack_require__(/*! ./_overArg */ "./node_modules/lodash/_overArg.js");
+
+/** Built-in value references. */
+var getPrototype = overArg(Object.getPrototypeOf, Object);
+
+module.exports = getPrototype;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getRawTag.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_getRawTag.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getSymbols.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_getSymbols.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayFilter = __webpack_require__(/*! ./_arrayFilter */ "./node_modules/lodash/_arrayFilter.js"),
+    stubArray = __webpack_require__(/*! ./stubArray */ "./node_modules/lodash/stubArray.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Built-in value references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+/**
+ * Creates an array of the own enumerable symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbols = !nativeGetSymbols ? stubArray : function(object) {
+  if (object == null) {
+    return [];
+  }
+  object = Object(object);
+  return arrayFilter(nativeGetSymbols(object), function(symbol) {
+    return propertyIsEnumerable.call(object, symbol);
+  });
+};
+
+module.exports = getSymbols;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getSymbolsIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_getSymbolsIn.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayPush = __webpack_require__(/*! ./_arrayPush */ "./node_modules/lodash/_arrayPush.js"),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ "./node_modules/lodash/_getPrototype.js"),
+    getSymbols = __webpack_require__(/*! ./_getSymbols */ "./node_modules/lodash/_getSymbols.js"),
+    stubArray = __webpack_require__(/*! ./stubArray */ "./node_modules/lodash/stubArray.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeGetSymbols = Object.getOwnPropertySymbols;
+
+/**
+ * Creates an array of the own and inherited enumerable symbols of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of symbols.
+ */
+var getSymbolsIn = !nativeGetSymbols ? stubArray : function(object) {
+  var result = [];
+  while (object) {
+    arrayPush(result, getSymbols(object));
+    object = getPrototype(object);
+  }
+  return result;
+};
+
+module.exports = getSymbolsIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getTag.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/_getTag.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var DataView = __webpack_require__(/*! ./_DataView */ "./node_modules/lodash/_DataView.js"),
+    Map = __webpack_require__(/*! ./_Map */ "./node_modules/lodash/_Map.js"),
+    Promise = __webpack_require__(/*! ./_Promise */ "./node_modules/lodash/_Promise.js"),
+    Set = __webpack_require__(/*! ./_Set */ "./node_modules/lodash/_Set.js"),
+    WeakMap = __webpack_require__(/*! ./_WeakMap */ "./node_modules/lodash/_WeakMap.js"),
+    baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    toSource = __webpack_require__(/*! ./_toSource */ "./node_modules/lodash/_toSource.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    setTag = '[object Set]',
+    weakMapTag = '[object WeakMap]';
+
+var dataViewTag = '[object DataView]';
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = baseGetTag(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : '';
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+module.exports = getTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_getValue.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_getValue.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+module.exports = getValue;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hasUnicode.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_hasUnicode.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+    rsVarRange = '\\ufe0e\\ufe0f';
+
+/** Used to compose unicode capture groups. */
+var rsZWJ = '\\u200d';
+
+/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
+var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboRange + rsVarRange + ']');
+
+/**
+ * Checks if `string` contains Unicode symbols.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {boolean} Returns `true` if a symbol is found, else `false`.
+ */
+function hasUnicode(string) {
+  return reHasUnicode.test(string);
+}
+
+module.exports = hasUnicode;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashClear.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_hashClear.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = nativeCreate ? nativeCreate(null) : {};
+  this.size = 0;
+}
+
+module.exports = hashClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashDelete.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_hashDelete.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  var result = this.has(key) && delete this.__data__[key];
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+module.exports = hashDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashGet.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashGet.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty.call(data, key) ? data[key] : undefined;
+}
+
+module.exports = hashGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashHas.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashHas.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
+}
+
+module.exports = hashHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_hashSet.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_hashSet.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ "./node_modules/lodash/_nativeCreate.js");
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  this.size += this.has(key) ? 0 : 1;
+  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+  return this;
+}
+
+module.exports = hashSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_initCloneArray.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_initCloneArray.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Initializes an array clone.
+ *
+ * @private
+ * @param {Array} array The array to clone.
+ * @returns {Array} Returns the initialized clone.
+ */
+function initCloneArray(array) {
+  var length = array.length,
+      result = new array.constructor(length);
+
+  // Add properties assigned by `RegExp#exec`.
+  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+    result.index = array.index;
+    result.input = array.input;
+  }
+  return result;
+}
+
+module.exports = initCloneArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_initCloneByTag.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_initCloneByTag.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var cloneArrayBuffer = __webpack_require__(/*! ./_cloneArrayBuffer */ "./node_modules/lodash/_cloneArrayBuffer.js"),
+    cloneDataView = __webpack_require__(/*! ./_cloneDataView */ "./node_modules/lodash/_cloneDataView.js"),
+    cloneRegExp = __webpack_require__(/*! ./_cloneRegExp */ "./node_modules/lodash/_cloneRegExp.js"),
+    cloneSymbol = __webpack_require__(/*! ./_cloneSymbol */ "./node_modules/lodash/_cloneSymbol.js"),
+    cloneTypedArray = __webpack_require__(/*! ./_cloneTypedArray */ "./node_modules/lodash/_cloneTypedArray.js");
+
+/** `Object#toString` result references. */
+var boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    symbolTag = '[object Symbol]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/**
+ * Initializes an object clone based on its `toStringTag`.
+ *
+ * **Note:** This function only supports cloning values with tags of
+ * `Boolean`, `Date`, `Error`, `Map`, `Number`, `RegExp`, `Set`, or `String`.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @param {string} tag The `toStringTag` of the object to clone.
+ * @param {boolean} [isDeep] Specify a deep clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneByTag(object, tag, isDeep) {
+  var Ctor = object.constructor;
+  switch (tag) {
+    case arrayBufferTag:
+      return cloneArrayBuffer(object);
+
+    case boolTag:
+    case dateTag:
+      return new Ctor(+object);
+
+    case dataViewTag:
+      return cloneDataView(object, isDeep);
+
+    case float32Tag: case float64Tag:
+    case int8Tag: case int16Tag: case int32Tag:
+    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+      return cloneTypedArray(object, isDeep);
+
+    case mapTag:
+      return new Ctor;
+
+    case numberTag:
+    case stringTag:
+      return new Ctor(object);
+
+    case regexpTag:
+      return cloneRegExp(object);
+
+    case setTag:
+      return new Ctor;
+
+    case symbolTag:
+      return cloneSymbol(object);
+  }
+}
+
+module.exports = initCloneByTag;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_initCloneObject.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_initCloneObject.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseCreate = __webpack_require__(/*! ./_baseCreate */ "./node_modules/lodash/_baseCreate.js"),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ "./node_modules/lodash/_getPrototype.js"),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js");
+
+/**
+ * Initializes an object clone.
+ *
+ * @private
+ * @param {Object} object The object to clone.
+ * @returns {Object} Returns the initialized clone.
+ */
+function initCloneObject(object) {
+  return (typeof object.constructor == 'function' && !isPrototype(object))
+    ? baseCreate(getPrototype(object))
+    : {};
+}
+
+module.exports = initCloneObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isIndex.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_isIndex.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/** Used to detect unsigned integer values. */
+var reIsUint = /^(?:0|[1-9]\d*)$/;
+
+/**
+ * Checks if `value` is a valid array-like index.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+ * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+ */
+function isIndex(value, length) {
+  var type = typeof value;
+  length = length == null ? MAX_SAFE_INTEGER : length;
+
+  return !!length &&
+    (type == 'number' ||
+      (type != 'symbol' && reIsUint.test(value))) &&
+        (value > -1 && value % 1 == 0 && value < length);
+}
+
+module.exports = isIndex;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isKeyable.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/_isKeyable.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+module.exports = isKeyable;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isMaskable.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_isMaskable.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ "./node_modules/lodash/_coreJsData.js"),
+    isFunction = __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+    stubFalse = __webpack_require__(/*! ./stubFalse */ "./node_modules/lodash/stubFalse.js");
+
+/**
+ * Checks if `func` is capable of being masked.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `func` is maskable, else `false`.
+ */
+var isMaskable = coreJsData ? isFunction : stubFalse;
+
+module.exports = isMaskable;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isMasked.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_isMasked.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var coreJsData = __webpack_require__(/*! ./_coreJsData */ "./node_modules/lodash/_coreJsData.js");
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+module.exports = isMasked;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isPrototype.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_isPrototype.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+module.exports = isPrototype;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_isStrictComparable.js":
+/*!****************************************************!*\
+  !*** ./node_modules/lodash/_isStrictComparable.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
+
+/**
+ * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` if suitable for strict
+ *  equality comparisons, else `false`.
+ */
+function isStrictComparable(value) {
+  return value === value && !isObject(value);
+}
+
+module.exports = isStrictComparable;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_iteratorToArray.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_iteratorToArray.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `iterator` to an array.
+ *
+ * @private
+ * @param {Object} iterator The iterator to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function iteratorToArray(iterator) {
+  var data,
+      result = [];
+
+  while (!(data = iterator.next()).done) {
+    result.push(data.value);
+  }
+  return result;
+}
+
+module.exports = iteratorToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheClear.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_listCacheClear.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+
+module.exports = listCacheClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheDelete.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_listCacheDelete.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  --this.size;
+  return true;
+}
+
+module.exports = listCacheDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheGet.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheGet.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+module.exports = listCacheGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheHas.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheHas.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return assocIndexOf(this.__data__, key) > -1;
+}
+
+module.exports = listCacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_listCacheSet.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_listCacheSet.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ "./node_modules/lodash/_assocIndexOf.js");
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = assocIndexOf(data, key);
+
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+module.exports = listCacheSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheClear.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheClear.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Hash = __webpack_require__(/*! ./_Hash */ "./node_modules/lodash/_Hash.js"),
+    ListCache = __webpack_require__(/*! ./_ListCache */ "./node_modules/lodash/_ListCache.js"),
+    Map = __webpack_require__(/*! ./_Map */ "./node_modules/lodash/_Map.js");
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.size = 0;
+  this.__data__ = {
+    'hash': new Hash,
+    'map': new (Map || ListCache),
+    'string': new Hash
+  };
+}
+
+module.exports = mapCacheClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheDelete.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_mapCacheDelete.js ***!
+  \************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  var result = getMapData(this, key)['delete'](key);
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+module.exports = mapCacheDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheGet.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheGet.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return getMapData(this, key).get(key);
+}
+
+module.exports = mapCacheGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheHas.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheHas.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return getMapData(this, key).has(key);
+}
+
+module.exports = mapCacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapCacheSet.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_mapCacheSet.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getMapData = __webpack_require__(/*! ./_getMapData */ "./node_modules/lodash/_getMapData.js");
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  var data = getMapData(this, key),
+      size = data.size;
+
+  data.set(key, value);
+  this.size += data.size == size ? 0 : 1;
+  return this;
+}
+
+module.exports = mapCacheSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_mapToArray.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_mapToArray.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `map` to its key-value pairs.
+ *
+ * @private
+ * @param {Object} map The map to convert.
+ * @returns {Array} Returns the key-value pairs.
+ */
+function mapToArray(map) {
+  var index = -1,
+      result = Array(map.size);
+
+  map.forEach(function(value, key) {
+    result[++index] = [key, value];
+  });
+  return result;
+}
+
+module.exports = mapToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nativeCreate.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_nativeCreate.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getNative = __webpack_require__(/*! ./_getNative */ "./node_modules/lodash/_getNative.js");
+
+/* Built-in method references that are verified to be native. */
+var nativeCreate = getNative(Object, 'create');
+
+module.exports = nativeCreate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nativeKeys.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_nativeKeys.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var overArg = __webpack_require__(/*! ./_overArg */ "./node_modules/lodash/_overArg.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = overArg(Object.keys, Object);
+
+module.exports = nativeKeys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nativeKeysIn.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/_nativeKeysIn.js ***!
+  \**********************************************/
+/***/ ((module) => {
+
+/**
+ * This function is like
+ * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * except that it includes inherited enumerable properties.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function nativeKeysIn(object) {
+  var result = [];
+  if (object != null) {
+    for (var key in Object(object)) {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = nativeKeysIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_nodeUtil.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_nodeUtil.js ***!
+  \******************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Detect free variable `process` from Node.js. */
+var freeProcess = moduleExports && freeGlobal.process;
+
+/** Used to access faster Node.js helpers. */
+var nodeUtil = (function() {
+  try {
+    // Use `util.types` for Node.js 10+.
+    var types = freeModule && freeModule.require && freeModule.require('util').types;
+
+    if (types) {
+      return types;
+    }
+
+    // Legacy `process.binding('util')` for Node.js < 10.
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+
+module.exports = nodeUtil;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_objectToString.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_objectToString.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_overArg.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/_overArg.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+module.exports = overArg;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_root.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/_root.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ "./node_modules/lodash/_freeGlobal.js");
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_setCacheAdd.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_setCacheAdd.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/**
+ * Adds `value` to the array cache.
+ *
+ * @private
+ * @name add
+ * @memberOf SetCache
+ * @alias push
+ * @param {*} value The value to cache.
+ * @returns {Object} Returns the cache instance.
+ */
+function setCacheAdd(value) {
+  this.__data__.set(value, HASH_UNDEFINED);
+  return this;
+}
+
+module.exports = setCacheAdd;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_setCacheHas.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_setCacheHas.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is in the array cache.
+ *
+ * @private
+ * @name has
+ * @memberOf SetCache
+ * @param {*} value The value to search for.
+ * @returns {number} Returns `true` if `value` is found, else `false`.
+ */
+function setCacheHas(value) {
+  return this.__data__.has(value);
+}
+
+module.exports = setCacheHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_setToArray.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_setToArray.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Converts `set` to an array of its values.
+ *
+ * @private
+ * @param {Object} set The set to convert.
+ * @returns {Array} Returns the values.
+ */
+function setToArray(set) {
+  var index = -1,
+      result = Array(set.size);
+
+  set.forEach(function(value) {
+    result[++index] = value;
+  });
+  return result;
+}
+
+module.exports = setToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stackClear.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/_stackClear.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var ListCache = __webpack_require__(/*! ./_ListCache */ "./node_modules/lodash/_ListCache.js");
+
+/**
+ * Removes all key-value entries from the stack.
+ *
+ * @private
+ * @name clear
+ * @memberOf Stack
+ */
+function stackClear() {
+  this.__data__ = new ListCache;
+  this.size = 0;
+}
+
+module.exports = stackClear;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stackDelete.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/_stackDelete.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * Removes `key` and its value from the stack.
+ *
+ * @private
+ * @name delete
+ * @memberOf Stack
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function stackDelete(key) {
+  var data = this.__data__,
+      result = data['delete'](key);
+
+  this.size = data.size;
+  return result;
+}
+
+module.exports = stackDelete;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stackGet.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_stackGet.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * Gets the stack value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Stack
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function stackGet(key) {
+  return this.__data__.get(key);
+}
+
+module.exports = stackGet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stackHas.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_stackHas.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if a stack value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Stack
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function stackHas(key) {
+  return this.__data__.has(key);
+}
+
+module.exports = stackHas;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stackSet.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_stackSet.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var ListCache = __webpack_require__(/*! ./_ListCache */ "./node_modules/lodash/_ListCache.js"),
+    Map = __webpack_require__(/*! ./_Map */ "./node_modules/lodash/_Map.js"),
+    MapCache = __webpack_require__(/*! ./_MapCache */ "./node_modules/lodash/_MapCache.js");
+
+/** Used as the size to enable large array optimizations. */
+var LARGE_ARRAY_SIZE = 200;
+
+/**
+ * Sets the stack `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Stack
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the stack cache instance.
+ */
+function stackSet(key, value) {
+  var data = this.__data__;
+  if (data instanceof ListCache) {
+    var pairs = data.__data__;
+    if (!Map || (pairs.length < LARGE_ARRAY_SIZE - 1)) {
+      pairs.push([key, value]);
+      this.size = ++data.size;
+      return this;
+    }
+    data = this.__data__ = new MapCache(pairs);
+  }
+  data.set(key, value);
+  this.size = data.size;
+  return this;
+}
+
+module.exports = stackSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_stringToArray.js":
+/*!***********************************************!*\
+  !*** ./node_modules/lodash/_stringToArray.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var asciiToArray = __webpack_require__(/*! ./_asciiToArray */ "./node_modules/lodash/_asciiToArray.js"),
+    hasUnicode = __webpack_require__(/*! ./_hasUnicode */ "./node_modules/lodash/_hasUnicode.js"),
+    unicodeToArray = __webpack_require__(/*! ./_unicodeToArray */ "./node_modules/lodash/_unicodeToArray.js");
+
+/**
+ * Converts `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function stringToArray(string) {
+  return hasUnicode(string)
+    ? unicodeToArray(string)
+    : asciiToArray(string);
+}
+
+module.exports = stringToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_toSource.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/_toSource.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+module.exports = toSource;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_trimmedEndIndex.js":
+/*!*************************************************!*\
+  !*** ./node_modules/lodash/_trimmedEndIndex.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+/** Used to match a single whitespace character. */
+var reWhitespace = /\s/;
+
+/**
+ * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+ * character of `string`.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {number} Returns the index of the last non-whitespace character.
+ */
+function trimmedEndIndex(string) {
+  var index = string.length;
+
+  while (index-- && reWhitespace.test(string.charAt(index))) {}
+  return index;
+}
+
+module.exports = trimmedEndIndex;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/_unicodeToArray.js":
+/*!************************************************!*\
+  !*** ./node_modules/lodash/_unicodeToArray.js ***!
+  \************************************************/
+/***/ ((module) => {
+
+/** Used to compose unicode character classes. */
+var rsAstralRange = '\\ud800-\\udfff',
+    rsComboMarksRange = '\\u0300-\\u036f',
+    reComboHalfMarksRange = '\\ufe20-\\ufe2f',
+    rsComboSymbolsRange = '\\u20d0-\\u20ff',
+    rsComboRange = rsComboMarksRange + reComboHalfMarksRange + rsComboSymbolsRange,
+    rsVarRange = '\\ufe0e\\ufe0f';
+
+/** Used to compose unicode capture groups. */
+var rsAstral = '[' + rsAstralRange + ']',
+    rsCombo = '[' + rsComboRange + ']',
+    rsFitz = '\\ud83c[\\udffb-\\udfff]',
+    rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')',
+    rsNonAstral = '[^' + rsAstralRange + ']',
+    rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}',
+    rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]',
+    rsZWJ = '\\u200d';
+
+/** Used to compose unicode regexes. */
+var reOptMod = rsModifier + '?',
+    rsOptVar = '[' + rsVarRange + ']?',
+    rsOptJoin = '(?:' + rsZWJ + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*',
+    rsSeq = rsOptVar + reOptMod + rsOptJoin,
+    rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
+
+/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
+var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
+
+/**
+ * Converts a Unicode `string` to an array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the converted array.
+ */
+function unicodeToArray(string) {
+  return string.match(reUnicode) || [];
+}
+
+module.exports = unicodeToArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/castArray.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/castArray.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js");
+
+/**
+ * Casts `value` as an array if it's not one.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.4.0
+ * @category Lang
+ * @param {*} value The value to inspect.
+ * @returns {Array} Returns the cast array.
+ * @example
+ *
+ * _.castArray(1);
+ * // => [1]
+ *
+ * _.castArray({ 'a': 1 });
+ * // => [{ 'a': 1 }]
+ *
+ * _.castArray('abc');
+ * // => ['abc']
+ *
+ * _.castArray(null);
+ * // => [null]
+ *
+ * _.castArray(undefined);
+ * // => [undefined]
+ *
+ * _.castArray();
+ * // => []
+ *
+ * var array = [1, 2, 3];
+ * console.log(_.castArray(array) === array);
+ * // => true
+ */
+function castArray() {
+  if (!arguments.length) {
+    return [];
+  }
+  var value = arguments[0];
+  return isArray(value) ? value : [value];
+}
+
+module.exports = castArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/clone.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/clone.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClone = __webpack_require__(/*! ./_baseClone */ "./node_modules/lodash/_baseClone.js");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * Creates a shallow clone of `value`.
+ *
+ * **Note:** This method is loosely based on the
+ * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
+ * and supports cloning arrays, array buffers, booleans, date objects, maps,
+ * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
+ * arrays. The own enumerable properties of `arguments` objects are cloned
+ * as plain objects. An empty object is returned for uncloneable values such
+ * as error objects, functions, DOM nodes, and WeakMaps.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to clone.
+ * @returns {*} Returns the cloned value.
+ * @see _.cloneDeep
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var shallow = _.clone(objects);
+ * console.log(shallow[0] === objects[0]);
+ * // => true
+ */
+function clone(value) {
+  return baseClone(value, CLONE_SYMBOLS_FLAG);
+}
+
+module.exports = clone;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/cloneDeep.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/cloneDeep.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClone = __webpack_require__(/*! ./_baseClone */ "./node_modules/lodash/_baseClone.js");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * This method is like `_.clone` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 1.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.clone
+ * @example
+ *
+ * var objects = [{ 'a': 1 }, { 'b': 2 }];
+ *
+ * var deep = _.cloneDeep(objects);
+ * console.log(deep[0] === objects[0]);
+ * // => false
+ */
+function cloneDeep(value) {
+  return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG);
+}
+
+module.exports = cloneDeep;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/cloneDeepWith.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/cloneDeepWith.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClone = __webpack_require__(/*! ./_baseClone */ "./node_modules/lodash/_baseClone.js");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_DEEP_FLAG = 1,
+    CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * This method is like `_.cloneWith` except that it recursively clones `value`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to recursively clone.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @returns {*} Returns the deep cloned value.
+ * @see _.cloneWith
+ * @example
+ *
+ * function customizer(value) {
+ *   if (_.isElement(value)) {
+ *     return value.cloneNode(true);
+ *   }
+ * }
+ *
+ * var el = _.cloneDeepWith(document.body, customizer);
+ *
+ * console.log(el === document.body);
+ * // => false
+ * console.log(el.nodeName);
+ * // => 'BODY'
+ * console.log(el.childNodes.length);
+ * // => 20
+ */
+function cloneDeepWith(value, customizer) {
+  customizer = typeof customizer == 'function' ? customizer : undefined;
+  return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG, customizer);
+}
+
+module.exports = cloneDeepWith;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/cloneWith.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/cloneWith.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClone = __webpack_require__(/*! ./_baseClone */ "./node_modules/lodash/_baseClone.js");
+
+/** Used to compose bitmasks for cloning. */
+var CLONE_SYMBOLS_FLAG = 4;
+
+/**
+ * This method is like `_.clone` except that it accepts `customizer` which
+ * is invoked to produce the cloned value. If `customizer` returns `undefined`,
+ * cloning is handled by the method instead. The `customizer` is invoked with
+ * up to four arguments; (value [, index|key, object, stack]).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to clone.
+ * @param {Function} [customizer] The function to customize cloning.
+ * @returns {*} Returns the cloned value.
+ * @see _.cloneDeepWith
+ * @example
+ *
+ * function customizer(value) {
+ *   if (_.isElement(value)) {
+ *     return value.cloneNode(false);
+ *   }
+ * }
+ *
+ * var el = _.cloneWith(document.body, customizer);
+ *
+ * console.log(el === document.body);
+ * // => false
+ * console.log(el.nodeName);
+ * // => 'BODY'
+ * console.log(el.childNodes.length);
+ * // => 0
+ */
+function cloneWith(value, customizer) {
+  customizer = typeof customizer == 'function' ? customizer : undefined;
+  return baseClone(value, CLONE_SYMBOLS_FLAG, customizer);
+}
+
+module.exports = cloneWith;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/conformsTo.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/conformsTo.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseConformsTo = __webpack_require__(/*! ./_baseConformsTo */ "./node_modules/lodash/_baseConformsTo.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Checks if `object` conforms to `source` by invoking the predicate
+ * properties of `source` with the corresponding property values of `object`.
+ *
+ * **Note:** This method is equivalent to `_.conforms` when `source` is
+ * partially applied.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.14.0
+ * @category Lang
+ * @param {Object} object The object to inspect.
+ * @param {Object} source The object of property predicates to conform to.
+ * @returns {boolean} Returns `true` if `object` conforms, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ *
+ * _.conformsTo(object, { 'b': function(n) { return n > 1; } });
+ * // => true
+ *
+ * _.conformsTo(object, { 'b': function(n) { return n > 2; } });
+ * // => false
+ */
+function conformsTo(object, source) {
+  return source == null || baseConformsTo(object, source, keys(source));
+}
+
+module.exports = conformsTo;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/eq.js":
+/*!***********************************!*\
+  !*** ./node_modules/lodash/eq.js ***!
+  \***********************************/
+/***/ ((module) => {
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+module.exports = eq;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/gt.js":
+/*!***********************************!*\
+  !*** ./node_modules/lodash/gt.js ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGt = __webpack_require__(/*! ./_baseGt */ "./node_modules/lodash/_baseGt.js"),
+    createRelationalOperation = __webpack_require__(/*! ./_createRelationalOperation */ "./node_modules/lodash/_createRelationalOperation.js");
+
+/**
+ * Checks if `value` is greater than `other`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.9.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is greater than `other`,
+ *  else `false`.
+ * @see _.lt
+ * @example
+ *
+ * _.gt(3, 1);
+ * // => true
+ *
+ * _.gt(3, 3);
+ * // => false
+ *
+ * _.gt(1, 3);
+ * // => false
+ */
+var gt = createRelationalOperation(baseGt);
+
+module.exports = gt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/gte.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/gte.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var createRelationalOperation = __webpack_require__(/*! ./_createRelationalOperation */ "./node_modules/lodash/_createRelationalOperation.js");
+
+/**
+ * Checks if `value` is greater than or equal to `other`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.9.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is greater than or equal to
+ *  `other`, else `false`.
+ * @see _.lte
+ * @example
+ *
+ * _.gte(3, 1);
+ * // => true
+ *
+ * _.gte(3, 3);
+ * // => true
+ *
+ * _.gte(1, 3);
+ * // => false
+ */
+var gte = createRelationalOperation(function(value, other) {
+  return value >= other;
+});
+
+module.exports = gte;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArguments.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isArguments.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ "./node_modules/lodash/_baseIsArguments.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Built-in value references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+
+module.exports = isArguments;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArray.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isArray.js ***!
+  \****************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+module.exports = isArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArrayBuffer.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/isArrayBuffer.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsArrayBuffer = __webpack_require__(/*! ./_baseIsArrayBuffer */ "./node_modules/lodash/_baseIsArrayBuffer.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsArrayBuffer = nodeUtil && nodeUtil.isArrayBuffer;
+
+/**
+ * Checks if `value` is classified as an `ArrayBuffer` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array buffer, else `false`.
+ * @example
+ *
+ * _.isArrayBuffer(new ArrayBuffer(2));
+ * // => true
+ *
+ * _.isArrayBuffer(new Array(2));
+ * // => false
+ */
+var isArrayBuffer = nodeIsArrayBuffer ? baseUnary(nodeIsArrayBuffer) : baseIsArrayBuffer;
+
+module.exports = isArrayBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArrayLike.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isArrayLike.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isFunction = __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+    isLength = __webpack_require__(/*! ./isLength */ "./node_modules/lodash/isLength.js");
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+module.exports = isArrayLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isArrayLikeObject.js":
+/*!**************************************************!*\
+  !*** ./node_modules/lodash/isArrayLikeObject.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/**
+ * This method is like `_.isArrayLike` except that it also checks if `value`
+ * is an object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array-like object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArrayLikeObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLikeObject(document.body.children);
+ * // => true
+ *
+ * _.isArrayLikeObject('abc');
+ * // => false
+ *
+ * _.isArrayLikeObject(_.noop);
+ * // => false
+ */
+function isArrayLikeObject(value) {
+  return isObjectLike(value) && isArrayLike(value);
+}
+
+module.exports = isArrayLikeObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isBoolean.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/isBoolean.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var boolTag = '[object Boolean]';
+
+/**
+ * Checks if `value` is classified as a boolean primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a boolean, else `false`.
+ * @example
+ *
+ * _.isBoolean(false);
+ * // => true
+ *
+ * _.isBoolean(null);
+ * // => false
+ */
+function isBoolean(value) {
+  return value === true || value === false ||
+    (isObjectLike(value) && baseGetTag(value) == boolTag);
+}
+
+module.exports = isBoolean;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isBuffer.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isBuffer.js ***!
+  \*****************************************/
+/***/ ((module, exports, __webpack_require__) => {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js"),
+    stubFalse = __webpack_require__(/*! ./stubFalse */ "./node_modules/lodash/stubFalse.js");
+
+/** Detect free variable `exports`. */
+var freeExports =  true && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && "object" == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+module.exports = isBuffer;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isDate.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/isDate.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsDate = __webpack_require__(/*! ./_baseIsDate */ "./node_modules/lodash/_baseIsDate.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsDate = nodeUtil && nodeUtil.isDate;
+
+/**
+ * Checks if `value` is classified as a `Date` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a date object, else `false`.
+ * @example
+ *
+ * _.isDate(new Date);
+ * // => true
+ *
+ * _.isDate('Mon April 23 2012');
+ * // => false
+ */
+var isDate = nodeIsDate ? baseUnary(nodeIsDate) : baseIsDate;
+
+module.exports = isDate;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isElement.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/isElement.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js"),
+    isPlainObject = __webpack_require__(/*! ./isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+
+/**
+ * Checks if `value` is likely a DOM element.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a DOM element, else `false`.
+ * @example
+ *
+ * _.isElement(document.body);
+ * // => true
+ *
+ * _.isElement('<body>');
+ * // => false
+ */
+function isElement(value) {
+  return isObjectLike(value) && value.nodeType === 1 && !isPlainObject(value);
+}
+
+module.exports = isElement;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isEmpty.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isEmpty.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseKeys = __webpack_require__(/*! ./_baseKeys */ "./node_modules/lodash/_baseKeys.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isArguments = __webpack_require__(/*! ./isArguments */ "./node_modules/lodash/isArguments.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js"),
+    isBuffer = __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+    isPrototype = __webpack_require__(/*! ./_isPrototype */ "./node_modules/lodash/_isPrototype.js"),
+    isTypedArray = __webpack_require__(/*! ./isTypedArray */ "./node_modules/lodash/isTypedArray.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    setTag = '[object Set]';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Checks if `value` is an empty object, collection, map, or set.
+ *
+ * Objects are considered empty if they have no own enumerable string keyed
+ * properties.
+ *
+ * Array-like values such as `arguments` objects, arrays, buffers, strings, or
+ * jQuery-like collections are considered empty if they have a `length` of `0`.
+ * Similarly, maps and sets are considered empty if they have a `size` of `0`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is empty, else `false`.
+ * @example
+ *
+ * _.isEmpty(null);
+ * // => true
+ *
+ * _.isEmpty(true);
+ * // => true
+ *
+ * _.isEmpty(1);
+ * // => true
+ *
+ * _.isEmpty([1, 2, 3]);
+ * // => false
+ *
+ * _.isEmpty({ 'a': 1 });
+ * // => false
+ */
+function isEmpty(value) {
+  if (value == null) {
+    return true;
+  }
+  if (isArrayLike(value) &&
+      (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
+        isBuffer(value) || isTypedArray(value) || isArguments(value))) {
+    return !value.length;
+  }
+  var tag = getTag(value);
+  if (tag == mapTag || tag == setTag) {
+    return !value.size;
+  }
+  if (isPrototype(value)) {
+    return !baseKeys(value).length;
+  }
+  for (var key in value) {
+    if (hasOwnProperty.call(value, key)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports = isEmpty;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isEqual.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isEqual.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ "./node_modules/lodash/_baseIsEqual.js");
+
+/**
+ * Performs a deep comparison between two values to determine if they are
+ * equivalent.
+ *
+ * **Note:** This method supports comparing arrays, array buffers, booleans,
+ * date objects, error objects, maps, numbers, `Object` objects, regexes,
+ * sets, strings, symbols, and typed arrays. `Object` objects are compared
+ * by their own, not inherited, enumerable properties. Functions and DOM
+ * nodes are compared by strict equality, i.e. `===`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.isEqual(object, other);
+ * // => true
+ *
+ * object === other;
+ * // => false
+ */
+function isEqual(value, other) {
+  return baseIsEqual(value, other);
+}
+
+module.exports = isEqual;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isEqualWith.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isEqualWith.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ "./node_modules/lodash/_baseIsEqual.js");
+
+/**
+ * This method is like `_.isEqual` except that it accepts `customizer` which
+ * is invoked to compare values. If `customizer` returns `undefined`, comparisons
+ * are handled by the method instead. The `customizer` is invoked with up to
+ * six arguments: (objValue, othValue [, index|key, object, other, stack]).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @param {Function} [customizer] The function to customize comparisons.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * function isGreeting(value) {
+ *   return /^h(?:i|ello)$/.test(value);
+ * }
+ *
+ * function customizer(objValue, othValue) {
+ *   if (isGreeting(objValue) && isGreeting(othValue)) {
+ *     return true;
+ *   }
+ * }
+ *
+ * var array = ['hello', 'goodbye'];
+ * var other = ['hi', 'goodbye'];
+ *
+ * _.isEqualWith(array, other, customizer);
+ * // => true
+ */
+function isEqualWith(value, other, customizer) {
+  customizer = typeof customizer == 'function' ? customizer : undefined;
+  var result = customizer ? customizer(value, other) : undefined;
+  return result === undefined ? baseIsEqual(value, other, undefined, customizer) : !!result;
+}
+
+module.exports = isEqualWith;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isError.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isError.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js"),
+    isPlainObject = __webpack_require__(/*! ./isPlainObject */ "./node_modules/lodash/isPlainObject.js");
+
+/** `Object#toString` result references. */
+var domExcTag = '[object DOMException]',
+    errorTag = '[object Error]';
+
+/**
+ * Checks if `value` is an `Error`, `EvalError`, `RangeError`, `ReferenceError`,
+ * `SyntaxError`, `TypeError`, or `URIError` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an error object, else `false`.
+ * @example
+ *
+ * _.isError(new Error);
+ * // => true
+ *
+ * _.isError(Error);
+ * // => false
+ */
+function isError(value) {
+  if (!isObjectLike(value)) {
+    return false;
+  }
+  var tag = baseGetTag(value);
+  return tag == errorTag || tag == domExcTag ||
+    (typeof value.message == 'string' && typeof value.name == 'string' && !isPlainObject(value));
+}
+
+module.exports = isError;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isFinite.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isFinite.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var root = __webpack_require__(/*! ./_root */ "./node_modules/lodash/_root.js");
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsFinite = root.isFinite;
+
+/**
+ * Checks if `value` is a finite primitive number.
+ *
+ * **Note:** This method is based on
+ * [`Number.isFinite`](https://mdn.io/Number/isFinite).
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a finite number, else `false`.
+ * @example
+ *
+ * _.isFinite(3);
+ * // => true
+ *
+ * _.isFinite(Number.MIN_VALUE);
+ * // => true
+ *
+ * _.isFinite(Infinity);
+ * // => false
+ *
+ * _.isFinite('3');
+ * // => false
+ */
+function isFinite(value) {
+  return typeof value == 'number' && nativeIsFinite(value);
+}
+
+module.exports = isFinite;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isFunction.js":
+/*!*******************************************!*\
+  !*** ./node_modules/lodash/isFunction.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js");
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+module.exports = isFunction;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isInteger.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/isInteger.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toInteger = __webpack_require__(/*! ./toInteger */ "./node_modules/lodash/toInteger.js");
+
+/**
+ * Checks if `value` is an integer.
+ *
+ * **Note:** This method is based on
+ * [`Number.isInteger`](https://mdn.io/Number/isInteger).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an integer, else `false`.
+ * @example
+ *
+ * _.isInteger(3);
+ * // => true
+ *
+ * _.isInteger(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isInteger(Infinity);
+ * // => false
+ *
+ * _.isInteger('3');
+ * // => false
+ */
+function isInteger(value) {
+  return typeof value == 'number' && value == toInteger(value);
+}
+
+module.exports = isInteger;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isLength.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isLength.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+module.exports = isLength;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isMap.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isMap.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsMap = __webpack_require__(/*! ./_baseIsMap */ "./node_modules/lodash/_baseIsMap.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsMap = nodeUtil && nodeUtil.isMap;
+
+/**
+ * Checks if `value` is classified as a `Map` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a map, else `false`.
+ * @example
+ *
+ * _.isMap(new Map);
+ * // => true
+ *
+ * _.isMap(new WeakMap);
+ * // => false
+ */
+var isMap = nodeIsMap ? baseUnary(nodeIsMap) : baseIsMap;
+
+module.exports = isMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isMatch.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/isMatch.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ "./node_modules/lodash/_baseIsMatch.js"),
+    getMatchData = __webpack_require__(/*! ./_getMatchData */ "./node_modules/lodash/_getMatchData.js");
+
+/**
+ * Performs a partial deep comparison between `object` and `source` to
+ * determine if `object` contains equivalent property values.
+ *
+ * **Note:** This method is equivalent to `_.matches` when `source` is
+ * partially applied.
+ *
+ * Partial comparisons will match empty array and empty object `source`
+ * values against any array or object value, respectively. See `_.isEqual`
+ * for a list of supported value comparisons.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {Object} object The object to inspect.
+ * @param {Object} source The object of property values to match.
+ * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ *
+ * _.isMatch(object, { 'b': 2 });
+ * // => true
+ *
+ * _.isMatch(object, { 'b': 1 });
+ * // => false
+ */
+function isMatch(object, source) {
+  return object === source || baseIsMatch(object, source, getMatchData(source));
+}
+
+module.exports = isMatch;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isMatchWith.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isMatchWith.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsMatch = __webpack_require__(/*! ./_baseIsMatch */ "./node_modules/lodash/_baseIsMatch.js"),
+    getMatchData = __webpack_require__(/*! ./_getMatchData */ "./node_modules/lodash/_getMatchData.js");
+
+/**
+ * This method is like `_.isMatch` except that it accepts `customizer` which
+ * is invoked to compare values. If `customizer` returns `undefined`, comparisons
+ * are handled by the method instead. The `customizer` is invoked with five
+ * arguments: (objValue, srcValue, index|key, object, source).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {Object} object The object to inspect.
+ * @param {Object} source The object of property values to match.
+ * @param {Function} [customizer] The function to customize comparisons.
+ * @returns {boolean} Returns `true` if `object` is a match, else `false`.
+ * @example
+ *
+ * function isGreeting(value) {
+ *   return /^h(?:i|ello)$/.test(value);
+ * }
+ *
+ * function customizer(objValue, srcValue) {
+ *   if (isGreeting(objValue) && isGreeting(srcValue)) {
+ *     return true;
+ *   }
+ * }
+ *
+ * var object = { 'greeting': 'hello' };
+ * var source = { 'greeting': 'hi' };
+ *
+ * _.isMatchWith(object, source, customizer);
+ * // => true
+ */
+function isMatchWith(object, source, customizer) {
+  customizer = typeof customizer == 'function' ? customizer : undefined;
+  return baseIsMatch(object, source, getMatchData(source), customizer);
+}
+
+module.exports = isMatchWith;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isNaN.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isNaN.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isNumber = __webpack_require__(/*! ./isNumber */ "./node_modules/lodash/isNumber.js");
+
+/**
+ * Checks if `value` is `NaN`.
+ *
+ * **Note:** This method is based on
+ * [`Number.isNaN`](https://mdn.io/Number/isNaN) and is not the same as
+ * global [`isNaN`](https://mdn.io/isNaN) which returns `true` for
+ * `undefined` and other non-number values.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
+ * @example
+ *
+ * _.isNaN(NaN);
+ * // => true
+ *
+ * _.isNaN(new Number(NaN));
+ * // => true
+ *
+ * isNaN(undefined);
+ * // => true
+ *
+ * _.isNaN(undefined);
+ * // => false
+ */
+function isNaN(value) {
+  // An `NaN` primitive is the only value that is not equal to itself.
+  // Perform the `toStringTag` check first to avoid errors with some
+  // ActiveX objects in IE.
+  return isNumber(value) && value != +value;
+}
+
+module.exports = isNaN;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isNative.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isNative.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ "./node_modules/lodash/_baseIsNative.js"),
+    isMaskable = __webpack_require__(/*! ./_isMaskable */ "./node_modules/lodash/_isMaskable.js");
+
+/** Error message constants. */
+var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.';
+
+/**
+ * Checks if `value` is a pristine native function.
+ *
+ * **Note:** This method can't reliably detect native functions in the presence
+ * of the core-js package because core-js circumvents this kind of detection.
+ * Despite multiple requests, the core-js maintainer has made it clear: any
+ * attempt to fix the detection will be obstructed. As a result, we're left
+ * with little choice but to throw an error. Unfortunately, this also affects
+ * packages, like [babel-polyfill](https://www.npmjs.com/package/babel-polyfill),
+ * which rely on core-js.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ * @example
+ *
+ * _.isNative(Array.prototype.push);
+ * // => true
+ *
+ * _.isNative(_);
+ * // => false
+ */
+function isNative(value) {
+  if (isMaskable(value)) {
+    throw new Error(CORE_ERROR_TEXT);
+  }
+  return baseIsNative(value);
+}
+
+module.exports = isNative;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isNil.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isNil.js ***!
+  \**************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is `null` or `undefined`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is nullish, else `false`.
+ * @example
+ *
+ * _.isNil(null);
+ * // => true
+ *
+ * _.isNil(void 0);
+ * // => true
+ *
+ * _.isNil(NaN);
+ * // => false
+ */
+function isNil(value) {
+  return value == null;
+}
+
+module.exports = isNil;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isNull.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/isNull.js ***!
+  \***************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `null`, else `false`.
+ * @example
+ *
+ * _.isNull(null);
+ * // => true
+ *
+ * _.isNull(void 0);
+ * // => false
+ */
+function isNull(value) {
+  return value === null;
+}
+
+module.exports = isNull;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isNumber.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isNumber.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var numberTag = '[object Number]';
+
+/**
+ * Checks if `value` is classified as a `Number` primitive or object.
+ *
+ * **Note:** To exclude `Infinity`, `-Infinity`, and `NaN`, which are
+ * classified as numbers, use the `_.isFinite` method.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a number, else `false`.
+ * @example
+ *
+ * _.isNumber(3);
+ * // => true
+ *
+ * _.isNumber(Number.MIN_VALUE);
+ * // => true
+ *
+ * _.isNumber(Infinity);
+ * // => true
+ *
+ * _.isNumber('3');
+ * // => false
+ */
+function isNumber(value) {
+  return typeof value == 'number' ||
+    (isObjectLike(value) && baseGetTag(value) == numberTag);
+}
+
+module.exports = isNumber;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObject.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isObject.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isObjectLike.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isObjectLike.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isPlainObject.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/isPlainObject.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    getPrototype = __webpack_require__(/*! ./_getPrototype */ "./node_modules/lodash/_getPrototype.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var objectTag = '[object Object]';
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to infer the `Object` constructor. */
+var objectCtorString = funcToString.call(Object);
+
+/**
+ * Checks if `value` is a plain object, that is, an object created by the
+ * `Object` constructor or one with a `[[Prototype]]` of `null`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.8.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ * }
+ *
+ * _.isPlainObject(new Foo);
+ * // => false
+ *
+ * _.isPlainObject([1, 2, 3]);
+ * // => false
+ *
+ * _.isPlainObject({ 'x': 0, 'y': 0 });
+ * // => true
+ *
+ * _.isPlainObject(Object.create(null));
+ * // => true
+ */
+function isPlainObject(value) {
+  if (!isObjectLike(value) || baseGetTag(value) != objectTag) {
+    return false;
+  }
+  var proto = getPrototype(value);
+  if (proto === null) {
+    return true;
+  }
+  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+  return typeof Ctor == 'function' && Ctor instanceof Ctor &&
+    funcToString.call(Ctor) == objectCtorString;
+}
+
+module.exports = isPlainObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isRegExp.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isRegExp.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsRegExp = __webpack_require__(/*! ./_baseIsRegExp */ "./node_modules/lodash/_baseIsRegExp.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsRegExp = nodeUtil && nodeUtil.isRegExp;
+
+/**
+ * Checks if `value` is classified as a `RegExp` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a regexp, else `false`.
+ * @example
+ *
+ * _.isRegExp(/abc/);
+ * // => true
+ *
+ * _.isRegExp('/abc/');
+ * // => false
+ */
+var isRegExp = nodeIsRegExp ? baseUnary(nodeIsRegExp) : baseIsRegExp;
+
+module.exports = isRegExp;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSafeInteger.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/isSafeInteger.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var isInteger = __webpack_require__(/*! ./isInteger */ "./node_modules/lodash/isInteger.js");
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Checks if `value` is a safe integer. An integer is safe if it's an IEEE-754
+ * double precision number which isn't the result of a rounded unsafe integer.
+ *
+ * **Note:** This method is based on
+ * [`Number.isSafeInteger`](https://mdn.io/Number/isSafeInteger).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a safe integer, else `false`.
+ * @example
+ *
+ * _.isSafeInteger(3);
+ * // => true
+ *
+ * _.isSafeInteger(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isSafeInteger(Infinity);
+ * // => false
+ *
+ * _.isSafeInteger('3');
+ * // => false
+ */
+function isSafeInteger(value) {
+  return isInteger(value) && value >= -MAX_SAFE_INTEGER && value <= MAX_SAFE_INTEGER;
+}
+
+module.exports = isSafeInteger;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSet.js":
+/*!**************************************!*\
+  !*** ./node_modules/lodash/isSet.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsSet = __webpack_require__(/*! ./_baseIsSet */ "./node_modules/lodash/_baseIsSet.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsSet = nodeUtil && nodeUtil.isSet;
+
+/**
+ * Checks if `value` is classified as a `Set` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a set, else `false`.
+ * @example
+ *
+ * _.isSet(new Set);
+ * // => true
+ *
+ * _.isSet(new WeakSet);
+ * // => false
+ */
+var isSet = nodeIsSet ? baseUnary(nodeIsSet) : baseIsSet;
+
+module.exports = isSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isString.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isString.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isArray = __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var stringTag = '[object String]';
+
+/**
+ * Checks if `value` is classified as a `String` primitive or object.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a string, else `false`.
+ * @example
+ *
+ * _.isString('abc');
+ * // => true
+ *
+ * _.isString(1);
+ * // => false
+ */
+function isString(value) {
+  return typeof value == 'string' ||
+    (!isArray(value) && isObjectLike(value) && baseGetTag(value) == stringTag);
+}
+
+module.exports = isString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isSymbol.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/isSymbol.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var symbolTag = '[object Symbol]';
+
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */
+function isSymbol(value) {
+  return typeof value == 'symbol' ||
+    (isObjectLike(value) && baseGetTag(value) == symbolTag);
+}
+
+module.exports = isSymbol;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isTypedArray.js":
+/*!*********************************************!*\
+  !*** ./node_modules/lodash/isTypedArray.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ "./node_modules/lodash/_baseIsTypedArray.js"),
+    baseUnary = __webpack_require__(/*! ./_baseUnary */ "./node_modules/lodash/_baseUnary.js"),
+    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ "./node_modules/lodash/_nodeUtil.js");
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+module.exports = isTypedArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isUndefined.js":
+/*!********************************************!*\
+  !*** ./node_modules/lodash/isUndefined.js ***!
+  \********************************************/
+/***/ ((module) => {
+
+/**
+ * Checks if `value` is `undefined`.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is `undefined`, else `false`.
+ * @example
+ *
+ * _.isUndefined(void 0);
+ * // => true
+ *
+ * _.isUndefined(null);
+ * // => false
+ */
+function isUndefined(value) {
+  return value === undefined;
+}
+
+module.exports = isUndefined;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isWeakMap.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/isWeakMap.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var weakMapTag = '[object WeakMap]';
+
+/**
+ * Checks if `value` is classified as a `WeakMap` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a weak map, else `false`.
+ * @example
+ *
+ * _.isWeakMap(new WeakMap);
+ * // => true
+ *
+ * _.isWeakMap(new Map);
+ * // => false
+ */
+function isWeakMap(value) {
+  return isObjectLike(value) && getTag(value) == weakMapTag;
+}
+
+module.exports = isWeakMap;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/isWeakSet.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/isWeakSet.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ "./node_modules/lodash/_baseGetTag.js"),
+    isObjectLike = __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js");
+
+/** `Object#toString` result references. */
+var weakSetTag = '[object WeakSet]';
+
+/**
+ * Checks if `value` is classified as a `WeakSet` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a weak set, else `false`.
+ * @example
+ *
+ * _.isWeakSet(new WeakSet);
+ * // => true
+ *
+ * _.isWeakSet(new Set);
+ * // => false
+ */
+function isWeakSet(value) {
+  return isObjectLike(value) && baseGetTag(value) == weakSetTag;
+}
+
+module.exports = isWeakSet;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/keys.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/keys.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ "./node_modules/lodash/_arrayLikeKeys.js"),
+    baseKeys = __webpack_require__(/*! ./_baseKeys */ "./node_modules/lodash/_baseKeys.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js");
+
+/**
+ * Creates an array of the own enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects. See the
+ * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
+ * for more details.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keys(new Foo);
+ * // => ['a', 'b'] (iteration order is not guaranteed)
+ *
+ * _.keys('hi');
+ * // => ['0', '1']
+ */
+function keys(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
+}
+
+module.exports = keys;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/keysIn.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/keysIn.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ "./node_modules/lodash/_arrayLikeKeys.js"),
+    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ "./node_modules/lodash/_baseKeysIn.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js");
+
+/**
+ * Creates an array of the own and inherited enumerable property names of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.keysIn(new Foo);
+ * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+ */
+function keysIn(object) {
+  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);
+}
+
+module.exports = keysIn;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/lang.js":
+/*!*************************************!*\
+  !*** ./node_modules/lodash/lang.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = {
+  'castArray': __webpack_require__(/*! ./castArray */ "./node_modules/lodash/castArray.js"),
+  'clone': __webpack_require__(/*! ./clone */ "./node_modules/lodash/clone.js"),
+  'cloneDeep': __webpack_require__(/*! ./cloneDeep */ "./node_modules/lodash/cloneDeep.js"),
+  'cloneDeepWith': __webpack_require__(/*! ./cloneDeepWith */ "./node_modules/lodash/cloneDeepWith.js"),
+  'cloneWith': __webpack_require__(/*! ./cloneWith */ "./node_modules/lodash/cloneWith.js"),
+  'conformsTo': __webpack_require__(/*! ./conformsTo */ "./node_modules/lodash/conformsTo.js"),
+  'eq': __webpack_require__(/*! ./eq */ "./node_modules/lodash/eq.js"),
+  'gt': __webpack_require__(/*! ./gt */ "./node_modules/lodash/gt.js"),
+  'gte': __webpack_require__(/*! ./gte */ "./node_modules/lodash/gte.js"),
+  'isArguments': __webpack_require__(/*! ./isArguments */ "./node_modules/lodash/isArguments.js"),
+  'isArray': __webpack_require__(/*! ./isArray */ "./node_modules/lodash/isArray.js"),
+  'isArrayBuffer': __webpack_require__(/*! ./isArrayBuffer */ "./node_modules/lodash/isArrayBuffer.js"),
+  'isArrayLike': __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js"),
+  'isArrayLikeObject': __webpack_require__(/*! ./isArrayLikeObject */ "./node_modules/lodash/isArrayLikeObject.js"),
+  'isBoolean': __webpack_require__(/*! ./isBoolean */ "./node_modules/lodash/isBoolean.js"),
+  'isBuffer': __webpack_require__(/*! ./isBuffer */ "./node_modules/lodash/isBuffer.js"),
+  'isDate': __webpack_require__(/*! ./isDate */ "./node_modules/lodash/isDate.js"),
+  'isElement': __webpack_require__(/*! ./isElement */ "./node_modules/lodash/isElement.js"),
+  'isEmpty': __webpack_require__(/*! ./isEmpty */ "./node_modules/lodash/isEmpty.js"),
+  'isEqual': __webpack_require__(/*! ./isEqual */ "./node_modules/lodash/isEqual.js"),
+  'isEqualWith': __webpack_require__(/*! ./isEqualWith */ "./node_modules/lodash/isEqualWith.js"),
+  'isError': __webpack_require__(/*! ./isError */ "./node_modules/lodash/isError.js"),
+  'isFinite': __webpack_require__(/*! ./isFinite */ "./node_modules/lodash/isFinite.js"),
+  'isFunction': __webpack_require__(/*! ./isFunction */ "./node_modules/lodash/isFunction.js"),
+  'isInteger': __webpack_require__(/*! ./isInteger */ "./node_modules/lodash/isInteger.js"),
+  'isLength': __webpack_require__(/*! ./isLength */ "./node_modules/lodash/isLength.js"),
+  'isMap': __webpack_require__(/*! ./isMap */ "./node_modules/lodash/isMap.js"),
+  'isMatch': __webpack_require__(/*! ./isMatch */ "./node_modules/lodash/isMatch.js"),
+  'isMatchWith': __webpack_require__(/*! ./isMatchWith */ "./node_modules/lodash/isMatchWith.js"),
+  'isNaN': __webpack_require__(/*! ./isNaN */ "./node_modules/lodash/isNaN.js"),
+  'isNative': __webpack_require__(/*! ./isNative */ "./node_modules/lodash/isNative.js"),
+  'isNil': __webpack_require__(/*! ./isNil */ "./node_modules/lodash/isNil.js"),
+  'isNull': __webpack_require__(/*! ./isNull */ "./node_modules/lodash/isNull.js"),
+  'isNumber': __webpack_require__(/*! ./isNumber */ "./node_modules/lodash/isNumber.js"),
+  'isObject': __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+  'isObjectLike': __webpack_require__(/*! ./isObjectLike */ "./node_modules/lodash/isObjectLike.js"),
+  'isPlainObject': __webpack_require__(/*! ./isPlainObject */ "./node_modules/lodash/isPlainObject.js"),
+  'isRegExp': __webpack_require__(/*! ./isRegExp */ "./node_modules/lodash/isRegExp.js"),
+  'isSafeInteger': __webpack_require__(/*! ./isSafeInteger */ "./node_modules/lodash/isSafeInteger.js"),
+  'isSet': __webpack_require__(/*! ./isSet */ "./node_modules/lodash/isSet.js"),
+  'isString': __webpack_require__(/*! ./isString */ "./node_modules/lodash/isString.js"),
+  'isSymbol': __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js"),
+  'isTypedArray': __webpack_require__(/*! ./isTypedArray */ "./node_modules/lodash/isTypedArray.js"),
+  'isUndefined': __webpack_require__(/*! ./isUndefined */ "./node_modules/lodash/isUndefined.js"),
+  'isWeakMap': __webpack_require__(/*! ./isWeakMap */ "./node_modules/lodash/isWeakMap.js"),
+  'isWeakSet': __webpack_require__(/*! ./isWeakSet */ "./node_modules/lodash/isWeakSet.js"),
+  'lt': __webpack_require__(/*! ./lt */ "./node_modules/lodash/lt.js"),
+  'lte': __webpack_require__(/*! ./lte */ "./node_modules/lodash/lte.js"),
+  'toArray': __webpack_require__(/*! ./toArray */ "./node_modules/lodash/toArray.js"),
+  'toFinite': __webpack_require__(/*! ./toFinite */ "./node_modules/lodash/toFinite.js"),
+  'toInteger': __webpack_require__(/*! ./toInteger */ "./node_modules/lodash/toInteger.js"),
+  'toLength': __webpack_require__(/*! ./toLength */ "./node_modules/lodash/toLength.js"),
+  'toNumber': __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js"),
+  'toPlainObject': __webpack_require__(/*! ./toPlainObject */ "./node_modules/lodash/toPlainObject.js"),
+  'toSafeInteger': __webpack_require__(/*! ./toSafeInteger */ "./node_modules/lodash/toSafeInteger.js"),
+  'toString': __webpack_require__(/*! ./toString */ "./node_modules/lodash/toString.js")
+};
 
 
 /***/ }),
@@ -20997,6 +28381,605 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./node_modules/lodash/lt.js":
+/*!***********************************!*\
+  !*** ./node_modules/lodash/lt.js ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseLt = __webpack_require__(/*! ./_baseLt */ "./node_modules/lodash/_baseLt.js"),
+    createRelationalOperation = __webpack_require__(/*! ./_createRelationalOperation */ "./node_modules/lodash/_createRelationalOperation.js");
+
+/**
+ * Checks if `value` is less than `other`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.9.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is less than `other`,
+ *  else `false`.
+ * @see _.gt
+ * @example
+ *
+ * _.lt(1, 3);
+ * // => true
+ *
+ * _.lt(3, 3);
+ * // => false
+ *
+ * _.lt(3, 1);
+ * // => false
+ */
+var lt = createRelationalOperation(baseLt);
+
+module.exports = lt;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/lte.js":
+/*!************************************!*\
+  !*** ./node_modules/lodash/lte.js ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var createRelationalOperation = __webpack_require__(/*! ./_createRelationalOperation */ "./node_modules/lodash/_createRelationalOperation.js");
+
+/**
+ * Checks if `value` is less than or equal to `other`.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.9.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if `value` is less than or equal to
+ *  `other`, else `false`.
+ * @see _.gte
+ * @example
+ *
+ * _.lte(1, 3);
+ * // => true
+ *
+ * _.lte(3, 3);
+ * // => true
+ *
+ * _.lte(3, 1);
+ * // => false
+ */
+var lte = createRelationalOperation(function(value, other) {
+  return value <= other;
+});
+
+module.exports = lte;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/stubArray.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/stubArray.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * This method returns a new empty array.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {Array} Returns the new empty array.
+ * @example
+ *
+ * var arrays = _.times(2, _.stubArray);
+ *
+ * console.log(arrays);
+ * // => [[], []]
+ *
+ * console.log(arrays[0] === arrays[1]);
+ * // => false
+ */
+function stubArray() {
+  return [];
+}
+
+module.exports = stubArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/stubFalse.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/stubFalse.js ***!
+  \******************************************/
+/***/ ((module) => {
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = stubFalse;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toArray.js":
+/*!****************************************!*\
+  !*** ./node_modules/lodash/toArray.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var Symbol = __webpack_require__(/*! ./_Symbol */ "./node_modules/lodash/_Symbol.js"),
+    copyArray = __webpack_require__(/*! ./_copyArray */ "./node_modules/lodash/_copyArray.js"),
+    getTag = __webpack_require__(/*! ./_getTag */ "./node_modules/lodash/_getTag.js"),
+    isArrayLike = __webpack_require__(/*! ./isArrayLike */ "./node_modules/lodash/isArrayLike.js"),
+    isString = __webpack_require__(/*! ./isString */ "./node_modules/lodash/isString.js"),
+    iteratorToArray = __webpack_require__(/*! ./_iteratorToArray */ "./node_modules/lodash/_iteratorToArray.js"),
+    mapToArray = __webpack_require__(/*! ./_mapToArray */ "./node_modules/lodash/_mapToArray.js"),
+    setToArray = __webpack_require__(/*! ./_setToArray */ "./node_modules/lodash/_setToArray.js"),
+    stringToArray = __webpack_require__(/*! ./_stringToArray */ "./node_modules/lodash/_stringToArray.js"),
+    values = __webpack_require__(/*! ./values */ "./node_modules/lodash/values.js");
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    setTag = '[object Set]';
+
+/** Built-in value references. */
+var symIterator = Symbol ? Symbol.iterator : undefined;
+
+/**
+ * Converts `value` to an array.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {Array} Returns the converted array.
+ * @example
+ *
+ * _.toArray({ 'a': 1, 'b': 2 });
+ * // => [1, 2]
+ *
+ * _.toArray('abc');
+ * // => ['a', 'b', 'c']
+ *
+ * _.toArray(1);
+ * // => []
+ *
+ * _.toArray(null);
+ * // => []
+ */
+function toArray(value) {
+  if (!value) {
+    return [];
+  }
+  if (isArrayLike(value)) {
+    return isString(value) ? stringToArray(value) : copyArray(value);
+  }
+  if (symIterator && value[symIterator]) {
+    return iteratorToArray(value[symIterator]());
+  }
+  var tag = getTag(value),
+      func = tag == mapTag ? mapToArray : (tag == setTag ? setToArray : values);
+
+  return func(value);
+}
+
+module.exports = toArray;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toFinite.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toFinite.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toNumber = __webpack_require__(/*! ./toNumber */ "./node_modules/lodash/toNumber.js");
+
+/** Used as references for various `Number` constants. */
+var INFINITY = 1 / 0,
+    MAX_INTEGER = 1.7976931348623157e+308;
+
+/**
+ * Converts `value` to a finite number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.12.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted number.
+ * @example
+ *
+ * _.toFinite(3.2);
+ * // => 3.2
+ *
+ * _.toFinite(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toFinite(Infinity);
+ * // => 1.7976931348623157e+308
+ *
+ * _.toFinite('3.2');
+ * // => 3.2
+ */
+function toFinite(value) {
+  if (!value) {
+    return value === 0 ? value : 0;
+  }
+  value = toNumber(value);
+  if (value === INFINITY || value === -INFINITY) {
+    var sign = (value < 0 ? -1 : 1);
+    return sign * MAX_INTEGER;
+  }
+  return value === value ? value : 0;
+}
+
+module.exports = toFinite;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toInteger.js":
+/*!******************************************!*\
+  !*** ./node_modules/lodash/toInteger.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var toFinite = __webpack_require__(/*! ./toFinite */ "./node_modules/lodash/toFinite.js");
+
+/**
+ * Converts `value` to an integer.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted integer.
+ * @example
+ *
+ * _.toInteger(3.2);
+ * // => 3
+ *
+ * _.toInteger(Number.MIN_VALUE);
+ * // => 0
+ *
+ * _.toInteger(Infinity);
+ * // => 1.7976931348623157e+308
+ *
+ * _.toInteger('3.2');
+ * // => 3
+ */
+function toInteger(value) {
+  var result = toFinite(value),
+      remainder = result % 1;
+
+  return result === result ? (remainder ? result - remainder : result) : 0;
+}
+
+module.exports = toInteger;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toLength.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toLength.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClamp = __webpack_require__(/*! ./_baseClamp */ "./node_modules/lodash/_baseClamp.js"),
+    toInteger = __webpack_require__(/*! ./toInteger */ "./node_modules/lodash/toInteger.js");
+
+/** Used as references for the maximum length and index of an array. */
+var MAX_ARRAY_LENGTH = 4294967295;
+
+/**
+ * Converts `value` to an integer suitable for use as the length of an
+ * array-like object.
+ *
+ * **Note:** This method is based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted integer.
+ * @example
+ *
+ * _.toLength(3.2);
+ * // => 3
+ *
+ * _.toLength(Number.MIN_VALUE);
+ * // => 0
+ *
+ * _.toLength(Infinity);
+ * // => 4294967295
+ *
+ * _.toLength('3.2');
+ * // => 3
+ */
+function toLength(value) {
+  return value ? baseClamp(toInteger(value), 0, MAX_ARRAY_LENGTH) : 0;
+}
+
+module.exports = toLength;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toNumber.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toNumber.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseTrim = __webpack_require__(/*! ./_baseTrim */ "./node_modules/lodash/_baseTrim.js"),
+    isObject = __webpack_require__(/*! ./isObject */ "./node_modules/lodash/isObject.js"),
+    isSymbol = __webpack_require__(/*! ./isSymbol */ "./node_modules/lodash/isSymbol.js");
+
+/** Used as references for various `Number` constants. */
+var NAN = 0 / 0;
+
+/** Used to detect bad signed hexadecimal string values. */
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+
+/** Used to detect binary string values. */
+var reIsBinary = /^0b[01]+$/i;
+
+/** Used to detect octal string values. */
+var reIsOctal = /^0o[0-7]+$/i;
+
+/** Built-in method references without a dependency on `root`. */
+var freeParseInt = parseInt;
+
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (isSymbol(value)) {
+    return NAN;
+  }
+  if (isObject(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = isObject(other) ? (other + '') : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = baseTrim(value);
+  var isBinary = reIsBinary.test(value);
+  return (isBinary || reIsOctal.test(value))
+    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+    : (reIsBadHex.test(value) ? NAN : +value);
+}
+
+module.exports = toNumber;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toPlainObject.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/toPlainObject.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var copyObject = __webpack_require__(/*! ./_copyObject */ "./node_modules/lodash/_copyObject.js"),
+    keysIn = __webpack_require__(/*! ./keysIn */ "./node_modules/lodash/keysIn.js");
+
+/**
+ * Converts `value` to a plain object flattening inherited enumerable string
+ * keyed properties of `value` to own properties of the plain object.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {Object} Returns the converted plain object.
+ * @example
+ *
+ * function Foo() {
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.assign({ 'a': 1 }, new Foo);
+ * // => { 'a': 1, 'b': 2 }
+ *
+ * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
+ * // => { 'a': 1, 'b': 2, 'c': 3 }
+ */
+function toPlainObject(value) {
+  return copyObject(value, keysIn(value));
+}
+
+module.exports = toPlainObject;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toSafeInteger.js":
+/*!**********************************************!*\
+  !*** ./node_modules/lodash/toSafeInteger.js ***!
+  \**********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseClamp = __webpack_require__(/*! ./_baseClamp */ "./node_modules/lodash/_baseClamp.js"),
+    toInteger = __webpack_require__(/*! ./toInteger */ "./node_modules/lodash/toInteger.js");
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Converts `value` to a safe integer. A safe integer can be compared and
+ * represented correctly.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {number} Returns the converted integer.
+ * @example
+ *
+ * _.toSafeInteger(3.2);
+ * // => 3
+ *
+ * _.toSafeInteger(Number.MIN_VALUE);
+ * // => 0
+ *
+ * _.toSafeInteger(Infinity);
+ * // => 9007199254740991
+ *
+ * _.toSafeInteger('3.2');
+ * // => 3
+ */
+function toSafeInteger(value) {
+  return value
+    ? baseClamp(toInteger(value), -MAX_SAFE_INTEGER, MAX_SAFE_INTEGER)
+    : (value === 0 ? value : 0);
+}
+
+module.exports = toSafeInteger;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/toString.js":
+/*!*****************************************!*\
+  !*** ./node_modules/lodash/toString.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseToString = __webpack_require__(/*! ./_baseToString */ "./node_modules/lodash/_baseToString.js");
+
+/**
+ * Converts `value` to a string. An empty string is returned for `null`
+ * and `undefined` values. The sign of `-0` is preserved.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ * @example
+ *
+ * _.toString(null);
+ * // => ''
+ *
+ * _.toString(-0);
+ * // => '-0'
+ *
+ * _.toString([1, 2, 3]);
+ * // => '1,2,3'
+ */
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+module.exports = toString;
+
+
+/***/ }),
+
+/***/ "./node_modules/lodash/values.js":
+/*!***************************************!*\
+  !*** ./node_modules/lodash/values.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var baseValues = __webpack_require__(/*! ./_baseValues */ "./node_modules/lodash/_baseValues.js"),
+    keys = __webpack_require__(/*! ./keys */ "./node_modules/lodash/keys.js");
+
+/**
+ * Creates an array of the own enumerable string keyed property values of `object`.
+ *
+ * **Note:** Non-object values are coerced to objects.
+ *
+ * @static
+ * @since 0.1.0
+ * @memberOf _
+ * @category Object
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property values.
+ * @example
+ *
+ * function Foo() {
+ *   this.a = 1;
+ *   this.b = 2;
+ * }
+ *
+ * Foo.prototype.c = 3;
+ *
+ * _.values(new Foo);
+ * // => [1, 2] (iteration order is not guaranteed)
+ *
+ * _.values('hi');
+ * // => ['h', 'i']
+ */
+function values(object) {
+  return object == null ? [] : baseValues(object, keys(object));
+}
+
+module.exports = values;
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -21198,7 +29181,7 @@ process.umask = function() { return 0; };
 /***/ ((module) => {
 
 /*!
- * Pusher JavaScript Library v8.0.2
+ * Pusher JavaScript Library v8.3.0
  * https://pusher.com/
  *
  * Copyright 2020, Pusher
@@ -21756,13 +29739,13 @@ module.exports = __nested_webpack_require_19901__(3).default;
 __nested_webpack_require_20105__.r(__nested_webpack_exports__);
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/script_receiver_factory.ts
-var ScriptReceiverFactory = (function () {
-    function ScriptReceiverFactory(prefix, name) {
+class ScriptReceiverFactory {
+    constructor(prefix, name) {
         this.lastId = 0;
         this.prefix = prefix;
         this.name = name;
     }
-    ScriptReceiverFactory.prototype.create = function (callback) {
+    create(callback) {
         this.lastId++;
         var number = this.lastId;
         var id = this.prefix + number;
@@ -21776,18 +29759,16 @@ var ScriptReceiverFactory = (function () {
         };
         this[number] = callbackWrapper;
         return { number: number, id: id, name: name, callback: callbackWrapper };
-    };
-    ScriptReceiverFactory.prototype.remove = function (receiver) {
+    }
+    remove(receiver) {
         delete this[receiver.number];
-    };
-    return ScriptReceiverFactory;
-}());
-
+    }
+}
 var ScriptReceivers = new ScriptReceiverFactory('_pusher_script_', 'Pusher.ScriptReceivers');
 
 // CONCATENATED MODULE: ./src/core/defaults.ts
 var Defaults = {
-    VERSION: "8.0.2",
+    VERSION: "8.3.0",
     PROTOCOL: 7,
     wsPort: 80,
     wssPort: 443,
@@ -21819,13 +29800,13 @@ var Defaults = {
 // CONCATENATED MODULE: ./src/runtimes/web/dom/dependency_loader.ts
 
 
-var dependency_loader_DependencyLoader = (function () {
-    function DependencyLoader(options) {
+class dependency_loader_DependencyLoader {
+    constructor(options) {
         this.options = options;
         this.receivers = options.receivers || ScriptReceivers;
         this.loading = {};
     }
-    DependencyLoader.prototype.load = function (name, options, callback) {
+    load(name, options, callback) {
         var self = this;
         if (self.loading[name] && self.loading[name].length > 0) {
             self.loading[name].push(callback);
@@ -21850,8 +29831,8 @@ var dependency_loader_DependencyLoader = (function () {
             });
             request.send(receiver);
         }
-    };
-    DependencyLoader.prototype.getRoot = function (options) {
+    }
+    getRoot(options) {
         var cdn;
         var protocol = runtime.getDocument().location.protocol;
         if ((options && options.useTLS) || protocol === 'https:') {
@@ -21861,20 +29842,18 @@ var dependency_loader_DependencyLoader = (function () {
             cdn = this.options.cdn_http;
         }
         return cdn.replace(/\/*$/, '') + '/' + this.options.version;
-    };
-    DependencyLoader.prototype.getPath = function (name, options) {
+    }
+    getPath(name, options) {
         return this.getRoot(options) + '/' + name + this.options.suffix + '.js';
-    };
-    return DependencyLoader;
-}());
-/* harmony default export */ var dependency_loader = (dependency_loader_DependencyLoader);
+    }
+}
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/dependencies.ts
 
 
 
 var DependenciesReceivers = new ScriptReceiverFactory('_pusher_dependencies', 'Pusher.DependenciesReceivers');
-var Dependencies = new dependency_loader({
+var Dependencies = new dependency_loader_DependencyLoader({
     cdn_http: defaults.cdn_http,
     cdn_https: defaults.cdn_https,
     version: defaults.VERSION,
@@ -21883,7 +29862,7 @@ var Dependencies = new dependency_loader({
 });
 
 // CONCATENATED MODULE: ./src/core/utils/url_store.ts
-var urlStore = {
+const urlStore = {
     baseUrl: 'https://pusher.com',
     urls: {
         authenticationEndpoint: {
@@ -21903,12 +29882,12 @@ var urlStore = {
         }
     }
 };
-var buildLogSuffix = function (key) {
-    var urlPrefix = 'See:';
-    var urlObj = urlStore.urls[key];
+const buildLogSuffix = function (key) {
+    const urlPrefix = 'See:';
+    const urlObj = urlStore.urls[key];
     if (!urlObj)
         return '';
-    var url;
+    let url;
     if (urlObj.fullUrl) {
         url = urlObj.fullUrl;
     }
@@ -21917,9 +29896,9 @@ var buildLogSuffix = function (key) {
     }
     if (!url)
         return '';
-    return urlPrefix + " " + url;
+    return `${urlPrefix} ${url}`;
 };
-/* harmony default export */ var url_store = ({ buildLogSuffix: buildLogSuffix });
+/* harmony default export */ var url_store = ({ buildLogSuffix });
 
 // CONCATENATED MODULE: ./src/core/auth/options.ts
 var AuthRequestType;
@@ -21929,134 +29908,76 @@ var AuthRequestType;
 })(AuthRequestType || (AuthRequestType = {}));
 
 // CONCATENATED MODULE: ./src/core/errors.ts
-var __extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var BadEventName = (function (_super) {
-    __extends(BadEventName, _super);
-    function BadEventName(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+class BadEventName extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return BadEventName;
-}(Error));
-
-var BadChannelName = (function (_super) {
-    __extends(BadChannelName, _super);
-    function BadChannelName(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class BadChannelName extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return BadChannelName;
-}(Error));
-
-var RequestTimedOut = (function (_super) {
-    __extends(RequestTimedOut, _super);
-    function RequestTimedOut(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class RequestTimedOut extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return RequestTimedOut;
-}(Error));
-
-var TransportPriorityTooLow = (function (_super) {
-    __extends(TransportPriorityTooLow, _super);
-    function TransportPriorityTooLow(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class TransportPriorityTooLow extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return TransportPriorityTooLow;
-}(Error));
-
-var TransportClosed = (function (_super) {
-    __extends(TransportClosed, _super);
-    function TransportClosed(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class TransportClosed extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return TransportClosed;
-}(Error));
-
-var UnsupportedFeature = (function (_super) {
-    __extends(UnsupportedFeature, _super);
-    function UnsupportedFeature(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class UnsupportedFeature extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return UnsupportedFeature;
-}(Error));
-
-var UnsupportedTransport = (function (_super) {
-    __extends(UnsupportedTransport, _super);
-    function UnsupportedTransport(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class UnsupportedTransport extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return UnsupportedTransport;
-}(Error));
-
-var UnsupportedStrategy = (function (_super) {
-    __extends(UnsupportedStrategy, _super);
-    function UnsupportedStrategy(msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class UnsupportedStrategy extends Error {
+    constructor(msg) {
+        super(msg);
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return UnsupportedStrategy;
-}(Error));
-
-var HTTPAuthError = (function (_super) {
-    __extends(HTTPAuthError, _super);
-    function HTTPAuthError(status, msg) {
-        var _newTarget = this.constructor;
-        var _this = _super.call(this, msg) || this;
-        _this.status = status;
-        Object.setPrototypeOf(_this, _newTarget.prototype);
-        return _this;
+}
+class HTTPAuthError extends Error {
+    constructor(status, msg) {
+        super(msg);
+        this.status = status;
+        Object.setPrototypeOf(this, new.target.prototype);
     }
-    return HTTPAuthError;
-}(Error));
-
+}
 
 // CONCATENATED MODULE: ./src/runtimes/isomorphic/auth/xhr_auth.ts
 
 
 
 
-var ajax = function (context, query, authOptions, authRequestType, callback) {
-    var xhr = runtime.createXHR();
+const ajax = function (context, query, authOptions, authRequestType, callback) {
+    const xhr = runtime.createXHR();
     xhr.open('POST', authOptions.endpoint, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     for (var headerName in authOptions.headers) {
         xhr.setRequestHeader(headerName, authOptions.headers[headerName]);
     }
     if (authOptions.headersProvider != null) {
-        var dynamicHeaders = authOptions.headersProvider();
+        let dynamicHeaders = authOptions.headersProvider();
         for (var headerName in dynamicHeaders) {
             xhr.setRequestHeader(headerName, dynamicHeaders[headerName]);
         }
@@ -22064,31 +29985,31 @@ var ajax = function (context, query, authOptions, authRequestType, callback) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                var data = void 0;
-                var parsed = false;
+                let data;
+                let parsed = false;
                 try {
                     data = JSON.parse(xhr.responseText);
                     parsed = true;
                 }
                 catch (e) {
-                    callback(new HTTPAuthError(200, "JSON returned from " + authRequestType.toString() + " endpoint was invalid, yet status code was 200. Data was: " + xhr.responseText), null);
+                    callback(new HTTPAuthError(200, `JSON returned from ${authRequestType.toString()} endpoint was invalid, yet status code was 200. Data was: ${xhr.responseText}`), null);
                 }
                 if (parsed) {
                     callback(null, data);
                 }
             }
             else {
-                var suffix = '';
+                let suffix = '';
                 switch (authRequestType) {
                     case AuthRequestType.UserAuthentication:
                         suffix = url_store.buildLogSuffix('authenticationEndpoint');
                         break;
                     case AuthRequestType.ChannelAuthorization:
-                        suffix = "Clients must be authorized to join private or presence channels. " + url_store.buildLogSuffix('authorizationEndpoint');
+                        suffix = `Clients must be authorized to join private or presence channels. ${url_store.buildLogSuffix('authorizationEndpoint')}`;
                         break;
                 }
-                callback(new HTTPAuthError(xhr.status, "Unable to retrieve auth string from " + authRequestType.toString() + " endpoint - " +
-                    ("received status: " + xhr.status + " from " + authOptions.endpoint + ". " + suffix)), null);
+                callback(new HTTPAuthError(xhr.status, `Unable to retrieve auth string from ${authRequestType.toString()} endpoint - ` +
+                    `received status: ${xhr.status} from ${authOptions.endpoint}. ${suffix}`), null);
             }
         }
     };
@@ -22139,43 +30060,28 @@ var btoa = window.btoa ||
     };
 
 // CONCATENATED MODULE: ./src/core/utils/timers/abstract_timer.ts
-var Timer = (function () {
-    function Timer(set, clear, delay, callback) {
-        var _this = this;
+class Timer {
+    constructor(set, clear, delay, callback) {
         this.clear = clear;
-        this.timer = set(function () {
-            if (_this.timer) {
-                _this.timer = callback(_this.timer);
+        this.timer = set(() => {
+            if (this.timer) {
+                this.timer = callback(this.timer);
             }
         }, delay);
     }
-    Timer.prototype.isRunning = function () {
+    isRunning() {
         return this.timer !== null;
-    };
-    Timer.prototype.ensureAborted = function () {
+    }
+    ensureAborted() {
         if (this.timer) {
             this.clear(this.timer);
             this.timer = null;
         }
-    };
-    return Timer;
-}());
+    }
+}
 /* harmony default export */ var abstract_timer = (Timer);
 
 // CONCATENATED MODULE: ./src/core/utils/timers/index.ts
-var timers_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 function timers_clearTimeout(timer) {
     window.clearTimeout(timer);
@@ -22183,33 +30089,27 @@ function timers_clearTimeout(timer) {
 function timers_clearInterval(timer) {
     window.clearInterval(timer);
 }
-var OneOffTimer = (function (_super) {
-    timers_extends(OneOffTimer, _super);
-    function OneOffTimer(delay, callback) {
-        return _super.call(this, setTimeout, timers_clearTimeout, delay, function (timer) {
+class timers_OneOffTimer extends abstract_timer {
+    constructor(delay, callback) {
+        super(setTimeout, timers_clearTimeout, delay, function (timer) {
             callback();
             return null;
-        }) || this;
+        });
     }
-    return OneOffTimer;
-}(abstract_timer));
-
-var PeriodicTimer = (function (_super) {
-    timers_extends(PeriodicTimer, _super);
-    function PeriodicTimer(delay, callback) {
-        return _super.call(this, setInterval, timers_clearInterval, delay, function (timer) {
+}
+class timers_PeriodicTimer extends abstract_timer {
+    constructor(delay, callback) {
+        super(setInterval, timers_clearInterval, delay, function (timer) {
             callback();
             return timer;
-        }) || this;
+        });
     }
-    return PeriodicTimer;
-}(abstract_timer));
-
+}
 
 // CONCATENATED MODULE: ./src/core/util.ts
 
 var Util = {
-    now: function () {
+    now() {
         if (Date.now) {
             return Date.now();
         }
@@ -22217,14 +30117,10 @@ var Util = {
             return new Date().valueOf();
         }
     },
-    defer: function (callback) {
-        return new OneOffTimer(0, callback);
+    defer(callback) {
+        return new timers_OneOffTimer(0, callback);
     },
-    method: function (name) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    method(name, ...args) {
         var boundArguments = Array.prototype.slice.call(arguments, 1);
         return function (object) {
             return object[name].apply(object, boundArguments.concat(arguments));
@@ -22236,11 +30132,7 @@ var Util = {
 // CONCATENATED MODULE: ./src/core/utils/collections.ts
 
 
-function extend(target) {
-    var sources = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        sources[_i - 1] = arguments[_i];
-    }
+function extend(target, ...sources) {
     for (var i = 0; i < sources.length; i++) {
         var extensions = sources[i];
         for (var property in extensions) {
@@ -22434,67 +30326,50 @@ function safeJSONStringify(source) {
 // CONCATENATED MODULE: ./src/core/logger.ts
 
 
-var logger_Logger = (function () {
-    function Logger() {
-        this.globalLog = function (message) {
+class logger_Logger {
+    constructor() {
+        this.globalLog = (message) => {
             if (window.console && window.console.log) {
                 window.console.log(message);
             }
         };
     }
-    Logger.prototype.debug = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+    debug(...args) {
         this.log(this.globalLog, args);
-    };
-    Logger.prototype.warn = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+    }
+    warn(...args) {
         this.log(this.globalLogWarn, args);
-    };
-    Logger.prototype.error = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+    }
+    error(...args) {
         this.log(this.globalLogError, args);
-    };
-    Logger.prototype.globalLogWarn = function (message) {
+    }
+    globalLogWarn(message) {
         if (window.console && window.console.warn) {
             window.console.warn(message);
         }
         else {
             this.globalLog(message);
         }
-    };
-    Logger.prototype.globalLogError = function (message) {
+    }
+    globalLogError(message) {
         if (window.console && window.console.error) {
             window.console.error(message);
         }
         else {
             this.globalLogWarn(message);
         }
-    };
-    Logger.prototype.log = function (defaultLoggingFunction) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    }
+    log(defaultLoggingFunction, ...args) {
         var message = stringify.apply(this, arguments);
         if (core_pusher.log) {
             core_pusher.log(message);
         }
         else if (core_pusher.logToConsole) {
-            var log = defaultLoggingFunction.bind(this);
+            const log = defaultLoggingFunction.bind(this);
             log(message);
         }
-    };
-    return Logger;
-}());
+    }
+}
 /* harmony default export */ var logger = (new logger_Logger());
 
 // CONCATENATED MODULE: ./src/runtimes/web/auth/jsonp_auth.ts
@@ -22502,7 +30377,7 @@ var logger_Logger = (function () {
 var jsonp = function (context, query, authOptions, authRequestType, callback) {
     if (authOptions.headers !== undefined ||
         authOptions.headersProvider != null) {
-        logger.warn("To send headers with the " + authRequestType.toString() + " request, you must use AJAX, rather than JSONP.");
+        logger.warn(`To send headers with the ${authRequestType.toString()} request, you must use AJAX, rather than JSONP.`);
     }
     var callbackName = context.nextAuthCallbackID.toString();
     context.nextAuthCallbackID++;
@@ -22524,11 +30399,11 @@ var jsonp = function (context, query, authOptions, authRequestType, callback) {
 /* harmony default export */ var jsonp_auth = (jsonp);
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/script_request.ts
-var ScriptRequest = (function () {
-    function ScriptRequest(src) {
+class ScriptRequest {
+    constructor(src) {
         this.src = src;
     }
-    ScriptRequest.prototype.send = function (receiver) {
+    send(receiver) {
         var self = this;
         var errorString = 'Error loading ' + self.src;
         self.script = document.createElement('script');
@@ -22568,8 +30443,8 @@ var ScriptRequest = (function () {
         if (self.errorScript) {
             head.insertBefore(self.errorScript, self.script.nextSibling);
         }
-    };
-    ScriptRequest.prototype.cleanup = function () {
+    }
+    cleanup() {
         if (this.script) {
             this.script.onload = this.script.onerror = null;
             this.script.onreadystatechange = null;
@@ -22582,20 +30457,18 @@ var ScriptRequest = (function () {
         }
         this.script = null;
         this.errorScript = null;
-    };
-    return ScriptRequest;
-}());
-/* harmony default export */ var script_request = (ScriptRequest);
+    }
+}
 
 // CONCATENATED MODULE: ./src/runtimes/web/dom/jsonp_request.ts
 
 
-var jsonp_request_JSONPRequest = (function () {
-    function JSONPRequest(url, data) {
+class jsonp_request_JSONPRequest {
+    constructor(url, data) {
         this.url = url;
         this.data = data;
     }
-    JSONPRequest.prototype.send = function (receiver) {
+    send(receiver) {
         if (this.request) {
             return;
         }
@@ -22603,15 +30476,13 @@ var jsonp_request_JSONPRequest = (function () {
         var url = this.url + '/' + receiver.number + '?' + query;
         this.request = runtime.createScriptRequest(url);
         this.request.send(receiver);
-    };
-    JSONPRequest.prototype.cleanup = function () {
+    }
+    cleanup() {
         if (this.request) {
             this.request.cleanup();
         }
-    };
-    return JSONPRequest;
-}());
-/* harmony default export */ var jsonp_request = (jsonp_request_JSONPRequest);
+    }
+}
 
 // CONCATENATED MODULE: ./src/runtimes/web/timeline/jsonp_timeline.ts
 
@@ -22636,7 +30507,7 @@ var getAgent = function (sender, useTLS) {
 };
 var jsonp_timeline_jsonp = {
     name: 'jsonp',
-    getAgent: getAgent
+    getAgent
 };
 /* harmony default export */ var jsonp_timeline = (jsonp_timeline_jsonp);
 
@@ -22680,14 +30551,14 @@ var sockjs = {
 
 // CONCATENATED MODULE: ./src/core/events/callback_registry.ts
 
-var callback_registry_CallbackRegistry = (function () {
-    function CallbackRegistry() {
+class callback_registry_CallbackRegistry {
+    constructor() {
         this._callbacks = {};
     }
-    CallbackRegistry.prototype.get = function (name) {
+    get(name) {
         return this._callbacks[prefix(name)];
-    };
-    CallbackRegistry.prototype.add = function (name, callback, context) {
+    }
+    add(name, callback, context) {
         var prefixedEventName = prefix(name);
         this._callbacks[prefixedEventName] =
             this._callbacks[prefixedEventName] || [];
@@ -22695,8 +30566,8 @@ var callback_registry_CallbackRegistry = (function () {
             fn: callback,
             context: context
         });
-    };
-    CallbackRegistry.prototype.remove = function (name, callback, context) {
+    }
+    remove(name, callback, context) {
         if (!name && !callback && !context) {
             this._callbacks = {};
             return;
@@ -22708,8 +30579,8 @@ var callback_registry_CallbackRegistry = (function () {
         else {
             this.removeAllCallbacks(names);
         }
-    };
-    CallbackRegistry.prototype.removeCallback = function (names, callback, context) {
+    }
+    removeCallback(names, callback, context) {
         apply(names, function (name) {
             this._callbacks[name] = filter(this._callbacks[name] || [], function (binding) {
                 return ((callback && callback !== binding.fn) ||
@@ -22719,15 +30590,13 @@ var callback_registry_CallbackRegistry = (function () {
                 delete this._callbacks[name];
             }
         }, this);
-    };
-    CallbackRegistry.prototype.removeAllCallbacks = function (names) {
+    }
+    removeAllCallbacks(names) {
         apply(names, function (name) {
             delete this._callbacks[name];
         }, this);
-    };
-    return CallbackRegistry;
-}());
-/* harmony default export */ var callback_registry = (callback_registry_CallbackRegistry);
+    }
+}
 function prefix(name) {
     return '_' + name;
 }
@@ -22735,38 +30604,38 @@ function prefix(name) {
 // CONCATENATED MODULE: ./src/core/events/dispatcher.ts
 
 
-var dispatcher_Dispatcher = (function () {
-    function Dispatcher(failThrough) {
-        this.callbacks = new callback_registry();
+class dispatcher_Dispatcher {
+    constructor(failThrough) {
+        this.callbacks = new callback_registry_CallbackRegistry();
         this.global_callbacks = [];
         this.failThrough = failThrough;
     }
-    Dispatcher.prototype.bind = function (eventName, callback, context) {
+    bind(eventName, callback, context) {
         this.callbacks.add(eventName, callback, context);
         return this;
-    };
-    Dispatcher.prototype.bind_global = function (callback) {
+    }
+    bind_global(callback) {
         this.global_callbacks.push(callback);
         return this;
-    };
-    Dispatcher.prototype.unbind = function (eventName, callback, context) {
+    }
+    unbind(eventName, callback, context) {
         this.callbacks.remove(eventName, callback, context);
         return this;
-    };
-    Dispatcher.prototype.unbind_global = function (callback) {
+    }
+    unbind_global(callback) {
         if (!callback) {
             this.global_callbacks = [];
             return this;
         }
-        this.global_callbacks = filter(this.global_callbacks || [], function (c) { return c !== callback; });
+        this.global_callbacks = filter(this.global_callbacks || [], c => c !== callback);
         return this;
-    };
-    Dispatcher.prototype.unbind_all = function () {
+    }
+    unbind_all() {
         this.unbind();
         this.unbind_global();
         return this;
-    };
-    Dispatcher.prototype.emit = function (eventName, data, metadata) {
+    }
+    emit(eventName, data, metadata) {
         for (var i = 0; i < this.global_callbacks.length; i++) {
             this.global_callbacks[i](eventName, data);
         }
@@ -22787,54 +30656,36 @@ var dispatcher_Dispatcher = (function () {
             this.failThrough(eventName, data);
         }
         return this;
-    };
-    return Dispatcher;
-}());
-/* harmony default export */ var dispatcher = (dispatcher_Dispatcher);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/transports/transport_connection.ts
-var transport_connection_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var transport_connection_TransportConnection = (function (_super) {
-    transport_connection_extends(TransportConnection, _super);
-    function TransportConnection(hooks, name, priority, key, options) {
-        var _this = _super.call(this) || this;
-        _this.initialize = runtime.transportConnectionInitializer;
-        _this.hooks = hooks;
-        _this.name = name;
-        _this.priority = priority;
-        _this.key = key;
-        _this.options = options;
-        _this.state = 'new';
-        _this.timeline = options.timeline;
-        _this.activityTimeout = options.activityTimeout;
-        _this.id = _this.timeline.generateUniqueID();
-        return _this;
+class transport_connection_TransportConnection extends dispatcher_Dispatcher {
+    constructor(hooks, name, priority, key, options) {
+        super();
+        this.initialize = runtime.transportConnectionInitializer;
+        this.hooks = hooks;
+        this.name = name;
+        this.priority = priority;
+        this.key = key;
+        this.options = options;
+        this.state = 'new';
+        this.timeline = options.timeline;
+        this.activityTimeout = options.activityTimeout;
+        this.id = this.timeline.generateUniqueID();
     }
-    TransportConnection.prototype.handlesActivityChecks = function () {
+    handlesActivityChecks() {
         return Boolean(this.hooks.handlesActivityChecks);
-    };
-    TransportConnection.prototype.supportsPing = function () {
+    }
+    supportsPing() {
         return Boolean(this.hooks.supportsPing);
-    };
-    TransportConnection.prototype.connect = function () {
-        var _this = this;
+    }
+    connect() {
         if (this.socket || this.state !== 'initialized') {
             return false;
         }
@@ -22843,18 +30694,18 @@ var transport_connection_TransportConnection = (function (_super) {
             this.socket = this.hooks.getSocket(url, this.options);
         }
         catch (e) {
-            util.defer(function () {
-                _this.onError(e);
-                _this.changeState('closed');
+            util.defer(() => {
+                this.onError(e);
+                this.changeState('closed');
             });
             return false;
         }
         this.bindListeners();
-        logger.debug('Connecting', { transport: this.name, url: url });
+        logger.debug('Connecting', { transport: this.name, url });
         this.changeState('connecting');
         return true;
-    };
-    TransportConnection.prototype.close = function () {
+    }
+    close() {
         if (this.socket) {
             this.socket.close();
             return true;
@@ -22862,13 +30713,12 @@ var transport_connection_TransportConnection = (function (_super) {
         else {
             return false;
         }
-    };
-    TransportConnection.prototype.send = function (data) {
-        var _this = this;
+    }
+    send(data) {
         if (this.state === 'open') {
-            util.defer(function () {
-                if (_this.socket) {
-                    _this.socket.send(data);
+            util.defer(() => {
+                if (this.socket) {
+                    this.socket.send(data);
                 }
             });
             return true;
@@ -22876,24 +30726,24 @@ var transport_connection_TransportConnection = (function (_super) {
         else {
             return false;
         }
-    };
-    TransportConnection.prototype.ping = function () {
+    }
+    ping() {
         if (this.state === 'open' && this.supportsPing()) {
             this.socket.ping();
         }
-    };
-    TransportConnection.prototype.onOpen = function () {
+    }
+    onOpen() {
         if (this.hooks.beforeOpen) {
             this.hooks.beforeOpen(this.socket, this.hooks.urls.getPath(this.key, this.options));
         }
         this.changeState('open');
         this.socket.onopen = undefined;
-    };
-    TransportConnection.prototype.onError = function (error) {
+    }
+    onError(error) {
         this.emit('error', { type: 'WebSocketError', error: error });
         this.timeline.error(this.buildTimelineMessage({ error: error.toString() }));
-    };
-    TransportConnection.prototype.onClose = function (closeEvent) {
+    }
+    onClose(closeEvent) {
         if (closeEvent) {
             this.changeState('closed', {
                 code: closeEvent.code,
@@ -22906,34 +30756,33 @@ var transport_connection_TransportConnection = (function (_super) {
         }
         this.unbindListeners();
         this.socket = undefined;
-    };
-    TransportConnection.prototype.onMessage = function (message) {
+    }
+    onMessage(message) {
         this.emit('message', message);
-    };
-    TransportConnection.prototype.onActivity = function () {
+    }
+    onActivity() {
         this.emit('activity');
-    };
-    TransportConnection.prototype.bindListeners = function () {
-        var _this = this;
-        this.socket.onopen = function () {
-            _this.onOpen();
+    }
+    bindListeners() {
+        this.socket.onopen = () => {
+            this.onOpen();
         };
-        this.socket.onerror = function (error) {
-            _this.onError(error);
+        this.socket.onerror = error => {
+            this.onError(error);
         };
-        this.socket.onclose = function (closeEvent) {
-            _this.onClose(closeEvent);
+        this.socket.onclose = closeEvent => {
+            this.onClose(closeEvent);
         };
-        this.socket.onmessage = function (message) {
-            _this.onMessage(message);
+        this.socket.onmessage = message => {
+            this.onMessage(message);
         };
         if (this.supportsPing()) {
-            this.socket.onactivity = function () {
-                _this.onActivity();
+            this.socket.onactivity = () => {
+                this.onActivity();
             };
         }
-    };
-    TransportConnection.prototype.unbindListeners = function () {
+    }
+    unbindListeners() {
         if (this.socket) {
             this.socket.onopen = undefined;
             this.socket.onerror = undefined;
@@ -22943,44 +30792,40 @@ var transport_connection_TransportConnection = (function (_super) {
                 this.socket.onactivity = undefined;
             }
         }
-    };
-    TransportConnection.prototype.changeState = function (state, params) {
+    }
+    changeState(state, params) {
         this.state = state;
         this.timeline.info(this.buildTimelineMessage({
             state: state,
             params: params
         }));
         this.emit(state, params);
-    };
-    TransportConnection.prototype.buildTimelineMessage = function (message) {
+    }
+    buildTimelineMessage(message) {
         return extend({ cid: this.id }, message);
-    };
-    return TransportConnection;
-}(dispatcher));
-/* harmony default export */ var transport_connection = (transport_connection_TransportConnection);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/transports/transport.ts
 
-var transport_Transport = (function () {
-    function Transport(hooks) {
+class transport_Transport {
+    constructor(hooks) {
         this.hooks = hooks;
     }
-    Transport.prototype.isSupported = function (environment) {
+    isSupported(environment) {
         return this.hooks.isSupported(environment);
-    };
-    Transport.prototype.createConnection = function (name, priority, key, options) {
-        return new transport_connection(this.hooks, name, priority, key, options);
-    };
-    return Transport;
-}());
-/* harmony default export */ var transports_transport = (transport_Transport);
+    }
+    createConnection(name, priority, key, options) {
+        return new transport_connection_TransportConnection(this.hooks, name, priority, key, options);
+    }
+}
 
 // CONCATENATED MODULE: ./src/runtimes/isomorphic/transports/transports.ts
 
 
 
 
-var WSTransport = new transports_transport({
+var WSTransport = new transport_Transport({
     urls: ws,
     handlesActivityChecks: false,
     supportsPing: false,
@@ -23017,8 +30862,8 @@ var xhrConfiguration = {
         return runtime.isXHRSupported();
     }
 };
-var XHRStreamingTransport = new transports_transport((extend({}, streamingConfiguration, xhrConfiguration)));
-var XHRPollingTransport = new transports_transport(extend({}, pollingConfiguration, xhrConfiguration));
+var XHRStreamingTransport = new transport_Transport((extend({}, streamingConfiguration, xhrConfiguration)));
+var XHRPollingTransport = new transport_Transport(extend({}, pollingConfiguration, xhrConfiguration));
 var Transports = {
     ws: WSTransport,
     xhr_streaming: XHRStreamingTransport,
@@ -23033,7 +30878,7 @@ var Transports = {
 
 
 
-var SockJSTransport = new transports_transport({
+var SockJSTransport = new transport_Transport({
     file: 'sockjs',
     urls: sockjs,
     handlesActivityChecks: true,
@@ -23064,33 +30909,19 @@ var xdrConfiguration = {
         return yes;
     }
 };
-var XDRStreamingTransport = new transports_transport((extend({}, streamingConfiguration, xdrConfiguration)));
-var XDRPollingTransport = new transports_transport(extend({}, pollingConfiguration, xdrConfiguration));
+var XDRStreamingTransport = new transport_Transport((extend({}, streamingConfiguration, xdrConfiguration)));
+var XDRPollingTransport = new transport_Transport(extend({}, pollingConfiguration, xdrConfiguration));
 transports.xdr_streaming = XDRStreamingTransport;
 transports.xdr_polling = XDRPollingTransport;
 transports.sockjs = SockJSTransport;
 /* harmony default export */ var transports_transports = (transports);
 
 // CONCATENATED MODULE: ./src/runtimes/web/net_info.ts
-var net_info_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var NetInfo = (function (_super) {
-    net_info_extends(NetInfo, _super);
-    function NetInfo() {
-        var _this = _super.call(this) || this;
-        var self = _this;
+class net_info_NetInfo extends dispatcher_Dispatcher {
+    constructor() {
+        super();
+        var self = this;
         if (window.addEventListener !== undefined) {
             window.addEventListener('online', function () {
                 self.emit('online');
@@ -23099,34 +30930,30 @@ var NetInfo = (function (_super) {
                 self.emit('offline');
             }, false);
         }
-        return _this;
     }
-    NetInfo.prototype.isOnline = function () {
+    isOnline() {
         if (window.navigator.onLine === undefined) {
             return true;
         }
         else {
             return window.navigator.onLine;
         }
-    };
-    return NetInfo;
-}(dispatcher));
-
-var net_info_Network = new NetInfo();
+    }
+}
+var net_info_Network = new net_info_NetInfo();
 
 // CONCATENATED MODULE: ./src/core/transports/assistant_to_the_transport_manager.ts
 
 
-var assistant_to_the_transport_manager_AssistantToTheTransportManager = (function () {
-    function AssistantToTheTransportManager(manager, transport, options) {
+class assistant_to_the_transport_manager_AssistantToTheTransportManager {
+    constructor(manager, transport, options) {
         this.manager = manager;
         this.transport = transport;
         this.minPingDelay = options.minPingDelay;
         this.maxPingDelay = options.maxPingDelay;
         this.pingDelay = undefined;
     }
-    AssistantToTheTransportManager.prototype.createConnection = function (name, priority, key, options) {
-        var _this = this;
+    createConnection(name, priority, key, options) {
         options = extend({}, options, {
             activityTimeout: this.pingDelay
         });
@@ -23137,31 +30964,29 @@ var assistant_to_the_transport_manager_AssistantToTheTransportManager = (functio
             connection.bind('closed', onClosed);
             openTimestamp = util.now();
         };
-        var onClosed = function (closeEvent) {
+        var onClosed = closeEvent => {
             connection.unbind('closed', onClosed);
             if (closeEvent.code === 1002 || closeEvent.code === 1003) {
-                _this.manager.reportDeath();
+                this.manager.reportDeath();
             }
             else if (!closeEvent.wasClean && openTimestamp) {
                 var lifespan = util.now() - openTimestamp;
-                if (lifespan < 2 * _this.maxPingDelay) {
-                    _this.manager.reportDeath();
-                    _this.pingDelay = Math.max(lifespan / 2, _this.minPingDelay);
+                if (lifespan < 2 * this.maxPingDelay) {
+                    this.manager.reportDeath();
+                    this.pingDelay = Math.max(lifespan / 2, this.minPingDelay);
                 }
             }
         };
         connection.bind('open', onOpen);
         return connection;
-    };
-    AssistantToTheTransportManager.prototype.isSupported = function (environment) {
+    }
+    isSupported(environment) {
         return this.manager.isAlive() && this.transport.isSupported(environment);
-    };
-    return AssistantToTheTransportManager;
-}());
-/* harmony default export */ var assistant_to_the_transport_manager = (assistant_to_the_transport_manager_AssistantToTheTransportManager);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/connection/protocol/protocol.ts
-var Protocol = {
+const Protocol = {
     decodeMessage: function (messageEvent) {
         try {
             var messageData = JSON.parse(messageEvent.data);
@@ -23254,68 +31079,52 @@ var Protocol = {
 /* harmony default export */ var protocol_protocol = (Protocol);
 
 // CONCATENATED MODULE: ./src/core/connection/connection.ts
-var connection_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
-var connection_Connection = (function (_super) {
-    connection_extends(Connection, _super);
-    function Connection(id, transport) {
-        var _this = _super.call(this) || this;
-        _this.id = id;
-        _this.transport = transport;
-        _this.activityTimeout = transport.activityTimeout;
-        _this.bindListeners();
-        return _this;
+class connection_Connection extends dispatcher_Dispatcher {
+    constructor(id, transport) {
+        super();
+        this.id = id;
+        this.transport = transport;
+        this.activityTimeout = transport.activityTimeout;
+        this.bindListeners();
     }
-    Connection.prototype.handlesActivityChecks = function () {
+    handlesActivityChecks() {
         return this.transport.handlesActivityChecks();
-    };
-    Connection.prototype.send = function (data) {
+    }
+    send(data) {
         return this.transport.send(data);
-    };
-    Connection.prototype.send_event = function (name, data, channel) {
+    }
+    send_event(name, data, channel) {
         var event = { event: name, data: data };
         if (channel) {
             event.channel = channel;
         }
         logger.debug('Event sent', event);
         return this.send(protocol_protocol.encodeMessage(event));
-    };
-    Connection.prototype.ping = function () {
+    }
+    ping() {
         if (this.transport.supportsPing()) {
             this.transport.ping();
         }
         else {
             this.send_event('pusher:ping', {});
         }
-    };
-    Connection.prototype.close = function () {
+    }
+    close() {
         this.transport.close();
-    };
-    Connection.prototype.bindListeners = function () {
-        var _this = this;
+    }
+    bindListeners() {
         var listeners = {
-            message: function (messageEvent) {
+            message: (messageEvent) => {
                 var pusherEvent;
                 try {
                     pusherEvent = protocol_protocol.decodeMessage(messageEvent);
                 }
                 catch (e) {
-                    _this.emit('error', {
+                    this.emit('error', {
                         type: 'MessageParseError',
                         error: e,
                         data: messageEvent.data
@@ -23325,46 +31134,46 @@ var connection_Connection = (function (_super) {
                     logger.debug('Event recd', pusherEvent);
                     switch (pusherEvent.event) {
                         case 'pusher:error':
-                            _this.emit('error', {
+                            this.emit('error', {
                                 type: 'PusherError',
                                 data: pusherEvent.data
                             });
                             break;
                         case 'pusher:ping':
-                            _this.emit('ping');
+                            this.emit('ping');
                             break;
                         case 'pusher:pong':
-                            _this.emit('pong');
+                            this.emit('pong');
                             break;
                     }
-                    _this.emit('message', pusherEvent);
+                    this.emit('message', pusherEvent);
                 }
             },
-            activity: function () {
-                _this.emit('activity');
+            activity: () => {
+                this.emit('activity');
             },
-            error: function (error) {
-                _this.emit('error', error);
+            error: error => {
+                this.emit('error', error);
             },
-            closed: function (closeEvent) {
+            closed: closeEvent => {
                 unbindListeners();
                 if (closeEvent && closeEvent.code) {
-                    _this.handleCloseEvent(closeEvent);
+                    this.handleCloseEvent(closeEvent);
                 }
-                _this.transport = null;
-                _this.emit('closed');
+                this.transport = null;
+                this.emit('closed');
             }
         };
-        var unbindListeners = function () {
-            objectApply(listeners, function (listener, event) {
-                _this.transport.unbind(event, listener);
+        var unbindListeners = () => {
+            objectApply(listeners, (listener, event) => {
+                this.transport.unbind(event, listener);
             });
         };
-        objectApply(listeners, function (listener, event) {
-            _this.transport.bind(event, listener);
+        objectApply(listeners, (listener, event) => {
+            this.transport.bind(event, listener);
         });
-    };
-    Connection.prototype.handleCloseEvent = function (closeEvent) {
+    }
+    handleCloseEvent(closeEvent) {
         var action = protocol_protocol.getCloseAction(closeEvent);
         var error = protocol_protocol.getCloseError(closeEvent);
         if (error) {
@@ -23373,136 +31182,114 @@ var connection_Connection = (function (_super) {
         if (action) {
             this.emit(action, { action: action, error: error });
         }
-    };
-    return Connection;
-}(dispatcher));
-/* harmony default export */ var connection_connection = (connection_Connection);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/connection/handshake/index.ts
 
 
 
-var handshake_Handshake = (function () {
-    function Handshake(transport, callback) {
+class handshake_Handshake {
+    constructor(transport, callback) {
         this.transport = transport;
         this.callback = callback;
         this.bindListeners();
     }
-    Handshake.prototype.close = function () {
+    close() {
         this.unbindListeners();
         this.transport.close();
-    };
-    Handshake.prototype.bindListeners = function () {
-        var _this = this;
-        this.onMessage = function (m) {
-            _this.unbindListeners();
+    }
+    bindListeners() {
+        this.onMessage = m => {
+            this.unbindListeners();
             var result;
             try {
                 result = protocol_protocol.processHandshake(m);
             }
             catch (e) {
-                _this.finish('error', { error: e });
-                _this.transport.close();
+                this.finish('error', { error: e });
+                this.transport.close();
                 return;
             }
             if (result.action === 'connected') {
-                _this.finish('connected', {
-                    connection: new connection_connection(result.id, _this.transport),
+                this.finish('connected', {
+                    connection: new connection_Connection(result.id, this.transport),
                     activityTimeout: result.activityTimeout
                 });
             }
             else {
-                _this.finish(result.action, { error: result.error });
-                _this.transport.close();
+                this.finish(result.action, { error: result.error });
+                this.transport.close();
             }
         };
-        this.onClosed = function (closeEvent) {
-            _this.unbindListeners();
+        this.onClosed = closeEvent => {
+            this.unbindListeners();
             var action = protocol_protocol.getCloseAction(closeEvent) || 'backoff';
             var error = protocol_protocol.getCloseError(closeEvent);
-            _this.finish(action, { error: error });
+            this.finish(action, { error: error });
         };
         this.transport.bind('message', this.onMessage);
         this.transport.bind('closed', this.onClosed);
-    };
-    Handshake.prototype.unbindListeners = function () {
+    }
+    unbindListeners() {
         this.transport.unbind('message', this.onMessage);
         this.transport.unbind('closed', this.onClosed);
-    };
-    Handshake.prototype.finish = function (action, params) {
+    }
+    finish(action, params) {
         this.callback(extend({ transport: this.transport, action: action }, params));
-    };
-    return Handshake;
-}());
-/* harmony default export */ var connection_handshake = (handshake_Handshake);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/timeline/timeline_sender.ts
 
-var timeline_sender_TimelineSender = (function () {
-    function TimelineSender(timeline, options) {
+class timeline_sender_TimelineSender {
+    constructor(timeline, options) {
         this.timeline = timeline;
         this.options = options || {};
     }
-    TimelineSender.prototype.send = function (useTLS, callback) {
+    send(useTLS, callback) {
         if (this.timeline.isEmpty()) {
             return;
         }
         this.timeline.send(runtime.TimelineTransport.getAgent(this, useTLS), callback);
-    };
-    return TimelineSender;
-}());
-/* harmony default export */ var timeline_sender = (timeline_sender_TimelineSender);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/channels/channel.ts
-var channel_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var channel_Channel = (function (_super) {
-    channel_extends(Channel, _super);
-    function Channel(name, pusher) {
-        var _this = _super.call(this, function (event, data) {
+class channel_Channel extends dispatcher_Dispatcher {
+    constructor(name, pusher) {
+        super(function (event, data) {
             logger.debug('No callbacks on ' + name + ' for ' + event);
-        }) || this;
-        _this.name = name;
-        _this.pusher = pusher;
-        _this.subscribed = false;
-        _this.subscriptionPending = false;
-        _this.subscriptionCancelled = false;
-        return _this;
+        });
+        this.name = name;
+        this.pusher = pusher;
+        this.subscribed = false;
+        this.subscriptionPending = false;
+        this.subscriptionCancelled = false;
     }
-    Channel.prototype.authorize = function (socketId, callback) {
+    authorize(socketId, callback) {
         return callback(null, { auth: '' });
-    };
-    Channel.prototype.trigger = function (event, data) {
+    }
+    trigger(event, data) {
         if (event.indexOf('client-') !== 0) {
             throw new BadEventName("Event '" + event + "' does not start with 'client-'");
         }
         if (!this.subscribed) {
             var suffix = url_store.buildLogSuffix('triggeringClientEvents');
-            logger.warn("Client event triggered before channel 'subscription_succeeded' event . " + suffix);
+            logger.warn(`Client event triggered before channel 'subscription_succeeded' event . ${suffix}`);
         }
         return this.pusher.send_event(event, data, this.name);
-    };
-    Channel.prototype.disconnect = function () {
+    }
+    disconnect() {
         this.subscribed = false;
         this.subscriptionPending = false;
-    };
-    Channel.prototype.handleEvent = function (event) {
+    }
+    handleEvent(event) {
         var eventName = event.event;
         var data = event.data;
         if (eventName === 'pusher_internal:subscription_succeeded') {
@@ -23515,8 +31302,8 @@ var channel_Channel = (function (_super) {
             var metadata = {};
             this.emit(eventName, data, metadata);
         }
-    };
-    Channel.prototype.handleSubscriptionSucceededEvent = function (event) {
+    }
+    handleSubscriptionSucceededEvent(event) {
         this.subscriptionPending = false;
         this.subscribed = true;
         if (this.subscriptionCancelled) {
@@ -23525,91 +31312,69 @@ var channel_Channel = (function (_super) {
         else {
             this.emit('pusher:subscription_succeeded', event.data);
         }
-    };
-    Channel.prototype.handleSubscriptionCountEvent = function (event) {
+    }
+    handleSubscriptionCountEvent(event) {
         if (event.data.subscription_count) {
             this.subscriptionCount = event.data.subscription_count;
         }
         this.emit('pusher:subscription_count', event.data);
-    };
-    Channel.prototype.subscribe = function () {
-        var _this = this;
+    }
+    subscribe() {
         if (this.subscribed) {
             return;
         }
         this.subscriptionPending = true;
         this.subscriptionCancelled = false;
-        this.authorize(this.pusher.connection.socket_id, function (error, data) {
+        this.authorize(this.pusher.connection.socket_id, (error, data) => {
             if (error) {
-                _this.subscriptionPending = false;
+                this.subscriptionPending = false;
                 logger.error(error.toString());
-                _this.emit('pusher:subscription_error', Object.assign({}, {
+                this.emit('pusher:subscription_error', Object.assign({}, {
                     type: 'AuthError',
                     error: error.message
                 }, error instanceof HTTPAuthError ? { status: error.status } : {}));
             }
             else {
-                _this.pusher.send_event('pusher:subscribe', {
+                this.pusher.send_event('pusher:subscribe', {
                     auth: data.auth,
                     channel_data: data.channel_data,
-                    channel: _this.name
+                    channel: this.name
                 });
             }
         });
-    };
-    Channel.prototype.unsubscribe = function () {
+    }
+    unsubscribe() {
         this.subscribed = false;
         this.pusher.send_event('pusher:unsubscribe', {
             channel: this.name
         });
-    };
-    Channel.prototype.cancelSubscription = function () {
+    }
+    cancelSubscription() {
         this.subscriptionCancelled = true;
-    };
-    Channel.prototype.reinstateSubscription = function () {
+    }
+    reinstateSubscription() {
         this.subscriptionCancelled = false;
-    };
-    return Channel;
-}(dispatcher));
-/* harmony default export */ var channels_channel = (channel_Channel);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/channels/private_channel.ts
-var private_channel_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
-var PrivateChannel = (function (_super) {
-    private_channel_extends(PrivateChannel, _super);
-    function PrivateChannel() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    PrivateChannel.prototype.authorize = function (socketId, callback) {
+class private_channel_PrivateChannel extends channel_Channel {
+    authorize(socketId, callback) {
         return this.pusher.config.channelAuthorizer({
             channelName: this.name,
             socketId: socketId
         }, callback);
-    };
-    return PrivateChannel;
-}(channels_channel));
-/* harmony default export */ var private_channel = (PrivateChannel);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/channels/members.ts
 
-var members_Members = (function () {
-    function Members() {
+class members_Members {
+    constructor() {
         this.reset();
     }
-    Members.prototype.get = function (id) {
+    get(id) {
         if (Object.prototype.hasOwnProperty.call(this.members, id)) {
             return {
                 id: id,
@@ -23619,60 +31384,44 @@ var members_Members = (function () {
         else {
             return null;
         }
-    };
-    Members.prototype.each = function (callback) {
-        var _this = this;
-        objectApply(this.members, function (member, id) {
-            callback(_this.get(id));
+    }
+    each(callback) {
+        objectApply(this.members, (member, id) => {
+            callback(this.get(id));
         });
-    };
-    Members.prototype.setMyID = function (id) {
+    }
+    setMyID(id) {
         this.myID = id;
-    };
-    Members.prototype.onSubscription = function (subscriptionData) {
+    }
+    onSubscription(subscriptionData) {
         this.members = subscriptionData.presence.hash;
         this.count = subscriptionData.presence.count;
         this.me = this.get(this.myID);
-    };
-    Members.prototype.addMember = function (memberData) {
+    }
+    addMember(memberData) {
         if (this.get(memberData.user_id) === null) {
             this.count++;
         }
         this.members[memberData.user_id] = memberData.user_info;
         return this.get(memberData.user_id);
-    };
-    Members.prototype.removeMember = function (memberData) {
+    }
+    removeMember(memberData) {
         var member = this.get(memberData.user_id);
         if (member) {
             delete this.members[memberData.user_id];
             this.count--;
         }
         return member;
-    };
-    Members.prototype.reset = function () {
+    }
+    reset() {
         this.members = {};
         this.count = 0;
         this.myID = null;
         this.me = null;
-    };
-    return Members;
-}());
-/* harmony default export */ var members = (members_Members);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/channels/presence_channel.ts
-var presence_channel_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __awaiter = ( false) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -23682,80 +31431,42 @@ var __awaiter = ( false) || function (thisArg, _arguments, P, generator) {
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __generator = ( false) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+
+
+
+
+class presence_channel_PresenceChannel extends private_channel_PrivateChannel {
+    constructor(name, pusher) {
+        super(name, pusher);
+        this.members = new members_Members();
     }
-};
-
-
-
-
-var presence_channel_PresenceChannel = (function (_super) {
-    presence_channel_extends(PresenceChannel, _super);
-    function PresenceChannel(name, pusher) {
-        var _this = _super.call(this, name, pusher) || this;
-        _this.members = new members();
-        return _this;
-    }
-    PresenceChannel.prototype.authorize = function (socketId, callback) {
-        var _this = this;
-        _super.prototype.authorize.call(this, socketId, function (error, authData) { return __awaiter(_this, void 0, void 0, function () {
-            var channelData, suffix;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!error) return [3, 3];
-                        authData = authData;
-                        if (!(authData.channel_data != null)) return [3, 1];
-                        channelData = JSON.parse(authData.channel_data);
-                        this.members.setMyID(channelData.user_id);
-                        return [3, 3];
-                    case 1: return [4, this.pusher.user.signinDonePromise];
-                    case 2:
-                        _a.sent();
-                        if (this.pusher.user.user_data != null) {
-                            this.members.setMyID(this.pusher.user.user_data.id);
-                        }
-                        else {
-                            suffix = url_store.buildLogSuffix('authorizationEndpoint');
-                            logger.error("Invalid auth response for channel '" + this.name + "', " +
-                                ("expected 'channel_data' field. " + suffix + ", ") +
-                                "or the user should be signed in.");
-                            callback('Invalid auth response');
-                            return [2];
-                        }
-                        _a.label = 3;
-                    case 3:
-                        callback(error, authData);
-                        return [2];
+    authorize(socketId, callback) {
+        super.authorize(socketId, (error, authData) => __awaiter(this, void 0, void 0, function* () {
+            if (!error) {
+                authData = authData;
+                if (authData.channel_data != null) {
+                    var channelData = JSON.parse(authData.channel_data);
+                    this.members.setMyID(channelData.user_id);
                 }
-            });
-        }); });
-    };
-    PresenceChannel.prototype.handleEvent = function (event) {
+                else {
+                    yield this.pusher.user.signinDonePromise;
+                    if (this.pusher.user.user_data != null) {
+                        this.members.setMyID(this.pusher.user.user_data.id);
+                    }
+                    else {
+                        let suffix = url_store.buildLogSuffix('authorizationEndpoint');
+                        logger.error(`Invalid auth response for channel '${this.name}', ` +
+                            `expected 'channel_data' field. ${suffix}, ` +
+                            `or the user should be signed in.`);
+                        callback('Invalid auth response');
+                        return;
+                    }
+                }
+            }
+            callback(error, authData);
+        }));
+    }
+    handleEvent(event) {
         var eventName = event.event;
         if (eventName.indexOf('pusher_internal:') === 0) {
             this.handleInternalEvent(event);
@@ -23768,8 +31479,8 @@ var presence_channel_PresenceChannel = (function (_super) {
             }
             this.emit(eventName, data, metadata);
         }
-    };
-    PresenceChannel.prototype.handleInternalEvent = function (event) {
+    }
+    handleInternalEvent(event) {
         var eventName = event.event;
         var data = event.data;
         switch (eventName) {
@@ -23790,8 +31501,8 @@ var presence_channel_PresenceChannel = (function (_super) {
                 }
                 break;
         }
-    };
-    PresenceChannel.prototype.handleSubscriptionSucceededEvent = function (event) {
+    }
+    handleSubscriptionSucceededEvent(event) {
         this.subscriptionPending = false;
         this.subscribed = true;
         if (this.subscriptionCancelled) {
@@ -23801,14 +31512,12 @@ var presence_channel_PresenceChannel = (function (_super) {
             this.members.onSubscription(event.data);
             this.emit('pusher:subscription_succeeded', this.members);
         }
-    };
-    PresenceChannel.prototype.disconnect = function () {
+    }
+    disconnect() {
         this.members.reset();
-        _super.prototype.disconnect.call(this);
-    };
-    return PresenceChannel;
-}(private_channel));
-/* harmony default export */ var presence_channel = (presence_channel_PresenceChannel);
+        super.disconnect();
+    }
+}
 
 // EXTERNAL MODULE: ./node_modules/@stablelib/utf8/lib/utf8.js
 var utf8 = __nested_webpack_require_20105__(1);
@@ -23817,64 +31526,47 @@ var utf8 = __nested_webpack_require_20105__(1);
 var base64 = __nested_webpack_require_20105__(0);
 
 // CONCATENATED MODULE: ./src/core/channels/encrypted_channel.ts
-var encrypted_channel_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var encrypted_channel_EncryptedChannel = (function (_super) {
-    encrypted_channel_extends(EncryptedChannel, _super);
-    function EncryptedChannel(name, pusher, nacl) {
-        var _this = _super.call(this, name, pusher) || this;
-        _this.key = null;
-        _this.nacl = nacl;
-        return _this;
+class encrypted_channel_EncryptedChannel extends private_channel_PrivateChannel {
+    constructor(name, pusher, nacl) {
+        super(name, pusher);
+        this.key = null;
+        this.nacl = nacl;
     }
-    EncryptedChannel.prototype.authorize = function (socketId, callback) {
-        var _this = this;
-        _super.prototype.authorize.call(this, socketId, function (error, authData) {
+    authorize(socketId, callback) {
+        super.authorize(socketId, (error, authData) => {
             if (error) {
                 callback(error, authData);
                 return;
             }
-            var sharedSecret = authData['shared_secret'];
+            let sharedSecret = authData['shared_secret'];
             if (!sharedSecret) {
-                callback(new Error("No shared_secret key in auth payload for encrypted channel: " + _this.name), null);
+                callback(new Error(`No shared_secret key in auth payload for encrypted channel: ${this.name}`), null);
                 return;
             }
-            _this.key = Object(base64["decode"])(sharedSecret);
+            this.key = Object(base64["decode"])(sharedSecret);
             delete authData['shared_secret'];
             callback(null, authData);
         });
-    };
-    EncryptedChannel.prototype.trigger = function (event, data) {
+    }
+    trigger(event, data) {
         throw new UnsupportedFeature('Client events are not currently supported for encrypted channels');
-    };
-    EncryptedChannel.prototype.handleEvent = function (event) {
+    }
+    handleEvent(event) {
         var eventName = event.event;
         var data = event.data;
         if (eventName.indexOf('pusher_internal:') === 0 ||
             eventName.indexOf('pusher:') === 0) {
-            _super.prototype.handleEvent.call(this, event);
+            super.handleEvent(event);
             return;
         }
         this.handleEncryptedEvent(eventName, data);
-    };
-    EncryptedChannel.prototype.handleEncryptedEvent = function (event, data) {
-        var _this = this;
+    }
+    handleEncryptedEvent(event, data) {
         if (!this.key) {
             logger.debug('Received encrypted event before key has been retrieved from the authEndpoint');
             return;
@@ -23884,98 +31576,81 @@ var encrypted_channel_EncryptedChannel = (function (_super) {
                 data);
             return;
         }
-        var cipherText = Object(base64["decode"])(data.ciphertext);
+        let cipherText = Object(base64["decode"])(data.ciphertext);
         if (cipherText.length < this.nacl.secretbox.overheadLength) {
-            logger.error("Expected encrypted event ciphertext length to be " + this.nacl.secretbox.overheadLength + ", got: " + cipherText.length);
+            logger.error(`Expected encrypted event ciphertext length to be ${this.nacl.secretbox.overheadLength}, got: ${cipherText.length}`);
             return;
         }
-        var nonce = Object(base64["decode"])(data.nonce);
+        let nonce = Object(base64["decode"])(data.nonce);
         if (nonce.length < this.nacl.secretbox.nonceLength) {
-            logger.error("Expected encrypted event nonce length to be " + this.nacl.secretbox.nonceLength + ", got: " + nonce.length);
+            logger.error(`Expected encrypted event nonce length to be ${this.nacl.secretbox.nonceLength}, got: ${nonce.length}`);
             return;
         }
-        var bytes = this.nacl.secretbox.open(cipherText, nonce, this.key);
+        let bytes = this.nacl.secretbox.open(cipherText, nonce, this.key);
         if (bytes === null) {
             logger.debug('Failed to decrypt an event, probably because it was encrypted with a different key. Fetching a new key from the authEndpoint...');
-            this.authorize(this.pusher.connection.socket_id, function (error, authData) {
+            this.authorize(this.pusher.connection.socket_id, (error, authData) => {
                 if (error) {
-                    logger.error("Failed to make a request to the authEndpoint: " + authData + ". Unable to fetch new key, so dropping encrypted event");
+                    logger.error(`Failed to make a request to the authEndpoint: ${authData}. Unable to fetch new key, so dropping encrypted event`);
                     return;
                 }
-                bytes = _this.nacl.secretbox.open(cipherText, nonce, _this.key);
+                bytes = this.nacl.secretbox.open(cipherText, nonce, this.key);
                 if (bytes === null) {
-                    logger.error("Failed to decrypt event with new key. Dropping encrypted event");
+                    logger.error(`Failed to decrypt event with new key. Dropping encrypted event`);
                     return;
                 }
-                _this.emit(event, _this.getDataToEmit(bytes));
+                this.emit(event, this.getDataToEmit(bytes));
                 return;
             });
             return;
         }
         this.emit(event, this.getDataToEmit(bytes));
-    };
-    EncryptedChannel.prototype.getDataToEmit = function (bytes) {
-        var raw = Object(utf8["decode"])(bytes);
+    }
+    getDataToEmit(bytes) {
+        let raw = Object(utf8["decode"])(bytes);
         try {
             return JSON.parse(raw);
         }
         catch (_a) {
             return raw;
         }
-    };
-    return EncryptedChannel;
-}(private_channel));
-/* harmony default export */ var encrypted_channel = (encrypted_channel_EncryptedChannel);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/connection/connection_manager.ts
-var connection_manager_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var connection_manager_ConnectionManager = (function (_super) {
-    connection_manager_extends(ConnectionManager, _super);
-    function ConnectionManager(key, options) {
-        var _this = _super.call(this) || this;
-        _this.state = 'initialized';
-        _this.connection = null;
-        _this.key = key;
-        _this.options = options;
-        _this.timeline = _this.options.timeline;
-        _this.usingTLS = _this.options.useTLS;
-        _this.errorCallbacks = _this.buildErrorCallbacks();
-        _this.connectionCallbacks = _this.buildConnectionCallbacks(_this.errorCallbacks);
-        _this.handshakeCallbacks = _this.buildHandshakeCallbacks(_this.errorCallbacks);
+class connection_manager_ConnectionManager extends dispatcher_Dispatcher {
+    constructor(key, options) {
+        super();
+        this.state = 'initialized';
+        this.connection = null;
+        this.key = key;
+        this.options = options;
+        this.timeline = this.options.timeline;
+        this.usingTLS = this.options.useTLS;
+        this.errorCallbacks = this.buildErrorCallbacks();
+        this.connectionCallbacks = this.buildConnectionCallbacks(this.errorCallbacks);
+        this.handshakeCallbacks = this.buildHandshakeCallbacks(this.errorCallbacks);
         var Network = runtime.getNetwork();
-        Network.bind('online', function () {
-            _this.timeline.info({ netinfo: 'online' });
-            if (_this.state === 'connecting' || _this.state === 'unavailable') {
-                _this.retryIn(0);
+        Network.bind('online', () => {
+            this.timeline.info({ netinfo: 'online' });
+            if (this.state === 'connecting' || this.state === 'unavailable') {
+                this.retryIn(0);
             }
         });
-        Network.bind('offline', function () {
-            _this.timeline.info({ netinfo: 'offline' });
-            if (_this.connection) {
-                _this.sendActivityCheck();
+        Network.bind('offline', () => {
+            this.timeline.info({ netinfo: 'offline' });
+            if (this.connection) {
+                this.sendActivityCheck();
             }
         });
-        _this.updateStrategy();
-        return _this;
+        this.updateStrategy();
     }
-    ConnectionManager.prototype.connect = function () {
+    connect() {
         if (this.connection || this.runner) {
             return;
         }
@@ -23986,59 +31661,58 @@ var connection_manager_ConnectionManager = (function (_super) {
         this.updateState('connecting');
         this.startConnecting();
         this.setUnavailableTimer();
-    };
-    ConnectionManager.prototype.send = function (data) {
+    }
+    send(data) {
         if (this.connection) {
             return this.connection.send(data);
         }
         else {
             return false;
         }
-    };
-    ConnectionManager.prototype.send_event = function (name, data, channel) {
+    }
+    send_event(name, data, channel) {
         if (this.connection) {
             return this.connection.send_event(name, data, channel);
         }
         else {
             return false;
         }
-    };
-    ConnectionManager.prototype.disconnect = function () {
+    }
+    disconnect() {
         this.disconnectInternally();
         this.updateState('disconnected');
-    };
-    ConnectionManager.prototype.isUsingTLS = function () {
+    }
+    isUsingTLS() {
         return this.usingTLS;
-    };
-    ConnectionManager.prototype.startConnecting = function () {
-        var _this = this;
-        var callback = function (error, handshake) {
+    }
+    startConnecting() {
+        var callback = (error, handshake) => {
             if (error) {
-                _this.runner = _this.strategy.connect(0, callback);
+                this.runner = this.strategy.connect(0, callback);
             }
             else {
                 if (handshake.action === 'error') {
-                    _this.emit('error', {
+                    this.emit('error', {
                         type: 'HandshakeError',
                         error: handshake.error
                     });
-                    _this.timeline.error({ handshakeError: handshake.error });
+                    this.timeline.error({ handshakeError: handshake.error });
                 }
                 else {
-                    _this.abortConnecting();
-                    _this.handshakeCallbacks[handshake.action](handshake);
+                    this.abortConnecting();
+                    this.handshakeCallbacks[handshake.action](handshake);
                 }
             }
         };
         this.runner = this.strategy.connect(0, callback);
-    };
-    ConnectionManager.prototype.abortConnecting = function () {
+    }
+    abortConnecting() {
         if (this.runner) {
             this.runner.abort();
             this.runner = null;
         }
-    };
-    ConnectionManager.prototype.disconnectInternally = function () {
+    }
+    disconnectInternally() {
         this.abortConnecting();
         this.clearRetryTimer();
         this.clearUnavailableTimer();
@@ -24046,136 +31720,129 @@ var connection_manager_ConnectionManager = (function (_super) {
             var connection = this.abandonConnection();
             connection.close();
         }
-    };
-    ConnectionManager.prototype.updateStrategy = function () {
+    }
+    updateStrategy() {
         this.strategy = this.options.getStrategy({
             key: this.key,
             timeline: this.timeline,
             useTLS: this.usingTLS
         });
-    };
-    ConnectionManager.prototype.retryIn = function (delay) {
-        var _this = this;
+    }
+    retryIn(delay) {
         this.timeline.info({ action: 'retry', delay: delay });
         if (delay > 0) {
             this.emit('connecting_in', Math.round(delay / 1000));
         }
-        this.retryTimer = new OneOffTimer(delay || 0, function () {
-            _this.disconnectInternally();
-            _this.connect();
+        this.retryTimer = new timers_OneOffTimer(delay || 0, () => {
+            this.disconnectInternally();
+            this.connect();
         });
-    };
-    ConnectionManager.prototype.clearRetryTimer = function () {
+    }
+    clearRetryTimer() {
         if (this.retryTimer) {
             this.retryTimer.ensureAborted();
             this.retryTimer = null;
         }
-    };
-    ConnectionManager.prototype.setUnavailableTimer = function () {
-        var _this = this;
-        this.unavailableTimer = new OneOffTimer(this.options.unavailableTimeout, function () {
-            _this.updateState('unavailable');
+    }
+    setUnavailableTimer() {
+        this.unavailableTimer = new timers_OneOffTimer(this.options.unavailableTimeout, () => {
+            this.updateState('unavailable');
         });
-    };
-    ConnectionManager.prototype.clearUnavailableTimer = function () {
+    }
+    clearUnavailableTimer() {
         if (this.unavailableTimer) {
             this.unavailableTimer.ensureAborted();
         }
-    };
-    ConnectionManager.prototype.sendActivityCheck = function () {
-        var _this = this;
+    }
+    sendActivityCheck() {
         this.stopActivityCheck();
         this.connection.ping();
-        this.activityTimer = new OneOffTimer(this.options.pongTimeout, function () {
-            _this.timeline.error({ pong_timed_out: _this.options.pongTimeout });
-            _this.retryIn(0);
+        this.activityTimer = new timers_OneOffTimer(this.options.pongTimeout, () => {
+            this.timeline.error({ pong_timed_out: this.options.pongTimeout });
+            this.retryIn(0);
         });
-    };
-    ConnectionManager.prototype.resetActivityCheck = function () {
-        var _this = this;
+    }
+    resetActivityCheck() {
         this.stopActivityCheck();
         if (this.connection && !this.connection.handlesActivityChecks()) {
-            this.activityTimer = new OneOffTimer(this.activityTimeout, function () {
-                _this.sendActivityCheck();
+            this.activityTimer = new timers_OneOffTimer(this.activityTimeout, () => {
+                this.sendActivityCheck();
             });
         }
-    };
-    ConnectionManager.prototype.stopActivityCheck = function () {
+    }
+    stopActivityCheck() {
         if (this.activityTimer) {
             this.activityTimer.ensureAborted();
         }
-    };
-    ConnectionManager.prototype.buildConnectionCallbacks = function (errorCallbacks) {
-        var _this = this;
+    }
+    buildConnectionCallbacks(errorCallbacks) {
         return extend({}, errorCallbacks, {
-            message: function (message) {
-                _this.resetActivityCheck();
-                _this.emit('message', message);
+            message: message => {
+                this.resetActivityCheck();
+                this.emit('message', message);
             },
-            ping: function () {
-                _this.send_event('pusher:pong', {});
+            ping: () => {
+                this.send_event('pusher:pong', {});
             },
-            activity: function () {
-                _this.resetActivityCheck();
+            activity: () => {
+                this.resetActivityCheck();
             },
-            error: function (error) {
-                _this.emit('error', error);
+            error: error => {
+                this.emit('error', error);
             },
-            closed: function () {
-                _this.abandonConnection();
-                if (_this.shouldRetry()) {
-                    _this.retryIn(1000);
+            closed: () => {
+                this.abandonConnection();
+                if (this.shouldRetry()) {
+                    this.retryIn(1000);
                 }
             }
         });
-    };
-    ConnectionManager.prototype.buildHandshakeCallbacks = function (errorCallbacks) {
-        var _this = this;
+    }
+    buildHandshakeCallbacks(errorCallbacks) {
         return extend({}, errorCallbacks, {
-            connected: function (handshake) {
-                _this.activityTimeout = Math.min(_this.options.activityTimeout, handshake.activityTimeout, handshake.connection.activityTimeout || Infinity);
-                _this.clearUnavailableTimer();
-                _this.setConnection(handshake.connection);
-                _this.socket_id = _this.connection.id;
-                _this.updateState('connected', { socket_id: _this.socket_id });
+            connected: (handshake) => {
+                this.activityTimeout = Math.min(this.options.activityTimeout, handshake.activityTimeout, handshake.connection.activityTimeout || Infinity);
+                this.clearUnavailableTimer();
+                this.setConnection(handshake.connection);
+                this.socket_id = this.connection.id;
+                this.updateState('connected', { socket_id: this.socket_id });
             }
         });
-    };
-    ConnectionManager.prototype.buildErrorCallbacks = function () {
-        var _this = this;
-        var withErrorEmitted = function (callback) {
-            return function (result) {
+    }
+    buildErrorCallbacks() {
+        let withErrorEmitted = callback => {
+            return (result) => {
                 if (result.error) {
-                    _this.emit('error', { type: 'WebSocketError', error: result.error });
+                    this.emit('error', { type: 'WebSocketError', error: result.error });
                 }
                 callback(result);
             };
         };
         return {
-            tls_only: withErrorEmitted(function () {
-                _this.usingTLS = true;
-                _this.updateStrategy();
-                _this.retryIn(0);
+            tls_only: withErrorEmitted(() => {
+                this.usingTLS = true;
+                this.updateStrategy();
+                this.retryIn(0);
             }),
-            refused: withErrorEmitted(function () {
-                _this.disconnect();
+            refused: withErrorEmitted(() => {
+                this.disconnect();
             }),
-            backoff: withErrorEmitted(function () {
-                _this.retryIn(1000);
+            backoff: withErrorEmitted(() => {
+                this.retryIn(1000);
             }),
-            retry: withErrorEmitted(function () {
-                _this.retryIn(0);
+            retry: withErrorEmitted(() => {
+                this.retryIn(0);
             })
         };
-    };
-    ConnectionManager.prototype.setConnection = function (connection) {
+    }
+    setConnection(connection) {
         this.connection = connection;
         for (var event in this.connectionCallbacks) {
             this.connection.bind(event, this.connectionCallbacks[event]);
         }
         this.resetActivityCheck();
-    };
-    ConnectionManager.prototype.abandonConnection = function () {
+    }
+    abandonConnection() {
         if (!this.connection) {
             return;
         }
@@ -24186,8 +31853,8 @@ var connection_manager_ConnectionManager = (function (_super) {
         var connection = this.connection;
         this.connection = null;
         return connection;
-    };
-    ConnectionManager.prototype.updateState = function (newState, data) {
+    }
+    updateState(newState, data) {
         var previousState = this.state;
         this.state = newState;
         if (previousState !== newState) {
@@ -24200,56 +31867,52 @@ var connection_manager_ConnectionManager = (function (_super) {
             this.emit('state_change', { previous: previousState, current: newState });
             this.emit(newState, data);
         }
-    };
-    ConnectionManager.prototype.shouldRetry = function () {
+    }
+    shouldRetry() {
         return this.state === 'connecting' || this.state === 'connected';
-    };
-    return ConnectionManager;
-}(dispatcher));
-/* harmony default export */ var connection_manager = (connection_manager_ConnectionManager);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/channels/channels.ts
 
 
 
 
-var channels_Channels = (function () {
-    function Channels() {
+class channels_Channels {
+    constructor() {
         this.channels = {};
     }
-    Channels.prototype.add = function (name, pusher) {
+    add(name, pusher) {
         if (!this.channels[name]) {
             this.channels[name] = createChannel(name, pusher);
         }
         return this.channels[name];
-    };
-    Channels.prototype.all = function () {
+    }
+    all() {
         return values(this.channels);
-    };
-    Channels.prototype.find = function (name) {
+    }
+    find(name) {
         return this.channels[name];
-    };
-    Channels.prototype.remove = function (name) {
+    }
+    remove(name) {
         var channel = this.channels[name];
         delete this.channels[name];
         return channel;
-    };
-    Channels.prototype.disconnect = function () {
+    }
+    disconnect() {
         objectApply(this.channels, function (channel) {
             channel.disconnect();
         });
-    };
-    return Channels;
-}());
-/* harmony default export */ var channels = (channels_Channels);
+    }
+}
 function createChannel(name, pusher) {
     if (name.indexOf('private-encrypted-') === 0) {
         if (pusher.config.nacl) {
             return factory.createEncryptedChannel(name, pusher, pusher.config.nacl);
         }
-        var errMsg = 'Tried to subscribe to a private-encrypted- channel but no nacl implementation available';
-        var suffix = url_store.buildLogSuffix('encryptedChannelSupport');
-        throw new UnsupportedFeature(errMsg + ". " + suffix);
+        let errMsg = 'Tried to subscribe to a private-encrypted- channel but no nacl implementation available';
+        let suffix = url_store.buildLogSuffix('encryptedChannelSupport');
+        throw new UnsupportedFeature(`${errMsg}. ${suffix}`);
     }
     else if (name.indexOf('private-') === 0) {
         return factory.createPrivateChannel(name, pusher);
@@ -24276,97 +31939,94 @@ function createChannel(name, pusher) {
 
 
 var Factory = {
-    createChannels: function () {
-        return new channels();
+    createChannels() {
+        return new channels_Channels();
     },
-    createConnectionManager: function (key, options) {
-        return new connection_manager(key, options);
+    createConnectionManager(key, options) {
+        return new connection_manager_ConnectionManager(key, options);
     },
-    createChannel: function (name, pusher) {
-        return new channels_channel(name, pusher);
+    createChannel(name, pusher) {
+        return new channel_Channel(name, pusher);
     },
-    createPrivateChannel: function (name, pusher) {
-        return new private_channel(name, pusher);
+    createPrivateChannel(name, pusher) {
+        return new private_channel_PrivateChannel(name, pusher);
     },
-    createPresenceChannel: function (name, pusher) {
-        return new presence_channel(name, pusher);
+    createPresenceChannel(name, pusher) {
+        return new presence_channel_PresenceChannel(name, pusher);
     },
-    createEncryptedChannel: function (name, pusher, nacl) {
-        return new encrypted_channel(name, pusher, nacl);
+    createEncryptedChannel(name, pusher, nacl) {
+        return new encrypted_channel_EncryptedChannel(name, pusher, nacl);
     },
-    createTimelineSender: function (timeline, options) {
-        return new timeline_sender(timeline, options);
+    createTimelineSender(timeline, options) {
+        return new timeline_sender_TimelineSender(timeline, options);
     },
-    createHandshake: function (transport, callback) {
-        return new connection_handshake(transport, callback);
+    createHandshake(transport, callback) {
+        return new handshake_Handshake(transport, callback);
     },
-    createAssistantToTheTransportManager: function (manager, transport, options) {
-        return new assistant_to_the_transport_manager(manager, transport, options);
+    createAssistantToTheTransportManager(manager, transport, options) {
+        return new assistant_to_the_transport_manager_AssistantToTheTransportManager(manager, transport, options);
     }
 };
 /* harmony default export */ var factory = (Factory);
 
 // CONCATENATED MODULE: ./src/core/transports/transport_manager.ts
 
-var transport_manager_TransportManager = (function () {
-    function TransportManager(options) {
+class transport_manager_TransportManager {
+    constructor(options) {
         this.options = options || {};
         this.livesLeft = this.options.lives || Infinity;
     }
-    TransportManager.prototype.getAssistant = function (transport) {
+    getAssistant(transport) {
         return factory.createAssistantToTheTransportManager(this, transport, {
             minPingDelay: this.options.minPingDelay,
             maxPingDelay: this.options.maxPingDelay
         });
-    };
-    TransportManager.prototype.isAlive = function () {
+    }
+    isAlive() {
         return this.livesLeft > 0;
-    };
-    TransportManager.prototype.reportDeath = function () {
+    }
+    reportDeath() {
         this.livesLeft -= 1;
-    };
-    return TransportManager;
-}());
-/* harmony default export */ var transport_manager = (transport_manager_TransportManager);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/strategies/sequential_strategy.ts
 
 
 
-var sequential_strategy_SequentialStrategy = (function () {
-    function SequentialStrategy(strategies, options) {
+class sequential_strategy_SequentialStrategy {
+    constructor(strategies, options) {
         this.strategies = strategies;
         this.loop = Boolean(options.loop);
         this.failFast = Boolean(options.failFast);
         this.timeout = options.timeout;
         this.timeoutLimit = options.timeoutLimit;
     }
-    SequentialStrategy.prototype.isSupported = function () {
+    isSupported() {
         return any(this.strategies, util.method('isSupported'));
-    };
-    SequentialStrategy.prototype.connect = function (minPriority, callback) {
-        var _this = this;
+    }
+    connect(minPriority, callback) {
         var strategies = this.strategies;
         var current = 0;
         var timeout = this.timeout;
         var runner = null;
-        var tryNextStrategy = function (error, handshake) {
+        var tryNextStrategy = (error, handshake) => {
             if (handshake) {
                 callback(null, handshake);
             }
             else {
                 current = current + 1;
-                if (_this.loop) {
+                if (this.loop) {
                     current = current % strategies.length;
                 }
                 if (current < strategies.length) {
                     if (timeout) {
                         timeout = timeout * 2;
-                        if (_this.timeoutLimit) {
-                            timeout = Math.min(timeout, _this.timeoutLimit);
+                        if (this.timeoutLimit) {
+                            timeout = Math.min(timeout, this.timeoutLimit);
                         }
                     }
-                    runner = _this.tryStrategy(strategies[current], minPriority, { timeout: timeout, failFast: _this.failFast }, tryNextStrategy);
+                    runner = this.tryStrategy(strategies[current], minPriority, { timeout, failFast: this.failFast }, tryNextStrategy);
                 }
                 else {
                     callback(true);
@@ -24385,12 +32045,12 @@ var sequential_strategy_SequentialStrategy = (function () {
                 }
             }
         };
-    };
-    SequentialStrategy.prototype.tryStrategy = function (strategy, minPriority, options, callback) {
+    }
+    tryStrategy(strategy, minPriority, options, callback) {
         var timer = null;
         var runner = null;
         if (options.timeout > 0) {
-            timer = new OneOffTimer(options.timeout, function () {
+            timer = new timers_OneOffTimer(options.timeout, function () {
                 runner.abort();
                 callback(true);
             });
@@ -24415,22 +32075,20 @@ var sequential_strategy_SequentialStrategy = (function () {
                 runner.forceMinPriority(p);
             }
         };
-    };
-    return SequentialStrategy;
-}());
-/* harmony default export */ var sequential_strategy = (sequential_strategy_SequentialStrategy);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/strategies/best_connected_ever_strategy.ts
 
 
-var best_connected_ever_strategy_BestConnectedEverStrategy = (function () {
-    function BestConnectedEverStrategy(strategies) {
+class best_connected_ever_strategy_BestConnectedEverStrategy {
+    constructor(strategies) {
         this.strategies = strategies;
     }
-    BestConnectedEverStrategy.prototype.isSupported = function () {
+    isSupported() {
         return any(this.strategies, util.method('isSupported'));
-    };
-    BestConnectedEverStrategy.prototype.connect = function (minPriority, callback) {
+    }
+    connect(minPriority, callback) {
         return connect(this.strategies, minPriority, function (i, runners) {
             return function (error, handshake) {
                 runners[i].error = error;
@@ -24446,10 +32104,8 @@ var best_connected_ever_strategy_BestConnectedEverStrategy = (function () {
                 callback(null, handshake);
             };
         });
-    };
-    return BestConnectedEverStrategy;
-}());
-/* harmony default export */ var best_connected_ever_strategy = (best_connected_ever_strategy_BestConnectedEverStrategy);
+    }
+}
 function connect(strategies, minPriority, callbackBuilder) {
     var runners = map(strategies, function (strategy, i, _, rs) {
         return strategy.connect(minPriority, callbackBuilder(i, rs));
@@ -24477,38 +32133,44 @@ function abortRunner(runner) {
     }
 }
 
-// CONCATENATED MODULE: ./src/core/strategies/cached_strategy.ts
+// CONCATENATED MODULE: ./src/core/strategies/websocket_prioritized_cached_strategy.ts
 
 
 
 
-var cached_strategy_CachedStrategy = (function () {
-    function CachedStrategy(strategy, transports, options) {
+class websocket_prioritized_cached_strategy_WebSocketPrioritizedCachedStrategy {
+    constructor(strategy, transports, options) {
         this.strategy = strategy;
         this.transports = transports;
         this.ttl = options.ttl || 1800 * 1000;
         this.usingTLS = options.useTLS;
         this.timeline = options.timeline;
     }
-    CachedStrategy.prototype.isSupported = function () {
+    isSupported() {
         return this.strategy.isSupported();
-    };
-    CachedStrategy.prototype.connect = function (minPriority, callback) {
+    }
+    connect(minPriority, callback) {
         var usingTLS = this.usingTLS;
         var info = fetchTransportCache(usingTLS);
+        var cacheSkipCount = info && info.cacheSkipCount ? info.cacheSkipCount : 0;
         var strategies = [this.strategy];
         if (info && info.timestamp + this.ttl >= util.now()) {
             var transport = this.transports[info.transport];
             if (transport) {
-                this.timeline.info({
-                    cached: true,
-                    transport: info.transport,
-                    latency: info.latency
-                });
-                strategies.push(new sequential_strategy([transport], {
-                    timeout: info.latency * 2 + 1000,
-                    failFast: true
-                }));
+                if (['ws', 'wss'].includes(info.transport) || cacheSkipCount > 3) {
+                    this.timeline.info({
+                        cached: true,
+                        transport: info.transport,
+                        latency: info.latency
+                    });
+                    strategies.push(new sequential_strategy_SequentialStrategy([transport], {
+                        timeout: info.latency * 2 + 1000,
+                        failFast: true
+                    }));
+                }
+                else {
+                    cacheSkipCount++;
+                }
             }
         }
         var startTimestamp = util.now();
@@ -24526,7 +32188,7 @@ var cached_strategy_CachedStrategy = (function () {
                 }
             }
             else {
-                storeTransportCache(usingTLS, handshake.transport.name, util.now() - startTimestamp);
+                storeTransportCache(usingTLS, handshake.transport.name, util.now() - startTimestamp, cacheSkipCount);
                 callback(null, handshake);
             }
         });
@@ -24541,10 +32203,8 @@ var cached_strategy_CachedStrategy = (function () {
                 }
             }
         };
-    };
-    return CachedStrategy;
-}());
-/* harmony default export */ var cached_strategy = (cached_strategy_CachedStrategy);
+    }
+}
 function getTransportCacheKey(usingTLS) {
     return 'pusherTransport' + (usingTLS ? 'TLS' : 'NonTLS');
 }
@@ -24563,14 +32223,15 @@ function fetchTransportCache(usingTLS) {
     }
     return null;
 }
-function storeTransportCache(usingTLS, transport, latency) {
+function storeTransportCache(usingTLS, transport, latency, cacheSkipCount) {
     var storage = runtime.getLocalStorage();
     if (storage) {
         try {
             storage[getTransportCacheKey(usingTLS)] = safeJSONStringify({
                 timestamp: util.now(),
                 transport: transport,
-                latency: latency
+                latency: latency,
+                cacheSkipCount: cacheSkipCount
             });
         }
         catch (e) {
@@ -24590,19 +32251,18 @@ function flushTransportCache(usingTLS) {
 
 // CONCATENATED MODULE: ./src/core/strategies/delayed_strategy.ts
 
-var delayed_strategy_DelayedStrategy = (function () {
-    function DelayedStrategy(strategy, _a) {
-        var number = _a.delay;
+class delayed_strategy_DelayedStrategy {
+    constructor(strategy, { delay: number }) {
         this.strategy = strategy;
         this.options = { delay: number };
     }
-    DelayedStrategy.prototype.isSupported = function () {
+    isSupported() {
         return this.strategy.isSupported();
-    };
-    DelayedStrategy.prototype.connect = function (minPriority, callback) {
+    }
+    connect(minPriority, callback) {
         var strategy = this.strategy;
         var runner;
-        var timer = new OneOffTimer(this.options.delay, function () {
+        var timer = new timers_OneOffTimer(this.options.delay, function () {
             runner = strategy.connect(minPriority, callback);
         });
         return {
@@ -24619,39 +32279,35 @@ var delayed_strategy_DelayedStrategy = (function () {
                 }
             }
         };
-    };
-    return DelayedStrategy;
-}());
-/* harmony default export */ var delayed_strategy = (delayed_strategy_DelayedStrategy);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/strategies/if_strategy.ts
-var IfStrategy = (function () {
-    function IfStrategy(test, trueBranch, falseBranch) {
+class IfStrategy {
+    constructor(test, trueBranch, falseBranch) {
         this.test = test;
         this.trueBranch = trueBranch;
         this.falseBranch = falseBranch;
     }
-    IfStrategy.prototype.isSupported = function () {
+    isSupported() {
         var branch = this.test() ? this.trueBranch : this.falseBranch;
         return branch.isSupported();
-    };
-    IfStrategy.prototype.connect = function (minPriority, callback) {
+    }
+    connect(minPriority, callback) {
         var branch = this.test() ? this.trueBranch : this.falseBranch;
         return branch.connect(minPriority, callback);
-    };
-    return IfStrategy;
-}());
-/* harmony default export */ var if_strategy = (IfStrategy);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/strategies/first_connected_strategy.ts
-var FirstConnectedStrategy = (function () {
-    function FirstConnectedStrategy(strategy) {
+class FirstConnectedStrategy {
+    constructor(strategy) {
         this.strategy = strategy;
     }
-    FirstConnectedStrategy.prototype.isSupported = function () {
+    isSupported() {
         return this.strategy.isSupported();
-    };
-    FirstConnectedStrategy.prototype.connect = function (minPriority, callback) {
+    }
+    connect(minPriority, callback) {
         var runner = this.strategy.connect(minPriority, function (error, handshake) {
             if (handshake) {
                 runner.abort();
@@ -24659,10 +32315,8 @@ var FirstConnectedStrategy = (function () {
             callback(error, handshake);
         });
         return runner;
-    };
-    return FirstConnectedStrategy;
-}());
-/* harmony default export */ var first_connected_strategy = (FirstConnectedStrategy);
+    }
+}
 
 // CONCATENATED MODULE: ./src/runtimes/web/default_strategy.ts
 
@@ -24702,12 +32356,11 @@ var getDefaultStrategy = function (config, baseOptions, defineTransport) {
         timeout: 15000,
         timeoutLimit: 60000
     };
-    var ws_manager = new transport_manager({
-        lives: 2,
+    var ws_manager = new transport_manager_TransportManager({
         minPingDelay: 10000,
         maxPingDelay: config.activityTimeout
     });
-    var streaming_manager = new transport_manager({
+    var streaming_manager = new transport_manager_TransportManager({
         lives: 2,
         minPingDelay: 10000,
         maxPingDelay: config.activityTimeout
@@ -24719,37 +32372,37 @@ var getDefaultStrategy = function (config, baseOptions, defineTransport) {
     var xdr_streaming_transport = defineTransportStrategy('xdr_streaming', 'xdr_streaming', 1, sockjs_options, streaming_manager);
     var xhr_polling_transport = defineTransportStrategy('xhr_polling', 'xhr_polling', 1, sockjs_options);
     var xdr_polling_transport = defineTransportStrategy('xdr_polling', 'xdr_polling', 1, sockjs_options);
-    var ws_loop = new sequential_strategy([ws_transport], timeouts);
-    var wss_loop = new sequential_strategy([wss_transport], timeouts);
-    var sockjs_loop = new sequential_strategy([sockjs_transport], timeouts);
-    var streaming_loop = new sequential_strategy([
-        new if_strategy(testSupportsStrategy(xhr_streaming_transport), xhr_streaming_transport, xdr_streaming_transport)
+    var ws_loop = new sequential_strategy_SequentialStrategy([ws_transport], timeouts);
+    var wss_loop = new sequential_strategy_SequentialStrategy([wss_transport], timeouts);
+    var sockjs_loop = new sequential_strategy_SequentialStrategy([sockjs_transport], timeouts);
+    var streaming_loop = new sequential_strategy_SequentialStrategy([
+        new IfStrategy(testSupportsStrategy(xhr_streaming_transport), xhr_streaming_transport, xdr_streaming_transport)
     ], timeouts);
-    var polling_loop = new sequential_strategy([
-        new if_strategy(testSupportsStrategy(xhr_polling_transport), xhr_polling_transport, xdr_polling_transport)
+    var polling_loop = new sequential_strategy_SequentialStrategy([
+        new IfStrategy(testSupportsStrategy(xhr_polling_transport), xhr_polling_transport, xdr_polling_transport)
     ], timeouts);
-    var http_loop = new sequential_strategy([
-        new if_strategy(testSupportsStrategy(streaming_loop), new best_connected_ever_strategy([
+    var http_loop = new sequential_strategy_SequentialStrategy([
+        new IfStrategy(testSupportsStrategy(streaming_loop), new best_connected_ever_strategy_BestConnectedEverStrategy([
             streaming_loop,
-            new delayed_strategy(polling_loop, { delay: 4000 })
+            new delayed_strategy_DelayedStrategy(polling_loop, { delay: 4000 })
         ]), polling_loop)
     ], timeouts);
-    var http_fallback_loop = new if_strategy(testSupportsStrategy(http_loop), http_loop, sockjs_loop);
+    var http_fallback_loop = new IfStrategy(testSupportsStrategy(http_loop), http_loop, sockjs_loop);
     var wsStrategy;
     if (baseOptions.useTLS) {
-        wsStrategy = new best_connected_ever_strategy([
+        wsStrategy = new best_connected_ever_strategy_BestConnectedEverStrategy([
             ws_loop,
-            new delayed_strategy(http_fallback_loop, { delay: 2000 })
+            new delayed_strategy_DelayedStrategy(http_fallback_loop, { delay: 2000 })
         ]);
     }
     else {
-        wsStrategy = new best_connected_ever_strategy([
+        wsStrategy = new best_connected_ever_strategy_BestConnectedEverStrategy([
             ws_loop,
-            new delayed_strategy(wss_loop, { delay: 2000 }),
-            new delayed_strategy(http_fallback_loop, { delay: 5000 })
+            new delayed_strategy_DelayedStrategy(wss_loop, { delay: 2000 }),
+            new delayed_strategy_DelayedStrategy(http_fallback_loop, { delay: 5000 })
         ]);
     }
-    return new cached_strategy(new first_connected_strategy(new if_strategy(testSupportsStrategy(ws_transport), wsStrategy, http_fallback_loop)), definedTransports, {
+    return new websocket_prioritized_cached_strategy_WebSocketPrioritizedCachedStrategy(new FirstConnectedStrategy(new IfStrategy(testSupportsStrategy(ws_transport), wsStrategy, http_fallback_loop)), definedTransports, {
         ttl: 1800000,
         timeline: baseOptions.timeline,
         useTLS: baseOptions.useTLS
@@ -24823,37 +32476,21 @@ var http_xdomain_request_hooks = {
 /* harmony default export */ var http_xdomain_request = (http_xdomain_request_hooks);
 
 // CONCATENATED MODULE: ./src/core/http/http_request.ts
-var http_request_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var MAX_BUFFER_LENGTH = 256 * 1024;
-var http_request_HTTPRequest = (function (_super) {
-    http_request_extends(HTTPRequest, _super);
-    function HTTPRequest(hooks, method, url) {
-        var _this = _super.call(this) || this;
-        _this.hooks = hooks;
-        _this.method = method;
-        _this.url = url;
-        return _this;
+const MAX_BUFFER_LENGTH = 256 * 1024;
+class http_request_HTTPRequest extends dispatcher_Dispatcher {
+    constructor(hooks, method, url) {
+        super();
+        this.hooks = hooks;
+        this.method = method;
+        this.url = url;
     }
-    HTTPRequest.prototype.start = function (payload) {
-        var _this = this;
+    start(payload) {
         this.position = 0;
         this.xhr = this.hooks.getRequest(this);
-        this.unloader = function () {
-            _this.close();
+        this.unloader = () => {
+            this.close();
         };
         runtime.addUnloadListener(this.unloader);
         this.xhr.open(this.method, this.url, true);
@@ -24861,8 +32498,8 @@ var http_request_HTTPRequest = (function (_super) {
             this.xhr.setRequestHeader('Content-Type', 'application/json');
         }
         this.xhr.send(payload);
-    };
-    HTTPRequest.prototype.close = function () {
+    }
+    close() {
         if (this.unloader) {
             runtime.removeUnloadListener(this.unloader);
             this.unloader = null;
@@ -24871,8 +32508,8 @@ var http_request_HTTPRequest = (function (_super) {
             this.hooks.abortRequest(this.xhr);
             this.xhr = null;
         }
-    };
-    HTTPRequest.prototype.onChunk = function (status, data) {
+    }
+    onChunk(status, data) {
         while (true) {
             var chunk = this.advanceBuffer(data);
             if (chunk) {
@@ -24885,8 +32522,8 @@ var http_request_HTTPRequest = (function (_super) {
         if (this.isBufferTooLong(data)) {
             this.emit('buffer_too_long');
         }
-    };
-    HTTPRequest.prototype.advanceBuffer = function (buffer) {
+    }
+    advanceBuffer(buffer) {
         var unreadData = buffer.slice(this.position);
         var endOfLinePosition = unreadData.indexOf('\n');
         if (endOfLinePosition !== -1) {
@@ -24896,13 +32533,11 @@ var http_request_HTTPRequest = (function (_super) {
         else {
             return null;
         }
-    };
-    HTTPRequest.prototype.isBufferTooLong = function (buffer) {
+    }
+    isBufferTooLong(buffer) {
         return this.position === buffer.length && buffer.length > MAX_BUFFER_LENGTH;
-    };
-    return HTTPRequest;
-}(dispatcher));
-/* harmony default export */ var http_request = (http_request_HTTPRequest);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/http/state.ts
 var State;
@@ -24918,24 +32553,24 @@ var State;
 
 
 var autoIncrement = 1;
-var http_socket_HTTPSocket = (function () {
-    function HTTPSocket(hooks, url) {
+class http_socket_HTTPSocket {
+    constructor(hooks, url) {
         this.hooks = hooks;
         this.session = randomNumber(1000) + '/' + randomString(8);
         this.location = getLocation(url);
         this.readyState = state.CONNECTING;
         this.openStream();
     }
-    HTTPSocket.prototype.send = function (payload) {
+    send(payload) {
         return this.sendRaw(JSON.stringify([payload]));
-    };
-    HTTPSocket.prototype.ping = function () {
+    }
+    ping() {
         this.hooks.sendHeartbeat(this);
-    };
-    HTTPSocket.prototype.close = function (code, reason) {
+    }
+    close(code, reason) {
         this.onClose(code, reason, true);
-    };
-    HTTPSocket.prototype.sendRaw = function (payload) {
+    }
+    sendRaw(payload) {
         if (this.readyState === state.OPEN) {
             try {
                 runtime.createSocketRequest('POST', getUniqueURL(getSendURL(this.location, this.session))).start(payload);
@@ -24948,12 +32583,12 @@ var http_socket_HTTPSocket = (function () {
         else {
             return false;
         }
-    };
-    HTTPSocket.prototype.reconnect = function () {
+    }
+    reconnect() {
         this.closeStream();
         this.openStream();
-    };
-    HTTPSocket.prototype.onClose = function (code, reason, wasClean) {
+    }
+    onClose(code, reason, wasClean) {
         this.closeStream();
         this.readyState = state.CLOSED;
         if (this.onclose) {
@@ -24963,8 +32598,8 @@ var http_socket_HTTPSocket = (function () {
                 wasClean: wasClean
             });
         }
-    };
-    HTTPSocket.prototype.onChunk = function (chunk) {
+    }
+    onChunk(chunk) {
         if (chunk.status !== 200) {
             return;
         }
@@ -24996,8 +32631,8 @@ var http_socket_HTTPSocket = (function () {
                 this.onClose(payload[0], payload[1], true);
                 break;
         }
-    };
-    HTTPSocket.prototype.onOpen = function (options) {
+    }
+    onOpen(options) {
         if (this.readyState === state.CONNECTING) {
             if (options && options.hostname) {
                 this.location.base = replaceHost(this.location.base, options.hostname);
@@ -25010,53 +32645,51 @@ var http_socket_HTTPSocket = (function () {
         else {
             this.onClose(1006, 'Server lost session', true);
         }
-    };
-    HTTPSocket.prototype.onEvent = function (event) {
+    }
+    onEvent(event) {
         if (this.readyState === state.OPEN && this.onmessage) {
             this.onmessage({ data: event });
         }
-    };
-    HTTPSocket.prototype.onActivity = function () {
+    }
+    onActivity() {
         if (this.onactivity) {
             this.onactivity();
         }
-    };
-    HTTPSocket.prototype.onError = function (error) {
+    }
+    onError(error) {
         if (this.onerror) {
             this.onerror(error);
         }
-    };
-    HTTPSocket.prototype.openStream = function () {
-        var _this = this;
+    }
+    openStream() {
         this.stream = runtime.createSocketRequest('POST', getUniqueURL(this.hooks.getReceiveURL(this.location, this.session)));
-        this.stream.bind('chunk', function (chunk) {
-            _this.onChunk(chunk);
+        this.stream.bind('chunk', chunk => {
+            this.onChunk(chunk);
         });
-        this.stream.bind('finished', function (status) {
-            _this.hooks.onFinished(_this, status);
+        this.stream.bind('finished', status => {
+            this.hooks.onFinished(this, status);
         });
-        this.stream.bind('buffer_too_long', function () {
-            _this.reconnect();
+        this.stream.bind('buffer_too_long', () => {
+            this.reconnect();
         });
         try {
             this.stream.start();
         }
         catch (error) {
-            util.defer(function () {
-                _this.onError(error);
-                _this.onClose(1006, 'Could not start streaming', false);
+            util.defer(() => {
+                this.onError(error);
+                this.onClose(1006, 'Could not start streaming', false);
             });
         }
-    };
-    HTTPSocket.prototype.closeStream = function () {
+    }
+    closeStream() {
         if (this.stream) {
             this.stream.unbind_all();
             this.stream.close();
             this.stream = null;
         }
-    };
-    return HTTPSocket;
-}());
+    }
+}
 function getLocation(url) {
     var parts = /([^\?]*)\/*(\??.*)/.exec(url);
     return {
@@ -25163,20 +32796,20 @@ var http_xhr_request_hooks = {
 
 
 var HTTP = {
-    createStreamingSocket: function (url) {
+    createStreamingSocket(url) {
         return this.createSocket(http_streaming_socket, url);
     },
-    createPollingSocket: function (url) {
+    createPollingSocket(url) {
         return this.createSocket(http_polling_socket, url);
     },
-    createSocket: function (hooks, url) {
+    createSocket(hooks, url) {
         return new http_socket(hooks, url);
     },
-    createXHR: function (method, url) {
+    createXHR(method, url) {
         return this.createRequest(http_xhr_request, method, url);
     },
-    createRequest: function (hooks, method, url) {
-        return new http_request(hooks, method, url);
+    createRequest(hooks, method, url) {
+        return new http_request_HTTPRequest(hooks, method, url);
     }
 };
 /* harmony default export */ var http_http = (HTTP);
@@ -25212,17 +32845,16 @@ var Runtime = {
     transportConnectionInitializer: transport_connection_initializer,
     HTTPFactory: web_http_http,
     TimelineTransport: jsonp_timeline,
-    getXHRAPI: function () {
+    getXHRAPI() {
         return window.XMLHttpRequest;
     },
-    getWebSocketAPI: function () {
+    getWebSocketAPI() {
         return window.WebSocket || window.MozWebSocket;
     },
-    setup: function (PusherClass) {
-        var _this = this;
+    setup(PusherClass) {
         window.Pusher = PusherClass;
-        var initializeOnDocumentBody = function () {
-            _this.onDocumentBody(PusherClass.ready);
+        var initializeOnDocumentBody = () => {
+            this.onDocumentBody(PusherClass.ready);
         };
         if (!window.JSON) {
             Dependencies.load('json2', {}, initializeOnDocumentBody);
@@ -25231,33 +32863,32 @@ var Runtime = {
             initializeOnDocumentBody();
         }
     },
-    getDocument: function () {
+    getDocument() {
         return document;
     },
-    getProtocol: function () {
+    getProtocol() {
         return this.getDocument().location.protocol;
     },
-    getAuthorizers: function () {
+    getAuthorizers() {
         return { ajax: xhr_auth, jsonp: jsonp_auth };
     },
-    onDocumentBody: function (callback) {
-        var _this = this;
+    onDocumentBody(callback) {
         if (document.body) {
             callback();
         }
         else {
-            setTimeout(function () {
-                _this.onDocumentBody(callback);
+            setTimeout(() => {
+                this.onDocumentBody(callback);
             }, 0);
         }
     },
-    createJSONPRequest: function (url, data) {
-        return new jsonp_request(url, data);
+    createJSONPRequest(url, data) {
+        return new jsonp_request_JSONPRequest(url, data);
     },
-    createScriptRequest: function (src) {
-        return new script_request(src);
+    createScriptRequest(src) {
+        return new ScriptRequest(src);
     },
-    getLocalStorage: function () {
+    getLocalStorage() {
         try {
             return window.localStorage;
         }
@@ -25265,7 +32896,7 @@ var Runtime = {
             return undefined;
         }
     },
-    createXHR: function () {
+    createXHR() {
         if (this.getXHRAPI()) {
             return this.createXMLHttpRequest();
         }
@@ -25273,21 +32904,21 @@ var Runtime = {
             return this.createMicrosoftXHR();
         }
     },
-    createXMLHttpRequest: function () {
+    createXMLHttpRequest() {
         var Constructor = this.getXHRAPI();
         return new Constructor();
     },
-    createMicrosoftXHR: function () {
+    createMicrosoftXHR() {
         return new ActiveXObject('Microsoft.XMLHTTP');
     },
-    getNetwork: function () {
+    getNetwork() {
         return net_info_Network;
     },
-    createWebSocket: function (url) {
+    createWebSocket(url) {
         var Constructor = this.getWebSocketAPI();
         return new Constructor(url);
     },
-    createSocketRequest: function (method, url) {
+    createSocketRequest(method, url) {
         if (this.isXHRSupported()) {
             return this.HTTPFactory.createXHR(method, url);
         }
@@ -25298,16 +32929,16 @@ var Runtime = {
             throw 'Cross-origin HTTP requests are not supported';
         }
     },
-    isXHRSupported: function () {
+    isXHRSupported() {
         var Constructor = this.getXHRAPI();
         return (Boolean(Constructor) && new Constructor().withCredentials !== undefined);
     },
-    isXDRSupported: function (useTLS) {
+    isXDRSupported(useTLS) {
         var protocol = useTLS ? 'https:' : 'http:';
         var documentProtocol = this.getProtocol();
         return (Boolean(window['XDomainRequest']) && documentProtocol === protocol);
     },
-    addUnloadListener: function (listener) {
+    addUnloadListener(listener) {
         if (window.addEventListener !== undefined) {
             window.addEventListener('unload', listener, false);
         }
@@ -25315,7 +32946,7 @@ var Runtime = {
             window.attachEvent('onunload', listener);
         }
     },
-    removeUnloadListener: function (listener) {
+    removeUnloadListener(listener) {
         if (window.addEventListener !== undefined) {
             window.removeEventListener('unload', listener, false);
         }
@@ -25323,10 +32954,10 @@ var Runtime = {
             window.detachEvent('onunload', listener);
         }
     },
-    randomInt: function (max) {
-        var random = function () {
-            var crypto = window.crypto || window['msCrypto'];
-            var random = crypto.getRandomValues(new Uint32Array(1))[0];
+    randomInt(max) {
+        const random = function () {
+            const crypto = window.crypto || window['msCrypto'];
+            const random = crypto.getRandomValues(new Uint32Array(1))[0];
             return random / Math.pow(2, 32);
         };
         return Math.floor(random() * max);
@@ -25347,8 +32978,8 @@ var TimelineLevel;
 
 
 
-var timeline_Timeline = (function () {
-    function Timeline(key, session, options) {
+class timeline_Timeline {
+    constructor(key, session, options) {
         this.key = key;
         this.session = session;
         this.events = [];
@@ -25356,28 +32987,27 @@ var timeline_Timeline = (function () {
         this.sent = 0;
         this.uniqueID = 0;
     }
-    Timeline.prototype.log = function (level, event) {
+    log(level, event) {
         if (level <= this.options.level) {
             this.events.push(extend({}, event, { timestamp: util.now() }));
             if (this.options.limit && this.events.length > this.options.limit) {
                 this.events.shift();
             }
         }
-    };
-    Timeline.prototype.error = function (event) {
+    }
+    error(event) {
         this.log(timeline_level.ERROR, event);
-    };
-    Timeline.prototype.info = function (event) {
+    }
+    info(event) {
         this.log(timeline_level.INFO, event);
-    };
-    Timeline.prototype.debug = function (event) {
+    }
+    debug(event) {
         this.log(timeline_level.DEBUG, event);
-    };
-    Timeline.prototype.isEmpty = function () {
+    }
+    isEmpty() {
         return this.events.length === 0;
-    };
-    Timeline.prototype.send = function (sendfn, callback) {
-        var _this = this;
+    }
+    send(sendfn, callback) {
         var data = extend({
             session: this.session,
             bundle: this.sent + 1,
@@ -25389,43 +33019,40 @@ var timeline_Timeline = (function () {
             timeline: this.events
         }, this.options.params);
         this.events = [];
-        sendfn(data, function (error, result) {
+        sendfn(data, (error, result) => {
             if (!error) {
-                _this.sent++;
+                this.sent++;
             }
             if (callback) {
                 callback(error, result);
             }
         });
         return true;
-    };
-    Timeline.prototype.generateUniqueID = function () {
+    }
+    generateUniqueID() {
         this.uniqueID++;
         return this.uniqueID;
-    };
-    return Timeline;
-}());
-/* harmony default export */ var timeline_timeline = (timeline_Timeline);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/strategies/transport_strategy.ts
 
 
 
 
-var transport_strategy_TransportStrategy = (function () {
-    function TransportStrategy(name, priority, transport, options) {
+class transport_strategy_TransportStrategy {
+    constructor(name, priority, transport, options) {
         this.name = name;
         this.priority = priority;
         this.transport = transport;
         this.options = options || {};
     }
-    TransportStrategy.prototype.isSupported = function () {
+    isSupported() {
         return this.transport.isSupported({
             useTLS: this.options.useTLS
         });
-    };
-    TransportStrategy.prototype.connect = function (minPriority, callback) {
-        var _this = this;
+    }
+    connect(minPriority, callback) {
         if (!this.isSupported()) {
             return failAttempt(new UnsupportedStrategy(), callback);
         }
@@ -25468,7 +33095,7 @@ var transport_strategy_TransportStrategy = (function () {
         transport.bind('closed', onClosed);
         transport.initialize();
         return {
-            abort: function () {
+            abort: () => {
                 if (connected) {
                     return;
                 }
@@ -25480,11 +33107,11 @@ var transport_strategy_TransportStrategy = (function () {
                     transport.close();
                 }
             },
-            forceMinPriority: function (p) {
+            forceMinPriority: p => {
                 if (connected) {
                     return;
                 }
-                if (_this.priority < p) {
+                if (this.priority < p) {
                     if (handshake) {
                         handshake.close();
                     }
@@ -25494,10 +33121,8 @@ var transport_strategy_TransportStrategy = (function () {
                 }
             }
         };
-    };
-    return TransportStrategy;
-}());
-/* harmony default export */ var transport_strategy = (transport_strategy_TransportStrategy);
+    }
+}
 function failAttempt(error, callback) {
     util.defer(function () {
         callback(error);
@@ -25514,7 +33139,7 @@ function failAttempt(error, callback) {
 
 
 
-var strategy_builder_Transports = runtime.Transports;
+const { Transports: strategy_builder_Transports } = runtime;
 var strategy_builder_defineTransport = function (config, name, type, priority, options, manager) {
     var transportClass = strategy_builder_Transports[type];
     if (!transportClass) {
@@ -25527,7 +33152,7 @@ var strategy_builder_defineTransport = function (config, name, type, priority, o
     var transport;
     if (enabled) {
         options = Object.assign({ ignoreNullOrigin: config.ignoreNullOrigin }, options);
-        transport = new transport_strategy(name, priority, manager ? manager.getAssistant(transportClass) : transportClass, options);
+        transport = new transport_strategy_TransportStrategy(name, priority, manager ? manager.getAssistant(transportClass) : transportClass, options);
     }
     else {
         transport = strategy_builder_UnsupportedStrategy;
@@ -25568,7 +33193,7 @@ function validateOptions(options) {
 // CONCATENATED MODULE: ./src/core/auth/user_authenticator.ts
 
 
-var composeChannelQuery = function (params, authOptions) {
+const composeChannelQuery = (params, authOptions) => {
     var query = 'socket_id=' + encodeURIComponent(params.socketId);
     for (var key in authOptions.params) {
         query +=
@@ -25578,7 +33203,7 @@ var composeChannelQuery = function (params, authOptions) {
                 encodeURIComponent(authOptions.params[key]);
     }
     if (authOptions.paramsProvider != null) {
-        var dynamicParams = authOptions.paramsProvider();
+        let dynamicParams = authOptions.paramsProvider();
         for (var key in dynamicParams) {
             query +=
                 '&' +
@@ -25589,12 +33214,12 @@ var composeChannelQuery = function (params, authOptions) {
     }
     return query;
 };
-var UserAuthenticator = function (authOptions) {
+const UserAuthenticator = (authOptions) => {
     if (typeof runtime.getAuthorizers()[authOptions.transport] === 'undefined') {
-        throw "'" + authOptions.transport + "' is not a recognized auth transport";
+        throw `'${authOptions.transport}' is not a recognized auth transport`;
     }
-    return function (params, callback) {
-        var query = composeChannelQuery(params, authOptions);
+    return (params, callback) => {
+        const query = composeChannelQuery(params, authOptions);
         runtime.getAuthorizers()[authOptions.transport](runtime, query, authOptions, AuthRequestType.UserAuthentication, callback);
     };
 };
@@ -25603,7 +33228,7 @@ var UserAuthenticator = function (authOptions) {
 // CONCATENATED MODULE: ./src/core/auth/channel_authorizer.ts
 
 
-var channel_authorizer_composeChannelQuery = function (params, authOptions) {
+const channel_authorizer_composeChannelQuery = (params, authOptions) => {
     var query = 'socket_id=' + encodeURIComponent(params.socketId);
     query += '&channel_name=' + encodeURIComponent(params.channelName);
     for (var key in authOptions.params) {
@@ -25614,7 +33239,7 @@ var channel_authorizer_composeChannelQuery = function (params, authOptions) {
                 encodeURIComponent(authOptions.params[key]);
     }
     if (authOptions.paramsProvider != null) {
-        var dynamicParams = authOptions.paramsProvider();
+        let dynamicParams = authOptions.paramsProvider();
         for (var key in dynamicParams) {
             query +=
                 '&' +
@@ -25625,20 +33250,20 @@ var channel_authorizer_composeChannelQuery = function (params, authOptions) {
     }
     return query;
 };
-var ChannelAuthorizer = function (authOptions) {
+const ChannelAuthorizer = (authOptions) => {
     if (typeof runtime.getAuthorizers()[authOptions.transport] === 'undefined') {
-        throw "'" + authOptions.transport + "' is not a recognized auth transport";
+        throw `'${authOptions.transport}' is not a recognized auth transport`;
     }
-    return function (params, callback) {
-        var query = channel_authorizer_composeChannelQuery(params, authOptions);
+    return (params, callback) => {
+        const query = channel_authorizer_composeChannelQuery(params, authOptions);
         runtime.getAuthorizers()[authOptions.transport](runtime, query, authOptions, AuthRequestType.ChannelAuthorization, callback);
     };
 };
 /* harmony default export */ var channel_authorizer = (ChannelAuthorizer);
 
 // CONCATENATED MODULE: ./src/core/auth/deprecated_channel_authorizer.ts
-var ChannelAuthorizerProxy = function (pusher, authOptions, channelAuthorizerGenerator) {
-    var deprecatedAuthorizerOptions = {
+const ChannelAuthorizerProxy = (pusher, authOptions, channelAuthorizerGenerator) => {
+    const deprecatedAuthorizerOptions = {
         authTransport: authOptions.transport,
         authEndpoint: authOptions.endpoint,
         auth: {
@@ -25646,32 +33271,21 @@ var ChannelAuthorizerProxy = function (pusher, authOptions, channelAuthorizerGen
             headers: authOptions.headers
         }
     };
-    return function (params, callback) {
-        var channel = pusher.channel(params.channelName);
-        var channelAuthorizer = channelAuthorizerGenerator(channel, deprecatedAuthorizerOptions);
+    return (params, callback) => {
+        const channel = pusher.channel(params.channelName);
+        const channelAuthorizer = channelAuthorizerGenerator(channel, deprecatedAuthorizerOptions);
         channelAuthorizer.authorize(params.socketId, callback);
     };
 };
 
 // CONCATENATED MODULE: ./src/core/config.ts
-var __assign = ( false) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 
 
 
 
 
 function getConfig(opts, pusher) {
-    var config = {
+    let config = {
         activityTimeout: opts.activityTimeout || defaults.activityTimeout,
         cluster: opts.cluster,
         httpPath: opts.httpPath || defaults.httpPath,
@@ -25708,7 +33322,7 @@ function getHttpHost(opts) {
         return opts.httpHost;
     }
     if (opts.cluster) {
-        return "sockjs-" + opts.cluster + ".pusher.com";
+        return `sockjs-${opts.cluster}.pusher.com`;
     }
     return defaults.httpHost;
 }
@@ -25719,7 +33333,7 @@ function getWebsocketHost(opts) {
     return getWebsocketHostFromCluster(opts.cluster);
 }
 function getWebsocketHostFromCluster(cluster) {
-    return "ws-" + cluster + ".pusher.com";
+    return `ws-${cluster}.pusher.com`;
 }
 function shouldUseTLS(opts) {
     if (runtime.getProtocol() === 'https:') {
@@ -25740,7 +33354,7 @@ function getEnableStatsConfig(opts) {
     return false;
 }
 function buildUserAuthenticator(opts) {
-    var userAuthentication = __assign(__assign({}, defaults.userAuthentication), opts.userAuthentication);
+    const userAuthentication = Object.assign(Object.assign({}, defaults.userAuthentication), opts.userAuthentication);
     if ('customHandler' in userAuthentication &&
         userAuthentication['customHandler'] != null) {
         return userAuthentication['customHandler'];
@@ -25748,9 +33362,9 @@ function buildUserAuthenticator(opts) {
     return user_authenticator(userAuthentication);
 }
 function buildChannelAuth(opts, pusher) {
-    var channelAuthorization;
+    let channelAuthorization;
     if ('channelAuthorization' in opts) {
-        channelAuthorization = __assign(__assign({}, defaults.channelAuthorization), opts.channelAuthorization);
+        channelAuthorization = Object.assign(Object.assign({}, defaults.channelAuthorization), opts.channelAuthorization);
     }
     else {
         channelAuthorization = {
@@ -25769,7 +33383,7 @@ function buildChannelAuth(opts, pusher) {
     return channelAuthorization;
 }
 function buildChannelAuthorizer(opts, pusher) {
-    var channelAuthorization = buildChannelAuth(opts, pusher);
+    const channelAuthorization = buildChannelAuth(opts, pusher);
     if ('customHandler' in channelAuthorization &&
         channelAuthorization['customHandler'] != null) {
         return channelAuthorization['customHandler'];
@@ -25778,134 +33392,99 @@ function buildChannelAuthorizer(opts, pusher) {
 }
 
 // CONCATENATED MODULE: ./src/core/watchlist.ts
-var watchlist_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var watchlist_WatchlistFacade = (function (_super) {
-    watchlist_extends(WatchlistFacade, _super);
-    function WatchlistFacade(pusher) {
-        var _this = _super.call(this, function (eventName, data) {
-            logger.debug("No callbacks on watchlist events for " + eventName);
-        }) || this;
-        _this.pusher = pusher;
-        _this.bindWatchlistInternalEvent();
-        return _this;
-    }
-    WatchlistFacade.prototype.handleEvent = function (pusherEvent) {
-        var _this = this;
-        pusherEvent.data.events.forEach(function (watchlistEvent) {
-            _this.emit(watchlistEvent.name, watchlistEvent);
+class watchlist_WatchlistFacade extends dispatcher_Dispatcher {
+    constructor(pusher) {
+        super(function (eventName, data) {
+            logger.debug(`No callbacks on watchlist events for ${eventName}`);
         });
-    };
-    WatchlistFacade.prototype.bindWatchlistInternalEvent = function () {
-        var _this = this;
-        this.pusher.connection.bind('message', function (pusherEvent) {
+        this.pusher = pusher;
+        this.bindWatchlistInternalEvent();
+    }
+    handleEvent(pusherEvent) {
+        pusherEvent.data.events.forEach(watchlistEvent => {
+            this.emit(watchlistEvent.name, watchlistEvent);
+        });
+    }
+    bindWatchlistInternalEvent() {
+        this.pusher.connection.bind('message', pusherEvent => {
             var eventName = pusherEvent.event;
             if (eventName === 'pusher_internal:watchlist_events') {
-                _this.handleEvent(pusherEvent);
+                this.handleEvent(pusherEvent);
             }
         });
-    };
-    return WatchlistFacade;
-}(dispatcher));
-/* harmony default export */ var watchlist = (watchlist_WatchlistFacade);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/utils/flat_promise.ts
 function flatPromise() {
-    var resolve, reject;
-    var promise = new Promise(function (res, rej) {
+    let resolve, reject;
+    const promise = new Promise((res, rej) => {
         resolve = res;
         reject = rej;
     });
-    return { promise: promise, resolve: resolve, reject: reject };
+    return { promise, resolve, reject };
 }
 /* harmony default export */ var flat_promise = (flatPromise);
 
 // CONCATENATED MODULE: ./src/core/user.ts
-var user_extends = ( false) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
 
 
-var user_UserFacade = (function (_super) {
-    user_extends(UserFacade, _super);
-    function UserFacade(pusher) {
-        var _this = _super.call(this, function (eventName, data) {
+class user_UserFacade extends dispatcher_Dispatcher {
+    constructor(pusher) {
+        super(function (eventName, data) {
             logger.debug('No callbacks on user for ' + eventName);
-        }) || this;
-        _this.signin_requested = false;
-        _this.user_data = null;
-        _this.serverToUserChannel = null;
-        _this.signinDonePromise = null;
-        _this._signinDoneResolve = null;
-        _this._onAuthorize = function (err, authData) {
+        });
+        this.signin_requested = false;
+        this.user_data = null;
+        this.serverToUserChannel = null;
+        this.signinDonePromise = null;
+        this._signinDoneResolve = null;
+        this._onAuthorize = (err, authData) => {
             if (err) {
-                logger.warn("Error during signin: " + err);
-                _this._cleanup();
+                logger.warn(`Error during signin: ${err}`);
+                this._cleanup();
                 return;
             }
-            _this.pusher.send_event('pusher:signin', {
+            this.pusher.send_event('pusher:signin', {
                 auth: authData.auth,
                 user_data: authData.user_data
             });
         };
-        _this.pusher = pusher;
-        _this.pusher.connection.bind('state_change', function (_a) {
-            var previous = _a.previous, current = _a.current;
+        this.pusher = pusher;
+        this.pusher.connection.bind('state_change', ({ previous, current }) => {
             if (previous !== 'connected' && current === 'connected') {
-                _this._signin();
+                this._signin();
             }
             if (previous === 'connected' && current !== 'connected') {
-                _this._cleanup();
-                _this._newSigninPromiseIfNeeded();
+                this._cleanup();
+                this._newSigninPromiseIfNeeded();
             }
         });
-        _this.watchlist = new watchlist(pusher);
-        _this.pusher.connection.bind('message', function (event) {
+        this.watchlist = new watchlist_WatchlistFacade(pusher);
+        this.pusher.connection.bind('message', event => {
             var eventName = event.event;
             if (eventName === 'pusher:signin_success') {
-                _this._onSigninSuccess(event.data);
+                this._onSigninSuccess(event.data);
             }
-            if (_this.serverToUserChannel &&
-                _this.serverToUserChannel.name === event.channel) {
-                _this.serverToUserChannel.handleEvent(event);
+            if (this.serverToUserChannel &&
+                this.serverToUserChannel.name === event.channel) {
+                this.serverToUserChannel.handleEvent(event);
             }
         });
-        return _this;
     }
-    UserFacade.prototype.signin = function () {
+    signin() {
         if (this.signin_requested) {
             return;
         }
         this.signin_requested = true;
         this._signin();
-    };
-    UserFacade.prototype._signin = function () {
+    }
+    _signin() {
         if (!this.signin_requested) {
             return;
         }
@@ -25916,46 +33495,45 @@ var user_UserFacade = (function (_super) {
         this.pusher.config.userAuthenticator({
             socketId: this.pusher.connection.socket_id
         }, this._onAuthorize);
-    };
-    UserFacade.prototype._onSigninSuccess = function (data) {
+    }
+    _onSigninSuccess(data) {
         try {
             this.user_data = JSON.parse(data.user_data);
         }
         catch (e) {
-            logger.error("Failed parsing user data after signin: " + data.user_data);
+            logger.error(`Failed parsing user data after signin: ${data.user_data}`);
             this._cleanup();
             return;
         }
         if (typeof this.user_data.id !== 'string' || this.user_data.id === '') {
-            logger.error("user_data doesn't contain an id. user_data: " + this.user_data);
+            logger.error(`user_data doesn't contain an id. user_data: ${this.user_data}`);
             this._cleanup();
             return;
         }
         this._signinDoneResolve();
         this._subscribeChannels();
-    };
-    UserFacade.prototype._subscribeChannels = function () {
-        var _this = this;
-        var ensure_subscribed = function (channel) {
+    }
+    _subscribeChannels() {
+        const ensure_subscribed = channel => {
             if (channel.subscriptionPending && channel.subscriptionCancelled) {
                 channel.reinstateSubscription();
             }
             else if (!channel.subscriptionPending &&
-                _this.pusher.connection.state === 'connected') {
+                this.pusher.connection.state === 'connected') {
                 channel.subscribe();
             }
         };
-        this.serverToUserChannel = new channels_channel("#server-to-user-" + this.user_data.id, this.pusher);
-        this.serverToUserChannel.bind_global(function (eventName, data) {
+        this.serverToUserChannel = new channel_Channel(`#server-to-user-${this.user_data.id}`, this.pusher);
+        this.serverToUserChannel.bind_global((eventName, data) => {
             if (eventName.indexOf('pusher_internal:') === 0 ||
                 eventName.indexOf('pusher:') === 0) {
                 return;
             }
-            _this.emit(eventName, data);
+            this.emit(eventName, data);
         });
         ensure_subscribed(this.serverToUserChannel);
-    };
-    UserFacade.prototype._cleanup = function () {
+    }
+    _cleanup() {
         this.user_data = null;
         if (this.serverToUserChannel) {
             this.serverToUserChannel.unbind_all();
@@ -25965,26 +33543,24 @@ var user_UserFacade = (function (_super) {
         if (this.signin_requested) {
             this._signinDoneResolve();
         }
-    };
-    UserFacade.prototype._newSigninPromiseIfNeeded = function () {
+    }
+    _newSigninPromiseIfNeeded() {
         if (!this.signin_requested) {
             return;
         }
         if (this.signinDonePromise && !this.signinDonePromise.done) {
             return;
         }
-        var _a = flat_promise(), promise = _a.promise, resolve = _a.resolve, _ = _a.reject;
+        const { promise, resolve, reject: _ } = flat_promise();
         promise.done = false;
-        var setDone = function () {
+        const setDone = () => {
             promise.done = true;
         };
-        promise.then(setDone)["catch"](setDone);
+        promise.then(setDone).catch(setDone);
         this.signinDonePromise = promise;
         this._signinDoneResolve = resolve;
-    };
-    return UserFacade;
-}(dispatcher));
-/* harmony default export */ var user = (user_UserFacade);
+    }
+}
 
 // CONCATENATED MODULE: ./src/core/pusher.ts
 
@@ -26000,19 +33576,29 @@ var user_UserFacade = (function (_super) {
 
 
 
-var pusher_Pusher = (function () {
-    function Pusher(app_key, options) {
-        var _this = this;
+class pusher_Pusher {
+    static ready() {
+        pusher_Pusher.isReady = true;
+        for (var i = 0, l = pusher_Pusher.instances.length; i < l; i++) {
+            pusher_Pusher.instances[i].connect();
+        }
+    }
+    static getClientFeatures() {
+        return keys(filterObject({ ws: runtime.Transports.ws }, function (t) {
+            return t.isSupported({});
+        }));
+    }
+    constructor(app_key, options) {
         checkAppKey(app_key);
         validateOptions(options);
         this.key = app_key;
         this.config = getConfig(options, this);
         this.channels = factory.createChannels();
-        this.global_emitter = new dispatcher();
+        this.global_emitter = new dispatcher_Dispatcher();
         this.sessionID = runtime.randomInt(1000000000);
-        this.timeline = new timeline_timeline(this.key, this.sessionID, {
+        this.timeline = new timeline_Timeline(this.key, this.sessionID, {
             cluster: this.config.cluster,
-            features: Pusher.getClientFeatures(),
+            features: pusher_Pusher.getClientFeatures(),
             params: this.config.timelineParams || {},
             limit: 50,
             level: timeline_level.INFO,
@@ -26024,8 +33610,8 @@ var pusher_Pusher = (function () {
                 path: '/timeline/v2/' + runtime.TimelineTransport.name
             });
         }
-        var getStrategy = function (options) {
-            return runtime.getDefaultStrategy(_this.config, options, strategy_builder_defineTransport);
+        var getStrategy = (options) => {
+            return runtime.getDefaultStrategy(this.config, options, strategy_builder_defineTransport);
         };
         this.connection = factory.createConnectionManager(this.key, {
             getStrategy: getStrategy,
@@ -26035,106 +33621,95 @@ var pusher_Pusher = (function () {
             unavailableTimeout: this.config.unavailableTimeout,
             useTLS: Boolean(this.config.useTLS)
         });
-        this.connection.bind('connected', function () {
-            _this.subscribeAll();
-            if (_this.timelineSender) {
-                _this.timelineSender.send(_this.connection.isUsingTLS());
+        this.connection.bind('connected', () => {
+            this.subscribeAll();
+            if (this.timelineSender) {
+                this.timelineSender.send(this.connection.isUsingTLS());
             }
         });
-        this.connection.bind('message', function (event) {
+        this.connection.bind('message', event => {
             var eventName = event.event;
             var internal = eventName.indexOf('pusher_internal:') === 0;
             if (event.channel) {
-                var channel = _this.channel(event.channel);
+                var channel = this.channel(event.channel);
                 if (channel) {
                     channel.handleEvent(event);
                 }
             }
             if (!internal) {
-                _this.global_emitter.emit(event.event, event.data);
+                this.global_emitter.emit(event.event, event.data);
             }
         });
-        this.connection.bind('connecting', function () {
-            _this.channels.disconnect();
+        this.connection.bind('connecting', () => {
+            this.channels.disconnect();
         });
-        this.connection.bind('disconnected', function () {
-            _this.channels.disconnect();
+        this.connection.bind('disconnected', () => {
+            this.channels.disconnect();
         });
-        this.connection.bind('error', function (err) {
+        this.connection.bind('error', err => {
             logger.warn(err);
         });
-        Pusher.instances.push(this);
-        this.timeline.info({ instances: Pusher.instances.length });
-        this.user = new user(this);
-        if (Pusher.isReady) {
+        pusher_Pusher.instances.push(this);
+        this.timeline.info({ instances: pusher_Pusher.instances.length });
+        this.user = new user_UserFacade(this);
+        if (pusher_Pusher.isReady) {
             this.connect();
         }
     }
-    Pusher.ready = function () {
-        Pusher.isReady = true;
-        for (var i = 0, l = Pusher.instances.length; i < l; i++) {
-            Pusher.instances[i].connect();
-        }
-    };
-    Pusher.getClientFeatures = function () {
-        return keys(filterObject({ ws: runtime.Transports.ws }, function (t) {
-            return t.isSupported({});
-        }));
-    };
-    Pusher.prototype.channel = function (name) {
+    channel(name) {
         return this.channels.find(name);
-    };
-    Pusher.prototype.allChannels = function () {
+    }
+    allChannels() {
         return this.channels.all();
-    };
-    Pusher.prototype.connect = function () {
+    }
+    connect() {
         this.connection.connect();
         if (this.timelineSender) {
             if (!this.timelineSenderTimer) {
                 var usingTLS = this.connection.isUsingTLS();
                 var timelineSender = this.timelineSender;
-                this.timelineSenderTimer = new PeriodicTimer(60000, function () {
+                this.timelineSenderTimer = new timers_PeriodicTimer(60000, function () {
                     timelineSender.send(usingTLS);
                 });
             }
         }
-    };
-    Pusher.prototype.disconnect = function () {
+    }
+    disconnect() {
         this.connection.disconnect();
         if (this.timelineSenderTimer) {
             this.timelineSenderTimer.ensureAborted();
             this.timelineSenderTimer = null;
         }
-    };
-    Pusher.prototype.bind = function (event_name, callback, context) {
+    }
+    bind(event_name, callback, context) {
         this.global_emitter.bind(event_name, callback, context);
         return this;
-    };
-    Pusher.prototype.unbind = function (event_name, callback, context) {
+    }
+    unbind(event_name, callback, context) {
         this.global_emitter.unbind(event_name, callback, context);
         return this;
-    };
-    Pusher.prototype.bind_global = function (callback) {
+    }
+    bind_global(callback) {
         this.global_emitter.bind_global(callback);
         return this;
-    };
-    Pusher.prototype.unbind_global = function (callback) {
+    }
+    unbind_global(callback) {
         this.global_emitter.unbind_global(callback);
         return this;
-    };
-    Pusher.prototype.unbind_all = function (callback) {
+    }
+    unbind_all(callback) {
         this.global_emitter.unbind_all();
         return this;
-    };
-    Pusher.prototype.subscribeAll = function () {
+    }
+    subscribeAll() {
         var channelName;
         for (channelName in this.channels.channels) {
             if (this.channels.channels.hasOwnProperty(channelName)) {
                 this.subscribe(channelName);
             }
         }
-    };
-    Pusher.prototype.subscribe = function (channel_name) {
+    }
+    subscribe(channel_name) {
         var channel = this.channels.add(channel_name, this);
         if (channel.subscriptionPending && channel.subscriptionCancelled) {
             channel.reinstateSubscription();
@@ -26144,8 +33719,8 @@ var pusher_Pusher = (function () {
             channel.subscribe();
         }
         return channel;
-    };
-    Pusher.prototype.unsubscribe = function (channel_name) {
+    }
+    unsubscribe(channel_name) {
         var channel = this.channels.find(channel_name);
         if (channel && channel.subscriptionPending) {
             channel.cancelSubscription();
@@ -26156,25 +33731,24 @@ var pusher_Pusher = (function () {
                 channel.unsubscribe();
             }
         }
-    };
-    Pusher.prototype.send_event = function (event_name, data, channel) {
+    }
+    send_event(event_name, data, channel) {
         return this.connection.send_event(event_name, data, channel);
-    };
-    Pusher.prototype.shouldUseTLS = function () {
+    }
+    shouldUseTLS() {
         return this.config.useTLS;
-    };
-    Pusher.prototype.signin = function () {
+    }
+    signin() {
         this.user.signin();
-    };
-    Pusher.instances = [];
-    Pusher.isReady = false;
-    Pusher.logToConsole = false;
-    Pusher.Runtime = runtime;
-    Pusher.ScriptReceivers = runtime.ScriptReceivers;
-    Pusher.DependenciesReceivers = runtime.DependenciesReceivers;
-    Pusher.auth_callbacks = runtime.auth_callbacks;
-    return Pusher;
-}());
+    }
+}
+pusher_Pusher.instances = [];
+pusher_Pusher.isReady = false;
+pusher_Pusher.logToConsole = false;
+pusher_Pusher.Runtime = runtime;
+pusher_Pusher.ScriptReceivers = runtime.ScriptReceivers;
+pusher_Pusher.DependenciesReceivers = runtime.DependenciesReceivers;
+pusher_Pusher.auth_callbacks = runtime.auth_callbacks;
 /* harmony default export */ var core_pusher = __nested_webpack_exports__["default"] = (pusher_Pusher);
 function checkAppKey(key) {
     if (key === null || key === undefined) {
@@ -26232,6 +33806,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -26283,17 +33869,20 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!**************************************!*\
   !*** ./resources/js/scoringDewan.js ***!
   \**************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./library/ScoreFunc */ "./resources/js/library/ScoreFunc.js");
+/* harmony import */ var _library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./library/DewanFunc */ "./resources/js/library/DewanFunc.js");
+/* harmony import */ var _library_JuriFunc__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./library/JuriFunc */ "./resources/js/library/JuriFunc.js");
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-  toNumber = _require.toNumber;
-var round = 'round1';
-var blueScore = document.getElementById("".concat(round, "-blueScore")).textContent;
-var redScore = document.getElementById("".concat(round, "-redScore")).textContent;
+
+
 var teguranMerahPertama = document.getElementById('teguran-merah-pertama');
 var binaanMerahPertama = document.getElementById('binaan-merah-pertama');
 var peringatanMerahPertama = document.getElementById('peringatan-merah-pertama');
@@ -26312,120 +33901,83 @@ var jatuhanMerahSah = document.getElementById('jatuhan-merah-plus');
 var jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus');
 var jatuhanBiruSah = document.getElementById('jatuhan-biru-plus');
 var jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus');
-var popupMerah = document.getElementById('popup-merah');
-var popupBiru = document.getElementById('popup-biru');
-var tutupPopup = document.getElementById('done-popup');
-var bluePenalty = 0;
-var redPenalty = 0;
-var redPopup = false;
-var bluePopup = false;
-teguranMerahPertama.addEventListener("click", function (event) {
-  redPenalty = 0;
-  pushScore();
+var diskMerah = document.getElementById('disk-merah');
+var diskBiru = document.getElementById('disk-biru');
+(0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(true);
+// localStorage.clear();
+if (localStorage.getItem('dataDewan')) {
+  (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.loadDataSave)();
+}
+_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelUpdateScore.listen(".updateScore.".concat(_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.userData.gelanggang_id), function (event) {
+  (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.updateDataScore)(event);
+  setTimeout(function () {
+    (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.saveData)();
+  }, 200);
 });
-teguranMerahKedua.addEventListener("click", function () {
-  redPenalty = 0;
-  pushScore();
+_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelOperator.listen(".operator.".concat(_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.userData.gelanggang_id), function (event) {
+  updateDataDewan(event);
 });
-binaanMerahPertama.addEventListener("click", function () {
-  redPenalty = 1;
-  pushScore();
-});
-binaanMerahKedua.addEventListener("click", function () {
-  redPenalty = 2;
-  pushScore();
-});
-peringatanMerahPertama.addEventListener("click", function () {
-  redPenalty = 3;
-  pushScore();
-});
-peringatanMerahKedua.addEventListener("click", function () {
-  redPenalty = 5;
-  pushScore();
-});
+
+// Add event listeners for red penalties
+teguranMerahPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'teguran-pertama'));
+teguranMerahKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'teguran-kedua'));
+binaanMerahPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'binaan-pertama'));
+binaanMerahKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'binaan-kedua'));
+peringatanMerahPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'peringatan-pertama'));
+peringatanMerahKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'peringatan-kedua'));
+peringatanMerahKetiga.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('red', 'peringatan-ketiga'));
 peringatanMerahKetiga.addEventListener("click", function () {
-  redPenalty = 7;
-  pushScore();
+  setTimeout(function () {
+    (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.updatePertandingan)("biru");
+  }, 200);
 });
-jatuhanMerahSah.addEventListener("click", function () {
-  redScore = toNumber(redScore) + 2;
-  pushScore();
-});
-jatuhanMerahTidakSah.addEventListener("click", function () {
-  redScore = toNumber(redScore) - 2;
-  pushScore();
-});
-teguranBiruPertama.addEventListener("click", function () {
-  bluePenalty = 0;
-  pushScore();
-});
-teguranBiruKedua.addEventListener("click", function () {
-  bluePenalty = 0;
-  pushScore();
-});
-binaanBiruPertama.addEventListener("click", function () {
-  bluePenalty = 1;
-  pushScore();
-});
-binaanBiruKedua.addEventListener("click", function () {
-  bluePenalty = 2;
-  pushScore();
-});
-peringatanBiruPertama.addEventListener("click", function () {
-  bluePenalty = 3;
-  pushScore();
-});
-peringatanBiruKedua.addEventListener("click", function () {
-  bluePenalty = 5;
-  pushScore();
-});
+teguranBiruPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'teguran-pertama'));
+teguranBiruKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'teguran-kedua'));
+binaanBiruPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'binaan-pertama'));
+binaanBiruKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'binaan-kedua'));
+peringatanBiruPertama.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'peringatan-pertama'));
+peringatanBiruKedua.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handlePenaltyClick)('blue', 'peringatan-kedua'));
 peringatanBiruKetiga.addEventListener("click", function () {
-  bluePenalty = 7;
-  pushScore();
+  setTimeout(function () {
+    (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.updatePertandingan)("merah");
+  }, 200);
 });
-jatuhanBiruSah.addEventListener("click", function () {
-  blueScore = toNumber(blueScore) + 2;
-  pushScore();
-});
-jatuhanBiruTidakSah.addEventListener("click", function () {
-  blueScore = toNumber(blueScore) - 2;
-  pushScore();
-});
-popupMerah.addEventListener("click", function () {
-  showRedPopup();
-  pushScore();
-});
-popupBiru.addEventListener("click", function () {
-  showBluePopup();
-  pushScore();
-});
-tutupPopup.addEventListener("click", function () {
-  donePopup();
-  pushScore();
-});
-function donePopup() {
-  bluePopup = false;
-  redPopup = false;
+jatuhanMerahSah.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handleScoreChange)('red', 3));
+jatuhanMerahTidakSah.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handleScoreChange)('red', -3));
+jatuhanBiruSah.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handleScoreChange)('blue', 3));
+jatuhanBiruTidakSah.addEventListener("click", (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.handleScoreChange)('blue', -3));
+diskMerah.addEventListener("click", disqualification('biru'));
+diskBiru.addEventListener("click", disqualification('merah'));
+function disqualification(corner) {
+  return function () {
+    (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.updatePertandingan)(corner);
+  };
 }
-function showRedPopup() {
-  bluePopup = false;
-  redPopup = true;
-}
-function showBluePopup() {
-  bluePopup = true;
-  redPopup = false;
-}
-function pushScore() {
-  axios.post("/score-update", {
-    message: {
-      "blueScore": toNumber(blueScore),
-      "redScore": toNumber(redScore),
-      "redPenalty": redPenalty,
-      "bluePenalty": bluePenalty,
-      'redPopup': redPopup,
-      'bluePopup': bluePopup
-    }
-  });
+function updateDataDewan(e) {
+  switch (e.action) {
+    case 'start':
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.saveData)();
+      break;
+    case 'finish':
+      localStorage.clear();
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.cekWinner)();
+      break;
+    case 'round':
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.clearIndicator)();
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.changeRoundDewan)(e.activeRound);
+      break;
+    case 'pause':
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
+      break;
+    case 'play':
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)();
+      break;
+    case 'reset':
+      localStorage.clear();
+      location.reload();
+      break;
+  }
 }
 })();
 

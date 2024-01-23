@@ -36,7 +36,7 @@ const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
 const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
 const diskMerah = document.getElementById('disk-merah')
 const diskBiru = document.getElementById('disk-biru')
-enabledAction(false)
+enabledAction(true)
 // localStorage.clear();
 if (localStorage.getItem('dataDewan')){
     loadDataSave()

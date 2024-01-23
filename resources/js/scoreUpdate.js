@@ -26,7 +26,6 @@ channelUpdateScore
 
 channelOperator
     .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        console.log(event);
         updateDataGelanggang(event);
     });
 
@@ -91,7 +90,6 @@ function changeColorRound(round, status) {
         if (status) {
             elementClassList.remove('bg-grayDefault');
             elementClassList.add(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault' , 'shadow-inset-custom');
-            console.log(blueScore)
             blueScore.innerText = 0;
             redScore.innerText = 0;
         } else {
