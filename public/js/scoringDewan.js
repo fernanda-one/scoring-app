@@ -2126,28 +2126,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScoreFunc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScoreFunc */ "./resources/js/library/ScoreFunc.js");
 
 
-var pelanggaran = ['teguran-pertama', 'teguran-kedua', 'binaan-pertama', 'binaan-kedua', 'peringatan-pertama', 'peringatan-kedua', 'peringatan-ketiga'];
-var bluePenalty = 'pertama';
-var peringatan = ['peringatan-pertama', 'peringatan-kedua', 'peringatan-ketiga'];
-var redPenalty = 'pertama';
+var pelanggaran = ["teguran-pertama", "teguran-kedua", "binaan-pertama", "binaan-kedua", "peringatan-pertama", "peringatan-kedua", "peringatan-ketiga"];
+var bluePenalty = "pertama";
+var peringatan = ["peringatan-pertama", "peringatan-kedua", "peringatan-ketiga"];
+var redPenalty = "pertama";
 var redPelanggaran = [];
 var bluePelanggaran = [];
 var pureScoreRed = 0;
 var pureScoreBlue = 0;
 var rounds = ["round-1", "round-2", "round-3"];
+var peringatanPenaltyBlue = false;
+var peringatanPenaltyRed = false;
 var pelanggaranPoint = {
-  'pertama': 0,
-  'binaan-pertama': 0,
-  'binaan-kedua': 0,
-  'teguran-pertama': 1,
-  'teguran-kedua': 2,
-  'peringatan-pertama': 5,
-  'peringatan-kedua': 10,
-  'peringatan-ketiga': 0
+  pertama: 0,
+  "binaan-pertama": 0,
+  "binaan-kedua": 0,
+  "teguran-pertama": 1,
+  "teguran-kedua": 2,
+  "peringatan-pertama": 5,
+  "peringatan-kedua": 10,
+  "peringatan-ketiga": 0
 };
-var pelanggaranBiru = ['pertama'];
-var pelanggaranMerah = ['pertama'];
-var buttonAction = ['jatuhan-biru-minus', 'jatuhan-biru-plus', 'jatuhan-merah-minus', 'jatuhan-merah-plus', 'peringatan-biru-ketiga', 'peringatan-biru-kedua', 'binaan-biru-kedua', 'teguran-biru-kedua', 'peringatan-biru-pertama', 'binaan-biru-pertama', 'teguran-biru-pertama', 'peringatan-merah-ketiga', 'peringatan-merah-kedua', 'binaan-merah-kedua', 'teguran-merah-kedua', 'peringatan-merah-pertama', 'binaan-merah-pertama', 'teguran-merah-pertama', 'disk-merah', 'disk-biru'];
+var pelanggaranBiru = ["pertama"];
+var pelanggaranMerah = ["pertama"];
+var buttonAction = ["jatuhan-biru-minus", "jatuhan-biru-plus", "jatuhan-merah-minus", "jatuhan-merah-plus", "peringatan-biru-ketiga", "peringatan-biru-kedua", "binaan-biru-kedua", "teguran-biru-kedua", "peringatan-biru-pertama", "binaan-biru-pertama", "teguran-biru-pertama", "peringatan-merah-ketiga", "peringatan-merah-kedua", "binaan-merah-kedua", "teguran-merah-kedua", "peringatan-merah-pertama", "binaan-merah-pertama", "teguran-merah-pertama", "disk-merah", "disk-biru"];
 var actionStatus = false;
 var pelanggaranRedElement = {
   "teguran-pertama": document.getElementById("teguran-merah-pertama"),
@@ -2188,9 +2190,10 @@ function enabledAction() {
   });
 }
 function handlePenaltyClick(color, penalty) {
+  console.log("🚀 ~ handlePenaltyClick ~ penalty:", penalty);
   return function () {
     if (peringatan.includes(penalty)) {
-      if (color === 'red') {
+      if (color === "red") {
         if (redPelanggaran.includes(penalty)) {
           redPelanggaran = redPelanggaran.filter(function (pelanggaran) {
             return pelanggaran != penalty;
@@ -2198,7 +2201,7 @@ function handlePenaltyClick(color, penalty) {
         } else {
           redPelanggaran.push(penalty);
         }
-      } else if (color === 'blue') {
+      } else if (color === "blue") {
         if (bluePelanggaran.includes(penalty)) {
           bluePelanggaran = bluePelanggaran.filter(function (pelanggaran) {
             return pelanggaran != penalty;
@@ -2208,7 +2211,7 @@ function handlePenaltyClick(color, penalty) {
         }
       }
     }
-    if (color === 'red') {
+    if (color === "red") {
       redPenalty = penalty;
     } else if (color === "blue") {
       bluePenalty = penalty;
@@ -2277,16 +2280,16 @@ function updateDataIndicator() {
       pureScoreRed -= pelanggaranPoint[pelanggaran];
     });
     pelanggaranMerah = redPelanggaran;
-    redPenalty = 'pertama';
-    changeIndicatorPelanggaran('red', redPenalty);
+    redPenalty = "pertama";
+    changeIndicatorPelanggaran("red", redPenalty);
   } else {
     pelanggaranMerah.map(function (pelanggaran) {
       pureScoreRed -= pelanggaranPoint[pelanggaran];
     });
     pelanggaranMerah = [];
     console.log("🚀 ~ updateDataIndicator ~ pelanggaranMerah:", pelanggaranMerah);
-    redPenalty = 'pertama';
-    changeIndicatorPelanggaran('red', redPenalty);
+    redPenalty = "pertama";
+    changeIndicatorPelanggaran("red", redPenalty);
   }
   if (bluePelanggaran.length > 0) {
     console.log("🚀 ~ updateDataIndicator ~ bluePelanggaran.length:", bluePelanggaran);
@@ -2300,16 +2303,16 @@ function updateDataIndicator() {
       pureScoreBlue -= pelanggaranPoint[pelanggaran];
     });
     pelanggaranBiru = bluePelanggaran;
-    bluePenalty = 'pertama';
-    changeIndicatorPelanggaran('blue', bluePenalty);
+    bluePenalty = "pertama";
+    changeIndicatorPelanggaran("blue", bluePenalty);
   } else {
     pelanggaranBiru.map(function (pelanggaran) {
       pureScoreBlue -= pelanggaranPoint[pelanggaran];
     });
     pelanggaranBiru = [];
     console.log("🚀 ~ updateDataIndicator ~ pelanggaranBiru:", pelanggaranBiru);
-    bluePenalty = 'pertama';
-    changeIndicatorPelanggaran('blue', bluePenalty);
+    bluePenalty = "pertama";
+    changeIndicatorPelanggaran("blue", bluePenalty);
   }
 }
 function saveData() {
@@ -2328,7 +2331,7 @@ function saveData() {
       blueScore: document.getElementById("".concat(round, "-blueScore")).textContent
     };
   });
-  localStorage.setItem('dataDewan', JSON.stringify(data));
+  localStorage.setItem("dataDewan", JSON.stringify(data));
 }
 function loadDataSave() {
   var data = JSON.parse(localStorage.getItem("dataDewan"));
@@ -2343,8 +2346,8 @@ function loadDataSave() {
     document.getElementById("".concat(round, "-blueScore")).textContent = data[round].blueScore;
   });
   enabledAction(true);
-  bluePenalty !== 'pertama' ? changeIndicatorPelanggaran('blue', bluePenalty) : '';
-  redPenalty !== 'pertama' ? changeIndicatorPelanggaran('red', redPenalty) : '';
+  bluePenalty !== "pertama" ? changeIndicatorPelanggaran("blue", bluePenalty) : "";
+  redPenalty !== "pertama" ? changeIndicatorPelanggaran("red", redPenalty) : "";
 }
 function pushScore() {
   var droppingRed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -2378,7 +2381,6 @@ function handleScoreChange(color, scoreChange) {
       } else {
         dataDewan.redInput.innerHTML = scoreChange;
       }
-      // pushScore(scoreChange, 0);
     } else if (color === "blue") {
       var _text = dataDewan.blueInput.innerHTML;
       if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(_text)) {
@@ -2399,7 +2401,11 @@ function handleScoreChange(color, scoreChange) {
 }
 
 function changeIndicatorPelanggaran(corner, penalty) {
+  var nameElemenet = pelanggaranRedElement;
+  var dataPelanggaran;
+  var color = "bg-redDefault";
   if (corner !== "red") {
+    nameElemenet = pelanggaranBlueElement;
     if (!pelanggaranBiru.includes(penalty)) {
       pelanggaranBiru.push(penalty);
     } else {
@@ -2407,6 +2413,8 @@ function changeIndicatorPelanggaran(corner, penalty) {
         return item !== penalty;
       });
     }
+    dataPelanggaran = pelanggaranBiru;
+    color = "bg-blueDark";
   } else {
     if (!pelanggaranMerah.includes(penalty)) {
       pelanggaranMerah.push(penalty);
@@ -2415,8 +2423,8 @@ function changeIndicatorPelanggaran(corner, penalty) {
         return item !== penalty;
       });
     }
+    dataPelanggaran = pelanggaranMerah;
   }
-  console.log("🚀 ~ changeIndicatorPelanggaran ~ dataPelanggaran:", dataPelanggaran);
   pelanggaranMerah.sort(compare);
   pelanggaranBiru.sort(compare);
   var pelanggaranMerahValue = pelanggaranMerah[pelanggaranMerah.length - 1];
@@ -2431,18 +2439,11 @@ function changeIndicatorPelanggaran(corner, penalty) {
   bluePenalty = pelanggaranBiruValue;
   pelanggaran.map(function (itemPelanggaran) {
     if (dataPelanggaran.includes(itemPelanggaran)) {
-      nameElemenet[itemPelanggaran].classList.remove('bg-grayDefault');
+      nameElemenet[itemPelanggaran].classList.remove("bg-grayDefault");
       nameElemenet[itemPelanggaran].classList.add(color);
     } else {
-      pelanggaranRedElement[itemPelanggaran].classList.remove(redColor);
-      pelanggaranRedElement[itemPelanggaran].classList.add(grayDefault);
-    }
-    if (isBluePelanggaran) {
-      pelanggaranBlueElement[itemPelanggaran].classList.add(blueColor);
-      pelanggaranBlueElement[itemPelanggaran].classList.remove(grayDefault);
-    } else {
-      pelanggaranBlueElement[itemPelanggaran].classList.remove(blueColor);
-      pelanggaranBlueElement[itemPelanggaran].classList.add(grayDefault);
+      nameElemenet[itemPelanggaran].classList.add("bg-grayDefault");
+      nameElemenet[itemPelanggaran].classList.remove(color);
     }
   });
 }
@@ -26425,29 +26426,29 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-var teguranMerahPertama = document.getElementById('teguran-merah-pertama');
-var binaanMerahPertama = document.getElementById('binaan-merah-pertama');
-var peringatanMerahPertama = document.getElementById('peringatan-merah-pertama');
-var teguranMerahKedua = document.getElementById('teguran-merah-kedua');
-var binaanMerahKedua = document.getElementById('binaan-merah-kedua');
-var peringatanMerahKedua = document.getElementById('peringatan-merah-kedua');
-var peringatanMerahKetiga = document.getElementById('peringatan-merah-ketiga');
-var teguranBiruPertama = document.getElementById('teguran-biru-pertama');
-var binaanBiruPertama = document.getElementById('binaan-biru-pertama');
-var peringatanBiruPertama = document.getElementById('peringatan-biru-pertama');
-var teguranBiruKedua = document.getElementById('teguran-biru-kedua');
-var binaanBiruKedua = document.getElementById('binaan-biru-kedua');
-var peringatanBiruKedua = document.getElementById('peringatan-biru-kedua');
-var peringatanBiruKetiga = document.getElementById('peringatan-biru-ketiga');
-var jatuhanMerahSah = document.getElementById('jatuhan-merah-plus');
-var jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus');
-var jatuhanBiruSah = document.getElementById('jatuhan-biru-plus');
-var jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus');
-var diskMerah = document.getElementById('disk-merah');
-var diskBiru = document.getElementById('disk-biru');
+var teguranMerahPertama = document.getElementById("teguran-merah-pertama");
+var binaanMerahPertama = document.getElementById("binaan-merah-pertama");
+var peringatanMerahPertama = document.getElementById("peringatan-merah-pertama");
+var teguranMerahKedua = document.getElementById("teguran-merah-kedua");
+var binaanMerahKedua = document.getElementById("binaan-merah-kedua");
+var peringatanMerahKedua = document.getElementById("peringatan-merah-kedua");
+var peringatanMerahKetiga = document.getElementById("peringatan-merah-ketiga");
+var teguranBiruPertama = document.getElementById("teguran-biru-pertama");
+var binaanBiruPertama = document.getElementById("binaan-biru-pertama");
+var peringatanBiruPertama = document.getElementById("peringatan-biru-pertama");
+var teguranBiruKedua = document.getElementById("teguran-biru-kedua");
+var binaanBiruKedua = document.getElementById("binaan-biru-kedua");
+var peringatanBiruKedua = document.getElementById("peringatan-biru-kedua");
+var peringatanBiruKetiga = document.getElementById("peringatan-biru-ketiga");
+var jatuhanMerahSah = document.getElementById("jatuhan-merah-plus");
+var jatuhanMerahTidakSah = document.getElementById("jatuhan-merah-minus");
+var jatuhanBiruSah = document.getElementById("jatuhan-biru-plus");
+var jatuhanBiruTidakSah = document.getElementById("jatuhan-biru-minus");
+var diskMerah = document.getElementById("disk-merah");
+var diskBiru = document.getElementById("disk-biru");
 (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(true);
 // localStorage.clear();
-if (localStorage.getItem('dataDewan')) {
+if (localStorage.getItem("dataDewan")) {
   (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.loadDataSave)();
 }
 _library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.channelUpdateScore.listen(".updateScore.".concat(_library_ScoreFunc__WEBPACK_IMPORTED_MODULE_0__.userData.gelanggang_id), function (event) {

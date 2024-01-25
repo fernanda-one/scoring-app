@@ -13,33 +13,42 @@ import {
     clearIndicator,
     enabledAction,
     handlePenaltyClick,
-    handleScoreChange, loadDataSave,
-    saveData, updateDataScore, updatePertandingan
-} from './library/DewanFunc'
-const teguranMerahPertama = document.getElementById('teguran-merah-pertama');
-const binaanMerahPertama = document.getElementById('binaan-merah-pertama')
-const peringatanMerahPertama = document.getElementById('peringatan-merah-pertama')
-const teguranMerahKedua = document.getElementById('teguran-merah-kedua')
-const binaanMerahKedua = document.getElementById('binaan-merah-kedua')
-const peringatanMerahKedua = document.getElementById('peringatan-merah-kedua')
-const peringatanMerahKetiga = document.getElementById('peringatan-merah-ketiga')
-const teguranBiruPertama = document.getElementById('teguran-biru-pertama')
-const binaanBiruPertama = document.getElementById('binaan-biru-pertama')
-const peringatanBiruPertama = document.getElementById('peringatan-biru-pertama')
-const teguranBiruKedua = document.getElementById('teguran-biru-kedua')
-const binaanBiruKedua = document.getElementById('binaan-biru-kedua')
-const peringatanBiruKedua = document.getElementById('peringatan-biru-kedua')
-const peringatanBiruKetiga = document.getElementById('peringatan-biru-ketiga')
-const jatuhanMerahSah = document.getElementById('jatuhan-merah-plus')
-const jatuhanMerahTidakSah = document.getElementById('jatuhan-merah-minus')
-const jatuhanBiruSah = document.getElementById('jatuhan-biru-plus')
-const jatuhanBiruTidakSah = document.getElementById('jatuhan-biru-minus')
-const diskMerah = document.getElementById('disk-merah')
-const diskBiru = document.getElementById('disk-biru')
-enabledAction(true)
+    handleScoreChange,
+    loadDataSave,
+    saveData,
+    updateDataScore,
+    updatePertandingan,
+} from "./library/DewanFunc";
+const teguranMerahPertama = document.getElementById("teguran-merah-pertama");
+const binaanMerahPertama = document.getElementById("binaan-merah-pertama");
+const peringatanMerahPertama = document.getElementById(
+    "peringatan-merah-pertama"
+);
+const teguranMerahKedua = document.getElementById("teguran-merah-kedua");
+const binaanMerahKedua = document.getElementById("binaan-merah-kedua");
+const peringatanMerahKedua = document.getElementById("peringatan-merah-kedua");
+const peringatanMerahKetiga = document.getElementById(
+    "peringatan-merah-ketiga"
+);
+const teguranBiruPertama = document.getElementById("teguran-biru-pertama");
+const binaanBiruPertama = document.getElementById("binaan-biru-pertama");
+const peringatanBiruPertama = document.getElementById(
+    "peringatan-biru-pertama"
+);
+const teguranBiruKedua = document.getElementById("teguran-biru-kedua");
+const binaanBiruKedua = document.getElementById("binaan-biru-kedua");
+const peringatanBiruKedua = document.getElementById("peringatan-biru-kedua");
+const peringatanBiruKetiga = document.getElementById("peringatan-biru-ketiga");
+const jatuhanMerahSah = document.getElementById("jatuhan-merah-plus");
+const jatuhanMerahTidakSah = document.getElementById("jatuhan-merah-minus");
+const jatuhanBiruSah = document.getElementById("jatuhan-biru-plus");
+const jatuhanBiruTidakSah = document.getElementById("jatuhan-biru-minus");
+const diskMerah = document.getElementById("disk-merah");
+const diskBiru = document.getElementById("disk-biru");
+enabledAction(true);
 // localStorage.clear();
-if (localStorage.getItem('dataDewan')){
-    loadDataSave()
+if (localStorage.getItem("dataDewan")) {
+    loadDataSave();
 }
 
 channelUpdateScore.listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
