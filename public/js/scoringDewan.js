@@ -2352,7 +2352,6 @@ function loadDataSave() {
 function pushScore() {
   var droppingRed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var droppingBlue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-  console.log("🚀 ~ pushScore ~ pushScore:");
   pureScoreRed += droppingRed;
   pureScoreBlue += droppingBlue;
   axios.post("/score-update", {

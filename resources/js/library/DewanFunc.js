@@ -289,7 +289,6 @@ export function loadDataSave() {
 }
 
 export function pushScore(droppingRed = 0, droppingBlue = 0) {
-    console.log("🚀 ~ pushScore ~ pushScore:");
     pureScoreRed += droppingRed;
     pureScoreBlue += droppingBlue;
     axios.post("/score-update", {
