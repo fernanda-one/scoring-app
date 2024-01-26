@@ -151,7 +151,7 @@ function updateDataDewan(e) {
             cekWinner();
             break;
         case "round":
-            // enabledAction(false);
+            enabledAction(false);
             clearIndicator();
             changeRoundDewan(e.activeRound);
             break;

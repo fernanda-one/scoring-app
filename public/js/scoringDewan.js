@@ -2246,20 +2246,20 @@ function cekWinner() {
   }
 }
 function updatePertandingan(winner) {
-  // const dataPartai = getDataGelanggang()
-  // localStorage.clear()
-  // axios.post("/operator-update", {
-  //     message: {
-  //         'blueName':dataPartai.namaBiru,
-  //         'redName':dataPartai.namaMerah,
-  //         'blueContingent':dataPartai.kontingenMerah,
-  //         'redContingent':dataPartai.kontingenBiru,
-  //         'babak':dataPartai.babak,
-  //         'time':0,
-  //         'activeRound':activeRound.textContent,
-  //         'action': winner
-  //     },
-  // });
+  var dataPartai = (0,_ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.getDataGelanggang)();
+  localStorage.clear();
+  axios.post("/operator-update", {
+    message: {
+      blueName: dataPartai.namaBiru,
+      redName: dataPartai.namaMerah,
+      blueContingent: dataPartai.kontingenMerah,
+      redContingent: dataPartai.kontingenBiru,
+      babak: dataPartai.babak,
+      time: 0,
+      activeRound: _ScoreFunc__WEBPACK_IMPORTED_MODULE_1__.activeRound.textContent,
+      action: winner
+    }
+  });
 }
 function changeRoundDewan(round) {
   updateRoundDewan(round);
@@ -2381,6 +2381,7 @@ function handleScoreChange(color, scoreChange) {
       } else {
         dataDewan.redInput.innerHTML = scoreChange;
       }
+      pushScore(scoreChange, 0);
     } else if (color === "blue") {
       var _text = dataDewan.blueInput.innerHTML;
       if (!(0,lodash__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(_text)) {
@@ -2395,11 +2396,10 @@ function handleScoreChange(color, scoreChange) {
       } else {
         dataDewan.blueInput.innerHTML = scoreChange;
       }
-      // pushScore(0, scoreChange);
+      pushScore(0, scoreChange);
     }
   };
 }
-
 function changeIndicatorPelanggaran(corner, penalty) {
   var nameElemenet = pelanggaranRedElement;
   var dataPelanggaran;
@@ -26506,7 +26506,7 @@ function updateDataDewan(e) {
       (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.cekWinner)();
       break;
     case "round":
-      // enabledAction(false);
+      (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.enabledAction)(false);
       (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.clearIndicator)();
       (0,_library_DewanFunc__WEBPACK_IMPORTED_MODULE_1__.changeRoundDewan)(e.activeRound);
       break;

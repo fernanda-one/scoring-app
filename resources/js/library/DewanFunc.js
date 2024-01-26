@@ -159,20 +159,20 @@ export function cekWinner() {
 }
 
 export function updatePertandingan(winner) {
-    // const dataPartai = getDataGelanggang()
-    // localStorage.clear()
-    // axios.post("/operator-update", {
-    //     message: {
-    //         'blueName':dataPartai.namaBiru,
-    //         'redName':dataPartai.namaMerah,
-    //         'blueContingent':dataPartai.kontingenMerah,
-    //         'redContingent':dataPartai.kontingenBiru,
-    //         'babak':dataPartai.babak,
-    //         'time':0,
-    //         'activeRound':activeRound.textContent,
-    //         'action': winner
-    //     },
-    // });
+    const dataPartai = getDataGelanggang();
+    localStorage.clear();
+    axios.post("/operator-update", {
+        message: {
+            blueName: dataPartai.namaBiru,
+            redName: dataPartai.namaMerah,
+            blueContingent: dataPartai.kontingenMerah,
+            redContingent: dataPartai.kontingenBiru,
+            babak: dataPartai.babak,
+            time: 0,
+            activeRound: activeRound.textContent,
+            action: winner,
+        },
+    });
 }
 export function changeRoundDewan(round) {
     updateRoundDewan(round);
@@ -319,6 +319,7 @@ export function handleScoreChange(color, scoreChange) {
             } else {
                 dataDewan.redInput.innerHTML = scoreChange;
             }
+            pushScore(scoreChange, 0);
         } else if (color === "blue") {
             let text = dataDewan.blueInput.innerHTML;
             if (!isEmpty(text)) {
@@ -333,7 +334,7 @@ export function handleScoreChange(color, scoreChange) {
             } else {
                 dataDewan.blueInput.innerHTML = scoreChange;
             }
-            // pushScore(0, scoreChange);
+            pushScore(0, scoreChange);
         }
     };
 }

@@ -72,7 +72,6 @@ channelOperator
 channelUpdateScore
     .here((usersCB) => {
         users = usersCB
-        console.log(users)
         cekStatususer()
     })
     .joining((user) => {
