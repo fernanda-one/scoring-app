@@ -158,12 +158,12 @@ function startTimer(seconds) {
 
 function updateDataGelanggang(e) {
     switch (e.action) {
-        case 'start':
-            // timePerRound = e.time
-            startPertandingan(e)
+        case "start":
+            timePerRound = e.time;
+            startPertandingan(e);
             break;
-        case 'finish':
-            localStorage.clear()
+        case "finish":
+            localStorage.clear();
             location.reload();
             break;
         case "reset":
