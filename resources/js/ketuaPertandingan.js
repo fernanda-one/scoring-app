@@ -20,54 +20,53 @@ import {
     updateScore,
     userData,
     savedGelanggangData,
-} from "./library/ScoreFunc.js"
+} from "./library/ScoreFunc.js";
 
 storeGelanggangData(savedGelanggangData);
 loadDataSaved();
 
-channelUpdateScore
-    .listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
-        updateScore(event);
-        storePoint();
-        storeDroppingRed(event.droppingRed)
-        storeDroppingBlue(event.droppingBlue)
-        storeRedPenalty(event.red_penalty)
-        storeBluePenalty(event.blue_penalty)
-    });
+channelUpdateScore.listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
+    updateScore(event);
+    storePoint();
+    storeDroppingRed(event.droppingRed);
+    storeDroppingBlue(event.droppingBlue);
+    storeRedPenalty(event.red_penalty);
+    storeBluePenalty(event.blue_penalty);
+});
 
-channelOperator
-    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        updateDataGelanggang(event);
-    });
+channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
+    updateDataGelanggang(event);
+});
 
-channelKetuaPertandingan
-    .listen(`.ketuaPertandingan.${userData.gelanggang_id}`, (event) => {
-        storeJurror(event.id, event.scorePiece, event.sudut)
-    });
+channelKetuaPertandingan.listen(
+    `.ketuaPertandingan.${userData.gelanggang_id}`,
+    (event) => {
+        storeJurror(event.id, event.scorePiece, event.sudut);
+    }
+);
 
-function screenShot(){
-    axios.get('/capture-screenshot')
+function screenShot() {
+    axios.get("/capture-screenshot");
 }
-
 
 function updateDataGelanggang(e) {
     switch (e.action) {
-        case 'start':
-            startPertandingan(e)
+        case "start":
+            startPertandingan(e);
             break;
-        case 'finish':
-            screenShot()
+        case "finish":
+            screenShot();
             break;
-        case 'round':
-            changeRound(e)
+        case "round":
+            changeRound(e);
             break;
-        case 'reset':
-            localStorage.clear()
+        case "reset":
+            localStorage.clear();
             location.reload();
             break;
-        case 'play':
+        case "play":
             break;
-        case 'pause':
+        case "pause":
             break;
     }
 }

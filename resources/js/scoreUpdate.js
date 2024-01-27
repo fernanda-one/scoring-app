@@ -24,10 +24,9 @@ channelUpdateScore.listen(`.updateScore.${userData.gelanggang_id}`, (event) => {
     updateScore(event);
 });
 
-channelOperator
-    .listen(`.operator.${userData.gelanggang_id}`, (event) => {
-        updateDataGelanggang(event);
-    });
+channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
+    updateDataGelanggang(event);
+});
 
 function updateDataGelanggang(e) {
     switch (e.action) {
@@ -90,8 +89,11 @@ function changeColorRound(round, status) {
         const blueScore = document.getElementById(`${round}-blueScore`);
         const redScore = document.getElementById(`${round}-redScore`);
         if (status) {
-            elementClassList.remove('bg-grayDefault');
-            elementClassList.add(element.includes('blue') ? 'bg-blueDefault' : 'bg-redDefault' , 'shadow-inset-custom');
+            elementClassList.remove("bg-grayDefault");
+            elementClassList.add(
+                element.includes("blue") ? "bg-blueDefault" : "bg-redDefault",
+                "shadow-inset-custom"
+            );
             blueScore.innerText = 0;
             redScore.innerText = 0;
         } else {

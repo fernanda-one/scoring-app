@@ -2129,13 +2129,13 @@ __webpack_require__.r(__webpack_exports__);
 var _JSON$parse;
 
 
-var rounds = ['round-1', 'round-2', 'round-3'];
+var rounds = ["round-1", "round-2", "round-3"];
 var pureScoreRed = 0;
 var pureScoreBlue = 0;
-var bluePenalty = ['pertama'];
-var buttonAction = ['pukul-biru', 'tendang-biru', 'pukul-merah', 'tendang-merah'];
-var redPenalty = ['pertama'];
-var roundGelanggang = ((_JSON$parse = JSON.parse(localStorage.getItem("gelanggangData"))) === null || _JSON$parse === void 0 || (_JSON$parse = _JSON$parse.activeRound) === null || _JSON$parse === void 0 ? void 0 : _JSON$parse.toLowerCase()) || 'ROUND';
+var bluePenalty = ["pertama"];
+var buttonAction = ["pukul-biru", "tendang-biru", "pukul-merah", "tendang-merah"];
+var redPenalty = ["pertama"];
+var roundGelanggang = ((_JSON$parse = JSON.parse(localStorage.getItem("gelanggangData"))) === null || _JSON$parse === void 0 || (_JSON$parse = _JSON$parse.activeRound) === null || _JSON$parse === void 0 ? void 0 : _JSON$parse.toLowerCase()) || "ROUND";
 var dataJuri = {
   blueScore: document.getElementById("round-1-blueScore"),
   redScore: document.getElementById("round-1-redScore"),
@@ -2169,27 +2169,27 @@ var timeouts = {
   juriketigatendanganblue: []
 };
 function getId(id) {
-  return id.toLowerCase().replace(/ /g, '-');
+  return id.toLowerCase().replace(/ /g, "-");
 }
 function indicatorUpdate(id, sudut) {
   console.log(id);
   var indicator = document.getElementById(id);
-  if (sudut === 'blue') {
-    indicator.classList.toggle('bg-blueDefault');
-    indicator.classList.toggle('bg-grayDefault');
+  if (sudut === "blue") {
+    indicator.classList.toggle("bg-blueDefault");
+    indicator.classList.toggle("bg-grayDefault");
   } else {
-    indicator.classList.toggle('bg-redDefault');
-    indicator.classList.toggle('bg-grayDefault');
+    indicator.classList.toggle("bg-redDefault");
+    indicator.classList.toggle("bg-grayDefault");
   }
 }
 function startTimeoutIndicator(element, sudut) {
-  var name = element.replace(/-/g, '');
+  var name = element.replace(/-/g, "");
   timeouts["".concat(name)] = setTimeout(function () {
     indicatorUpdate(element, sudut);
   }, 2000);
 }
 function startTimeout(element, params, posisi) {
-  var sudut = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'red';
+  var sudut = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "red";
   timeouts["".concat(params)] = setTimeout(function () {
     strikeoutLastValue(element, posisi, sudut);
   }, 2000);
@@ -2199,7 +2199,7 @@ function cancelTimeout(params) {
   clearTimeout(timeouts["".concat(params)]);
 }
 function inputPoint(element, point) {
-  var sudut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'red';
+  var sudut = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "red";
   element = dataJuri["".concat(element)];
   var text = element.innerHTML;
   var values = text.split(",");
@@ -2211,7 +2211,7 @@ function inputPoint(element, point) {
         return value;
       }
     });
-    if (sudut === 'blue') {
+    if (sudut === "blue") {
       formattedValues.reverse();
       formattedValues.push("".concat(point));
       formattedValues.reverse();
@@ -2238,12 +2238,12 @@ function strikeoutLastValue(element, posisi, sudut) {
   var text = element.innerHTML;
   if (text !== "") {
     var values = text.split(",");
-    if (sudut === 'blue') {
+    if (sudut === "blue") {
       values = values.reverse();
     }
     var valuePosisi = values.splice(posisi, 1)[0];
     values.splice(posisi, 0, "<s>".concat(valuePosisi.trim(), "</s>"));
-    if (sudut === 'blue') {
+    if (sudut === "blue") {
       values = values.reverse();
     }
     var formattedValues = values.map(function (value) {
@@ -2269,19 +2269,19 @@ function pushMessage(sudut, gerakan) {
   var redScore = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
   axios.post("/score-event", {
     message: {
-      "gerakan": gerakan,
-      "sudut": sudut,
-      "blueScore": blueScore,
-      "redScore": redScore,
-      "time": Date.now()
+      gerakan: gerakan,
+      sudut: sudut,
+      blueScore: blueScore,
+      redScore: redScore,
+      time: Date.now()
     }
   });
 }
 function pushKetuaPertandingan(sudut, scorePiece) {
   axios.post("/ketua-pertandingan-update", {
     message: {
-      "sudut": sudut,
-      "scorePiece": scorePiece
+      sudut: sudut,
+      scorePiece: scorePiece
     }
   });
 }
@@ -2301,10 +2301,10 @@ function saveDataJuri() {
       blueScore: document.getElementById("".concat(round, "-blueScore")).textContent
     };
   });
-  localStorage.setItem('dataJuriScoring', JSON.stringify(data));
+  localStorage.setItem("dataJuriScoring", JSON.stringify(data));
 }
 function loadDataSaveJuri() {
-  var data = JSON.parse(localStorage.getItem('dataJuriScoring'));
+  var data = JSON.parse(localStorage.getItem("dataJuriScoring"));
   bluePenalty = data.bluePenalty;
   redPenalty = data.redPenalty;
   pureScoreRed = data.pureScoreRed;
@@ -2329,20 +2329,20 @@ function updateScore(event) {
   var sudut = event.sudut;
   var id = event.id;
   var name = sudut + gerakan;
-  var sudutPointTime = name + 'time';
+  var sudutPointTime = name + "time";
   var exp = event.expired;
   var score = {
-    'redScore': 0,
-    'blueScore': 0
+    redScore: 0,
+    blueScore: 0
   };
-  var sudutScore = event.sudut + 'Score';
-  var elementName = getId(id + ' ' + gerakan + ' ' + sudut);
+  var sudutScore = event.sudut + "Score";
+  var elementName = getId(id + " " + gerakan + " " + sudut);
   indicatorUpdate(elementName, sudut);
   startTimeoutIndicator(elementName, sudut);
   if (localStorage.getItem(sudutPointTime) && localStorage.getItem(name)) {
     var time = localStorage.getItem(sudutPointTime);
     if (exp - time <= 2000 && localStorage.getItem(name) !== id) {
-      if (gerakan === 'tendangan') {
+      if (gerakan === "tendangan") {
         score["".concat(sudutScore)] += 2;
       } else {
         score["".concat(sudutScore)] += 1;
@@ -2350,8 +2350,8 @@ function updateScore(event) {
       localStorage.removeItem(sudutPointTime);
       localStorage.removeItem(name);
       cancelTimeout(gerakan + sudut);
-      pureScoreRed += score['redScore'];
-      pureScoreBlue += score['blueScore'];
+      pureScoreRed += score["redScore"];
+      pureScoreBlue += score["blueScore"];
       pushScore();
       return score;
     }
@@ -2366,12 +2366,12 @@ function pushScore() {
   saveDataJuri();
   axios.post("/score-update", {
     message: {
-      "redPenalty": redPenalty,
-      "bluePenalty": bluePenalty,
-      "blueScore": pureScoreBlue,
-      "redScore": pureScoreRed,
-      "droppingRed": 0,
-      "droppingBlue": 0
+      redPenalty: redPenalty,
+      bluePenalty: bluePenalty,
+      blueScore: pureScoreBlue,
+      redScore: pureScoreRed,
+      droppingRed: 0,
+      droppingBlue: 0
     }
   });
 }
