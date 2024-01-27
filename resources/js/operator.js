@@ -44,7 +44,7 @@ const userActiveList = {
     juri_kedua: document.getElementById("status_juri_kedua"),
     juri_ketiga: document.getElementById("status_juri_ketiga"),
     dewan: document.getElementById("status_dewan"),
-    ketua_pertandingan: document.getElementById("status_ketua"),
+    ketua: document.getElementById("status_ketua"),
 };
 const rounds = ["round-1", "round-2", "round-3"];
 const allRoundStatus = {
@@ -60,13 +60,7 @@ const roleIds = {
     6: "juri_kedua",
     7: "juri_ketiga",
 };
-const roles = [
-    "ketua_pertandingan",
-    "dewan",
-    "juri_pertama",
-    "juri_kedua",
-    "juri_ketiga",
-];
+const roles = ["ketua", "dewan", "juri_pertama", "juri_kedua", "juri_ketiga"];
 
 channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
     if (event.action === "merah" || event.action === "biru") {
@@ -231,15 +225,18 @@ function cekStatususer() {
         juri_kedua: false,
         juri_ketiga: false,
         dewan: false,
-        ketua_pertandingan: false,
+        ketua: false,
     };
+    console.log("🚀 ~ cekStatususer ~ userList:", userList);
     let trueCount = 0;
+    console.log("🚀 ~ users.map ~ users:", users);
     users.map((user) => {
         if (roleIds[`${user.role_id}`]) {
             trueCount += 1;
             userList[roleIds[`${user.role_id}`]] = true;
         }
     });
+    console.log("🚀 ~ cekStatususer ~ userList:", userList);
     if (trueCount === countMinimumToStart) {
         start.disabled = false;
     }
