@@ -1222,6 +1222,9 @@ input:checked + .toggle-bg {
 .mt-\[0\%\] {
   margin-top: 0%;
 }
+.mt-\[1\%\] {
+  margin-top: 1%;
+}
 .mt-\[2\%\] {
   margin-top: 2%;
 }
@@ -1242,9 +1245,6 @@ input:checked + .toggle-bg {
 }
 .mt-\[8\%\] {
   margin-top: 8%;
-}
-.mt-\[1\%\] {
-  margin-top: 1%;
 }
 .block {
   display: block;
@@ -1306,11 +1306,11 @@ input:checked + .toggle-bg {
 .h-9 {
   height: 2.25rem;
 }
+.h-\[140px\] {
+  height: 140px;
+}
 .h-\[190px\] {
   height: 190px;
-}
-.h-\[200px\] {
-  height: 200px;
 }
 .h-\[24\.375rem\] {
   height: 24.375rem;
@@ -1327,6 +1327,9 @@ input:checked + .toggle-bg {
 .h-\[45px\] {
   height: 45px;
 }
+.h-\[4rem\] {
+  height: 4rem;
+}
 .h-\[50\%\] {
   height: 50%;
 }
@@ -1336,9 +1339,6 @@ input:checked + .toggle-bg {
 .h-\[56px\] {
   height: 56px;
 }
-.h-\[8rem\] {
-  height: 8rem;
-}
 .h-\[calc\(100\%-1rem\)\] {
   height: calc(100% - 1rem);
 }
@@ -1347,21 +1347,6 @@ input:checked + .toggle-bg {
 }
 .h-screen {
   height: 100vh;
-}
-.h-\[4rem\] {
-  height: 4rem;
-}
-.h-\[180px\] {
-  height: 180px;
-}
-.h-\[140px\] {
-  height: 140px;
-}
-.h-\[160px\] {
-  height: 160px;
-}
-.h-\[420px\] {
-  height: 420px;
 }
 .max-h-full {
   max-height: 100%;
@@ -1420,9 +1405,6 @@ input:checked + .toggle-bg {
 .w-\[12\.5rem\] {
   width: 12.5rem;
 }
-.w-\[12rem\] {
-  width: 12rem;
-}
 .w-\[15\%\] {
   width: 15%;
 }
@@ -1477,20 +1459,14 @@ input:checked + .toggle-bg {
 .w-\[95\%\] {
   width: 95%;
 }
+.w-\[9rem\] {
+  width: 9rem;
+}
 .w-auto {
   width: auto;
 }
 .w-full {
   width: 100%;
-}
-.w-\[10rem\] {
-  width: 10rem;
-}
-.w-\[8rem\] {
-  width: 8rem;
-}
-.w-\[9rem\] {
-  width: 9rem;
 }
 .max-w-6xl {
   max-width: 72rem;
@@ -2418,10 +2394,6 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(194 8 58 / var(--tw-bg-opacity));
 }
-.hover\:bg-redDefault:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 10 73 / var(--tw-bg-opacity));
-}
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -2992,11 +2964,6 @@ input:checked + .toggle-bg {
     line-height: 2rem;
   }
 
-  .lg\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
-
   .lg\:text-9xl {
     font-size: 8rem;
     line-height: 1;
@@ -3010,16 +2977,6 @@ input:checked + .toggle-bg {
   .lg\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
-  }
-
-  .lg\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-
-  .lg\:text-4xl {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
   }
 
   .lg\:font-bold {
