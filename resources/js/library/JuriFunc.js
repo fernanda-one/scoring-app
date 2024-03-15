@@ -1,5 +1,4 @@
 import { isEmpty } from "lodash";
-import { toInteger } from "lodash/lang";
 const rounds = ["round-1", "round-2", "round-3"];
 let pureScoreRed = 0;
 let pureScoreBlue = 0;

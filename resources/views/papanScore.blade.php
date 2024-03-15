@@ -38,15 +38,15 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center w-full h-[200px]">
-            <div class="w-[12rem] h-[8rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-2 text-whiteDefault shadow-inset-custom">
+        <div class="flex justify-center items-center w-full h-[140px]">
+            <div class="w-[9rem] h-[4rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-2 text-whiteDefault shadow-inset-custom">
                 <p id="timer" class="text-base lg:text-2xl font-semibold">00 : 00</p>
             </div>
         </div>
         <x-drop-verification-result/>
     </header>
 
-    <div class="flex justify-between mt-[3%] overflow-hidden">
+    <div class="flex justify-between mt-[1%] overflow-hidden">
         <div class="flex h-[450px] w-[50%]">
             <div class="flex items-center justify-center w-[40%] lg:w-[45%] h-screen lg:h-[70%] rounded-r-[30px] bg-redDefault">
                 <p id="redScore" class="text-whiteDefault text-6xl md:text-8xl lg:text-9xl font-bold">0</p>
