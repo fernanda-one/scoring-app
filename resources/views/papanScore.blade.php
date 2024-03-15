@@ -39,10 +39,9 @@
             </div>
         </div>
         <div class="flex justify-center items-center w-full h-[200px]">
-                <div class="w-[12rem] h-[8rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-5 text-whiteDefault shadow-inset-custom">
-                    <p class="text-base lg:text-lg font-semibold">WAKTU</p>
-                    <p id="timer" class="text-base lg:text-lg font-semibold">00 : 00</p>
-                </div>
+            <div class="w-[12rem] h-[8rem] bg-grayDark rounded-xl flex flex-col items-center justify-center gap-2 text-whiteDefault shadow-inset-custom">
+                <p id="timer" class="text-base lg:text-2xl font-semibold">00 : 00</p>
+            </div>
         </div>
         <x-drop-verification-result/>
     </header>

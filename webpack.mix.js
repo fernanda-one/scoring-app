@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,24 +11,25 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/scoringJuri.js', 'public/js')
-    .js('resources/js/scoringDewan.js', 'public/js')
-    .js('resources/js/scoreUpdate.js', 'public/js')
-    .js('resources/js/operator.js', 'public/js')
-    .js('resources/js/ketuaPertandingan.js', 'public/js')
-    .js('resources/js/dropVerification.js', 'public/js')
-    .js('resources/js/papanScore.js', 'public/js')
-    .js('resources/js/library/DewanFunc.js', 'public/js/library')
-    .js('resources/js/library/JuriFunc.js', 'public/js/library')
-    .js('resources/js/library/LogoutFunc.js', 'public/js/library')
-    .postCss('resources/css/app.css', 'public/css', [
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/scoringJuri.js", "public/js")
+    .js("resources/js/scoringDewan.js", "public/js")
+    .js("resources/js/scoreUpdate.js", "public/js")
+    .js("resources/js/operator.js", "public/js")
+    .js("resources/js/ketuaPertandingan.js", "public/js")
+    .js("resources/js/dropVerification.js", "public/js")
+    .js("resources/js/papanScore.js", "public/js")
+    .js("resources/js/library/DewanFunc.js", "public/js/library")
+    .js("resources/js/library/JuriFunc.js", "public/js/library")
+    .js("resources/js/library/LogoutFunc.js", "public/js/library")
+    .js("resources/js/library/Time.js", "public/js/library")
+    .postCss("resources/css/app.css", "public/css", [
         //
     ]);
 
 mix.options({
-    hmrOptions : {
-        host: 'localhost',
-        port:8080,
-    }
-})
+    hmrOptions: {
+        host: "localhost",
+        port: 8080,
+    },
+});

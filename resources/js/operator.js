@@ -1,36 +1,26 @@
-require("./bootstrap");
-const roundsElement = {
-    "round-1": document.getElementById("round-1"),
-    "round-2": document.getElementById("round-2"),
-    "round-3": document.getElementById("round-3"),
-};
+const { joinChanel } = require("./channel");
+const { roundsElement, countMinimumToStart } = require("./library/Rounds");
+const { timesValue } = require("./library/Time");
+
+const channelUpdateScore = joinChanel("updateScore", userData.gelanggang_id);
+const channelOperator = joinChanel("operator", userData.gelanggang_id);
+
 let activeRound = "round-1";
-const countMinimumToStart = 5;
+
+let pauseStatus = true;
+let isButtonDisable = true;
+
 const start = document.getElementById("start");
 const next = document.getElementById("next");
 const prev = document.getElementById("prev");
 const segarkan = document.getElementById("segarkan");
 const kunci = document.getElementById("kunci");
 const pausePlay = document.getElementById("pause");
-let pauseStatus = true;
-let isButtonDisable = true;
 const finish = document.getElementById("finish");
 const userElement = document.getElementById("user");
 const userData = JSON.parse(userElement.getAttribute("data-user"));
 const partaiElement = document.getElementById("partai");
 const dataPartai = JSON.parse(partaiElement.getAttribute("data-partai"));
-const channelUpdateScore = Echo.join(
-    `presence.updateScore.${userData.gelanggang_id}`
-);
-const channelOperator = Echo.join(
-    `presence.operator.${userData.gelanggang_id}`
-);
-const timesValue = {
-    satu: 90,
-    dua: 120,
-    tiga: 150,
-    empat: 180,
-};
 const timeElement = document.getElementById("time");
 let matchTime = 120;
 let users;
@@ -227,9 +217,7 @@ function cekStatususer() {
         dewan: false,
         ketua: false,
     };
-    console.log("🚀 ~ cekStatususer ~ userList:", userList);
     let trueCount = 0;
-    console.log("🚀 ~ users.map ~ users:", users);
     users.map((user) => {
         if (roleIds[`${user.role_id}`]) {
             trueCount += 1;
