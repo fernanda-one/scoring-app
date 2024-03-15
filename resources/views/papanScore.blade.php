@@ -17,7 +17,7 @@
                 <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-blueDefault py-3 rounded-br-[90px] shadow-inset-custom">
                     <p id="nama_biru" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT BIRU</p>
                 </div>
-                <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDefault py-2 rounded-br-[90px] shadow-inset-custom">
+                <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-br-[90px] shadow-inset-custom">
                     <p id="kontingen_biru" class="text-whiteDefault text-sm lg:text-xl">KONTINGEN</p>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                 <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-redDefault py-3 rounded-bl-[90px] shadow-inset-custom">
                     <p id="nama_merah" class="font-bold text-whiteDefault text-base lg:text-2xl">SUDUT MERAH</p>
                 </div>
-                <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDefault py-2 rounded-bl-[90px] shadow-inset-custom">
+                <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-bl-[90px] shadow-inset-custom">
                     <p id="kontingen_merah" class="text-whiteDefault text-sm lg:text-xl">KONTINGEN</p>
                 </div>
             </div>

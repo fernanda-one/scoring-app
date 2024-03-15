@@ -14,11 +14,11 @@
     <label for="user"></label><input id="user" type="text" hidden="hidden" data-user="{{$gelangang}}" detail-user="{{auth()->user()}}">
     <div class="flex justify-between">
         <div>
-            <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-redDefault py-3 rounded-br-[90px] shadow-inset-custom">
-                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">SUDUT MERAH</p>
+            <div class="flex justify-start pl-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] bg-blueDefault py-3 rounded-br-[90px] shadow-inset-custom">
+                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">SUDUT BIRU</p>
             </div>
-            <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-br-[90px] shadow-inset-custom">
-                <p id="kontingen_merah" class="text-whiteDefault text-base">KONTINGEN</p>
+            <div class="flex justify-start pl-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-br-[90px] shadow-inset-custom">
+                <p id="kontingen_biru" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
         <div>
@@ -30,11 +30,11 @@
             </div>
         </div>
         <div>
-            <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-blueDefault py-3 rounded-bl-[90px] shadow-inset-custom">
-                <p id="nama_biru" class="font-bold text-whiteDefault text-xl">SUDUT BIRU</p>
+            <div class="flex justify-end pr-6 w-[200px] 2xl:w-[600px] xl:w-[500px] lg:w-[395px] md:w-[280px] sm:w-[200px] bg-redDefault py-3 rounded-bl-[90px] shadow-inset-custom">
+                <p id="nama_merah" class="font-bold text-whiteDefault text-xl">SUDUT MERAH</p>
             </div>
-            <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-blueDark py-2 rounded-bl-[90px] shadow-inset-custom">
-                <p id="kontingen_biru" class="text-whiteDefault text-base">KONTINGEN</p>
+            <div class="flex ml-auto justify-end pr-6 w-[150px] xl:w-[300px] lg:w-[250px] md:w-[200px] bg-redDark py-2 rounded-bl-[90px] shadow-inset-custom">
+                <p id="kontingen_merah" class="text-whiteDefault text-base">KONTINGEN</p>
             </div>
         </div>
     </div>
