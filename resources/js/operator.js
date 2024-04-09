@@ -2,9 +2,6 @@ const { joinChanel } = require("./channel");
 const { roundsElement, countMinimumToStart } = require("./library/Rounds");
 const { timesValue } = require("./library/Time");
 
-const channelUpdateScore = joinChanel("updateScore", userData.gelanggang_id);
-const channelOperator = joinChanel("operator", userData.gelanggang_id);
-
 let activeRound = "round-1";
 
 let pauseStatus = true;
@@ -52,6 +49,8 @@ const roleIds = {
 };
 const roles = ["ketua", "dewan", "juri_pertama", "juri_kedua", "juri_ketiga"];
 
+const channelUpdateScore = joinChanel("updateScore", userData.gelanggang_id);
+const channelOperator = joinChanel("operator", userData.gelanggang_id);
 channelOperator.listen(`.operator.${userData.gelanggang_id}`, (event) => {
     if (event.action === "merah" || event.action === "biru") {
         updatePertandingan("reset");
