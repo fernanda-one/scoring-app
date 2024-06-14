@@ -3,7 +3,7 @@ const { roundsElement, countMinimumToStart } = require("./library/Rounds");
 const { timesValue } = require("./library/Time");
 
 let activeRound = "round-1";
-let pauseStatus = true;
+let pauseStatus = false;
 let isButtonDisable = true;
 let matchTime = 120;
 let users;
@@ -108,9 +108,7 @@ function handleUserLeave(user) {
     checkUserStatus();
 }
 
-function handleScoreUpdate(event) {
-    // Handle score update event if necessary
-}
+function handleScoreUpdate(event) {}
 
 function handleStart() {
     updateMatch("start");
@@ -133,7 +131,7 @@ function handleRefresh() {
 
 function handlePausePlay() {
     togglePausePlay();
-    updateMatch(pauseStatus ? "pause" : "play");
+    updateMatch(pauseStatus ? "play" : "pause");
 }
 
 function handleTimeChange() {
