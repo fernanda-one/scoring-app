@@ -44,7 +44,6 @@ channelGelanggang.listen(`.juri.${userData.gelanggang_id}`, (event) => {
     updateindicator(event);
 });
 channelPenalty.listen(`.penalty.${userData.gelanggang_id}`, (event) => {
-    console.log(event);
     changeIndicatorPelanggaran(event.color, event.penalty);
 });
 
@@ -84,6 +83,7 @@ function saveTimerState() {
     localStorage.setItem("timerSecondsRemaining", secondsRemaining);
     localStorage.setItem("timerEndTime", endTime);
 }
+F;
 
 function loadSaveTimer() {
     timerStarted = localStorage.getItem("timerStarted");

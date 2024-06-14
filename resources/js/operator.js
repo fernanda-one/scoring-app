@@ -153,10 +153,15 @@ function setElementColor(element, colorClass, add) {
     element.classList.toggle(colorClass, add);
 }
 
-function togglePausePlay() {
-    pauseStatus = !pauseStatus;
-    elements.pausePlay.textContent = pauseStatus ? "MULAI" : "JEDA";
-    elements.pausePlay.classList.toggle("bg-yellowDefault");
+function togglePausePlay(status = !pauseStatus) {
+    pauseStatus = status !== null ? status : !pauseStatus;
+    elements.pausePlay.textContent = pauseStatus ? "JEDA" : "MULAI";
+
+    if (pauseStatus) {
+        elements.pausePlay.classList.add("bg-yellowDefault");
+    } else {
+        elements.pausePlay.classList.remove("bg-yellowDefault");
+    }
 }
 
 function toggleLock() {

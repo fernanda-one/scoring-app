@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('login');
-//});
-
 Route::get('/score', function () {
     return view('scoring');
 });
