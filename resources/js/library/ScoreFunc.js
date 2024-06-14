@@ -6,7 +6,6 @@ const babak = document.getElementById("babak");
 let pureScoreRed = 0;
 let pureScoreBlue = 0;
 export let partaiId = "";
-const rounds = ["round-1", "round-2", "round-3"];
 
 export let kelas;
 let redScore = "";

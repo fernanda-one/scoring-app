@@ -2416,7 +2416,6 @@ var babak = document.getElementById("babak");
 var pureScoreRed = 0;
 var pureScoreBlue = 0;
 var partaiId = "";
-var rounds = ["round-1", "round-2", "round-3"];
 var kelas;
 var redScore = "";
 var blueScore = "";

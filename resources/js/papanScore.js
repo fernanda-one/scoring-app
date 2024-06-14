@@ -23,7 +23,6 @@ import {
     startTimeoutIndicator,
 } from "./library/JuriFunc";
 
-let round = "round-1";
 let blueScore = document.getElementById(`blueScore`);
 let redScore = document.getElementById(`redScore`);
 const timerDisplay = document.getElementById("timer");
@@ -34,11 +33,13 @@ let countdown;
 let isPaused = false;
 let endTime;
 let secondsRemaining = 0;
+
 changeScoreElement(redScore, blueScore);
 loadDataSaved();
 if (localStorage.getItem("timerStarted")) {
     loadSaveTimer();
 }
+
 channelGelanggang.listen(`.juri.${userData.gelanggang_id}`, (event) => {
     updateindicator(event);
 });
@@ -76,6 +77,7 @@ function updateTimer(action) {
         saveTimerState();
     }
 }
+
 function saveTimerState() {
     localStorage.setItem("timerStarted", timerStarted);
     localStorage.setItem("timerIsPaused", isPaused);
@@ -90,6 +92,7 @@ function loadSaveTimer() {
     endTime = localStorage.getItem("timerEndTime");
     startTimer(secondsRemaining);
 }
+
 function displayTimeLeft(seconds) {
     const minutes = Math.floor(seconds / 60);
     const remainderSeconds = seconds % 60;
@@ -100,28 +103,15 @@ function displayTimeLeft(seconds) {
         timerDisplay.textContent = display;
     }
 }
-function updatePertandingan(action = "round") {
-    const dataPartai = getDataGelanggang();
-    axios.post("/operator-update", {
-        message: {
-            blueName: dataPartai.namaBiru,
-            redName: dataPartai.namaMerah,
-            blueContingent: dataPartai.kontingenBiru,
-            redContingent: dataPartai.kontingenMerah,
-            babak: dataPartai.babak,
-            time: 0,
-            activeRound: dataPartai.activeRound,
-            action: "round-done",
-        },
-    });
-}
+
 function clearTimerState() {
     timerStarted = false;
-    updatePertandingan();
+    // updatePertandingan();
     localStorage.removeItem("timerIsPaused");
     localStorage.removeItem("timerSecondsRemaining");
     localStorage.removeItem("timerEndTime");
 }
+
 function startTimer(seconds) {
     clearInterval(countdown);
 
@@ -162,11 +152,7 @@ function updateDataGelanggang(e) {
             timePerRound = e.time;
             startPertandingan(e);
             break;
-        case "finish":
-            localStorage.clear();
-            location.reload();
-            break;
-        case "reset":
+        case "reset" || "finish":
             localStorage.clear();
             location.reload();
             break;
@@ -182,6 +168,7 @@ function updateDataGelanggang(e) {
             break;
     }
 }
+
 function updateindicator(event) {
     const gerakan = event.gerakan;
     const sudut = event.sudut;
@@ -190,6 +177,7 @@ function updateindicator(event) {
     indicatorUpdate(elementName, sudut);
     startTimeoutIndicator(elementName, sudut);
 }
+
 function changeRound(e) {
     updateDataIndicator();
     activeRound.textContent = e.activeRound.toUpperCase();

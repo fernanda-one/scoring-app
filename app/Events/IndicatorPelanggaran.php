@@ -29,8 +29,6 @@ class IndicatorPelanggaran implements ShouldBroadcast
         $this->roomId = $gelanggang;
         $this->color = $message['color'];
         $this->penalty = $message['penalty'];
-
-
     }
 
     /**
@@ -40,19 +38,19 @@ class IndicatorPelanggaran implements ShouldBroadcast
      */
     public function broadcastOn(): PresenceChannel
     {
-        return new PresenceChannel('presence.penalty.'.$this->roomId);
+        return new PresenceChannel('presence.penalty.' . $this->roomId);
     }
 
     public function broadcastAs(): string
     {
-        return 'penalty.'.$this->roomId;
+        return 'penalty.' . $this->roomId;
     }
 
     public function broadcastWith()
     {
         return [
             'color' => $this->color,
-            'penalty'=>$this->penalty
+            'penalty' => $this->penalty
         ];
     }
 

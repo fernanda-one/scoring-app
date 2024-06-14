@@ -1375,6 +1375,9 @@ input:checked + .toggle-bg {
 .w-3 {
   width: 0.75rem;
 }
+.w-3\/4 {
+  width: 75%;
+}
 .w-36 {
   width: 9rem;
 }
@@ -1899,11 +1902,11 @@ input:checked + .toggle-bg {
 }
 .bg-redDark {
   --tw-bg-opacity: 1;
-  background-color: rgb(194 8 58 / var(--tw-bg-opacity));
+  background-color: rgb(207 4 51 / var(--tw-bg-opacity));
 }
 .bg-redDefault {
   --tw-bg-opacity: 1;
-  background-color: rgb(243 10 73 / var(--tw-bg-opacity));
+  background-color: rgb(252 3 61 / var(--tw-bg-opacity));
 }
 .bg-redOpacity {
   --tw-bg-opacity: 1;
@@ -2392,7 +2395,7 @@ input:checked + .toggle-bg {
 }
 .hover\:bg-redDark:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(194 8 58 / var(--tw-bg-opacity));
+  background-color: rgb(207 4 51 / var(--tw-bg-opacity));
 }
 .hover\:bg-white:hover {
   --tw-bg-opacity: 1;
@@ -2449,7 +2452,7 @@ input:checked + .toggle-bg {
 }
 .focus\:bg-redDark:focus {
   --tw-bg-opacity: 1;
-  background-color: rgb(194 8 58 / var(--tw-bg-opacity));
+  background-color: rgb(207 4 51 / var(--tw-bg-opacity));
 }
 .focus\:bg-yellowDark:focus {
   --tw-bg-opacity: 1;
@@ -2495,7 +2498,7 @@ input:checked + .toggle-bg {
 }
 .focus\:ring-redDark:focus {
   --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(194 8 58 / var(--tw-ring-opacity));
+  --tw-ring-color: rgb(207 4 51 / var(--tw-ring-opacity));
 }
 .focus\:ring-yellowDark:focus {
   --tw-ring-opacity: 1;
@@ -2762,6 +2765,10 @@ input:checked + .toggle-bg {
 
   .md\:h-screen {
     height: 100vh;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:w-\[105px\] {

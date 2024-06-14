@@ -11,12 +11,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class DropVerification implements ShouldBroadcast
+class WinnerEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private $juriPertama, $juriKedua, $juriKetiga;
+    private $data, $action;
     private int $roomId, $id;
-    private bool $redPopup, $bluePopup = false;
 
     /**
      * Create a new event instance.
@@ -29,11 +28,8 @@ class DropVerification implements ShouldBroadcast
         $gelanggang = $this->getGelanggangId($user);
         $this->roomId = $gelanggang;
         $this->id = $user['role_id'];
-        $this->juriPertama = $message['juriPertama'];
-        $this->juriKedua = $message['juriKedua'];
-        $this->juriKetiga = $message['juriKetiga'];
-        $this->redPopup = $message['redPopup'];
-        $this->bluePopup = $message['bluePopup'];
+        $this->action = $message['action'];
+        $this->data = $message['data'];
     }
 
     /**
@@ -43,24 +39,19 @@ class DropVerification implements ShouldBroadcast
      */
     public function broadcastOn(): PresenceChannel
     {
-        return new PresenceChannel('presence.dropVerification.' . $this->roomId);
+        return new PresenceChannel('presence.winner.' . $this->roomId);
     }
 
     public function broadcastAs(): string
     {
-        return 'dropVerification.' . $this->roomId;
+        return 'winner.' . $this->roomId;
     }
 
     public function broadcastWith()
     {
         return [
-            'message' => 'choice drop verificaton',
-            'juri_pertama' => $this->juriPertama,
-            'juri_kedua' => $this->juriKedua,
-            'juri_ketiga' => $this->juriKetiga,
-            'red_popup' => $this->redPopup,
-            'blue_popup' => $this->bluePopup,
-            'id' => $this->getRoleById($this->id)
+            'data' => $this->data,
+            'action' => $this->action,
         ];
     }
 
